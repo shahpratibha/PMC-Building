@@ -17,35 +17,36 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
     <link rel="stylesheet" href="libs/Leaflet.MousePosition-master/src/L.Control.MousePosition.css">
     <link rel="stylesheet" href="libs/polyline-measure/line-measure.css">
     <link rel="stylesheet" href="libs/leaflet-measure-master/leaflet-measure.css">
     <link rel="stylesheet" href="libs/leaflet-wms-legend/leaflet.wmslegend.css">
 
     <style>
-    #map {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100vh; 
-    width: 100vw; 
-    z-index: 0;
-    }
-   
-#search_type {
-    /* position: absolute; */
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    /* z-index: 999; */
-   
-}
+        #map {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 100vw;
+            z-index: 0;
+        }
+
+        #search_type {
+            /* position: absolute; */
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            /* z-index: 999; */
+
+        }
 
 
 
 
-.multi-checkboxes_wrap[aria-selected="true"]:before {
+        .multi-checkboxes_wrap[aria-selected="true"]:before {
             content: "\f14a";
         }
 
@@ -72,9 +73,10 @@
         .accordion-button:hover {
             background-color: #bbb;
         }
+
         .bg-transparent {
-     background-color: transparent !important; 
-}
+            background-color: transparent !important;
+        }
 
         /* Style for the select element */
         #search_type {
@@ -85,6 +87,7 @@
             border: 1px solid #ccc;
             background-color: #fff;
         }
+
         #sr_no {
             width: 90px;
             border-radius: 10px;
@@ -94,10 +97,12 @@
             background-color: #fff;
 
         }
-    .leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar {
-     border: 2px solid rgba(0, 0, 0, 0.2); 
-    /* background-clip: padding-box; */
-}
+
+        .leaflet-touch .leaflet-control-layers,
+        .leaflet-touch .leaflet-bar {
+            border: 2px solid rgba(0, 0, 0, 0.2);
+            /* background-clip: padding-box; */
+        }
 
         /* Container style to position the select element at the top center of the map */
         #map-container {
@@ -107,39 +112,41 @@
             /* Adjust height as needed */
         }
 
-    #search_type {
+        #search_type {
             position: absolute;
-            top: 20px;           
+            top: 20px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 999;
-            }
-    #checkboxContainer {
-      
-    gap: 1px;
-    position: absolute;
-    top: 20px;
-    left: 63%;
-    transform: translateX(-50%);
-    z-index: 999;
-    /* max-width: 700px; */
-    font-size: 8px;
-    height: auto;
-    max-height: 300px;
-    overflow: scroll;
-    scrollbar-width: thin;
-}
+        }
+
+        #checkboxContainer {
+
+            gap: 1px;
+            position: absolute;
+            top: 20px;
+            left: 63%;
+            transform: translateX(-50%);
+            z-index: 999;
+            /* max-width: 700px; */
+            font-size: 8px;
+            height: auto;
+            max-height: 300px;
+            overflow: scroll;
+            scrollbar-width: thin;
+        }
 
 
         #checkboxContainer input[type="checkboxContainer"] {
             margin-right: 1px;
-          
+
         }
 
         #checkboxContainer label {
             font-size: 10px;
         }
-/* 
+
+        /* 
         .scrollable-container {
             max-height: 200px;
             overflow-y: auto;
@@ -163,13 +170,13 @@
         <div>
 
             <select id="search_type" class="">
-             
+
                 <option value="">Area</option>
             </select>
 
             <div id="checkboxContainer" style="width:12%;background-color: white;"></div>
-       
-            
+
+
 
         </div>
     </header>
@@ -183,27 +190,28 @@
 
 
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://unpkg.com/togeojson@1.1.0/togeojson.js"></script>
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<script src="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/js/select2.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-<script src="libs/Leaflet.MousePosition-master/src/L.Control.MousePosition.js"></script>
-<script src="libs/polyline-measure/line-measure.js"></script>
-<script src="libs/leaflet-measure-master/leaflet-measure.js"></script>
-<script src="libs/leaflet-wms-legend/leaflet.wmslegend.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<script src="https://cdn.jsdelivr.net/npm/@turf/turf@6.3.0/turf.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.0/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="index.js"></script>
-<script src="select2.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.7/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/togeojson@1.1.0/togeojson.js"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/js/select2.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="libs/Leaflet.MousePosition-master/src/L.Control.MousePosition.js"></script>
+    <script src="libs/polyline-measure/line-measure.js"></script>
+    <script src="libs/leaflet-measure-master/leaflet-measure.js"></script>
+    <script src="libs/leaflet-wms-legend/leaflet.wmslegend.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6.3.0/turf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.0/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="index.js"></script>
+    <script src="select2.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.7/axios.min.js"></script>
 
     <script>
 
@@ -274,9 +282,6 @@
             var selectedValueVillage = $(this).val();
             var Village_name = 'Village_Name'
             let filters = `${Village_name} = '${selectedValueVillage}'`;
-
-            // Update Revenue_Layer with new CQL_FILTER
-
             FitbouCustomiseRevenue(filters)
             Revenue_Layer.setParams({
                 CQL_FILTER: filters,
@@ -294,104 +299,63 @@
 
                 $.getJSON(geoServerURL, function (data) {
                     var gutvalues = new Set();
-
-                    // Populate the Set with gut numbers
                     $.each(data.features, function (index, feature) {
                         var gutss = feature.properties.Gut_No;
                         gutvalues.add(gutss);
                     });
-
-                    // Convert the Set to an array
                     var Uniqueguts = Array.from(gutvalues);
                     console.log(Uniqueguts, "Uniqueguts");
-
-                    // Call the callback function if it's provided
                     if (callback && typeof callback === "function") {
                         callback(Uniqueguts);
                     }
                 });
             }
-
-            // Call getvalues function and pass a callback function to handle Uniqueguts
             getvalues(function (Uniqueguts) {
                 console.log(Uniqueguts, "Uniqueguts");
-
-                // Add checkboxes for each Uniqueguts value
                 var container = document.getElementById("checkboxContainer");
                 container.innerHTML = ""; // Clear previous checkboxes
-
                 Uniqueguts.forEach(function (value) {
                     var checkbox = document.createElement("input");
                     checkbox.type = "checkbox";
                     checkbox.id = "checkbox_" + value.replace(/\s+/g, "_"); // Use a unique ID for each checkbox
                     checkbox.value = value;
-
                     var label = document.createElement("label");
                     label.htmlFor = checkbox.id;
                     label.textContent = value;
-
                     container.appendChild(checkbox);
                     container.appendChild(label);
                     container.appendChild(document.createElement("br")); // Add a line break after each checkbox
                 });
             });
 
-
-
-            // Array to store selected values
-            var selectedValues = [];
-
             function getSelectedValues() {
-                // Reset selectedValues array
-                selectedValues = [];
-
-                // Get all checkboxes
+                var selectedValues = [];
                 var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-
-                // Iterate over each checkbox
                 checkboxes.forEach(function (checkbox) {
-                    // If checkbox is checked, add its value to selectedValues array
-                    if (checkbox.checked) {
+                    if (checkbox.checked && checkbox.value !== 'on') {
                         selectedValues.push(checkbox.value);
                     }
                 });
 
-
-
-                // Create CQL filter string for Gut_No
                 var cqlFilterGut = "";
                 if (selectedValues.length > 0) {
                     cqlFilterGut = "Gut_No IN (" + selectedValues.map(value => "'" + value + "'").join(",") + ")";
                 }
-
-                // Create CQL filter string for Village_Name
-                // var selectedValueVillage = $("#search_type").val();
-                // var Village_name = 'Village_Name'
-                // let filtersVillage = `${Village_name} = '${selectedValueVillage}'`;
-
-                // Combine the two filters with an 'AND' condition
                 var cqlFilter = "";
                 if (cqlFilterGut && filters) {
                     cqlFilter = "(" + cqlFilterGut + ") AND (" + filters + ")";
                 } else {
                     cqlFilter = cqlFilterGut || filters;
                 }
-
-                // Log CQL filter string
                 console.log(cqlFilter);
-
-                return cqlFilter;
-
-
-                // Log selected values
                 console.log(selectedValues);
+                return cqlFilter;
             }
-
-            // Add event listener to checkboxContainer
-            // Add event listener to checkboxContainer
             document.getElementById('checkboxContainer').addEventListener('change', function () {
                 var cqlFilter = getSelectedValues();
                 // Use cqlFilter as needed, e.g., update the GeoServer layer
+                console.log(cqlFilter, "cwlfdf")
+                FitbouCustomiseRevenue(cqlFilter)
                 Revenue_Layer.setParams({
                     CQL_FILTER: cqlFilter,
                     maxZoom: 19.5,
@@ -401,21 +365,9 @@
 
             // Initial call to getSelectedValues to log the initially selected values and create the initial CQL filter
             var initialCqlFilter = getSelectedValues();
-
-
-
-
         })
 
-
-
-
-
-
     </script>
-
-
-
 </body>
 
 </html>

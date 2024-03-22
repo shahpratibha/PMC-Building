@@ -233,6 +233,33 @@ var initialCqlFilter = getSelectedValues();
 
 })
 
+// draw tool add
 
+// Initialize the FeatureGroup to store drawn items
+var drawnItems = new L.FeatureGroup();
+map.addLayer(drawnItems);
+
+// Initialize the Leaflet Draw control
+var drawControl = new L.Control.Draw({
+    draw: {
+      polyline: false,
+        polygon: {
+            shapeOptions: {
+                color: 'red' // Color of the polygon outline
+            },
+            icon: new L.DivIcon({
+            iconSize: new L.Point(4, 4), // reduce the size of the icon
+            className: "leaflet-div-icon", // specify the icon class
+          }),
+        },
+        rectangle: false,
+        circle: false, // Disable drawing circles
+        marker: false // Disable drawing markers
+    },
+    edit: false // Disable edit mode
+});
+map.addControl(drawControl);
+
+// ===============================================
 
 

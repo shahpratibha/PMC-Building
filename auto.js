@@ -83,24 +83,27 @@ map.on('draw:created', function (e) {
 
     var bounds = layer.getBounds().toBBoxString();
     var drawnPolygon = layer.toGeoJSON();
+console.log(drawnPolygon.geometry.type)
 
+    var layers = ["pmc:Revenue"];
+    var url = "https://portal.geopulsea.com//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=";
+    var propertyName = "Village_Name,Peth_Name,geom";
+    var outputFormat = "application/json";
     // Ensure the drawn polygon is a valid Polygon
     if (drawnPolygon.geometry.type === 'Polygon') {
-        FitRevenue(drawnPolygon, bounds);
+        IntersectAreaWithPolygon(drawnPolygon, layers, url, propertyName, bounds, outputFormat);
     } else {
         console.log('Drawn geometry is not a valid Polygon.');
     }
 });
 
-function FitRevenue(drawnPolygon, bounds) {
-    var layers = ["pmc:Revenue"];
-    var url = "https://portal.geopulsea.com//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=";
 
+function IntersectAreaWithPolygon(drawnPolygon, layers, url, propertyName, bounds, outputFormat) {
     layers.forEach(function (layerName) {
         var urlm = url + layerName +
-            "&propertyName=Village_Name,Peth_Name,geom&bbox=" +
+            "&propertyName=" + propertyName + "&bbox=" +
             bounds +
-            "&outputFormat=application/json";
+            "&outputFormat=" + outputFormat;
 
         $.getJSON(urlm, function (data) {
             console.log(data);

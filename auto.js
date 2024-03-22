@@ -5,25 +5,22 @@ const API_URL = "http://localhost/geopulse/autodcr/";
 //Add Basemap
 var map = L.map("map", {}).setView([18.52, 73.895], 12, L.CRS.EPSG4326);
 
-var googleSat = L.tileLayer(
-  "http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}",
-  {
-    maxZoom: 20,
-    subdomains: ["mt0", "mt1", "mt2", "mt3"],
-  }
-);
 
 var osm = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-  // attribution:
-  //   '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+
 }).addTo(map);
+var googleSat = L.tileLayer(
+    "http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}",
+    {
+      maxZoom: 20,
+      subdomains: ["mt0", "mt1", "mt2", "mt3"],
+    }
+  );
+  
 
 var Esri_WorldImagery = L.tileLayer(
   "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-  {
-    // attribution:
-    //   "Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community",
-  }
+
 );
 var baseLayers = {};
  
@@ -46,7 +43,6 @@ var WMSlayers = {
   "OSM": osm,
   "Esri": Esri_WorldImagery,
   "Satellite": googleSat,
- 
   Revenue: Revenue_Layer,
  
 };
@@ -122,6 +118,7 @@ Revenue_Layer.setParams({
     maxZoom: 19.5,
     styles: "polygon"
 });
+
 
 function getvalues(callback) {
     var geoServerURL =

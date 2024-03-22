@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KML Upload and Display</title>
+    <!-- Include Leaflet CSS and JavaScript -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+<body>
+    <!-- File input for KML upload -->
+    <input type="file" id="fileInput" accept=".kml" />
+    
+    <!-- Div to hold the map -->
+    <div id="map" style="height: 500px;"></div>
+
+    <!-- Div to display the area -->
+    <div id="areaDisplay"></div>
+
+    <script>
+        // Initialize Leaflet map
+        var map = L.map('map').setView([0, 0], 2); // Center map at [0,0] with zoom level 2
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Function to handle file upload
+        document.getElementById('fileInput').addEventListener('change', function (e) {
+            var file = e.target.files[0];
+            if (!file) return; // No file selected
+
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var contents = e.target.result;
+                displayKML(contents);
+            };
+            reader.readAsText(file);
+        });
+
+        // Function to display KML data on the map
+        function displayKML(kmlData) {
+            var parser = new DOMParser();
+            var kmlDoc = parser.parseFromString(kmlData, 'text/xml');
+            var trackCoordinates = [];
+
+            // Extract coordinates from KML
+            var coordinates = kmlDoc.querySelectorAll('coordinates');
+            coordinates.forEach(function (coordElement) {
+                var coords = coordElement.textContent.trim().split(',');
+                coords.forEach(function (coord) {
+                    var latlng = coord.split(' ').map(parseFloat);
+                    trackCoordinates.push(latlng);
+                });
+            });
+
+            // Create polygon and add it to the map
+            var polygon = L.polygon(trackCoordinates, { color: 'blue' }).addTo(map);
+
+            // Calculate area of the polygon
+            var area = L.GeometryUtil.geodesicArea(trackCoordinates);
+
+            // Display area on the map
+            var areaDisplay = document.getElementById('areaDisplay');
+            areaDisplay.innerHTML = 'Area: ' + (area / 1000000).toFixed(2) + ' km<sup>2</sup>';
+        }
+    </script>
+</body>
+</html>
+

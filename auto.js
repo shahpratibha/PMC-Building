@@ -177,38 +177,26 @@ getvalues(function (Uniqueguts) {
 
 
 
-// Array to store selected values
-var selectedValues = [];
 
 function getSelectedValues() {
     // Reset selectedValues array
-    selectedValues = [];
+    var selectedValues = [];
 
     // Get all checkboxes
     var checkboxes = document.querySelectorAll('input[type="checkbox"]');
 
     // Iterate over each checkbox
-    checkboxes.forEach(function (checkbox) {
-        // If checkbox is checked, add its value to selectedValues array
-        if (checkbox.checked) {
+    checkboxes.forEach(function(checkbox) {
+        // If checkbox is checked and value is not 'on', add its value to selectedValues array
+        if (checkbox.checked && checkbox.value !== 'on') {
             selectedValues.push(checkbox.value);
         }
     });
 
-
-
-    // Create CQL filter string for Gut_No
     var cqlFilterGut = "";
     if (selectedValues.length > 0) {
         cqlFilterGut = "Gut_No IN (" + selectedValues.map(value => "'" + value + "'").join(",") + ")";
     }
-
-    // Create CQL filter string for Village_Name
-    // var selectedValueVillage = $("#search_type").val();
-    // var Village_name = 'Village_Name'
-    // let filtersVillage = `${Village_name} = '${selectedValueVillage}'`;
-
-    // Combine the two filters with an 'AND' condition
     var cqlFilter = "";
     if (cqlFilterGut && filters) {
         cqlFilter = "(" + cqlFilterGut + ") AND (" + filters + ")";
@@ -219,17 +207,19 @@ function getSelectedValues() {
     // Log CQL filter string
     console.log(cqlFilter);
 
-    return cqlFilter;
-
-
     // Log selected values
     console.log(selectedValues);
+
+    return cqlFilter;
 }
+
 
 
 document.getElementById('checkboxContainer').addEventListener('change', function () {
     var cqlFilter = getSelectedValues();
     // Use cqlFilter as needed, e.g., update the GeoServer layer
+    console.log(cqlFilter,"fvfdvddshcdc")
+    FitbouCustomiseRevenue(cqlFilter)
     Revenue_Layer.setParams({
         CQL_FILTER: cqlFilter,
         maxZoom: 19.5,
@@ -239,8 +229,6 @@ document.getElementById('checkboxContainer').addEventListener('change', function
 
 // Initial call to getSelectedValues to log the initially selected values and create the initial CQL filter
 var initialCqlFilter = getSelectedValues();
-
-
 
 
 })

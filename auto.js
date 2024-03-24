@@ -1,6 +1,6 @@
 
 var map, geojson;
-const API_URL = "http://localhost/geopulse/autodcr/";
+const API_URL = "http://localhost/autodcr/";
 // const API_URL = "http://localhost/PMC-Project/";
 
 //Add Basemap
@@ -75,15 +75,13 @@ var drawControl = new L.Control.Draw({
 map.addControl(drawControl);
 
 
-
-
 map.on('draw:created', function (e) {
     var layer = e.layer;
     drawnItems.addLayer(layer);
 
     var bounds = layer.getBounds().toBBoxString();
     var drawnPolygon = layer.toGeoJSON();
-console.log(drawnPolygon.geometry.type)
+    console.log(drawnPolygon.geometry.type)
 
     var layers = ["pmc:Revenue"];
     var url = "https://portal.geopulsea.com//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=";
@@ -108,9 +106,7 @@ function IntersectAreaWithPolygon(drawnPolygon, layers, url, propertyName, bound
         $.getJSON(urlm, function (data) {
             console.log(data);
 
-            // Check if data is a valid GeoJSON feature collection
             if (data && data.features && data.features.length > 0) {
-                // Create a new GeoJSON layer for the intersected features
                 var intersectedFeatures = [];
                 data.features.forEach(function (feature) {
                     var intersectedFeature = turf.intersect(feature, drawnPolygon);
@@ -120,18 +116,13 @@ function IntersectAreaWithPolygon(drawnPolygon, layers, url, propertyName, bound
                         intersectedFeatures.push(intersectedFeature);
                     }
                 });
-
                 var intersectedLayer = L.geoJSON(intersectedFeatures, {
                     style: {
                         color: 'red',
                         weight: 2
                     }
                 });
-
-                // Add the intersected layer to the map
                 intersectedLayer.addTo(map);
-
-                // Bind a popup with properties and area to each intersected feature
                 intersectedLayer.eachLayer(function (layer) {
                     var properties = layer.feature.properties;
                     var area = turf.area(layer.feature);
@@ -251,7 +242,6 @@ $("#search_type").change(function () {
 
 
 
-
     function getSelectedValues() {
         // Reset selectedValues array
         var selectedValues = [];
@@ -277,16 +267,8 @@ $("#search_type").change(function () {
         } else {
             cqlFilter = cqlFilterGut || filters;
         }
-
-        // Log CQL filter string
-        console.log(cqlFilter);
-
-        // Log selected values
-        console.log(selectedValues);
-
         return cqlFilter;
     }
-
 
     document.getElementById('checkboxContainer').addEventListener('change', function () {
         var cqlFilter = getSelectedValues();
@@ -309,3 +291,146 @@ $("#search_type").change(function () {
 
 
 
+// Create a button element
+var button = L.control({ position: 'topright' });
+
+button.onAdd = function (map) {
+    var div = L.DomUtil.create('div', 'custom-button');
+    div.innerHTML = '<button onclick="saveSelectedValues()">Next Page</button>';
+    return div;
+};
+
+button.addTo(map);
+
+
+
+function FitbouCustomiseRevenue(filter) {
+    layers = ["pmc:Revenue"];
+    layers.forEach(function (layerName) {
+        var urlm =
+            "https://portal.geopulsea.com//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=" +
+            layerName +
+            "&CQL_FILTER=" +
+            filter +
+            "&outputFormat=application/json";
+        $.getJSON(urlm, function (data) {
+            geojson = L.geoJson(data, {});
+            map.fitBounds(geojson.getBounds());
+        });
+    });
+}
+
+
+// for uploading kml/kmz file and loading on map 
+document.getElementById('fileInput').addEventListener('change', function (e) {
+    var file = e.target.files[0];
+    if (!file) {
+        return;
+    }
+
+    var reader = new FileReader();
+    reader.onload = function (e) {
+        var kmlContent = e.target.result;
+        if (file.name.toLowerCase().endsWith('.kmz')) {
+            JSZip.loadAsync(file).then(function (zip) {
+                var kmlFound = false;
+                for (var name in zip.files) {
+                    if (name.toLowerCase().endsWith('.kml')) {
+                        kmlFound = true;
+                        zip.files[name].async('string').then(function (kmlString) {
+                            processKML(kmlString);
+                        });
+                        break;
+                    }
+                }
+                if (!kmlFound) {
+                    alert('No valid KML file found in the KMZ archive.');
+                }
+            });
+        } else if (file.name.toLowerCase().endsWith('.kml')) {
+            processKML(kmlContent);
+        } else if (file.name.toLowerCase().endsWith('.csv')) {
+
+            processCSV(kmlContent)
+
+        } else {
+            alert('Invalid file file.');
+        }
+    };
+    reader.readAsText(file);
+});
+
+function processKML(kmlString) {
+    var layer = omnivore.kml.parse(kmlString);
+    if (layer.getBounds().isValid()) {
+        layer.addTo(map);
+        map.fitBounds(layer.getBounds());
+    } else {
+        alert('Invalid KML/KMZ file.');
+    }
+}
+
+function processCSV(kmlContent) {
+    var data = Papa.parse(kmlContent, { header: true, dynamicTyping: true }).data;
+    data = data.filter(row => row.latitude !== null && row.longitude !== null);
+    var polygon = L.polygon(data.map(coord => [coord.latitude, coord.longitude])).addTo(map);
+    if (polygon.getBounds().isValid()) {
+        map.fitBounds(polygon.getBounds());
+    } else {
+        alert('Invalid csv file.');
+    }
+}
+
+
+// for adding coordinates manulay
+
+
+document.getElementById('toggleFormBtn').addEventListener('click', function () {
+    var formContainer = document.getElementById('formContainer');
+    formContainer.style.display = (formContainer.style.display === 'none') ? 'block' : 'none';
+});
+
+document.getElementById('addRowBtn').addEventListener('click', function () {
+    var table = document.getElementById('coordinateTable');
+    var row = table.insertRow();
+    var longitudeCell = row.insertCell();
+    var latitudeCell = row.insertCell();
+    var actionCell = row.insertCell();
+
+    longitudeCell.innerHTML = '<input type="text" placeholder="73.856785778" name="longitude[]">';
+    latitudeCell.innerHTML = '<input type="text" placeholder="18.856785778" name="latitude[]">';
+    actionCell.innerHTML = '<button type="button" class="deleteRowBtn">Delete</button>';
+
+    document.querySelectorAll('.deleteRowBtn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            this.closest('tr').remove();
+        });
+    });
+});
+
+document.getElementById('coordinateForm').addEventListener('submit', function (event) {
+    event.preventDefault();
+    var formData = new FormData(this);
+    var coordinates = [];
+
+    // Process form data here
+    formData.getAll('longitude[]').forEach(function (longitude, index) {
+        var latitude = formData.getAll('latitude[]')[index];
+        coordinates.push({ latitude: latitude, longitude: longitude });
+    });
+
+    // console.log(coordinates);
+    markershow = [];
+    // Add markers to the map
+    coordinates.forEach(function (coord) {
+        var latitude = parseFloat(coord.latitude);
+        var longitude = parseFloat(coord.longitude);
+        if (!isNaN(latitude) && !isNaN(longitude)) {
+            var marker = L.marker([latitude, longitude]).addTo(map);
+            markershow.push(marker);
+        }
+    });
+
+    var group = new L.featureGroup(markershow);
+    map.fitBounds(group.getBounds());
+});

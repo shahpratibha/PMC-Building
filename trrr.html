@@ -24,9 +24,9 @@
     <link rel="stylesheet" href="libs/leaflet-measure-master/leaflet-measure.css">
     <link rel="stylesheet" href="libs/leaflet-wms-legend/leaflet.wmslegend.css">
 
-    <link  rel="stylesheet" href="https://unpkg.com/leaflet-draw/dist/leaflet.draw.css"  />
-    
-    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-draw/dist/leaflet.draw.css" />
+
+
 
 </head>
 
@@ -39,9 +39,34 @@
             <select id="search_type" class="">
                 <option value="">Area</option>
             </select>
-
             <div id="checkboxContainer" style="width:12%;background-color: white;">
             </div>
+
+            <div class="custom-button1">
+                <input type="file" id="fileInput" accept=".kml" style="display:none;">
+                <label for="fileInput" class="upload-btn">Upload KML/KMZ/CSV File</label>
+            </div>
+
+            <div class="custom-buttoncsv">
+                <button id="toggleFormBtn">Toggle Form</button>
+                <div id="formContainer" style="display:none;">
+                    <form id="coordinateForm">
+                        <table id="coordinateTable">
+                            <tr>
+                                <th>Longitude</th>
+                                <th>Latitude</th>
+                                <th>Action</th>
+                            </tr>
+                        </table>
+                        <button type="button" id="addRowBtn">Add More Coordinates</button>
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+
+
+
+
         </div>
     </header>
 
@@ -73,7 +98,12 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.7/axios.min.js"></script>
     <script src="https://unpkg.com/leaflet-draw/dist/leaflet.draw.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6.3.0/turf.min.js"></script>
+    <script src="libs/turf.min.js"></script>
+    <script src='libs/leaflet-omnivore.min.js'></script>
+    <script src='libs/jszip.min.js'></script>
+    <script src='libs/papaparse.min.js'></script>
+
+
 
 
 
@@ -81,8 +111,8 @@
     <script src="select2.js"></script>
     <script src="auto.js"></script>
 
-    
-    
+
+
 
     <script>
 

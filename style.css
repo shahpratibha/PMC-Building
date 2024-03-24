@@ -2,127 +2,232 @@
     position: absolute;
     top: 0;
     left: 0;
-    height: 100vh; 
-    width: 100vw; 
+    height: 100vh;
+    width: 100vw;
     z-index: 0;
-    }
-   
+}
+
 #search_type {
     /* position: absolute; */
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
     /* z-index: 999; */
-   
+
 }
-
-
-
 
 .multi-checkboxes_wrap[aria-selected="true"]:before {
-            content: "\f14a";
-        }
-
-        .form-control {
-            height: 30px;
-            padding: auto;
-        }
-
-        .accordion-button {
-            height: 30px;
-            font-size: 12px;
-        }
-
-        .form-select {
-            justify-content: center;
-            margin-left: -35px;
-            /* width: 50px; */
-        }
-
-        .accordion-body .form-control {
-            margin-left: -35px;
-        }
-
-        .accordion-button:hover {
-            background-color: #bbb;
-        }
-        .bg-transparent {
-     background-color: transparent !important; 
+    content: "\f14a";
 }
 
-        /* Style for the select element */
-        #search_type {
-            width: 90px;
-            border-radius: 10px;
-            padding: 5px;
-            font-size: 14px;
-            border: 1px solid #ccc;
-            background-color: #fff;
-        }
-        #sr_no {
-            width: 90px;
-            border-radius: 10px;
-            padding: 5px;
-            font-size: 14px;
-            border: 1px solid #ccc;
-            background-color: #fff;
+.form-control {
+    height: 30px;
+    padding: auto;
+}
 
-        }
-    .leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar {
-     border: 2px solid rgba(0, 0, 0, 0.2); 
+.accordion-button {
+    height: 30px;
+    font-size: 12px;
+}
+
+.form-select {
+    justify-content: center;
+    margin-left: -35px;
+    /* width: 50px; */
+}
+
+.accordion-body .form-control {
+    margin-left: -35px;
+}
+
+.accordion-button:hover {
+    background-color: #bbb;
+}
+
+.bg-transparent {
+    background-color: transparent !important;
+}
+
+/* Style for the select element */
+#search_type {
+    width: 90px;
+    border-radius: 10px;
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+}
+
+#sr_no {
+    width: 90px;
+    border-radius: 10px;
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+
+}
+
+.leaflet-touch .leaflet-control-layers,
+.leaflet-touch .leaflet-bar {
+    border: 2px solid rgba(0, 0, 0, 0.2);
     /* background-clip: padding-box; */
 }
 
-        /* Container style to position the select element at the top center of the map */
-        #map-container {
-            position: absolute;
-            width: 100%;
-            height: 400px;
-            /* Adjust height as needed */
-        }
 
-    #search_type {
-            position: absolute;
-            top: 20px;           
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 999;
-            }
-    #checkboxContainer {
-      
+
+#map-container {
+    position: absolute;
+    width: 100%;
+    height: 400px;
+    /* Adjust height as needed */
+}
+
+#search_type {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 999;
+}
+
+
+
+#checkboxContainer {
     gap: 1px;
     position: absolute;
     top: 20px;
-    left: 63%;
+    left: 33%;
     transform: translateX(-50%);
     z-index: 999;
-    /* max-width: 700px; */
     font-size: 8px;
     height: auto;
     max-height: 300px;
     overflow: scroll;
     scrollbar-width: thin;
+    width: 150px;
+    text-align: left;
+    background-color: white;
+    border: 1px solid #bbb;
+    border-radius: 10px;
+    padding: 10px 20px;
+}
+
+#checkboxContainer input[type="checkboxContainer"] {
+    padding: 5px;
+    /* margin-left: 5px; */
+}
+
+#checkboxContainer label {
+    font-size: 12px;
+    margin-left: 15px;
+    text-align: center;
+    padding: 15px 0px;
 }
 
 
-        #checkboxContainer input[type="checkboxContainer"] {
-            margin-right: 1px;
-          
-        }
+/* for button map start */
+.custom-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1000; /* Ensure the button is above other map elements */
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
-        #checkboxContainer label {
-            font-size: 10px;
-        }
-/* 
-        .scrollable-container {
-            max-height: 200px;
-            overflow-y: auto;
-            background-color: white;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            margin-top: 10px;
-        }
+.custom-button button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
 
-        .scrollable-container input[type="checkbox"] {
-            margin-right: 5px;
-        } */
+.custom-button button:hover {
+    background-color: #0056b3;
+}
+
+/* for button map start */
+
+
+/* Upload button style */
+.custom-button1 {
+    position: absolute;
+    top: 3%;
+    left: 60%;
+    z-index: 1000;
+    background-color: white;
+    border: 1px solid #62ed0c;
+    border-radius: 5px;
+    padding: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.custom-button1 .upload-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.custom-button1 .upload-btn:hover {
+    background-color: #0056b3;
+}
+
+
+
+/* for add coordinates */
+
+.custom-buttoncsv {
+    position: absolute;
+    top: %;
+    left: 50%;
+    z-index: 1000;
+    background-color: white;
+    border: 1px solid #62ed0c;
+    border-radius: 5px;
+    padding: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#formContainer {
+    margin-top: 20px;
+}
+
+#coordinateTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#coordinateTable th,
+#coordinateTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+#coordinateTable th {
+    background-color: #f2f2f2;
+}
+
+#addRowBtn {
+    margin-top: 10px;
+}
+
+.deleteRowBtn {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 4px;
+}

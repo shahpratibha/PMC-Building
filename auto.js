@@ -75,77 +75,33 @@ var drawControl = new L.Control.Draw({
 map.addControl(drawControl);
 
 
+// save polygons into database variable
+
+var drawnPolygons = {};
+
 map.on('draw:created', function (e) {
     var layer = e.layer;
     drawnItems.addLayer(layer);
 
-    var bounds = layer.getBounds().toBBoxString();
+    // var bounds = layer.getBounds().toBBoxString();
     var drawnPolygon = layer.toGeoJSON();
     console.log(drawnPolygon.geometry.type)
 
-    var layers = ["pmc:Revenue"];
-    var url = "https://portal.geopulsea.com//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=";
-    var propertyName = "Village_Name,Peth_Name,geom";
-    var outputFormat = "application/json";
     // Ensure the drawn polygon is a valid Polygon
     if (drawnPolygon.geometry.type === 'Polygon') {
-        IntersectAreaWithPolygon(drawnPolygon, layers, url, propertyName, bounds, outputFormat);
+        var polygonId = 'polygon_draw'
+
+        drawnPolygons[polygonId] = layer.toGeoJSON().geometry.coordinates;
+        console.log(drawnPolygons, "drawnPolygons", "polygonCounter")
+        // IntersectAreaWithPolygon(drawnPolygon, layers, url, propertyName, bounds, outputFormat);
     } else {
         console.log('Drawn geometry is not a valid Polygon.');
     }
 });
 
 
-function IntersectAreaWithPolygon(drawnPolygon, layers, url, propertyName, bounds, outputFormat) {
-    layers.forEach(function (layerName) {
-        var urlm = url + layerName +
-            "&propertyName=" + propertyName + "&bbox=" +
-            bounds +
-            "&outputFormat=" + outputFormat;
-
-        $.getJSON(urlm, function (data) {
-            console.log(data);
-
-            if (data && data.features && data.features.length > 0) {
-                var intersectedFeatures = [];
-                data.features.forEach(function (feature) {
-                    var intersectedFeature = turf.intersect(feature, drawnPolygon);
-                    if (intersectedFeature && intersectedFeature.geometry.type !== 'GeometryCollection') {
-                        // Copy the properties from the original feature to the intersected feature
-                        intersectedFeature.properties = feature.properties;
-                        intersectedFeatures.push(intersectedFeature);
-                    }
-                });
-                var intersectedLayer = L.geoJSON(intersectedFeatures, {
-                    style: {
-                        color: 'red',
-                        weight: 2
-                    }
-                });
-                intersectedLayer.addTo(map);
-                intersectedLayer.eachLayer(function (layer) {
-                    var properties = layer.feature.properties;
-                    var area = turf.area(layer.feature);
-                    layer.bindPopup(`Area: ${area.toFixed(2)} sq meters<br>Properties: ${JSON.stringify(properties)}`);
-                });
-
-                // Log the properties of each intersected feature
-                intersectedFeatures.forEach(function (feature) {
-                    var properties = feature.properties;
-                    console.log('Intersected feature properties:', properties);
-                });
-            } else {
-                console.log('No valid features found in the response.');
-            }
-        });
-    });
-}
-
-
-
 
 $(document).ready(function () {
-    console.log("Document ready");
     trials();
 
     function trials() {
@@ -267,6 +223,8 @@ $("#search_type").change(function () {
         } else {
             cqlFilter = cqlFilterGut || filters;
         }
+        localStorage.setItem('cqlFilter', cqlFilter);
+
         return cqlFilter;
     }
 
@@ -289,14 +247,12 @@ $("#search_type").change(function () {
 })
 
 
-
-
 // Create a button element
 var button = L.control({ position: 'topright' });
 
 button.onAdd = function (map) {
     var div = L.DomUtil.create('div', 'custom-button');
-    div.innerHTML = '<button onclick="saveSelectedValues()">Next Page</button>';
+    div.innerHTML = '<button onclick="savevalues()">Next Page</button>';
     return div;
 };
 
@@ -364,6 +320,12 @@ function processKML(kmlString) {
     var layer = omnivore.kml.parse(kmlString);
     if (layer.getBounds().isValid()) {
         layer.addTo(map);
+        console.log(layer.toGeoJSON())
+        // for saving coordinates
+        var polygonId = 'polygon_kml'
+        drawnPolygons[polygonId] = layer.toGeoJSON().features[0].geometry.coordinates;
+        console.log(drawnPolygons, "drawnPolygons", "polygonCounter");
+
         map.fitBounds(layer.getBounds());
     } else {
         alert('Invalid KML/KMZ file.');
@@ -375,6 +337,13 @@ function processCSV(kmlContent) {
     data = data.filter(row => row.latitude !== null && row.longitude !== null);
     var polygon = L.polygon(data.map(coord => [coord.latitude, coord.longitude])).addTo(map);
     if (polygon.getBounds().isValid()) {
+
+        // for saving coordinates
+        var polygonId = 'polygon_csv'
+        drawnPolygons[polygonId] = polygon.toGeoJSON().geometry.coordinates;
+        console.log(drawnPolygons, "drawnPolygons", "polygonCounter");
+
+
         map.fitBounds(polygon.getBounds());
     } else {
         alert('Invalid csv file.');
@@ -416,21 +385,98 @@ document.getElementById('coordinateForm').addEventListener('submit', function (e
     // Process form data here
     formData.getAll('longitude[]').forEach(function (longitude, index) {
         var latitude = formData.getAll('latitude[]')[index];
-        coordinates.push({ latitude: latitude, longitude: longitude });
+        coordinates.push([parseFloat(latitude), parseFloat(longitude)]);
     });
 
-    // console.log(coordinates);
+    console.log(coordinates, ",coordinates");
     markershow = [];
     // Add markers to the map
-    coordinates.forEach(function (coord) {
-        var latitude = parseFloat(coord.latitude);
-        var longitude = parseFloat(coord.longitude);
-        if (!isNaN(latitude) && !isNaN(longitude)) {
-            var marker = L.marker([latitude, longitude]).addTo(map);
-            markershow.push(marker);
-        }
-    });
+    if (coordinates.length < 4) {
+        alert('Please enter at least four coordinates.');
+        return;
+    } else {
+        var polygon = L.polygon(coordinates).addTo(map);
+        map.fitBounds(polygon.getBounds());
 
-    var group = new L.featureGroup(markershow);
-    map.fitBounds(group.getBounds());
+        var polygonId = 'polygon_coors'
+        // polygonCounter++;
+        drawnPolygons[polygonId] = coordinates;
+
+        console.log(drawnPolygons, "drawnPolygons", "polygonCounter");
+    }
+
+
 });
+
+function savevalues() {
+    console.log(drawnPolygons, "drawnPolygons")
+    Object.keys(drawnPolygons).forEach(function (polygonId) {
+        // checkBoxGutVillage();
+        var coordinates = drawnPolygons[polygonId];
+        console.log(coordinates, "cordinates")
+        var pp = turf.polygon(coordinates);
+        L.geoJSON(pp).addTo(map)
+        var bounds = L.geoJSON(pp).getBounds();
+        map.fitBounds(bounds);
+        console.log(bounds)
+
+        var layers = ["pmc:Revenue"];
+        var url = "https://portal.geopulsea.com//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=";
+        var propertyName = "Village_Name,Peth_Name,Gut_No,geom";
+        var outputFormat = "application/json";
+        IntersectAreaWithPolygon(pp, layers, url, propertyName, bounds.toBBoxString(), outputFormat)
+        localStorage.setItem('coordinates', JSON.stringify(coordinates));
+
+
+
+    });
+    window.location.href = 'data.html';
+
+    // alert("heheeh");
+};
+
+function IntersectAreaWithPolygon(drawnPolygon, layers, url, propertyName, bounds, outputFormat) {
+    layers.forEach(function (layerName) {
+        var urlm = url + layerName +
+            "&propertyName=" + propertyName + "&bbox=" +
+            bounds +
+            "&outputFormat=" + outputFormat;
+
+        $.getJSON(urlm, function (data) {
+            console.log(data);
+
+            if (data && data.features && data.features.length > 0) {
+                var intersectedFeatures = [];
+                data.features.forEach(function (feature) {
+                    var intersectedFeature = turf.intersect(feature, drawnPolygon);
+                    if (intersectedFeature && intersectedFeature.geometry.type !== 'GeometryCollection') {
+                        // Copy the properties from the original feature to the intersected feature
+                        intersectedFeature.properties = feature.properties;
+                        intersectedFeatures.push(intersectedFeature);
+                    }
+                });
+                var intersectedLayer = L.geoJSON(intersectedFeatures, {
+                    style: {
+                        color: 'red',
+                        weight: 2
+                    }
+                });
+                intersectedLayer.addTo(map);
+                intersectedLayer.eachLayer(function (layer) {
+                    var properties = layer.feature.properties;
+                    var area = turf.area(layer.feature);
+                    layer.bindPopup(`Area: ${area.toFixed(2)} sq meters<br>Properties: ${JSON.stringify(properties)}`);
+                });
+
+                // Log the properties of each intersected feature
+                intersectedFeatures.forEach(function (feature) {
+                    var properties = feature.properties;
+                    // console.log('Intersected feature properties:', properties);
+                    localStorage.setItem('properties', JSON.stringify(properties))
+                });
+            } else {
+                console.log('No valid features found in the response.');
+            }
+        });
+    });
+}

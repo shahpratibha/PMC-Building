@@ -99,4 +99,112 @@
   margin-left: 15px;
   text-align: center;
   padding: 15px 0px;
+
+  
+/* for button map start */
+.custom-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1000; /* Ensure the button is above other map elements */
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.custom-button button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.custom-button button:hover {
+  background-color: #0056b3;
+}
+
+/* for button map start */
+
+
+/* Upload button style */
+.custom-button1 {
+  position: absolute;
+  top: 3%;
+  left: 60%;
+  z-index: 1000;
+  background-color: white;
+  border: 1px solid #62ed0c;
+  border-radius: 5px;
+  padding: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.custom-button1 .upload-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.custom-button1 .upload-btn:hover {
+  background-color: #0056b3;
+}
+
+
+
+/* for add coordinates */
+
+.custom-buttoncsv {
+  position: absolute;
+  top: %;
+  left: 50%;
+  z-index: 1000;
+  background-color: white;
+  border: 1px solid #62ed0c;
+  border-radius: 5px;
+  padding: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#formContainer {
+  margin-top: 20px;
+}
+
+#coordinateTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#coordinateTable th,
+#coordinateTable td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+#coordinateTable th {
+  background-color: #f2f2f2;
+}
+
+#addRowBtn {
+  margin-top: 10px;
+}
+
+.deleteRowBtn {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
 }

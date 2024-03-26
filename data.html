@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Data Page</title>
+    <!-- Include any necessary CSS stylesheets -->
+</head>
+<body>
+    <h1>Data Page</h1>
+    <table id="data-table">
+        <!-- Table content will be populated dynamically -->
+    </table>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Retrieve data from localStorage and populate table
+        $(document).ready(function(){
+            var properties = localStorage.getItem('properties');
+            var cqlFilter = localStorage.getItem('cqlFilter');
+            var coordinates = localStorage.getItem('coordinates');
+
+            // Populate table with data
+            var table = $('#data-table');
+            table.append('<tr><td>Properties</td><td>' + properties + '</td></tr>');
+            table.append('<tr><td>CQL Filter</td><td>' + cqlFilter + '</td></tr>');
+            table.append('<tr><td>Coordinates</td><td>' + coordinates + '</td></tr>');
+        });
+    </script>
+</body>
+</html>

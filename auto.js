@@ -1,6 +1,6 @@
 
 var map, geojson;
-const API_URL = "http://localhost/autodcr/";
+const API_URL = "http://localhost/PMC-Building/";
 // const API_URL = "http://localhost/PMC-Project/";
 
 //Add Basemap
@@ -33,26 +33,99 @@ var baseLayers = {};
 
 
 
-var Revenue_Layer = L.tileLayer
-    .wms("https://portal.geopulsea.com/geoserver/pmc/wms", {
-        layers: "Revenue",
-        format: "image/png",
-        transparent: true,
-        tiled: true,
-        version: "1.1.0",
-        // attribution: "Revenue",
-        opacity: 1,
-    }).addTo(map);
+// var Revenue_Layer = L.tileLayer
+//     .wms("https://portal.geopulsea.com/geoserver/pmc/wms", {
+//         layers: "Revenue",
+//         format: "image/png",
+//         transparent: true,
+//         tiled: true,
+//         version: "1.1.0",
+//         // attribution: "Revenue",
+//         opacity: 1,
+//     }).addTo(map);
 
 
+// var WMSlayers = {
+//   "OSM": osm,
+//   "Esri": Esri_WorldImagery,
+//   "Satellite": googleSat,
+//   Revenue: Revenue_Layer,
+ 
+// };
+var wms_layer1 = L.tileLayer.wms(
+  "https://portal.geopulsea.com/geoserver/AutoDCR/wms",
+  {
+    layers: "PLU_Ward",
+    format: "image/png",
+    transparent: true,
+    tiled: true,
+    version: "1.1.0",
+    // attribution: "Exist_Road",
+    opacity: 1,
+  }).addTo(map);
+ 
+var wms_layer16 = L.tileLayer.wms(
+  "https://portal.geopulsea.com/geoserver/AutoDCR/wms",
+  {
+    layers: "Ward_Boundary",
+    format: "image/png",
+    transparent: true,
+    tiled: true,
+    version: "1.1.0",
+    // attribution: "Exist_Road",
+    opacity: 1,
+  }
+);
+ 
+var wms_layer12 = L.tileLayer
+  .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+    layers: "DP_Ward_Road",
+    format: "image/png",
+    transparent: true,
+    tiled: true,
+    version: "1.1.0",
+    // attribution: "DP_Roads",
+    opacity: 1,
+    maxZoom: 25,
+  }).addTo(map);
+ 
+var wms_layer11 = L.tileLayer
+  .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+    layers: "Revenue",
+    format: "image/png",
+    transparent: true,
+    tiled: true,
+    version: "1.1.0",
+    // attribution: "Reservations",
+    opacity: 1,
+  });
+ 
+var wms_layer13 = L.tileLayer.wms(
+  "https://portal.geopulsea.com/geoserver/AutoDCR/wms",
+  {
+    layers: "PMC_Boundary",
+    format: "image/png",
+    transparent: true,
+    tiled: true,
+    version: "1.1.0",
+    // attribution: "Drainage_data",
+    opacity: 1,
+  }
+);
+ 
+ 
+// //////////////////////////added 11-03-2023/////////////////////////////////////////
+ 
 var WMSlayers = {
   "OSM": osm,
   "Esri": Esri_WorldImagery,
   "Satellite": googleSat,
-  Revenue: Revenue_Layer,
- 
+  PLU_Ward: wms_layer1,
+  Ward: wms_layer16,
+  DP_roads: wms_layer12,
+  Revenue: wms_layer11,
+  Boundary: wms_layer13,
 };
-
 
 var control = new L.control.layers(baseLayers, WMSlayers).addTo(map);
 control.setPosition('topright');

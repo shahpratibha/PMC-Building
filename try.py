@@ -1,17 +1,6 @@
-from flask import Flask, request, jsonify
-from flask_cors import CORS
+#! C:\Users\nelwa\AppData\Local\Programs\Python\Python312
 
-app = Flask(__name__)
-CORS(app)
+print("Content-type:text/html\n\n");
 
-@app.route('/save_values', methods=['POST'])
-def save_values():
-    data = request.json
-    selected_values = data.get('selectedValues', [])
-    
-    # Process the selected values (e.g., save them to the database)
-    
-    return jsonify(message="Values saved successfully")
 
-if __name__ == '__main__':
-    app.run(debug=True)
+print("working")

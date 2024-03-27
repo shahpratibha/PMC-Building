@@ -8,7 +8,9 @@
     <h1>Data Page</h1>
     <table id="data-table">
         <!-- Table content will be populated dynamically -->
+
     </table>
+    <button onclick="goBack()">Go Back</button>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         // Retrieve data from localStorage and populate table
@@ -23,6 +25,10 @@
             table.append('<tr><td>CQL Filter</td><td>' + cqlFilter + '</td></tr>');
             table.append('<tr><td>Coordinates</td><td>' + coordinates + '</td></tr>');
         });
+
+        function goBack() {
+            window.history.back(); // Go back to the main page
+        }
     </script>
 </body>
 </html>

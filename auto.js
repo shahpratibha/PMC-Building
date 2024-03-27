@@ -38,9 +38,24 @@ var Revenue_Layer = L.tileLayer
         version: "1.1.0",
         // attribution: "Revenue",
         opacity: 1,
-    }).addTo(map);
- 
-    var PLU_Layer = L.tileLayer
+    });
+
+// .addTo(map);
+
+
+// for only gut showing
+var Revenue_Layer1 = L.tileLayer
+    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+        layers: "Revenue_1",
+        format: "image/png",
+        transparent: true,
+        tiled: true,
+        version: "1.1.0",
+        // attribution: "Revenue",
+        opacity: 1,
+    });
+
+var PLU_Layer = L.tileLayer
     .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
         layers: "PLU_Ward",
         format: "image/png",
@@ -50,8 +65,8 @@ var Revenue_Layer = L.tileLayer
         // attribution: "Revenue",
         opacity: 1,
     });
- 
-    var DPRoad_Layer = L.tileLayer
+
+var DPRoad_Layer = L.tileLayer
     .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
         layers: "DP_Ward_Road",
         format: "image/png",
@@ -61,8 +76,8 @@ var Revenue_Layer = L.tileLayer
         // attribution: "Revenue",
         opacity: 1,
     });
- 
-    var Boundary_Layer = L.tileLayer
+
+var Boundary_Layer = L.tileLayer
     .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
         layers: "PMC_Boundary",
         format: "image/png",
@@ -73,7 +88,7 @@ var Revenue_Layer = L.tileLayer
         opacity: 1,
     }).addTo(map);
 
-    var Village_Boundary = L.tileLayer
+var Village_Boundary = L.tileLayer
     .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
         layers: "Village_Boundary",
         format: "image/png",
@@ -89,16 +104,16 @@ var WMSlayers = {
     "OSM": osm,
     "Esri": Esri_WorldImagery,
     "Satellite": googleSat,
- 
+
     Revenue: Revenue_Layer,
-    PLU:PLU_Layer,
-    DPRoad:DPRoad_Layer,
-    Boundary:Boundary_Layer,
-    Village:Village_Boundary
- 
- 
+    PLU: PLU_Layer,
+    DPRoad: DPRoad_Layer,
+    Boundary: Boundary_Layer,
+    Village: Village_Boundary
+
+
 };
- 
+
 
 var control = new L.control.layers(baseLayers, WMSlayers).addTo(map);
 control.setPosition('topright');
@@ -120,14 +135,14 @@ var drawControl = new L.Control.Draw({
     },
     draw: {
         polygon: {
-        shapeOptions: {
-          color: "red", // set the color for the polygon border
+            shapeOptions: {
+                color: "red", // set the color for the polygon border
+            },
+            icon: new L.DivIcon({
+                iconSize: new L.Point(6, 6), // set the size of the icon
+                className: "leaflet-div-icon", // specify the icon class
+            }),
         },
-        icon: new L.DivIcon({
-          iconSize: new L.Point(6, 6), // set the size of the icon
-          className: "leaflet-div-icon", // specify the icon class
-        }),
-      },
 
         polyline: false,
         rectangle: false,
@@ -194,61 +209,61 @@ $(document).ready(function () {
     }
 });
 // autocompleteSuggestions
- 
+
 $("#search_type").change(function () {
     var selectedValueVillage = $(this).val();
     var Village_name = 'village_name'
     let filters = `${Village_name} = '${selectedValueVillage}'`;
- 
+
     // Update Revenue_Layer with new CQL_FILTER
- 
+
     FitbouCustomiseRevenue(filters)
     Revenue_Layer.setParams({
         CQL_FILTER: filters,
         maxZoom: 19.5,
         styles: "Highlight_polygon"
-    });
- 
+    }).addTo(map);
+
     function getvalues(callback) {
         var geoServerURL =
             "https://portal.geopulsea.com//geoserver/AutoDCR/wms?service=WFS&version=1.1.0&request=GetFeature&typeName=Revenue_1&propertyName=Gut_No&outputFormat=application/json";
- 
+
         if (filters) {
             geoServerURL += "&CQL_FILTER=" + encodeURIComponent(filters);
         }
- 
+
         $.getJSON(geoServerURL, function (data) {
             var gutvalues = new Set();
- 
+
             // Populate the Set with gut numbers
             $.each(data.features, function (index, feature) {
                 var gutss = feature.properties.Gut_No;
                 gutvalues.add(gutss);
             });
- 
+
             // Convert the Set to an array
             var Uniqueguts = Array.from(gutvalues);
             console.log(Uniqueguts, "Uniqueguts");
- 
+
             // Call the callback function if it's provided
             if (callback && typeof callback === "function") {
                 callback(Uniqueguts);
             }
         });
     }
- 
+
     // Call getvalues function and pass a callback function to handle Uniqueguts
     getvalues(function (Uniqueguts) {
         console.log(Uniqueguts, "Uniqueguts");
- 
-        var states = Uniqueguts;
- 
+
         var stateList = $('#stateList');
-        _.each(states, function (state) {
+        stateList.empty();
+        // console.log(stateList,"stateList")
+        _.each(Uniqueguts, function (state) {
             var listItem = $('<li><input name="' + state + '" type="checkbox"><label for="' + state + '">' + state + '</label></li>');
             stateList.append(listItem);
         });
- 
+
         // Events
         $('.dropdown-container')
             .on('click', '.dropdown-button', function () {
@@ -258,12 +273,12 @@ $("#search_type").change(function () {
                 var target = $(this);
                 var dropdownList = target.closest('.dropdown-list');
                 var search = target.val().toLowerCase();
- 
+
                 if (!search) {
                     dropdownList.find('li').show();
                     return false;
                 }
- 
+
                 dropdownList.find('li').each(function () {
                     var text = $(this).text().toLowerCase();
                     var match = text.indexOf(search) > -1;
@@ -275,37 +290,42 @@ $("#search_type").change(function () {
                 var numChecked = container.find('[type="checkbox"]:checked').length;
                 container.find('.quantity').text(numChecked || 'Any');
             });
- 
- 
+
+
     });
- 
- 
-    $('#stateList').on('change', 'input[type="checkbox"]', function () {
+
+
+    $(document).on('change', '#stateList input[type="checkbox"]', function () {
         var cqlFilter = getSelectedValues();
         console.log(cqlFilter, "Selected filters");
- 
+
         // Update the map with the new filter
         FitbouCustomiseRevenue(cqlFilter);
-        Revenue_Layer.setParams({
+        Revenue_Layer1.setParams({
             CQL_FILTER: cqlFilter,
-            maxZoom: 19.5,
-            styles: "Highlight_polygon"
-        });
+            maxZoom: 23,
+            styles: "Highlight_polygon1"
+        }).addTo(map).bringToFront();
     });
- 
+
     // Function to get the selected checkbox values and construct the CQL filter
+
     function getSelectedValues() {
         var selectedValues = [];
         $('input[type="checkbox"]:checked').each(function () {
-            selectedValues.push("'" + $(this).attr('name') + "'");
+            var name = $(this).attr('name');
+            if (name !== undefined) {
+                selectedValues.push("'" + name + "'");
+            }
         });
- 
         var cqlFilterGut = ""
         if (selectedValues.length > 0) {
             cqlFilterGut = "Gut_No IN (" + selectedValues.join(",") + ")";
+        } else {
+            cqlFilterGut = ""
         }
         console.log(cqlFilterGut, "cqlFilterGut")
- 
+
         var cqlFilter = "";
         if (cqlFilterGut && filters) {
             cqlFilter = "(" + cqlFilterGut + ") AND (" + filters + ")";
@@ -313,15 +333,15 @@ $("#search_type").change(function () {
             cqlFilter = cqlFilterGut || filters;
         }
         localStorage.setItem('cqlFilter', cqlFilter);
- 
+
         return cqlFilter;
     }
- 
+
     var initialCqlFilter = getSelectedValues();
- 
- 
- 
- 
+
+
+
+
 })
 
 // Create a button element

@@ -115,6 +115,21 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.coordimg img {
+  position: absolute;
+  top: 1.4%;
+  left:77%;
+  z-index: 1000;
+  width: 45px;
+  height: 45px;
+  background-color: white;
+  border: 2px solid #14147d6e;
+  border-radius: 5px;
+  font-size:25px;
+  color: #3c3cb8;
+  padding: 5px 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
 
 #toggleFormBtn{
@@ -140,8 +155,8 @@
 .form-modal {
   width: 400px;
   position: fixed;
-  top: 20%;
-  left: 73%;
+  top: 10%;
+  left: 63%;
   /* transform: translate(-50%, -50%); */
   transition: 0s;
   background-color: white;

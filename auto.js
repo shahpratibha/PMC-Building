@@ -15,12 +15,16 @@ var googleSat = L.tileLayer(
 );
 
 var osm = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-
+    // attribution:
+    //   '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 }).addTo(map);
 
 var Esri_WorldImagery = L.tileLayer(
     "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-
+    {
+        // attribution:
+        //   "Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community",
+    }
 );
 var baseLayers = {};
 
@@ -69,7 +73,7 @@ var WMSlayers = {
 //       // attribution: "Exist_Road",
 //       opacity: 1,
 //     }).addTo(map);
-
+   
 //   var wms_layer16 = L.tileLayer.wms(
 //     "https://portal.geopulsea.com/geoserver/AutoDCR/wms",
 //     {
@@ -82,7 +86,7 @@ var WMSlayers = {
 //       opacity: 1,
 //     }
 //   );
-
+   
 //   var wms_layer12 = L.tileLayer
 //     .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
 //       layers: "DP_Ward_Road",
@@ -94,9 +98,9 @@ var WMSlayers = {
 //       opacity: 1,
 //       maxZoom: 25,
 //     }).addTo(map);
-
-
-
+   
+  
+   
 //   var wms_layer13 = L.tileLayer.wms(
 //     "https://portal.geopulsea.com/geoserver/AutoDCR/wms",
 //     {
@@ -109,10 +113,10 @@ var WMSlayers = {
 //       opacity: 1,
 //     }
 //   );
-
-
+   
+   
 //   // //////////////////////////added 11-03-2023/////////////////////////////////////////
-
+   
 //   var WMSlayers = {
 //     "OSM": osm,
 //     "Esri": Esri_WorldImagery,
@@ -121,7 +125,7 @@ var WMSlayers = {
 //     PLU_Ward: wms_layer1,
 //     Ward: wms_layer16,
 //     DP_roads: wms_layer12,
-
+   
 //     Boundary: wms_layer13,
 //   };
 
@@ -145,14 +149,14 @@ var drawControl = new L.Control.Draw({
     },
     draw: {
         polygon: {
-            shapeOptions: {
-                color: "red", // set the color for the polygon border
-            },
-            icon: new L.DivIcon({
-                iconSize: new L.Point(6, 6), // set the size of the icon
-                className: "leaflet-div-icon", // specify the icon class
-            }),
+        shapeOptions: {
+          color: "red", // set the color for the polygon border
         },
+        icon: new L.DivIcon({
+          iconSize: new L.Point(6, 6), // set the size of the icon
+          className: "leaflet-div-icon", // specify the icon class
+        }),
+      },
 
         polyline: false,
         rectangle: false,
@@ -219,61 +223,61 @@ $(document).ready(function () {
     }
 });
 // autocompleteSuggestions
-
+ 
 $("#search_type").change(function () {
     var selectedValueVillage = $(this).val();
     var Village_name = 'Village_Name'
     let filters = `${Village_name} = '${selectedValueVillage}'`;
-
+ 
     // Update Revenue_Layer with new CQL_FILTER
-
+ 
     FitbouCustomiseRevenue(filters)
     Revenue_Layer.setParams({
         CQL_FILTER: filters,
         maxZoom: 19.5,
         styles: "polygon"
     });
-
+ 
     function getvalues(callback) {
         var geoServerURL =
             "https://portal.geopulsea.com//geoserver/pmc/wms?service=WFS&version=1.1.0&request=GetFeature&typeName=Revenue&propertyName=Gut_No&outputFormat=application/json";
-
+ 
         if (filters) {
             geoServerURL += "&CQL_FILTER=" + encodeURIComponent(filters);
         }
-
+ 
         $.getJSON(geoServerURL, function (data) {
             var gutvalues = new Set();
-
+ 
             // Populate the Set with gut numbers
             $.each(data.features, function (index, feature) {
                 var gutss = feature.properties.Gut_No;
                 gutvalues.add(gutss);
             });
-
+ 
             // Convert the Set to an array
             var Uniqueguts = Array.from(gutvalues);
             console.log(Uniqueguts, "Uniqueguts");
-
+ 
             // Call the callback function if it's provided
             if (callback && typeof callback === "function") {
                 callback(Uniqueguts);
             }
         });
     }
-
+ 
     // Call getvalues function and pass a callback function to handle Uniqueguts
     getvalues(function (Uniqueguts) {
         console.log(Uniqueguts, "Uniqueguts");
-
+ 
         var states = Uniqueguts;
-
+ 
         var stateList = $('#stateList');
         _.each(states, function (state) {
             var listItem = $('<li><input name="' + state + '" type="checkbox"><label for="' + state + '">' + state + '</label></li>');
             stateList.append(listItem);
         });
-
+ 
         // Events
         $('.dropdown-container')
             .on('click', '.dropdown-button', function () {
@@ -283,12 +287,12 @@ $("#search_type").change(function () {
                 var target = $(this);
                 var dropdownList = target.closest('.dropdown-list');
                 var search = target.val().toLowerCase();
-
+ 
                 if (!search) {
                     dropdownList.find('li').show();
                     return false;
                 }
-
+ 
                 dropdownList.find('li').each(function () {
                     var text = $(this).text().toLowerCase();
                     var match = text.indexOf(search) > -1;
@@ -300,21 +304,37 @@ $("#search_type").change(function () {
                 var numChecked = container.find('[type="checkbox"]:checked').length;
                 container.find('.quantity').text(numChecked || 'Any');
             });
-
+ 
+ 
     });
-
-
-
+ 
+ 
+    $('#stateList').on('change', 'input[type="checkbox"]', function () {
+        var cqlFilter = getSelectedValues();
+        console.log(cqlFilter, "Selected filters");
+ 
+        // Update the map with the new filter
+        FitbouCustomiseRevenue(cqlFilter);
+        Revenue_Layer.setParams({
+            CQL_FILTER: cqlFilter,
+            maxZoom: 19.5,
+            styles: "polygon"
+        });
+    });
+ 
+    // Function to get the selected checkbox values and construct the CQL filter
     function getSelectedValues() {
         var selectedValues = [];
         $('input[type="checkbox"]:checked').each(function () {
-            selectedValues.push($(this).attr('name'));
+            selectedValues.push("'" + $(this).attr('name') + "'");
         });
-
-        var cqlFilterGut = "";
+ 
+        var cqlFilterGut = ""
         if (selectedValues.length > 0) {
-            cqlFilterGut = "Gut_No IN (" + selectedValues.map(value => "'" + value + "'").join(",") + ")";
+            cqlFilterGut = "Gut_No IN (" + selectedValues.join(",") + ")";
         }
+        console.log(cqlFilterGut, "cqlFilterGut")
+ 
         var cqlFilter = "";
         if (cqlFilterGut && filters) {
             cqlFilter = "(" + cqlFilterGut + ") AND (" + filters + ")";
@@ -322,34 +342,16 @@ $("#search_type").change(function () {
             cqlFilter = cqlFilterGut || filters;
         }
         localStorage.setItem('cqlFilter', cqlFilter);
-
+ 
         return cqlFilter;
-
     }
-
-
-    $('#getSelectedValuesBtn').click(function () {
-        // var selectedValues = getSelectedValues(); // Call getSelectedValues here
-
-        console.log(getSelectedValues(), "getSelectedValues()");
-        var cqlFilter = getSelectedValues();
-        // Use cqlFilter as needed, e.g., update the GeoServer layer
-        console.log(cqlFilter, "fvfdvddshcdc")
-        FitbouCustomiseRevenue(cqlFilter)
-        Revenue_Layer.setParams({
-            CQL_FILTER: cqlFilter,
-            maxZoom: 19.5,
-            styles: "polygon"
-        });
-    });
-
+ 
     var initialCqlFilter = getSelectedValues();
-
-
-
-
+ 
+ 
+ 
+ 
 })
-
 
 // Create a button element
 var button = L.control({ position: 'bottomright' });

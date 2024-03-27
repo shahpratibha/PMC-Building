@@ -29,11 +29,9 @@ var Esri_WorldImagery = L.tileLayer(
 var baseLayers = {};
 
 
-
-
 var Revenue_Layer = L.tileLayer
-    .wms("https://portal.geopulsea.com/geoserver/pmc/wms", {
-        layers: "Revenue",
+    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+        layers: "Revenue_1",
         format: "image/png",
         transparent: true,
         tiled: true,
@@ -41,93 +39,41 @@ var Revenue_Layer = L.tileLayer
         // attribution: "Revenue",
         opacity: 1,
     }).addTo(map);
-
-
+ 
+    var PLU_Layer = L.tileLayer
+    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+        layers: "PLU_Ward",
+        format: "image/png",
+        transparent: true,
+        tiled: true,
+        version: "1.1.0",
+        // attribution: "Revenue",
+        opacity: 1,
+    });
+ 
+    var DPRoad_Layer = L.tileLayer
+    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+        layers: "DP_Ward_Road",
+        format: "image/png",
+        transparent: true,
+        tiled: true,
+        version: "1.1.0",
+        // attribution: "Revenue",
+        opacity: 1,
+    });
+ 
+ 
 var WMSlayers = {
     "OSM": osm,
     "Esri": Esri_WorldImagery,
     "Satellite": googleSat,
-
+ 
     Revenue: Revenue_Layer,
-
+    PLU:PLU_Layer,
+    DPRoad:DPRoad_Layer,
+ 
 };
-
-// var Revenue_Layer = L.tileLayer
-//     .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
-//       layers: "AutoDCR: Revenue_1",
-//       format: "image/png",
-//       transparent: true,
-//       tiled: true,
-//       version: "1.1.0",
-//       // attribution: "Reservations",
-//       opacity: 1,
-//     });
-// var wms_layer1 = L.tileLayer.wms(
-//     "https://portal.geopulsea.com/geoserver/AutoDCR/wms",
-//     {
-//       layers: "PLU_Ward",
-//       format: "image/png",
-//       transparent: true,
-//       tiled: true,
-//       version: "1.1.0",
-//       // attribution: "Exist_Road",
-//       opacity: 1,
-//     }).addTo(map);
-   
-//   var wms_layer16 = L.tileLayer.wms(
-//     "https://portal.geopulsea.com/geoserver/AutoDCR/wms",
-//     {
-//       layers: "Ward_Boundary",
-//       format: "image/png",
-//       transparent: true,
-//       tiled: true,
-//       version: "1.1.0",
-//       // attribution: "Exist_Road",
-//       opacity: 1,
-//     }
-//   );
-   
-//   var wms_layer12 = L.tileLayer
-//     .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
-//       layers: "DP_Ward_Road",
-//       format: "image/png",
-//       transparent: true,
-//       tiled: true,
-//       version: "1.1.0",
-//       // attribution: "DP_Roads",
-//       opacity: 1,
-//       maxZoom: 25,
-//     }).addTo(map);
-   
-  
-   
-//   var wms_layer13 = L.tileLayer.wms(
-//     "https://portal.geopulsea.com/geoserver/AutoDCR/wms",
-//     {
-//       layers: "PMC_Boundary",
-//       format: "image/png",
-//       transparent: true,
-//       tiled: true,
-//       version: "1.1.0",
-//       // attribution: "Drainage_data",
-//       opacity: 1,
-//     }
-//   );
-   
-   
-//   // //////////////////////////added 11-03-2023/////////////////////////////////////////
-   
-//   var WMSlayers = {
-//     "OSM": osm,
-//     "Esri": Esri_WorldImagery,
-//     "Satellite": googleSat,
-//     Revenue: Revenue_Layer,
-//     PLU_Ward: wms_layer1,
-//     Ward: wms_layer16,
-//     DP_roads: wms_layer12,
-   
-//     Boundary: wms_layer13,
-//   };
+ 
 
 var control = new L.control.layers(baseLayers, WMSlayers).addTo(map);
 control.setPosition('topright');
@@ -199,13 +145,13 @@ $(document).ready(function () {
     trials();
 
     function trials() {
-        var geoServerURL = "https://portal.geopulsea.com//geoserver/pmc/wms?service=WFS&version=1.1.0&request=GetFeature&typeName=Revenue&propertyName=Village_Name&outputFormat=application/json";
+        var geoServerURL = "https://portal.geopulsea.com//geoserver/AutoDCR/wms?service=WFS&version=1.1.0&request=GetFeature&typeName=Revenue_1&propertyName=village_name&outputFormat=application/json";
 
         $.getJSON(geoServerURL)
             .done(function (data) {
                 var villageSet = new Set();
                 data.features.forEach(function (feature) {
-                    villageSet.add(feature.properties.Village_Name);
+                    villageSet.add(feature.properties.village_name);
                 });
 
                 var select = document.getElementById("search_type");
@@ -226,7 +172,7 @@ $(document).ready(function () {
  
 $("#search_type").change(function () {
     var selectedValueVillage = $(this).val();
-    var Village_name = 'Village_Name'
+    var Village_name = 'village_name'
     let filters = `${Village_name} = '${selectedValueVillage}'`;
  
     // Update Revenue_Layer with new CQL_FILTER
@@ -235,12 +181,12 @@ $("#search_type").change(function () {
     Revenue_Layer.setParams({
         CQL_FILTER: filters,
         maxZoom: 19.5,
-        styles: "polygon"
+        styles: "Highlight_polygon"
     });
  
     function getvalues(callback) {
         var geoServerURL =
-            "https://portal.geopulsea.com//geoserver/pmc/wms?service=WFS&version=1.1.0&request=GetFeature&typeName=Revenue&propertyName=Gut_No&outputFormat=application/json";
+            "https://portal.geopulsea.com//geoserver/AutoDCR/wms?service=WFS&version=1.1.0&request=GetFeature&typeName=Revenue_1&propertyName=Gut_No&outputFormat=application/json";
  
         if (filters) {
             geoServerURL += "&CQL_FILTER=" + encodeURIComponent(filters);
@@ -318,7 +264,7 @@ $("#search_type").change(function () {
         Revenue_Layer.setParams({
             CQL_FILTER: cqlFilter,
             maxZoom: 19.5,
-            styles: "polygon"
+            styles: "Highlight_polygon"
         });
     });
  
@@ -367,7 +313,7 @@ button.addTo(map);
 
 
 function FitbouCustomiseRevenue(filter) {
-    layers = ["pmc:Revenue"];
+    layers = ["AutoDCR:Revenue_1"];
     layers.forEach(function (layerName) {
         var urlm =
             "https://portal.geopulsea.com//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=" +
@@ -561,9 +507,9 @@ function savevalues() {
         map.fitBounds(bounds);
         console.log(bounds)
 
-        var layers = ["pmc:Revenue"];
+        var layers = ["AutoDCR:Revenue_1"];
         var url = "https://portal.geopulsea.com//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=";
-        var propertyName = "Village_Name,Peth_Name,Gut_No,geom";
+        var propertyName = "village_name,TPS_Name,Gut_No,geom";
         var outputFormat = "application/json";
         IntersectAreaWithPolygon(pp, layers, url, propertyName, bounds.toBBoxString(), outputFormat)
         localStorage.setItem('coordinates', JSON.stringify(coordinates));

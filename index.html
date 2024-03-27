@@ -37,33 +37,80 @@
 
         <div>
             <select id="search_type" class="">
-                <option value="">Area</option>
+                <option value="" >Area</option>
             </select>
-            <div id="checkboxContainer" style="width:12%;background-color: white;">
-            </div>
 
-            <div class="custom-button1">
-                <input type="file" id="fileInput" accept=".kml" style="display:none;">
-                <label for="fileInput" class="upload-btn">Upload KML/KMZ/CSV File</label>
-            </div>
+            <!-- <select name="" id="sr_no" >
+                <option value="" id="checkboxContainer">Select Gut No.</option>
+            </select> -->
+           <!-- <div id="checkboxContainer" style="width:12%;background-color: white;"> -->
 
-            <div class="custom-buttoncsv">
-                <button id="toggleFormBtn">Toggle Form</button>
-                <div id="formContainer" style="display:none;">
-                    <form id="coordinateForm">
-                        <table id="coordinateTable">
-                            <tr>
-                                <th>Longitude</th>
-                                <th>Latitude</th>
-                                <th>Action</th>
-                            </tr>
-                        </table>
-                        <button type="button" id="addRowBtn">Add More Coordinates</button>
-                        <button type="submit">Submit</button>
-                    </form>
+            <div class="multiselect-container" id="checkboxContainer">
+                <div class="multiselect-selected">Select Gut No.</div>
+                <div class="multiselect-options"></div>
+              </div>
+
+                 <!-- <div>
+                    <input type="checkbox" id="select-all">
+                    <label for="select-all">Select All</label>
+                </div>
+                <div class="options">
+                </div> -->
+
+
+            <!-- new addedddd/////////////////////////////////////////////////////////////////////////////////////// -->
+
+
+            <div class="instructions">(Click to expand and select states to filter)</div>
+            <div class="dropdown-container">
+                <div class="dropdown-button noselect">
+                    <div class="dropdown-label">States</div>
+                    <div class="dropdown-quantity">(<span class="quantity">Any</span>)</div>
+                    <i class="fa fa-filter"></i>
+                </div>
+                <div class="dropdown-list" style="display: none;">
+                    <input type="search" placeholder="Search states" class="dropdown-search"/>
+                    <ul id="stateList"></ul>
                 </div>
             </div>
 
+
+
+
+
+            <!-- vvv////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+            
+
+
+         </div>
+
+            <div class="custom-button1">
+                <input type="file" id="fileInput" accept=".kml" style="display:none;" title="Upload KML/KMZ/CSV File">
+                <label for="fileInput" class="upload-btn"><i class="fa-solid fa-file-arrow-up"></i></label>
+            </div>
+
+           
+            <div class="custom-buttoncsv">
+                <button id="toggleFormBtn" class="addbtn"> Add Coordinates
+                    <!-- <img src="png/search-coord.png" class="coordimg"> -->
+                </button>
+                <div id="formContainer" class="form-modal" style="display:none;">
+                    <button id="closeFormBtn" class="close-btn"><i class="fa-solid fa-xmark" style="font-size: 15px; color: #141414d3; top: 3%;
+                        position: absolute;
+                        left: -30%"></i></button>
+                    <form id="coordinateForm" style="text-align: center;">
+                        <table id="coordinateTable">
+                            <tr style="background-color: #bbb; padding: 5px; font-size: 13px;">
+                                <th class="p-1 px-5">Longitude</th>
+                                <th class="p-1 px-5">Latitude</th>
+                                <th class="p-1">Action</th>
+                            </tr>
+                        </table>
+                        <button class="addbtn" type="button" id="addRowBtn">Add More Coordinates <i class="fa-solid fa-circle-plus" style="color: #bbb;"></i></button>
+                        <button class="subbtn" type="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
 
 
 
@@ -98,10 +145,14 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.7/axios.min.js"></script>
     <script src="https://unpkg.com/leaflet-draw/dist/leaflet.draw.js"></script>
+
     <script src="libs/turf.min.js"></script>
     <script src='libs/leaflet-omnivore.min.js'></script>
     <script src='libs/jszip.min.js'></script>
     <script src='libs/papaparse.min.js'></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
 

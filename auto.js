@@ -1,6 +1,6 @@
 
 var map, geojson;
-const API_URL = "http://localhost/PMC-Building/";
+const API_URL = "http://localhost/autodcr/";
 // const API_URL = "http://localhost/PMC-Project/";
 
 //Add Basemap
@@ -15,16 +15,12 @@ var googleSat = L.tileLayer(
 );
 
 var osm = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    // attribution:
-    //   '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+
 }).addTo(map);
 
 var Esri_WorldImagery = L.tileLayer(
     "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-    {
-        // attribution:
-        //   "Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community",
-    }
+
 );
 var baseLayers = {};
 
@@ -52,9 +48,92 @@ var WMSlayers = {
 
 };
 
+// var Revenue_Layer = L.tileLayer
+//     .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+//       layers: "AutoDCR: Revenue_1",
+//       format: "image/png",
+//       transparent: true,
+//       tiled: true,
+//       version: "1.1.0",
+//       // attribution: "Reservations",
+//       opacity: 1,
+//     });
+// var wms_layer1 = L.tileLayer.wms(
+//     "https://portal.geopulsea.com/geoserver/AutoDCR/wms",
+//     {
+//       layers: "PLU_Ward",
+//       format: "image/png",
+//       transparent: true,
+//       tiled: true,
+//       version: "1.1.0",
+//       // attribution: "Exist_Road",
+//       opacity: 1,
+//     }).addTo(map);
+
+//   var wms_layer16 = L.tileLayer.wms(
+//     "https://portal.geopulsea.com/geoserver/AutoDCR/wms",
+//     {
+//       layers: "Ward_Boundary",
+//       format: "image/png",
+//       transparent: true,
+//       tiled: true,
+//       version: "1.1.0",
+//       // attribution: "Exist_Road",
+//       opacity: 1,
+//     }
+//   );
+
+//   var wms_layer12 = L.tileLayer
+//     .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+//       layers: "DP_Ward_Road",
+//       format: "image/png",
+//       transparent: true,
+//       tiled: true,
+//       version: "1.1.0",
+//       // attribution: "DP_Roads",
+//       opacity: 1,
+//       maxZoom: 25,
+//     }).addTo(map);
+
+
+
+//   var wms_layer13 = L.tileLayer.wms(
+//     "https://portal.geopulsea.com/geoserver/AutoDCR/wms",
+//     {
+//       layers: "PMC_Boundary",
+//       format: "image/png",
+//       transparent: true,
+//       tiled: true,
+//       version: "1.1.0",
+//       // attribution: "Drainage_data",
+//       opacity: 1,
+//     }
+//   );
+
+
+//   // //////////////////////////added 11-03-2023/////////////////////////////////////////
+
+//   var WMSlayers = {
+//     "OSM": osm,
+//     "Esri": Esri_WorldImagery,
+//     "Satellite": googleSat,
+//     Revenue: Revenue_Layer,
+//     PLU_Ward: wms_layer1,
+//     Ward: wms_layer16,
+//     DP_roads: wms_layer12,
+
+//     Boundary: wms_layer13,
+//   };
 
 var control = new L.control.layers(baseLayers, WMSlayers).addTo(map);
 control.setPosition('topright');
+
+// Remove the default zoom control
+map.zoomControl.remove();
+
+L.control.zoom({
+    position: 'bottomright' // Set position to bottom right
+}).addTo(map);
 
 
 var drawnItems = new L.FeatureGroup();
@@ -65,14 +144,25 @@ var drawControl = new L.Control.Draw({
         featureGroup: drawnItems
     },
     draw: {
-        polygon: true,
-        polyline: true,
-        rectangle: true,
-        circle: true,
-        marker: true
+        polygon: {
+            shapeOptions: {
+                color: "red", // set the color for the polygon border
+            },
+            icon: new L.DivIcon({
+                iconSize: new L.Point(6, 6), // set the size of the icon
+                className: "leaflet-div-icon", // specify the icon class
+            }),
+        },
+
+        polyline: false,
+        rectangle: false,
+        circle: false,
+        marker: false
     }
 });
 map.addControl(drawControl);
+
+
 
 
 // save polygons into database variable
@@ -176,41 +266,49 @@ $("#search_type").change(function () {
     getvalues(function (Uniqueguts) {
         console.log(Uniqueguts, "Uniqueguts");
 
-        // Add checkboxes for each Uniqueguts value
-        var container = document.getElementById("checkboxContainer");
-        container.innerHTML = ""; // Clear previous checkboxes
+        var states = Uniqueguts;
 
-        Uniqueguts.forEach(function (value) {
-            var checkbox = document.createElement("input");
-            checkbox.type = "checkbox";
-            checkbox.id = "checkbox_" + value.replace(/\s+/g, "_"); // Use a unique ID for each checkbox
-            checkbox.value = value;
-
-            var label = document.createElement("label");
-            label.htmlFor = checkbox.id;
-            label.textContent = value;
-
-            container.appendChild(checkbox);
-            container.appendChild(label);
-            container.appendChild(document.createElement("br")); // Add a line break after each checkbox
+        var stateList = $('#stateList');
+        _.each(states, function (state) {
+            var listItem = $('<li><input name="' + state + '" type="checkbox"><label for="' + state + '">' + state + '</label></li>');
+            stateList.append(listItem);
         });
+
+        // Events
+        $('.dropdown-container')
+            .on('click', '.dropdown-button', function () {
+                $(this).siblings('.dropdown-list').toggle();
+            })
+            .on('input', '.dropdown-search', function () {
+                var target = $(this);
+                var dropdownList = target.closest('.dropdown-list');
+                var search = target.val().toLowerCase();
+
+                if (!search) {
+                    dropdownList.find('li').show();
+                    return false;
+                }
+
+                dropdownList.find('li').each(function () {
+                    var text = $(this).text().toLowerCase();
+                    var match = text.indexOf(search) > -1;
+                    $(this).toggle(match);
+                });
+            })
+            .on('change', '[type="checkbox"]', function () {
+                var container = $(this).closest('.dropdown-container');
+                var numChecked = container.find('[type="checkbox"]:checked').length;
+                container.find('.quantity').text(numChecked || 'Any');
+            });
+
     });
 
 
 
     function getSelectedValues() {
-        // Reset selectedValues array
         var selectedValues = [];
-
-        // Get all checkboxes
-        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-
-        // Iterate over each checkbox
-        checkboxes.forEach(function (checkbox) {
-            // If checkbox is checked and value is not 'on', add its value to selectedValues array
-            if (checkbox.checked && checkbox.value !== 'on') {
-                selectedValues.push(checkbox.value);
-            }
+        $('input[type="checkbox"]:checked').each(function () {
+            selectedValues.push($(this).attr('name'));
         });
 
         var cqlFilterGut = "";
@@ -226,9 +324,14 @@ $("#search_type").change(function () {
         localStorage.setItem('cqlFilter', cqlFilter);
 
         return cqlFilter;
+
     }
 
-    document.getElementById('checkboxContainer').addEventListener('change', function () {
+
+    $('#getSelectedValuesBtn').click(function () {
+        // var selectedValues = getSelectedValues(); // Call getSelectedValues here
+
+        console.log(getSelectedValues(), "getSelectedValues()");
         var cqlFilter = getSelectedValues();
         // Use cqlFilter as needed, e.g., update the GeoServer layer
         console.log(cqlFilter, "fvfdvddshcdc")
@@ -240,19 +343,20 @@ $("#search_type").change(function () {
         });
     });
 
-    // Initial call to getSelectedValues to log the initially selected values and create the initial CQL filter
     var initialCqlFilter = getSelectedValues();
+
+
 
 
 })
 
 
 // Create a button element
-var button = L.control({ position: 'topright' });
+var button = L.control({ position: 'bottomright' });
 
 button.onAdd = function (map) {
     var div = L.DomUtil.create('div', 'custom-button');
-    div.innerHTML = '<button onclick="savevalues()">Next Page</button>';
+    div.innerHTML = '<button onclick="savevalues()" >Next  <i class="fa-regular fa-circle-right"></i></button>';
     return div;
 };
 
@@ -354,28 +458,63 @@ function processCSV(kmlContent) {
 // for adding coordinates manulay
 
 
+
 document.getElementById('toggleFormBtn').addEventListener('click', function () {
     var formContainer = document.getElementById('formContainer');
     formContainer.style.display = (formContainer.style.display === 'none') ? 'block' : 'none';
 });
 
+document.getElementById('closeFormBtn').addEventListener('click', function () {
+    var formContainer = document.getElementById('formContainer');
+    formContainer.style.display = 'none';
+});
+$('#formContainer').draggable();
+
+// Show one row initially
+var table = document.getElementById('coordinateTable');
+addCoordinateRow(table);
+
+// Event listener for adding more rows
 document.getElementById('addRowBtn').addEventListener('click', function () {
-    var table = document.getElementById('coordinateTable');
+    addCoordinateRow(table);
+});
+
+
+
+
+
+// Function to add a new coordinate row
+function addCoordinateRow(table) {
     var row = table.insertRow();
     var longitudeCell = row.insertCell();
     var latitudeCell = row.insertCell();
     var actionCell = row.insertCell();
 
-    longitudeCell.innerHTML = '<input type="text" placeholder="73.856785778" name="longitude[]">';
-    latitudeCell.innerHTML = '<input type="text" placeholder="18.856785778" name="latitude[]">';
-    actionCell.innerHTML = '<button type="button" class="deleteRowBtn">Delete</button>';
+    var longitudeInput = document.createElement('input');
+    longitudeInput.setAttribute('type', 'text');
+    longitudeInput.setAttribute('placeholder', '73.856785778');
+    longitudeInput.setAttribute('name', 'longitude[]');
+    longitudeInput.classList.add('coordinate-input'); // Add CSS class to input
 
-    document.querySelectorAll('.deleteRowBtn').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-            this.closest('tr').remove();
-        });
+    var latitudeInput = document.createElement('input');
+    latitudeInput.setAttribute('type', 'text');
+    latitudeInput.setAttribute('placeholder', '18.856785778');
+    latitudeInput.setAttribute('name', 'latitude[]');
+    latitudeInput.classList.add('coordinate-input'); // Add CSS class to input
+
+    longitudeCell.appendChild(longitudeInput);
+    latitudeCell.appendChild(latitudeInput);
+
+    actionCell.innerHTML = '<button type="button" class="deleteRowBtn"><i class="fa-solid fa-trash-can"></i></button>';
+
+    // Add event listener to delete button
+    var deleteBtn = actionCell.querySelector('.deleteRowBtn');
+    deleteBtn.addEventListener('click', function () {
+        row.remove();
     });
-});
+}
+
+// 
 
 document.getElementById('coordinateForm').addEventListener('submit', function (event) {
     event.preventDefault();

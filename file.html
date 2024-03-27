@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>State Filter Dropdown</title>
+<style>
+    html, body {
+        width: 100%;
+        height: 100%;
+    }
+
+    .noselect {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    .dropdown-container, .instructions {
+        width: 200px;
+        margin: 20px auto 0;
+        font-size: 14px;
+        font-family: sans-serif;
+        overflow: auto;
+    }
+
+    .instructions {
+        width: 100%;
+        text-align: center;
+    }
+
+    .dropdown-button {
+        float: left;
+        width: 100%;
+        background: whitesmoke;
+        padding: 10px 12px;
+
+        cursor: pointer;
+        border: 1px solid lightgray;
+        box-sizing: border-box;
+    }
+
+    .dropdown-label, .dropdown-quantity {
+        float: left;
+    }
+
+    .dropdown-quantity {
+        margin-left: 4px;
+    }
+
+    .fa-filter {
+        float: right;
+    }
+
+    .dropdown-list {
+        float: left;
+        width: 100%;
+        border: 1px solid lightgray;
+        border-top: none;
+        box-sizing: border-box;
+        padding: 10px 12px;
+    }
+
+    input[type="search"] {
+        padding: 5px 0;
+    }
+
+    ul {
+        margin: 10px 0;
+        max-height: 200px;
+        overflow-y: auto;
+    }
+
+    input[type="checkbox"] {
+        position: relative;
+        top: 2px;
+    }
+</style>
+</head>
+<body>
+<div class="instructions">(Click to expand and select states to filter)</div>
+<div class="dropdown-container">
+    <div class="dropdown-button noselect">
+        <div class="dropdown-label">States</div>
+        <div class="dropdown-quantity">(<span class="quantity">Any</span>)</div>
+        <i class="fa fa-filter"></i>
+    </div>
+    <div class="dropdown-list" style="display: none;">
+        <input type="search" placeholder="Search states" class="dropdown-search"/>
+        <ul id="stateList"></ul>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Array of states
+        var states = [
+            { abbreviation: 'AL', name: 'Alabama' },
+            { abbreviation: 'AK', name: 'Alaska' },
+            { abbreviation: 'AS', name: 'American Samoa' },
+            { abbreviation: 'AZ', name: 'Arizona' },
+            { abbreviation: 'AR', name: 'Arkansas' },
+            { abbreviation: 'CA', name: 'California' },
+            // Add more states here
+        ];
+
+        // Populate state list
+        var stateList = $('#stateList');
+        _.each(states, function(state) {
+            var listItem = $('<li><input name="' + state.abbreviation + '" type="checkbox"><label for="' + state.abbreviation + '">' + state.name + '</label></li>');
+            stateList.append(listItem);
+        });
+
+        // Events
+        $('.dropdown-container')
+            .on('click', '.dropdown-button', function() {
+                $(this).siblings('.dropdown-list').toggle();
+            })
+            .on('input', '.dropdown-search', function() {
+                var target = $(this);
+                var dropdownList = target.closest('.dropdown-list');
+                var search = target.val().toLowerCase();
+
+                if (!search) {
+                    dropdownList.find('li').show();
+                    return false;
+                }
+
+                dropdownList.find('li').each(function() {
+                    var text = $(this).text().toLowerCase();
+                    var match = text.indexOf(search) > -1;
+                    $(this).toggle(match);
+                });
+            })
+            .on('change', '[type="checkbox"]', function() {
+                var container = $(this).closest('.dropdown-container');
+                var numChecked = container.find('[type="checkbox"]:checked').length;
+                container.find('.quantity').text(numChecked || 'Any');
+            });
+    });
+</script>
+</body>
+</html>

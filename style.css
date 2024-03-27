@@ -1,4 +1,4 @@
-/* #map {
+ #map {
   position: absolute;
   top: 0;
   left: 0;
@@ -7,10 +7,29 @@
   z-index: 0;
 }
 
+
+
+
+/* autodcr */
+
+
 #search_type {
   position: absolute;
   top: 20px;
   left: 20%;
+  transform: translateX(-50%);
+  z-index: 999;
+  width: 190px;
+  border-radius: 10px;
+  padding: 5px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+}
+#sr_no {
+  position: absolute;
+  top: 20px;
+  left: 40%;
   transform: translateX(-50%);
   z-index: 999;
   width: 190px;
@@ -29,6 +48,7 @@
   top: 20px;
   left: 6%;
 }
+
 
 .multi-checkboxes_wrap[aria-selected="true"]:before {
   content: "\f14a";
@@ -58,11 +78,6 @@
 }
 .bg-transparent {
   background-color: transparent !important;
-}
-
-.leaflet-touch .leaflet-control-layers,
-.leaflet-touch .leaflet-bar {
-  border: 2px solid rgba(0, 0, 0, 0.2);
 }
 
 
@@ -85,6 +100,14 @@
   border: 1px solid #bbb;
   border-radius: 10px;
   padding: 10px 20px;
+
+
+
+  /*  */
+  /* display: flex;
+  flex-direction: column;
+  align-items: flex-start; */
+  /*  */
 }
 
 #checkboxContainer input[type="checkboxContainer"] {
@@ -97,266 +120,35 @@
   text-align: center;
   padding: 15px 0px;
 
-  
-.custom-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 1000; 
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-
-.custom-button button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-}
-
-.custom-button button:hover {
-  background-color: #0056b3;
-}
-
-
-.custom-button1 {
-  position: absolute;
-  top: 3%;
-  left: 60%;
-  z-index: 1000;
-  background-color: white;
-  border: 1px solid #62ed0c;
-  border-radius: 5px;
-  padding: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.custom-button1 .upload-btn {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-  display: inline-block;
-}
-
-.custom-button1 .upload-btn:hover {
-  background-color: #0056b3;
-}
-
-
-
-
-.custom-buttoncsv {
-  position: absolute;
-  top:0%;
-  left: 50%;
-  z-index: 1000;
-  background-color: white;
-  border: 1px solid #62ed0c;
-  border-radius: 5px;
-  padding: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-#formContainer {
-  margin-top: 20px;
-}
-
-#coordinateTable {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-#coordinateTable th,
-#coordinateTable td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: center;
-}
-
-#coordinateTable th {
-  background-color: #f2f2f2;
-}
-
-#addRowBtn {
-  margin-top: 10px;
-}
-
-.deleteRowBtn {
-  background-color: #f44336;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  cursor: pointer;
-  border-radius: 4px;
-}
-
-} */
-
-
-
-/* autodcr */
-
-
-#map {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 100vw;
-  z-index: 0;
-}
-
-#search_type {
-  /* position: absolute; */
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  /* z-index: 999; */
-
-}
-
-.multi-checkboxes_wrap[aria-selected="true"]:before {
-  content: "\f14a";
-}
-
-.form-control {
-  height: 30px;
-  padding: auto;
-}
-
-.accordion-button {
-  height: 30px;
-  font-size: 12px;
-}
-
-.form-select {
-  justify-content: center;
-  margin-left: -35px;
-  /* width: 50px; */
-}
-
-.accordion-body .form-control {
-  margin-left: -35px;
-}
-
-.accordion-button:hover {
-  background-color: #bbb;
-}
-
-.bg-transparent {
-  background-color: transparent !important;
-}
-
-/* Style for the select element */
-#search_type {
-  width: 90px;
-  border-radius: 10px;
-  padding: 5px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  background-color: #fff;
-}
-
-#sr_no {
-  width: 90px;
-  border-radius: 10px;
-  padding: 5px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  background-color: #fff;
-
-}
-
-.leaflet-touch .leaflet-control-layers,
-.leaflet-touch .leaflet-bar {
-  border: 2px solid rgba(0, 0, 0, 0.2);
-  /* background-clip: padding-box; */
-}
-
-
-
-#map-container {
-  position: absolute;
-  width: 100%;
-  height: 400px;
-  /* Adjust height as needed */
-}
-
-#search_type {
-  position: absolute;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 999;
-}
-
-
-
-#checkboxContainer {
-  gap: 1px;
-  position: absolute;
-  top: 20px;
-  left: 33%;
-  transform: translateX(-50%);
-  z-index: 999;
-  font-size: 8px;
-  height: auto;
-  max-height: 300px;
-  overflow: scroll;
-  scrollbar-width: thin;
-  width: 150px;
-  text-align: left;
-  background-color: white;
-  border: 1px solid #bbb;
-  border-radius: 10px;
-  padding: 10px 20px;
-}
-
-#checkboxContainer input[type="checkboxContainer"] {
-  padding: 5px;
-  /* margin-left: 5px; */
-}
-
-#checkboxContainer label {
-  font-size: 12px;
-  margin-left: 15px;
-  text-align: center;
-  padding: 15px 0px;
-}
-
 
 /* for button map start */
 .custom-button {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  bottom: -80px;
+  right: 80px;
   z-index: 1000; /* Ensure the button is above other map elements */
-  background-color: white;
-  border: 1px solid #ccc;
+  background-color: green;
   border-radius: 5px;
-  padding: 5px;
+  padding: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 5px 10px;
+  cursor: pointer;
+  border: 2px solid green;
 }
 
 .custom-button button {
-  background-color: #007bff;
+  background-color:green;
   color: white;
+  font-weight: bold;
+  font-size: 15px;
   border: none;
-  padding: 5px 10px;
-  cursor: pointer;
+ 
 }
 
-.custom-button button:hover {
-  background-color: #0056b3;
+.custom-button:hover, .custom-button button:hover {
+  background-color: green;
+  color: #f2f2f2;
 }
 
 /* for button map start */
@@ -365,77 +157,241 @@
 /* Upload button style */
 .custom-button1 {
   position: absolute;
-  top: 3%;
-  left: 60%;
+  top: 1.4%;
+  left: 90%;
   z-index: 1000;
   background-color: white;
-  border: 1px solid #62ed0c;
+  border: 2px solid #bbb;
   border-radius: 5px;
-  padding: 5px;
+  font-size:25px;
+  color: rgb(60, 60, 184);
+  padding: 5px 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-
-.custom-button1 .upload-btn {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-  display: inline-block;
-}
-
-.custom-button1 .upload-btn:hover {
-  background-color: #0056b3;
-}
-
 
 
 /* for add coordinates */
+.coordimg{
+  height: 30px;
+  width: 30px;
+ 
+}
 
+#toggleFormBtn{
+  border: none;
+ 
+}
 .custom-buttoncsv {
   position: absolute;
-  top:0%;
-  left: 50%;
+  top:1.4%;
+  left: 86%;
   z-index: 1000;
   background-color: white;
-  border: 1px solid #62ed0c;
+  border: 2px solid #bbb;
   border-radius: 5px;
-  padding: 5px;
+  padding: 8px 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-#formContainer {
-  margin-top: 20px;
+
+.form-modal {
+  width: 400px;
+  position: fixed;
+  top: 20%;
+  left: 73%;
+  /* transform: translate(-50%, -50%); */
+  transition: 0s;
+  background-color: white;
+  padding: 15px 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  z-index: 9999;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
 
-#coordinateTable {
-  width: 100%;
-  border-collapse: collapse;
-}
 
-#coordinateTable th,
-#coordinateTable td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: center;
-}
-
-#coordinateTable th {
-  background-color: #f2f2f2;
-}
-
-#addRowBtn {
-  margin-top: 10px;
-}
-
-.deleteRowBtn {
-  background-color: #f44336;
-  color: white;
+.close-btn {
+  position: absolute;
+  top: 0.2%;
+  right: -0.05%;
+  cursor: pointer;
   border: none;
+  background-color: transparent;
+}
+
+.subbtn{
+  margin-top: 10px;
+  background-color: green;
+  border: 2px solid green;
+  border-radius: 5px;
+  color: white;
+  padding: 5px;
+  font-size: 10PX;
+}
+.addbtn{
+  background-color: gray;
+  border: 2px solid gray;
+  border-radius: 5px;
+  color: white;
+  padding: 5px;
+  font-size: 10PX;
+}
+
+
+.coordinate-input {
+  width: 100%; /* Example width */
+  padding: 10px 20px; /* Example padding */
+  font-size: 10px;
+  border: 1px solid #ccc; /* Example border */
+  border-radius: 4px; /* Example border radius */
+  margin-right: 10px; /* Example margin */
+  /* Add more styling properties as needed */
+}
+
+
+ .deleteRowBtn {
+  background-color:transparent ;
+  font-size: 15px;
+  color:#f44336;
+  border-top: 1px solid #bbb;
+  border-bottom: 1px solid #bbb;
+  border-left: none;
+  border-right: none;
   padding: 5px 10px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   cursor: pointer;
   border-radius: 4px;
+}
+
+
+
+.multiselect-container {
+  width: 12%;
+  background-color: white;
+  position: relative;
+  cursor: pointer;
+}
+
+.multiselect-selected {
+  border: 1px solid #ccc;
+  padding: 5px;
+  margin-bottom: 5px;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.multiselect-options {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  z-index: 1000;
+  max-height: 150px;
+  overflow-y: auto;
+  width: 100%;
+}
+
+.multiselect-option {
+  padding: 5px;
+}
+
+.multiselect-option:hover {
+  background-color: #f0f0f0;
+}
+
+
+
+
+/* newly added for filter */
+/*  */
+
+
+
+/* .custom-button1 {
+  position: absolute;
+  top: 1.4%;
+  left: 90%;
+  z-index: 1000;
+  background-color: white;
+  border: 2px solid #bbb;
+  border-radius: 5px;
+  font-size:25px;
+  color: rgb(60, 60, 184);
+  padding: 5px 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+} */
+
+.noselect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.dropdown-container, .instructions {
+  position: absolute;
+  top: 1.4%;
+  left: 50%;
+  z-index: 1000;
+  width: 200px;
+  margin: 20px auto 0;
+  font-size: 14px;
+  font-family: sans-serif;
+  overflow: auto;
+}
+
+.instructions {
+  width: 100%;
+  text-align: center;
+}
+
+.dropdown-button {
+  float: left;
+  width: 100%;
+  background: whitesmoke;
+  padding: 10px 12px;
+
+  cursor: pointer;
+  border: 1px solid lightgray;
+  box-sizing: border-box;
+}
+
+.dropdown-label, .dropdown-quantity {
+  float: left;
+}
+
+.dropdown-quantity {
+  margin-left: 4px;
+}
+
+.fa-filter {
+  float: right;
+}
+
+.dropdown-list {
+  float: left;
+  width: 100%;
+  border: 1px solid lightgray;
+  border-top: none;
+  box-sizing: border-box;
+  padding: 10px 12px;
+}
+
+input[type="search"] {
+  padding: 5px 0;
+}
+
+ul {
+  margin: 10px 0;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+input[type="checkbox"] {
+  position: relative;
+  top: 2px;
 }

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Multi-Select Dropdown with Checkboxes</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  
+</style>
+</head>
+<body>
+
+    <div>
+        <select id="search_type" class="">
+          <option value="">Area</option>
+        </select>
+        <select id="sr_no" multiple>
+          <option value="">Select Gut No.</option>
+        </select>
+      </div>
+      
+      <script>
+        $("#search_type").change(function () {
+          var selectedValueVillage = $(this).val();
+          var Village_name = 'Village_Name'
+          let filters = `${Village_name} = '${selectedValueVillage}'`;
+      
+          FitbouCustomiseRevenue(filters);
+          Revenue_Layer.setParams({
+            CQL_FILTER: filters,
+            maxZoom: 19.5,
+            styles: "polygon"
+          });
+      
+          function getValues(callback) {
+            var geoServerURL =
+              "https://portal.geopulsea.com//geoserver/pmc/wms?service=WFS&version=1.1.0&request=GetFeature&typeName=Revenue&propertyName=Gut_No&outputFormat=application/json";
+      
+            if (filters) {
+              geoServerURL += "&CQL_FILTER=" + encodeURIComponent(filters);
+            }
+      
+            $.getJSON(geoServerURL, function (data) {
+              var gutValues = [];
+      
+              // Populate the array with gut numbers
+              $.each(data.features, function (index, feature) {
+                var gut = feature.properties.Gut_No;
+                gutValues.push(gut);
+              });
+      
+              // Call the callback function if provided
+              if (callback && typeof callback === "function") {
+                callback(gutValues);
+              }
+            });
+          }
+      
+          // Call getValues function and pass a callback function to handle gutValues
+          getValues(function (gutValues) {
+            // Populate select options
+            var selectElement = document.getElementById("sr_no");
+            selectElement.innerHTML = "<option value=''>Select Gut No.</option>";
+      
+            gutValues.forEach(function (value) {
+              var option = document.createElement("option");
+              option.value = value;
+              option.text = value;
+              selectElement.appendChild(option);
+            });
+          });
+        });
+      
+        $("#sr_no").change(function () {
+          var selectedValues = $(this).val() || [];
+          var cqlFilterGut = "";
+          if (selectedValues.length > 0) {
+            cqlFilterGut = "Gut_No IN (" + selectedValues.map(value => "'" + value + "'").join(",") + ")";
+          }
+          var filters = localStorage.getItem('cqlFilter');
+          var cqlFilter = "";
+          if (cqlFilterGut && filters) {
+            cqlFilter = "(" + cqlFilterGut + ") AND (" + filters + ")";
+          } else {
+            cqlFilter = cqlFilterGut || filters;
+          }
+          localStorage.setItem('cqlFilter', cqlFilter);
+      
+          // Use cqlFilter as needed, e.g., update the GeoServer layer
+          FitbouCustomiseRevenue(cqlFilter);
+          Revenue_Layer.setParams({
+            CQL_FILTER: cqlFilter,
+            maxZoom: 19.5,
+            styles: "polygon"
+          });
+        });
+      </script>
+      
+
+<script src="auto.js"></script>
+</body>
+</html>

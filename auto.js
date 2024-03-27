@@ -62,7 +62,29 @@ var Revenue_Layer = L.tileLayer
         opacity: 1,
     });
  
- 
+    var Boundary_Layer = L.tileLayer
+    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+        layers: "PMC_Boundary",
+        format: "image/png",
+        transparent: true,
+        tiled: true,
+        version: "1.1.0",
+        // attribution: "Revenue",
+        opacity: 1,
+    }).addTo(map);
+
+    var Village_Boundary = L.tileLayer
+    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+        layers: "Village_Boundary",
+        format: "image/png",
+        transparent: true,
+        tiled: true,
+        version: "1.1.0",
+        // attribution: "Revenue",
+        opacity: 1,
+    }).addTo(map);
+
+
 var WMSlayers = {
     "OSM": osm,
     "Esri": Esri_WorldImagery,
@@ -71,6 +93,9 @@ var WMSlayers = {
     Revenue: Revenue_Layer,
     PLU:PLU_Layer,
     DPRoad:DPRoad_Layer,
+    Boundary:Boundary_Layer,
+    Village:Village_Boundary
+ 
  
 };
  

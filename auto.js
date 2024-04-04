@@ -684,11 +684,12 @@ function savevalues() {
         $.ajax({
             type: "POST",
             url: "APIS/savevalues.php",
-            data: { coordinates: JSON.stringify(coordinates), 
+            contentType: "application/json",
+            data: JSON.stringify({ coordinates: coordinates, 
                     village_name:"sus",
                     gut_num:"12",
             
-            },
+            }),
             success: function(response) {
                 console.log("Coordinates saved successfully");
             },

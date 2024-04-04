@@ -3,51 +3,40 @@ require('config.php');
 
 header('Content-Type: application/json');
 
+
 try {
     if (!isset($pdo)) {
         throw new Exception("PDO connection not found. Please check your configuration.");
     }
 
-    $rawData = file_get_contents('php://input');
-    // $coordinates = json_decode($rawData, true);
-    // print_r($rawData); 
+    $rawData = json_decode(file_get_contents('php://input'), true);
+    $villageName = $rawData['village_name'] ?? null;
+    $gutNo = $rawData['gut_num'] ?? null;
+    $geometry = $rawData['coordinates'] ?? null;
 
-    // foreach ($coordinates as $coordinate) {
-        // Extract values from each coordinate
-        $villageName = isset($rawData['village_name']) ? $rawData['village_name'] : null;
-        print_r($villageName);
-        $gutNo = isset($rawData['gut_num']) ? $rawData['gut_num'] : null;
-        $geometry = isset($rawData['coordinates']) ? $rawData['coordinates'] : null;
+    
+    if ($geometry === null) {
+        throw new Exception("Geometry (coordinates) data is missing.");
+    }
 
-        // Prepare and execute the SQL query
-        $query = "INSERT INTO PlotBoundary (village_name, gut_no, geometry) VALUES (:villageName, :gutNo, ST_GeomFromGeoJSON(:geometry))";
-        $statement = $pdo->prepare($query);
-        $statement->bindParam(':villageName', $villageName);
-        $statement->bindParam(':gutNo', $gutNo);
-        $statement->bindParam(':geometry', $geometry);
-        $result = $statement->execute();
-        print_r($result);
+    $geoJSON = [
+        'type' => 'Polygon',
+        'coordinates' => [$geometry], 
+    ];
+    $geometryJSON = json_encode($geoJSON);
 
-        try {
-            // $stmt->execute();
-            $statement->execute();
-            // $lastInsertId = $pdo->lastInsertId();
-            //  echo json_encode(["message" => "Data successfully saved to the database", "lastInsertId" => $lastInsertId]);
-        } catch (PDOException $e) {
-            echo json_encode(["error" => $e->getMessage()]);
-            exit;
-        }
+    $query = "INSERT INTO PlotBoundary (village_name, gut_no, geometry) VALUES (:villageName, :gutNo, ST_GeomFromGeoJSON(:geometry))";
+    $statement = $pdo->prepare($query);
+    $statement->bindParam(':villageName', $villageName);
+    $statement->bindParam(':gutNo', $gutNo);
+    $statement->bindParam(':geometry', $geometryJSON);
 
-
-
-
-
-        if (!$result) {
-            throw new Exception("Failed to insert data into the database.");
-        }
-    // }
-
-    echo json_encode(['success' => true, 'message' => 'Coordinates saved successfully']);
+    if ($statement->execute()) {
+        
+        echo json_encode(['success' => true, 'message' => 'Coordinates saved successfully']);
+    } else {
+        throw new Exception("Failed to insert data into the database.");
+    }
 
 } catch (Exception $e) {
     echo json_encode(['error' => true, 'message' => $e->getMessage()]);

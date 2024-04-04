@@ -39,10 +39,21 @@
 
     <script>
         var map = L.map("map", {}).setView([18.52, 73.895], 12, L.CRS.EPSG4326);
+
+        
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 30,
+            maxZoom: 19,
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
+        });
+
+
+        var googleSat = L.tileLayer(
+    "http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}",
+    {
+        maxZoom: 20,
+        subdomains: ["mt0", "mt1", "mt2", "mt3"],
+    }
+).addTo(map);
 
         var Village_Boundary = L.tileLayer.wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
             layers: "Village_Boundary",
@@ -83,6 +94,134 @@
         });
         map.addControl(drawControl);
 
+       
+
+        function getClosestRoadPoint(latlng) {
+    var buffer = 10; // Buffer distance in meters
+    var clickedPoint = latlng;
+    var bufferedPoint = turf.buffer(turf.point([clickedPoint.lng, clickedPoint.lat]), buffer, {units: 'meters'});
+    var bbox = turf.bbox(bufferedPoint);
+    var url = 'https://portal.geopulsea.com/geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=pmc:Exist_Road&outputFormat=application/json&bbox=' + bbox.join(',') + ',EPSG:4326';
+
+    return new Promise((resolve, reject) => {
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                var lastPointMarker;
+                if (data.features && data.features.length > 0) {
+                    var geometry = data.features[0].geometry;
+                    var flattenedCoordinates = geometry.coordinates.reduce((acc, val) => acc.concat(val), []);
+                    var line = flattenedCoordinates.map(coord => L.latLng(coord[1], coord[0]));
+                    var closestPoint = L.GeometryUtil.closest(map, line,clickedPoint);
+                    
+                    lastPointMarker = L.circleMarker(closestPoint, { radius: 2.5, color: 'blue' });
+                    lastPointMarker.distance = turf.distance(turf.point([lastPointMarker.getLatLng().lng, lastPointMarker.getLatLng().lat]), turf.point([clickedPoint.lng, clickedPoint.lat]), {units: 'meters'});
+                    lastPointMarker.addTo(map);
+                }
+                resolve({ marker: lastPointMarker, distance: lastPointMarker ? lastPointMarker.distance : Infinity });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                reject(error);
+            });
+    });
+}
+
+map.on("draw:drawvertex", function (e) {
+    for (const key in e.layers._layers) {
+        if (e.layers._layers.hasOwnProperty(key)) {
+            const layer = e.layers._layers[key];
+            const originalLatlng = layer._latlng;
+            getClosestRoadPoint(originalLatlng).then(result => {
+                console.log(result.marker, "lastPointMarker");
+                if (result.marker && result.distance <= 20.0000) {
+                    console.log(result.marker.getLatLng(),"kkk");
+                    layer._latlng.lat = result.marker.getLatLng().lat;
+                    layer._latlng.lng = result.marker.getLatLng().lng;
+                }
+            });
+        }
+    }
+});
+
+
+
+
+
+
+
+//         map.on("draw:drawvertex", function (e) {
+
+
+//         /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//         var lastAddedLayer;
+// var lastPointMarker;
+
+        
+// map.on('mousemove', function (e) {
+//     var buffer = 10; // Buffer distance in meters
+//     var clickedPoint = e.latlng;
+//     var bufferedPoint = turf.buffer(turf.point([clickedPoint.lng, clickedPoint.lat]), buffer, {units: 'meters'});
+//     var bbox = turf.bbox(bufferedPoint);
+//     var url = 'https://portal.geopulsea.com/geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=pmc:Exist_Road&outputFormat=application/json&bbox=' + bbox.join(',') + ',EPSG:4326';
+
+//     fetch(url)
+//         .then(response => response.json())
+//         .then(data => {
+//             if (data.features && data.features.length > 0) {
+//                 if (lastAddedLayer) {
+//                     map.removeLayer(lastAddedLayer);
+//                 }
+//                 if (lastPointMarker) {
+//                     map.removeLayer(lastPointMarker);
+//                 }
+//                 var geometry = data.features[0].geometry;
+//                 var flattenedCoordinates = geometry.coordinates.reduce((acc, val) => acc.concat(val), []);
+//                 var line = flattenedCoordinates.map(coord => L.latLng(coord[1], coord[0]));
+//                 var closestPoint = L.GeometryUtil.closest(map, line,clickedPoint);
+                
+//                 var geojsonLayer = L.geoJSON(geometry, { radius: 2, color: 'red' }).addTo(map);
+//                 // geojsonLayer.addTo(map);
+//                 lastPointMarker = L.circleMarker(closestPoint, { radius: 2.5    , color: 'blue' }).addTo(map);
+//                 lastAddedLayer = geojsonLayer;
+//             }
+//         })
+//         .catch(error => {
+//             console.error('Error:', error);
+//         });
+// });
+
+
+
+//         //////////////////////////////////////////////////////////////////////////////////////////////////////
+            
+//             console.log(lastPointMarker,"lastClosestMarker");
+//             console.log(e.layers._layers, "e.layers._layers old")
+//             // const layersObject = e.layers._layers;
+//             for (const key in e.layers._layers) {
+//                 // console.log(key, "key")
+//                 if (e.layers._layers.hasOwnProperty(key)) {
+//                     const layer = e.layers._layers[key];
+//                     // const layerlastindex = e.layers._layers[key];
+//                     // const layerlastindex1 =  Object.keys(e.layers._layer).pop();
+//                     // console.log(layerlastindex, "layerlastindex")
+//                     const originalLatlng = layer._latlng.lat;
+//                     console.log(originalLatlng, "originalLatlng")
+
+//                     const options = { units: 'meters' };
+//                      const distance1 = turf.distance(turf.point([lastPointMarker.lat, lastPointMarker.lng]), turf.point([layer._latlng.lat, layer._latlng.lng]), options);
+//                      console.log(distance1,"distcance")
+//                      if (distance1 <= 10.0000){
+//                         layer._latlng.lat = lastClosestMarker.lat
+//                     layer._latlng.lng = lastClosestMarker.lng
+//                      }
+//                 }
+//             }
+//             console.log(e.layers._layers, "e.layers._layers new")
+//         });
+
+
         map.on('draw:created', function (e) {
             var layer = e.layer;
             console.log("heheeh")
@@ -97,77 +236,120 @@
             });
         });
 
-        // map.on('mousemove', function (e) {
-        //     // console.log(e, "yyy")
-        //     // layer.bindPopup( e.latlng);
-        //     var latlng = e.latlng;
-
-        //     var turfPoint = turf.point([latlng.lng, latlng.lat]);
-
-        //     // Create a buffer around the point with a radius of 100 meters
-        //     var buffered = turf.buffer(turfPoint, 0.1, { units: 'kilometers' });
-
-        //     // Get the bounding box of the buffered area
-        //     // Assuming bbox is the bounding box of the Village_Boundary layer
-        //     var bbox = turf.bbox(buffered);
-        //     var bboxString = bbox.join(',');
-        //     // var bounds = bbox.toBBoxString();
-        //     // Create a Leaflet rectangle using the bounding box
-
-        //     var rectangle = L.rectangle([
-        //         [bbox[1], bbox[0]],
-        //         [bbox[3], bbox[2]]
-        //     ], { color: 'red', weight: 2, fillOpacity: 0.2 });
-
-        //     var urls = "https://portal.geopulsea.com//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=AutoDCR:Village_Boundary"+"&propertyName=extension,geom&bbox="+bboxString +"&outputFormat=application/json";
-
-
-        //     $.getJSON(urls, function (data) {
-
-
-        //     if (data && data.features && data.features.length > 0) {
-        //         console.log(data);
-
-        //         var intersectedFeatures = [];
-        //         data.features.forEach(function (feature) {
-        //             var intersectedFeature = turf.intersect(feature, rectangle);
-        //             if (intersectedFeature && intersectedFeature.geometry.type !== 'GeometryCollection') {
-        //                 // Copy the properties from the original feature to the intersected feature
-        //                 intersectedFeature.properties = feature.properties;
-        //                 intersectedFeatures.push(intersectedFeature);
-        //             }
-        //         });
-        //         var intersectedLayer = L.geoJSON(intersectedFeatures, {
-        //             style: {
-        //                 color: 'red',
-        //                 weight: 2
-        //             }
-        //         });
-        //         intersectedLayer.addTo(map);
-        //         intersectedLayer.eachLayer(function (layer) {
-        //             var properties = layer.feature.properties;
-        //             var area = turf.area(layer.feature);
-        //             layer.bindPopup(`Area: ${area.toFixed(2)} sq meters<br>Properties: ${JSON.stringify(properties)}`);
-        //         });
 
 
 
-        //         var cqlFilter = 'INTERSECTS(geometry, ' + bboxString + ')';
-        //         Village_Boundary.setParams({
-        //              cql_filter: cqlFilter,
-        //              styles: "Highlight_polygon"
-        //              }).addTo(map);
 
-        //              FitbouCustomiseRevenue(cqlFilter)
 
-        //     }
-        //     else{
-        //         console.log("no data");
-        //     }
-        // });
 
-        // });
 
+
+
+
+
+
+
+
+        // here upto
+
+// var pointMarker = null; // Declare pointMarker as a global variable
+
+// // Define the function to handle the mousemove event
+// function handleMousemove(e) {
+//     var url = 'https://portal.geopulsea.com/geoserver/ows?service=WMS&version=1.1.1&request=GetFeatureInfo&transparent=true&format=image/png&info_format=application/json&srs=EPSG:4326&bbox=' + map.getBounds().toBBoxString() + '&width=' + map.getSize().x + '&height=' + map.getSize().y + '&layers=pmc:Exist_Road&query_layers=pmc:Exist_Road&feature_count=10&x=' + Math.round(e.containerPoint.x) + '&y=' + Math.round(e.containerPoint.y);
+
+//     if (url) {
+//         fetch(url)
+//             .then(response => response.json())
+//             .then(data => {
+//                 if (data.features && data.features.length > 0) {
+//                     var clickedPoint = e.latlng;
+                    
+//                     if (pointMarker) {
+//                             map.removeLayer(pointMarker);
+//                         }
+//                     var nearestBoundary = getNearestBoundary(data.features, clickedPoint);
+//                     pointMarker = L.circleMarker(nearestBoundary, { radius: 2.5, color: 'blue' }).addTo(map).bindPopup('Closest point on boundary');
+//                 }
+//             });
+//     }
+// }
+
+// map.on('mousemove', handleMousemove);
+// var lastClosestMarker = null;
+// function getNearestBoundary(features, clickedPoint) {
+    
+//     if (lastClosestMarker) {
+//                 map.removeLayer(lastClosestMarker);
+//             }
+//     features.forEach(function (feature) {
+//         var boundary = feature.geometry.coordinates[0];
+//         console.log(boundary,"boundary")
+//         var closestToBoundary = L.GeometryUtil.closest(map, boundary, [clickedPoint.lng, clickedPoint.lat]);
+//         console.log(closestToBoundary)
+//         lastClosestMarker = L.latLng(closestToBoundary.lng, closestToBoundary.lat);
+//         const options = { units: 'meters' };
+//         const distance1 = turf.distance(turf.point([closestToBoundary.lat, closestToBoundary.lng]), turf.point([clickedPoint.lng, clickedPoint.lat]), options);
+//         // console.log(distance1,"distance",closestToBoundary.distance,"closestToBoundary")
+//     });
+//     return lastClosestMarker;
+// }
+
+
+
+//         map.on("draw:drawvertex", function (e) {
+//             // Get the layers object
+//             console.log(lastClosestMarker,"lastClosestMarker");
+//             console.log(e.layers._layers, "e.layers._layers old")
+//             const layersObject = e.layers._layers;
+
+//             // checking distance
+          
+
+//             // Loop through each layer object
+//             for (const key in e.layers._layers) {
+//                 console.log(key, "key")
+//                 if (e.layers._layers.hasOwnProperty(key)) {
+//                     const layer = e.layers._layers[key];
+//                     const layerlastindex = e.layers._layers[key];
+//                     // const layerlastindex1 =  Object.keys(e.layers._layer).pop();
+//                     console.log(layerlastindex, "layerlastindex")
+//                     const originalLatlng = layer._latlng.lat;
+//                     console.log(originalLatlng, "originalLatlng")
+
+//                     const options = { units: 'meters' };
+//                      const distance1 = turf.distance(turf.point([lastClosestMarker.lat, lastClosestMarker.lng]), turf.point([layer._latlng.lat, layer._latlng.lng]), options);
+//                      console.log(distance1,"distcance")
+//                      if (distance1 <= 10.0000){
+//                         layer._latlng.lat = lastClosestMarker.lat
+//                     layer._latlng.lng = lastClosestMarker.lng
+//                      }
+//                 }
+//             }
+//             console.log(e.layers._layers, "e.layers._layers new")
+//         });
+
+
+//         map.on('draw:created', function (e) {
+//             var layer = e.layer;
+//             console.log("heheeh")
+//             drawnItems.addLayer(layer);
+//         });
+
+//         map.on('draw:edited', function (e) {
+//             var layers = e.layers;
+//             console.log("suyog")
+//             layers.eachLayer(function (layer) {
+//                 // Do whatever you need with the edited layers
+//             });
+//         });
+
+
+
+
+    
+
+// here upto
 
 
 
@@ -205,7 +387,7 @@
         //             .then(response => response.json())
         //             .then(data => {
         //                 if (data.features && data.features.length > 0) {
-           
+
         //                     var clickedPoint = e.latlng;
         //                     if (pointMarker) {
         //                         map.removeLayer(pointMarker);
@@ -232,43 +414,122 @@
         //     return lastClosestMarker
         // }
 
-        var pointMarker;
 
-map.on('mousemove', function (e) {
-    var url = 'https://portal.geopulsea.com/geoserver/ows?service=WMS&version=1.1.1&request=GetFeatureInfo&transparent=true&format=image/png&info_format=application/json&srs=EPSG:4326&bbox=' + map.getBounds().toBBoxString() + '&width=' + map.getSize().x + '&height=' + map.getSize().y + '&layers=pmc:Exist_Road&query_layers=pmc:Exist_Road&feature_count=10&x=' + Math.round(e.containerPoint.x) + '&y=' + Math.round(e.containerPoint.y);
 
-    if (url) {
-        // console.log(url)
-        fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                if (data.features && data.features.length > 0) {
-                    // console.log(data.features,"data.features")
-                    var clickedPoint = e.latlng;
-                    if (pointMarker) {
-                        map.removeLayer(pointMarker);
-                    }
-                    var nearestBoundary = getNearestBoundary(data.features, clickedPoint);
-                    pointMarker = L.circleMarker(nearestBoundary, { radius: 2.5, color: 'blue' }).addTo(map).bindPopup('Closest point on boundary');
-                }
-            });
-    }
-});
+// // Define the function to handle the mousemove event
+// var pointMarker = null; 
+// function handleMousemove(e) {
+//     // var pointMarker;
+//     var url = 'https://portal.geopulsea.com/geoserver/ows?service=WMS&version=1.1.1&request=GetFeatureInfo&transparent=true&format=image/png&info_format=application/json&srs=EPSG:4326&bbox=' + map.getBounds().toBBoxString() + '&width=' + map.getSize().x + '&height=' + map.getSize().y + '&layers=pmc:Exist_Road&query_layers=pmc:Exist_Road&feature_count=10&x=' + Math.round(e.containerPoint.x) + '&y=' + Math.round(e.containerPoint.y);
 
-var lastClosestMarker = null;
-function getNearestBoundary(features, clickedPoint) {
-    // Remove the last closest point marker if it exists
-    if (lastClosestMarker) {
-        map.removeLayer(lastClosestMarker);
-    }
-    features.forEach(function (feature) {
-        var boundary = feature.geometry.coordinates[0];
-        var closestToBoundary = L.GeometryUtil.closest(map, boundary, [clickedPoint.lng, clickedPoint.lat]);
-        var closestPoint = L.latLng(closestToBoundary.lng, closestToBoundary.lat);// Swap lng and lat
-        lastClosestMarker = closestPoint            
-    });
-    return lastClosestMarker
-}
+//     if (url) {
+//         fetch(url)
+//             .then(response => response.json())
+//             .then(data => {
+//                 if (data.features && data.features.length > 0) {
+//                     var clickedPoint = e.latlng;
+//                     if (pointMarker) {
+//                         map.removeLayer(pointMarker);
+//                     }
+//                     var nearestBoundary = getNearestBoundary(data.features, clickedPoint);
+//                     const options = { units: 'meters' };
+//                     const distance = turf.distance(turf.point([nearestBoundary.lng, nearestBoundary.lat]), turf.point([clickedPoint.lng, clickedPoint.lat]), options);
+//                     if (distance <= 10.00) {
+//                         pointMarker = L.circleMarker(nearestBoundary, { radius: 2.5, color: 'blue' }).addTo(map).bindPopup('Closest point on boundary');
+//                     }
+//                     else {
+//                         if (pointMarker) {
+//                             map.removeLayer(pointMarker);
+//                             pointMarker = null; // Reset pointMarker to null
+//                         }
+//                     }
+//                 }
+//             });
+//     }
+// }
+
+// // Attach the mousemove event listener to the map
+// map.on('mousemove', handleMousemove);
+
+// // Define the function to get the nearest boundary
+// function getNearestBoundary(features, clickedPoint) {
+//     var lastClosestMarker = null;
+//     features.forEach(function (feature) {
+//         var boundary = feature.geometry.coordinates[0];
+//         var closestToBoundary = L.GeometryUtil.closest(map, boundary, [clickedPoint.lng, clickedPoint.lat]);
+//         var closestPoint = L.latLng(closestToBoundary.lng, closestToBoundary.lat);
+//         lastClosestMarker = closestPoint
+//     });
+//     return lastClosestMarker
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        // map.on('mousemove', function (e) {
+        //     var pointMarker;
+        //     var url = 'https://portal.geopulsea.com/geoserver/ows?service=WMS&version=1.1.1&request=GetFeatureInfo&transparent=true&format=image/png&info_format=application/json&srs=EPSG:4326&bbox=' + map.getBounds().toBBoxString() + '&width=' + map.getSize().x + '&height=' + map.getSize().y + '&layers=pmc:Exist_Road&query_layers=pmc:Exist_Road&feature_count=10&x=' + Math.round(e.containerPoint.x) + '&y=' + Math.round(e.containerPoint.y);
+
+        //     if (url) {
+        //         // console.log(url)
+        //         fetch(url)
+        //             .then(response => response.json())
+        //             .then(data => {
+        //                 if (data.features && data.features.length > 0) {
+        //                     // console.log(data.features,"data.features")
+        //                     var clickedPoint = e.latlng;
+        //                     if (pointMarker) {
+        //                         map.removeLayer(pointMarker);
+        //                     }
+        //                     var nearestBoundary = getNearestBoundary(data.features, clickedPoint);
+        //                     console.log(nearestBoundary, "nearestBoundary", clickedPoint)
+        //                     const options = { units: 'meters' };
+        //                     const distance = turf.distance(turf.point([nearestBoundary.lng, nearestBoundary.lat]), turf.point([clickedPoint.lng, clickedPoint.lat]), options);
+        //                     console.log(distance, "distance")
+        //                     if (distance <= 10.00) {
+        //                         console.log("passed")
+        //                         pointMarker = L.circleMarker(nearestBoundary, { radius: 2.5, color: 'blue' }).addTo(map).bindPopup('Closest point on boundary');
+        //                     }
+        //                     else {
+        //                         if (pointMarker) {
+        //                             map.removeLayer(pointMarker);
+        //                             pointMarker = null; // Reset pointMarker to null
+        //                         }
+        //                     }
+        //                 }
+        //             });
+        //     }
+        // });
+
+        // var lastClosestMarker = null;
+        // function getNearestBoundary(features, clickedPoint) {
+        //     // Remove the last closest point marker if it exists
+        //     if (lastClosestMarker) {
+        //         map.removeLayer(lastClosestMarker);
+        //     }
+        //     features.forEach(function (feature) {
+        //         var boundary = feature.geometry.coordinates[0];
+        //         var closestToBoundary = L.GeometryUtil.closest(map, boundary, [clickedPoint.lng, clickedPoint.lat]);
+        //         var closestPoint = L.latLng(closestToBoundary.lng, closestToBoundary.lat);// Swap lng and lat
+        //         lastClosestMarker = closestPoint
+        //     });
+        //     return lastClosestMarker
+        // }
 
 
 

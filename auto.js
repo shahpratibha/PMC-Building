@@ -462,9 +462,7 @@ function processCSV(kmlContent) {
     }
 }
 
-
 // for adding coordinates manulay
-
 
 
 document.getElementById('toggleFormBtn').addEventListener('click', function () {
@@ -486,8 +484,6 @@ addCoordinateRow(table);
 document.getElementById('addRowBtn').addEventListener('click', function () {
     addCoordinateRow(table);
 });
-
-
 
 
 
@@ -609,7 +605,7 @@ function addCoordinateRow(table) {
 
 
     // latitudeSecondsInput.style.marginRight = '5px'; 
-        longitudeDegreesCell.appendChild(longitudeDegreesInput);
+    longitudeDegreesCell.appendChild(longitudeDegreesInput);
     longitudeMinutesCell.appendChild(longitudeMinutesInput);
     longitudeSecondsCell.appendChild(longitudeSecondsInput);
     latitudeDegreesCell.appendChild(latitudeDegreesInput);
@@ -684,9 +680,28 @@ function savevalues() {
         var propertyName = "village_name,TPS_Name,Gut_No,geom";
         var outputFormat = "application/json";
         IntersectAreaWithPolygon(pp, layers, url, propertyName, bounds.toBBoxString(), outputFormat)
+        console.log(coordinates,"coordinates")
+        $.ajax({
+            type: "POST",
+            url: "APIS/savevalues.php",
+            data: { coordinates: JSON.stringify(coordinates), 
+                    village_name:"sus",
+                    gut_num:"12",
+            
+            },
+            success: function(response) {
+                console.log("Coordinates saved successfully");
+            },
+            error: function(xhr, status, error) {
+                console.error("Failed to save coordinates:", error);
+            }
+        });
+
+
+
         localStorage.setItem('coordinates', JSON.stringify(coordinates));
     });
-    window.location.href = 'data.html';
+    // window.location.href = 'data.html';
 }
 
 function IntersectAreaWithPolygon(drawnPolygon, layers, url, propertyName, bounds, outputFormat) {

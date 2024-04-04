@@ -7,9 +7,71 @@
   z-index: 0;
 }
 
+.logopng{
+  height: 50px;
+  width:50px;
+  /* border: 2px solid #bbb; */
+  border-radius: 10px;
+  /* background-color: white; */
+  padding: 5px;
+ position: absolute;
+ z-index: 9999;
+ top: 1%;
+ left: 1%;
+}
 
 
+.geopulseaname{
+  font-size: 10px;
+  color: darkblue;
+  position: absolute;
+  z-index: 99999;
+  bottom: -1.5%;
+  right: 5px;
+  font-weight: bold;
+  /* background-color: rgba(173, 216, 230, 0.5); */
+}
 
+.leaflet-control-zoom{
+  position: relative;
+  right: 20px;
+  bottom: 25px;
+  border: 1px solid;
+}
+
+
+/* .leaflet-draw-toolbar .leaflet-bar .leaflet-draw-toolbar-top.leaflet-draw-draw-circlemarker{
+  display: none;
+} */
+
+
+.leaflet-draw-draw-polygon:before {
+  /* content: url('png/006-drawing.png'); */
+  /* width: 2% !important;
+  height: 2% !important; */
+  /* Optionally, adjust other styles */
+}
+
+/* .leaflet-draw-draw-polygon:before {
+  content: url('png/006-drawing.png');
+  background-size: cover; 
+} */
+.leaflet-draw-toolbar {
+  
+  /* content: url('png/006-drawing.png');
+   width: 24px;
+  height: 24px;  */
+  position: relative;
+  top: 60px;
+}
+/* .leaflet-draw-draw-circlemarker{
+  display: none;
+} */
+
+.leaflet-container .leaflet-control-attribution {
+    
+  display: none;
+}
 /* autodcr */
 
 
@@ -71,7 +133,7 @@
 /* for button map start */
 .custom-button {
   position: absolute;
-  bottom: -80px;
+  bottom: -50px;
   right: 80px;
   z-index: 1000; /* Ensure the button is above other map elements */
   background-color: green;
@@ -101,33 +163,38 @@
 
 
 /* Upload button style */
-.custom-button1 {
+.custom-button1{
+
   position: absolute;
-  top: 1.4%;
-  left: 89%;
+  top: 3.1%;
+  left: 88%;
   z-index: 1000;
-  background-color: white;
   border: 2px solid #3c3cb8;
   border-radius: 5px;
-  font-size:25px;
   color: #3c3cb8;
+  background-color: white;
+  font-size:17px;
   padding: 3px 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
 
-.coordimg img {
+}
+#coordinateTable{
+  margin-bottom: 5%;
+}
+.coordimg  {
   position: absolute;
-  top: 1.4%;
+  top: 3.1%;
   left:85%;
   z-index: 1000;
-  width: 45px;
-  height: 45px;
+  width: 34px;
+  height: 34px;
   background-color: white;
   border: 2px solid #3c3cb8;
   border-radius: 5px;
-  font-size:25px;
+  font-size:15px;
   color: #3c3cb8;
-  padding: 5px 10px;
+  font-weight: bold;
+  /* padding: 5px 10px; */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -140,20 +207,21 @@
 
 .custom-buttoncsv {
   position: absolute;
-  top:1.4%;
+  top:3%;
   left: 77%;
   z-index: 1000;
   background-color: white;
   border: 2px solid #3c3cb8;
   /* border: none; */
-  border-radius: 5px;
-  padding: 8px 5px;
+  border-radius: 10px;
+  padding: px 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 35px;
 }
 
 
 .form-modal {
-  width: 400px;
+  width: 370px;
   position: fixed;
   top: 10%;
   left: 63%;
@@ -197,13 +265,14 @@
   font-size: 10PX;
 }
 .addbtn{
-  background-color: white;
+  background-color:transparent;
   border: 2px solid#3c3cb8;
   border-radius: 5px;
   font-weight: bold;
   color: #171717cf;
-  padding: 5px;
+  padding: 5px 15px;
   font-size: 10PX;
+  
 }
 
 
@@ -220,13 +289,19 @@
 
  .deleteRowBtn {
   background-color:transparent ;
-  font-size: 15px;
+  position: relative;
+  top:15px;
+  right: 10%;
+  z-index: 99999;
+  font-size: 14px;
   color:#f44336;
-  border-top: 1px solid #3c3cb8;
-  border-bottom: 1px solid #3c3cb8;
+  border-top: 2px solid #3c3cb8;
+  border-bottom: 2px solid #3c3cb8;
   border-left: none;
   border-right: none;
-  padding: 5px 10px;
+  padding: 2px 10px;
+  margin-top:10%;
+  margin-left: -280%;
   text-align: center;
   text-decoration: none;
   display: inline-block;

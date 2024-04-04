@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="libs/Leaflet.MousePosition-master/src/L.Control.MousePosition.css">
     <link rel="stylesheet" href="libs/polyline-measure/line-measure.css">
     <link rel="stylesheet" href="libs/leaflet-measure-master/leaflet-measure.css">
-    <link rel="stylesheet" href="libs/leaflet-wms-legend/leaflet.wmslegend.css">
+    <!-- <link rel="stylesheet" href="libs/leaflet-wms-legend/leaflet.wmslegend.css"> -->
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet-draw/dist/leaflet.draw.css" />
 
@@ -33,7 +33,7 @@
 <body>
 
     <header class="header justify-content-between bg-transparent" id="header">
-        <h5>Geopulse</h5>
+        <img src="png/pmcjpeg.png" alt="" class="logopng" >
 
         <div>
             <select id="search_type" class="">
@@ -59,7 +59,7 @@
                 <label for="fileInput" class="upload-btn"><i class="fa-solid fa-file-arrow-up"></i></label>
             </div>
             <button class="coordimg">
-               <img src="png/letter-i-icon-png-3.png" alt="">
+                <i class="fa-solid fa-info"></i>
             </button>
 
            
@@ -93,6 +93,7 @@
 
     <div id="content">
         <div id="map"></div>
+        <p class="geopulseaname">@GeoPulse Analytics</p>
     </div>
 
 
@@ -112,7 +113,7 @@
     <script src="libs/Leaflet.MousePosition-master/src/L.Control.MousePosition.js"></script>
     <script src="libs/polyline-measure/line-measure.js"></script>
     <script src="libs/leaflet-measure-master/leaflet-measure.js"></script>
-    <script src="libs/leaflet-wms-legend/leaflet.wmslegend.js"></script>
+    <!-- <script src="libs/leaflet-wms-legend/leaflet.wmslegend.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6.3.0/turf.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.0/html2canvas.min.js"></script>
@@ -129,6 +130,7 @@
 
     <script src="select2.js"></script>
     <script src="auto.js"></script>
+    <script src="js/legend.js"></script>
 
 
 

@@ -3,21 +3,8 @@ var map, geojson;
 const API_URL = "http://localhost/autodcr/";
 // const API_URL = "http://localhost/PMC-Project/";
 
-// Add Basemap
-var map = L.map("map", {
-        center:[18.52, 73.89],
-        zoom: 11,
-        minZoom: 10,
-        maxZoom: 18,
-        boxZoom: true,
-        trackResize: true,
-        wheelPxPerZoomLevel: 40,
-        zoomAnimation: true,
-        
-});
-
-
-// var map = L.map("map", {}).setView([18.52, 73.895], 12, L.CRS.EPSG4326);
+//Add Basemap
+var map = L.map("map", {}).setView([18.52, 73.895], 12, L.CRS.EPSG4326);
 
 var googleSat = L.tileLayer(
     "http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}",
@@ -28,16 +15,12 @@ var googleSat = L.tileLayer(
 );
 
 var osm = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    // attribution:
-    //   '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  
 }).addTo(map);
 
 var Esri_WorldImagery = L.tileLayer(
     "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-    {
-        // attribution:
-        //   "Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community",
-    }
+    {   }
 );
 var baseLayers = {};
 
@@ -139,7 +122,7 @@ L.control.zoom({
 }).addTo(map);
 
 
-var drawnItems = new L.FeatureGroup().addTo(map);
+var drawnItems = new L.FeatureGroup();
 map.addLayer(drawnItems);
 
 var drawControl = new L.Control.Draw({
@@ -157,12 +140,10 @@ var drawControl = new L.Control.Draw({
             }),
         },
 
-
         polyline: false,
         rectangle: false,
         circle: false,
-        marker: false,
-        // circlemarker:false,   
+        marker: false
     }
 });
 map.addControl(drawControl);
@@ -463,7 +444,7 @@ function processCSV(kmlContent) {
 }
 
 
-// for adding coordinates manulay
+// // for adding coordinates manulay
 
 
 
@@ -488,139 +469,62 @@ document.getElementById('addRowBtn').addEventListener('click', function () {
 });
 
 
-
-
-
-var drawnPolygons = {};
-
+// -------------------------------------------------
+// Function to add a new coordinate row
 function addCoordinateRow(table) {
     var row = table.insertRow();
-    var longitudeDegreesCell = row.insertCell();
-    var longitudeMinutesCell = row.insertCell();
-    var longitudeSecondsCell = row.insertCell();
-    var latitudeDegreesCell = row.insertCell();
-    var latitudeMinutesCell = row.insertCell();
-    var latitudeSecondsCell = row.insertCell();
+    var latitudeCell = row.insertCell();
+    var longitudeCell = row.insertCell();
     var actionCell = row.insertCell();
-// degreee-----------------------------------
-    var longitudeDegreesInput = document.createElement('input');
-    longitudeDegreesInput.setAttribute('type', 'number');
-    longitudeDegreesInput.setAttribute('placeholder', '73°');
-    longitudeDegreesInput.setAttribute('name', 'longitudeDegrees[]');
-    // longitudeDegreesInput.setAttribute('readonly', 'readonly'); 
-    longitudeDegreesInput.value = '73'; 
-    longitudeDegreesInput.style.width = '50px'; 
-    longitudeDegreesInput.style.position = 'absolute'; 
-    longitudeDegreesInput.style.left = '5%';
-    // longitudeDegreesInput.style.marginRight = '5px';
-    longitudeDegreesInput.style.borderBottomLeftRadius = '5px';
-    longitudeDegreesInput.style.borderTopLeftRadius = '5px';
-    longitudeDegreesInput.style.borderTop = '2px solid #3c3cb8'; 
-    longitudeDegreesInput.style.borderLeft = '2px solid #3c3cb8'; 
-    longitudeDegreesInput.style.borderBottom = '2px solid #3c3cb8'; 
-    longitudeDegreesInput.style.borderRight = '2px solid  #3c3cb8'; 
 
+    var latitudeDegreeInput = document.createElement('input');
+    latitudeDegreeInput.setAttribute('type', 'text');
+    latitudeDegreeInput.setAttribute('placeholder', 'Degree');
+    latitudeDegreeInput.setAttribute('name', 'latitudeDegree[]');
+    latitudeDegreeInput.classList.add('coordinate-input');
 
+    var latitudeMinuteInput = document.createElement('input');
+    latitudeMinuteInput.setAttribute('type', 'text');
+    latitudeMinuteInput.setAttribute('placeholder', 'Minute');
+    latitudeMinuteInput.setAttribute('name', 'latitudeMinute[]');
+    latitudeMinuteInput.classList.add('coordinate-input');
 
-// minutes--------------------------------------------------
-    var longitudeMinutesInput = document.createElement('input');
-    longitudeMinutesInput.setAttribute('type', 'number');
-    longitudeMinutesInput.setAttribute('placeholder', '51′');
-    longitudeMinutesInput.setAttribute('name', 'longitudeMinutes[]');
-    longitudeMinutesInput.style.width = '50px'; 
-    longitudeMinutesInput.style.position = 'absolute';
-    longitudeMinutesInput.style.left = '16%'; 
-    // longitudeMinutesInput.style.marginRight = '5px';
-    longitudeMinutesInput.style.borderTop = '2px solid  #3c3cb8';
-    longitudeMinutesInput.style.borderBottom = '2px solid  #3c3cb8'; 
-    longitudeMinutesInput.style.borderLeft = '2px solid  #bbb'; 
-    longitudeMinutesInput.style.borderRight = '2px solid  #bbb'; 
+    var latitudeSecondInput = document.createElement('input');
+    latitudeSecondInput.setAttribute('type', 'text');
+    latitudeSecondInput.setAttribute('placeholder', 'Second');
+    latitudeSecondInput.setAttribute('name', 'latitudeSecond[]');
+    latitudeSecondInput.classList.add('coordinate-input');
 
+    latitudeCell.appendChild(latitudeDegreeInput);
+    latitudeCell.appendChild(latitudeMinuteInput);
+    latitudeCell.appendChild(latitudeSecondInput);
 
-// second--------------------------------------------------------------
-    var longitudeSecondsInput = document.createElement('input');
-    longitudeSecondsInput.setAttribute('type', 'number');
-    longitudeSecondsInput.setAttribute('placeholder', '24.43″');
-    longitudeSecondsInput.setAttribute('name', 'longitudeSeconds[]');
-    longitudeSecondsInput.setAttribute('step', 'any'); 
-    longitudeSecondsInput.style.width = '65px'; 
-    longitudeSecondsInput.style.position = 'absolute'; 
-    longitudeSecondsInput.style.left = '28%'; 
-    // longitudeSecondsInput.style.marginRight = '5px'; 
-    longitudeSecondsInput.style.borderTop = '2px solid  #3c3cb8';
-    longitudeSecondsInput.style.borderBottom = '2px solid #3c3cb8';
-    longitudeSecondsInput.style.borderRight = '2px solid #3c3cb8'; 
-    longitudeSecondsInput.style.borderLeft = '2px solid  #bbb'; 
-    longitudeSecondsInput.style.borderTopRightRadius = '5px'; 
-    longitudeSecondsInput.style.borderBottomRightRadius = '5px'; 
+    var longitudeDegreeInput = document.createElement('input');
+    longitudeDegreeInput.setAttribute('type', 'text');
+    longitudeDegreeInput.setAttribute('placeholder', 'Degree');
+    longitudeDegreeInput.setAttribute('name', 'longitudeDegree[]');
+    longitudeDegreeInput.classList.add('coordinate-input');
 
+    var longitudeMinuteInput = document.createElement('input');
+    longitudeMinuteInput.setAttribute('type', 'text');
+    longitudeMinuteInput.setAttribute('placeholder', 'Minute');
+    longitudeMinuteInput.setAttribute('name', 'longitudeMinute[]');
+    longitudeMinuteInput.classList.add('coordinate-input');
 
-// latdegree----------------------
-    
-    var latitudeDegreesInput = document.createElement('input');
-    latitudeDegreesInput.setAttribute('type', 'number');
-    latitudeDegreesInput.setAttribute('placeholder', '18°');
-    latitudeDegreesInput.setAttribute('name', 'latitudeDegrees[]');
-    latitudeDegreesInput.setAttribute('readonly', 'readonly'); 
-    latitudeDegreesInput.value = '18'; 
-    latitudeDegreesInput.style.width = '50px'; 
-    latitudeDegreesInput.style.position = 'absolute'; 
-    latitudeDegreesInput.style.left = '46%'; 
-    // latitudeDegreesInput.style.marginRight = '15px'; 
-    latitudeDegreesInput.style.borderBottomLeftRadius = '5px';
-    latitudeDegreesInput.style.borderTopLeftRadius = '5px';
-    latitudeDegreesInput.style.borderTop = '2px solid #3c3cb8'; 
-    latitudeDegreesInput.style.borderLeft = '2px solid #3c3cb8'; 
-    latitudeDegreesInput.style.borderBottom = '2px solid #3c3cb8'; 
-    latitudeDegreesInput.style.borderRight = '2px solid  #3c3cb8'; 
-    
-    // latMinute----------------------------
+    var longitudeSecondInput = document.createElement('input');
+    longitudeSecondInput.setAttribute('type', 'text');
+    longitudeSecondInput.setAttribute('placeholder', 'Second');
+    longitudeSecondInput.setAttribute('name', 'longitudeSecond[]');
+    longitudeSecondInput.classList.add('coordinate-input');
 
-    var latitudeMinutesInput = document.createElement('input');
-    latitudeMinutesInput.setAttribute('type', 'number');
-    latitudeMinutesInput.setAttribute('placeholder', '51′');
-    latitudeMinutesInput.setAttribute('name', 'latitudeMinutes[]');
-    latitudeMinutesInput.style.width = '45px'; 
-    latitudeMinutesInput.style.position = 'absolute'; 
-    latitudeMinutesInput.style.left = '55%';
-    latitudeMinutesInput.style.borderTop = '2px solid  #3c3cb8';
-    latitudeMinutesInput.style.borderBottom = '2px solid  #3c3cb8'; 
-    latitudeMinutesInput.style.borderLeft = '2px solid  #bbb'; 
-    latitudeMinutesInput.style.borderRight = '2px solid  #3c3cb8';
+    longitudeCell.appendChild(longitudeDegreeInput);
+    longitudeCell.appendChild(longitudeMinuteInput);
+    longitudeCell.appendChild(longitudeSecondInput);
 
-
-    // latsecond-----------------------------------------
-    
-    var latitudeSecondsInput = document.createElement('input');
-    latitudeSecondsInput.setAttribute('type', 'number');
-    latitudeSecondsInput.setAttribute('placeholder', '24.43″');
-    latitudeSecondsInput.setAttribute('name', 'latitudeSeconds[]');
-    latitudeSecondsInput.setAttribute('step', 'any'); 
-    latitudeSecondsInput.style.width = '65px'; 
-    latitudeSecondsInput.style.position = 'absolute'; 
-    latitudeSecondsInput.style.left = '65%';
-    latitudeSecondsInput.style.borderTop = '2px solid  #3c3cb8';
-    latitudeSecondsInput.style.borderBottom = '2px solid #3c3cb8';
-    latitudeSecondsInput.style.borderRight = '2px solid #3c3cb8'; 
-    latitudeSecondsInput.style.borderLeft = '2px solid  #bbb'; 
-    latitudeSecondsInput.style.borderTopRightRadius = '5px'; 
-    latitudeSecondsInput.style.borderBottomRightRadius = '5px'; 
-  
-
-
-    // latitudeSecondsInput.style.marginRight = '5px'; 
-        longitudeDegreesCell.appendChild(longitudeDegreesInput);
-    longitudeMinutesCell.appendChild(longitudeMinutesInput);
-    longitudeSecondsCell.appendChild(longitudeSecondsInput);
-    latitudeDegreesCell.appendChild(latitudeDegreesInput);
-    latitudeMinutesCell.appendChild(latitudeMinutesInput);
-    latitudeSecondsCell.appendChild(latitudeSecondsInput);
-       
-    
     actionCell.innerHTML = '<button type="button" class="deleteRowBtn"><i class="fa-solid fa-trash-can"></i></button>';
-    // Add event istener to delete button
+
+    // Add event listener to delete button
     var deleteBtn = actionCell.querySelector('.deleteRowBtn');
-    
     deleteBtn.addEventListener('click', function () {
         row.remove();
     });
@@ -632,19 +536,81 @@ document.getElementById('coordinateForm').addEventListener('submit', function (e
     var coordinates = [];
 
     // Process form data here
-    formData.getAll('longitudeDegrees[]').forEach(function (longitudeDegrees, index) {
-        var longitudeMinutes = formData.getAll('longitudeMinutes[]')[index];
-        var longitudeSeconds = formData.getAll('longitudeSeconds[]')[index];
-        var latitudeDegrees = formData.getAll('latitudeDegrees[]')[index];
-        var latitudeMinutes = formData.getAll('latitudeMinutes[]')[index];
-        var latitudeSeconds = formData.getAll('latitudeSeconds[]')[index];
+    formData.getAll('latitudeDegree[]').forEach(function (latitudeDegree, index) {
+        var latitudeMinute = formData.getAll('latitudeMinute[]')[index];
+        var latitudeSecond = formData.getAll('latitudeSecond[]')[index];
+        var longitudeDegree = formData.getAll('longitudeDegree[]')[index];
+        var longitudeMinute = formData.getAll('longitudeMinute[]')[index];
+        var longitudeSecond = formData.getAll('longitudeSecond[]')[index];
+        
+        var decimalLatitude = convertToDecimalDegree(parseFloat(latitudeDegree), parseFloat(latitudeMinute), parseFloat(latitudeSecond));
+        var decimalLongitude = convertToDecimalDegree(parseFloat(longitudeDegree), parseFloat(longitudeMinute), parseFloat(longitudeSecond));
+        
+        coordinates.push([decimalLatitude, decimalLongitude]);
+    });
 
-        // Parse DMS strings into decimal degrees
-        var parsedLongitude = parseDMS(longitudeDegrees, longitudeMinutes, longitudeSeconds);
-        var parsedLatitude = parseDMS(latitudeDegrees, latitudeMinutes, latitudeSeconds);
+    console.log(coordinates, ",coordinates");
+    // Add your remaining code for handling coordinates here
+});
 
-        // Push the coordinates to the array
-        coordinates.push([parsedLatitude, parsedLongitude]);
+// Function to convert degree-minute-second to decimal degree
+function convertToDecimalDegree(degree, minute, second) {
+    var sign = degree < 0 ? -1 : 1;
+    return sign * (Math.abs(degree) + minute / 60 + second / 3600);
+}
+
+// Initialize by showing one row
+var table = document.getElementById('coordinateTable');
+addCoordinateRow(table);
+
+// Event listener for adding more rows
+document.getElementById('addRowBtn').addEventListener('click', function () {
+    addCoordinateRow(table);
+});
+
+// ------------------------------------------------------------
+// // Function to add a new coordinate row
+// function addCoordinateRow(table) {
+//     var row = table.insertRow();
+//     var longitudeCell = row.insertCell();
+//     var latitudeCell = row.insertCell();
+//     var actionCell = row.insertCell();
+
+//     var longitudeInput = document.createElement('input');
+//     longitudeInput.setAttribute('type', 'text');
+//     longitudeInput.setAttribute('placeholder', '73.856785778');
+//     longitudeInput.setAttribute('name', 'longitude[]');
+//     longitudeInput.classList.add('coordinate-input'); // Add CSS class to input
+
+//     var latitudeInput = document.createElement('input');
+//     latitudeInput.setAttribute('type', 'text');
+//     latitudeInput.setAttribute('placeholder', '18.856785778');
+//     latitudeInput.setAttribute('name', 'latitude[]');
+//     latitudeInput.classList.add('coordinate-input'); // Add CSS class to input
+
+//     longitudeCell.appendChild(longitudeInput);
+//     latitudeCell.appendChild(latitudeInput);
+
+//     actionCell.innerHTML = '<button type="button" class="deleteRowBtn"><i class="fa-solid fa-trash-can"></i></button>';
+
+//     // Add event listener to delete button
+//     var deleteBtn = actionCell.querySelector('.deleteRowBtn');
+//     deleteBtn.addEventListener('click', function () {
+//         row.remove();
+//     });
+// }
+
+// // 
+
+document.getElementById('coordinateForm').addEventListener('submit', function (event) {
+    event.preventDefault();
+    var formData = new FormData(this);
+    var coordinates = [];
+
+    // Process form data here
+    formData.getAll('longitude[]').forEach(function (longitude, index) {
+        var latitude = formData.getAll('latitude[]')[index];
+        coordinates.push([parseFloat(latitude), parseFloat(longitude)]);
     });
 
     console.log(coordinates, ",coordinates");
@@ -663,21 +629,21 @@ document.getElementById('coordinateForm').addEventListener('submit', function (e
 
         console.log(drawnPolygons, "drawnPolygons", "polygonCounter");
     }
-});
 
-// Function to parse DMS format to decimal degrees
-function parseDMS(degrees, minutes, seconds) {
-    return parseFloat(degrees) + parseFloat(minutes) / 60 + parseFloat(seconds) / 3600;
-}
+
+});
 
 function savevalues() {
     console.log(drawnPolygons, "drawnPolygons")
     Object.keys(drawnPolygons).forEach(function (polygonId) {
+        // checkBoxGutVillage();
         var coordinates = drawnPolygons[polygonId];
+        console.log(coordinates, "cordinates")
         var pp = turf.polygon(coordinates);
         L.geoJSON(pp).addTo(map)
         var bounds = L.geoJSON(pp).getBounds();
         map.fitBounds(bounds);
+        console.log(bounds)
 
         var layers = ["AutoDCR:Revenue_1"];
         var url = "https://portal.geopulsea.com//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=";
@@ -685,9 +651,16 @@ function savevalues() {
         var outputFormat = "application/json";
         IntersectAreaWithPolygon(pp, layers, url, propertyName, bounds.toBBoxString(), outputFormat)
         localStorage.setItem('coordinates', JSON.stringify(coordinates));
+
+
+
     });
     window.location.href = 'data.html';
-}
+
+    // alert("heheeh");
+};
+
+
 
 function IntersectAreaWithPolygon(drawnPolygon, layers, url, propertyName, bounds, outputFormat) {
     layers.forEach(function (layerName) {
@@ -704,6 +677,7 @@ function IntersectAreaWithPolygon(drawnPolygon, layers, url, propertyName, bound
                 data.features.forEach(function (feature) {
                     var intersectedFeature = turf.intersect(feature, drawnPolygon);
                     if (intersectedFeature && intersectedFeature.geometry.type !== 'GeometryCollection') {
+                        // Copy the properties from the original feature to the intersected feature
                         intersectedFeature.properties = feature.properties;
                         intersectedFeatures.push(intersectedFeature);
                     }
@@ -721,8 +695,10 @@ function IntersectAreaWithPolygon(drawnPolygon, layers, url, propertyName, bound
                     layer.bindPopup(`Area: ${area.toFixed(2)} sq meters<br>Properties: ${JSON.stringify(properties)}`);
                 });
 
+                // Log the properties of each intersected feature
                 intersectedFeatures.forEach(function (feature) {
                     var properties = feature.properties;
+                    // console.log('Intersected feature properties:', properties);
                     localStorage.setItem('properties', JSON.stringify(properties))
                 });
             } else {
@@ -731,5 +707,3 @@ function IntersectAreaWithPolygon(drawnPolygon, layers, url, propertyName, bound
         });
     });
 }
-
-// 

@@ -738,7 +738,7 @@ function savevalues() {
 
         // localStorage.setItem('coordinates', JSON.stringify(coordinates));
     });
-    window.location.href = 'data.html';
+    // window.location.href = 'data.html';
 }
 // let summaryByVillage = {};
 function IntersectAreaWithPolygon(drawnPolygon, layers, url, propertyName, bounds, outputFormat) {   

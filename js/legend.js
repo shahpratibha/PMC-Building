@@ -1,18 +1,3 @@
-// Create link element for CSS
-// var link = document.createElement('link');
-// link.rel = 'stylesheet';
-// link.type = 'text/css';
-// link.href = '/libs/leaflet-wms-legend/leaflet.wmslegend.css';
-
-// // Append link to the head section of HTML document
-// document.head.appendChild(link);
-  
-// // Create script element for JS
-// var script = document.createElement('script');
-// script.src = '/libs/leaflet-wms-legend/leaflet.wmslegend.js';
-
-// // Append script to the head section of HTML document
-// document.head.appendChild(script);
 
 // Now continue with your remaining JavaScript code...
 // GeoServer URL

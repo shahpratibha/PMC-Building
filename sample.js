@@ -568,39 +568,6 @@ document.getElementById('addRowBtn').addEventListener('click', function () {
     addCoordinateRow(table);
 });
 
-// ------------------------------------------------------------
-// // Function to add a new coordinate row
-// function addCoordinateRow(table) {
-//     var row = table.insertRow();
-//     var longitudeCell = row.insertCell();
-//     var latitudeCell = row.insertCell();
-//     var actionCell = row.insertCell();
-
-//     var longitudeInput = document.createElement('input');
-//     longitudeInput.setAttribute('type', 'text');
-//     longitudeInput.setAttribute('placeholder', '73.856785778');
-//     longitudeInput.setAttribute('name', 'longitude[]');
-//     longitudeInput.classList.add('coordinate-input'); // Add CSS class to input
-
-//     var latitudeInput = document.createElement('input');
-//     latitudeInput.setAttribute('type', 'text');
-//     latitudeInput.setAttribute('placeholder', '18.856785778');
-//     latitudeInput.setAttribute('name', 'latitude[]');
-//     latitudeInput.classList.add('coordinate-input'); // Add CSS class to input
-
-//     longitudeCell.appendChild(longitudeInput);
-//     latitudeCell.appendChild(latitudeInput);
-
-//     actionCell.innerHTML = '<button type="button" class="deleteRowBtn"><i class="fa-solid fa-trash-can"></i></button>';
-
-//     // Add event listener to delete button
-//     var deleteBtn = actionCell.querySelector('.deleteRowBtn');
-//     deleteBtn.addEventListener('click', function () {
-//         row.remove();
-//     });
-// }
-
-// // 
 
 document.getElementById('coordinateForm').addEventListener('submit', function (event) {
     event.preventDefault();

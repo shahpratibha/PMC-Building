@@ -28,16 +28,14 @@ var googleSat = L.tileLayer(
 );
 
 var osm = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    // attribution:
-    //   '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    maxZoom: 20,
 }).addTo(map);
 
 var Esri_WorldImagery = L.tileLayer(
     "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
     {
-        // attribution:
-        //   "Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community",
-    }
+        maxZoom: 20,
+      }
 );
 var baseLayers = {};
 
@@ -138,9 +136,9 @@ L.control.zoom({
     position: 'bottomright' // Set position to bottom right
 }).addTo(map);
 
-
+// draw-----------------------------------------------------
 var drawnItems = new L.FeatureGroup().addTo(map);
-map.addLayer(drawnItems);
+// map.addLayer(drawnItems);
 
 var drawControl = new L.Control.Draw({
     edit: {
@@ -166,9 +164,6 @@ var drawControl = new L.Control.Draw({
     }
 });
 map.addControl(drawControl);
-
-
-
 
 // save polygons into database variable
 
@@ -453,7 +448,9 @@ function processCSV(kmlContent) {
     }
 }
 
+
 // for adding coordinates manulay
+
 
 
 document.getElementById('toggleFormBtn').addEventListener('click', function () {
@@ -478,7 +475,9 @@ document.getElementById('addRowBtn').addEventListener('click', function () {
 
 
 
-var drawnPolygons = {};
+
+
+// var drawnPolygons = {};
 
 function addCoordinateRow(table) {
     var row = table.insertRow();
@@ -596,7 +595,7 @@ function addCoordinateRow(table) {
 
 
     // latitudeSecondsInput.style.marginRight = '5px'; 
-    longitudeDegreesCell.appendChild(longitudeDegreesInput);
+        longitudeDegreesCell.appendChild(longitudeDegreesInput);
     longitudeMinutesCell.appendChild(longitudeMinutesInput);
     longitudeSecondsCell.appendChild(longitudeSecondsInput);
     latitudeDegreesCell.appendChild(latitudeDegreesInput);
@@ -617,7 +616,7 @@ document.getElementById('coordinateForm').addEventListener('submit', function (e
     event.preventDefault();
     var formData = new FormData(this);
     var coordinates = [];
-
+    console.log("Form submitted. Form data:", formData);
     // Process form data here
     formData.getAll('longitudeDegrees[]').forEach(function (longitudeDegrees, index) {
         var longitudeMinutes = formData.getAll('longitudeMinutes[]')[index];
@@ -739,7 +738,7 @@ function savevalues() {
 
         // localStorage.setItem('coordinates', JSON.stringify(coordinates));
     });
-    // window.location.href = 'data.html';
+    window.location.href = 'data.html';
 }
 // let summaryByVillage = {};
 function IntersectAreaWithPolygon(drawnPolygon, layers, url, propertyName, bounds, outputFormat) {   

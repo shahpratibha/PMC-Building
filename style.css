@@ -43,24 +43,30 @@
 /* .leaflet-draw-toolbar .leaflet-bar .leaflet-draw-toolbar-top.leaflet-draw-draw-circlemarker{
   display: none;
 } */
-
+/* .leaflet-draw-toolbar .leaflet-draw-draw-polygon {
+  background: url('png/006-drawing.png') no-repeat;
+  background-color: #FFF;
+} */
 
 .leaflet-draw-draw-polygon:before {
-  /* content: url('png/006-drawing.png'); */
-  /* width: 2% !important;
-  height: 2% !important; */
-  /* Optionally, adjust other styles */
+ background: url('png/006-drawing.png');
+  display: block;
+  background-size:10px 10px; /* Adjust the size as needed */
+  width: 10px; /* This should be the same as background-size */
+  height: 10px; /* This should be the same as background-size */
 }
 
-/* .leaflet-draw-draw-polygon:before {
-  content: url('png/006-drawing.png');
-  background-size: cover; 
+
+/* .leaflet-draw-toolbar .leaflet-draw-draw-polygon:before {
+  content: url('png/006-drawing.png') !important; 
+  width: 32px !important;
+  height: 32px !important;
+  position:relative;
+  z-index: 99999;
 } */
+
 .leaflet-draw-toolbar {
-  
-  /* content: url('png/006-drawing.png');
-   width: 24px;
-  height: 24px;  */
+
   position: relative;
   top: 60px;
 }

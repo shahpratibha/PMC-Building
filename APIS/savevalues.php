@@ -36,8 +36,11 @@ try {
     $statement->bindParam(':selectedguts', $selectedguts);
 
     if ($statement->execute()) {
+        $lastInsertId = $pdo->lastInsertId();
         
-        echo json_encode(['success' => true, 'message' => 'Coordinates saved successfully']);
+        echo json_encode(['success' => true, 'message' => 'Coordinates saved successfully', 'data' => [
+            'id' => $lastInsertId
+        ]]);
     } else {
         throw new Exception("Failed to insert data into the database.");
     }

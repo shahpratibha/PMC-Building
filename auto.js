@@ -693,7 +693,7 @@ function savevalues() {
     console.log(getSelectedValues1())
     
     console.log(drawnPolygons, "drawnPolygons")
-    Object.keys(drawnPolygons).forEach(function (polygonId) {
+    Object.keys(drawnPolygons).forEach(async function (polygonId) {
         var coordinates = drawnPolygons[polygonId];
         console.log(coordinates,"drawcoordinates")
         var pp = turf.polygon(coordinates);
@@ -704,11 +704,10 @@ function savevalues() {
         var url = "https://portal.geopulsea.com//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=";
         var propertyName = "village_name,TPS_Name,Gut_No,geom";
         var outputFormat = "application/json";
-        var valuses = IntersectAreaWithPolygon(pp, layers, url, propertyName, bounds.toBBoxString(), outputFormat)
-        console.log(valuses,"valuses")
+        var values =  await IntersectAreaWithPolygon(pp, layers, url, propertyName, bounds.toBBoxString(), outputFormat)
         var cqlFilterget = localStorage.getItem('cqlFilter')
         const selected_dropdown = JSON.stringify(cqlFilterget)
-        const villageName =  JSON.stringify("dd");
+        const villageName =  JSON.stringify(values);
         const selected_guts = JSON.stringify(getSelectedValues1());
         const selected_village = JSON.stringify(getFilters());
         const coordinates1= coordinates[0].map(coord => [coord[0], coord[1]]);
@@ -726,84 +725,75 @@ function savevalues() {
 
             }),
             success: function (response) {
+                console.log(response)
                 console.log("Coordinates saved successfully");
-                // localStorage.clear();
+                localStorage.setItem('lastInsertedPlotBoundaryId', response.data.id);
             },
             error: function (xhr, status, error) {
                 console.error("Failed to save coordinates:", error);
             }
         });
 
-
-
-        // localStorage.setItem('coordinates', JSON.stringify(coordinates));
     });
-    // window.location.href = 'data.html';
+   window.location.href = 'data.html';
 }
-// let summaryByVillage = {};
-function IntersectAreaWithPolygon(drawnPolygon, layers, url, propertyName, bounds, outputFormat) {   
-    layers.forEach(function (layerName) {
+
+async function IntersectAreaWithPolygon(drawnPolygon, layers, url, propertyName, bounds, outputFormat) {  
+    let summaryByVillage = [];
+    
+    let requests = layers.map(function (layerName) {
         var urlm = url + layerName +
             "&propertyName=" + propertyName + "&bbox=" +
             bounds +
             "&outputFormat=" + outputFormat;
-
-        $.getJSON(urlm, function (data) {
-            // console.log(data);
-            
-            if (data && data.features && data.features.length > 0) {
-                var intersectedFeatures = [];
-                data.features.forEach(function (feature) {
-                    var intersectedFeature = turf.intersect(feature, drawnPolygon);
-                    if (intersectedFeature && intersectedFeature.geometry.type !== 'GeometryCollection') {
-                        intersectedFeature.properties = feature.properties;
-                        intersectedFeatures.push(intersectedFeature);
-                    }
-                });
-                var intersectedLayer = L.geoJSON(intersectedFeatures, {
-                    style: {
-                        color: 'red',
-                        weight: 2
-                    }
-                });
-                intersectedLayer.addTo(map);
-                intersectedLayer.eachLayer(function (layer) {
-                    var properties = layer.feature.properties;
-                    var area = turf.area(layer.feature);
-                    layer.bindPopup(`Area: ${area.toFixed(2)} sq meters<br>Properties: ${JSON.stringify(properties)}`);
-                });
-                // Initialize an empty dictionary to store the summarized data
-                
-
-                let summaryByVillage = {};
-
-                intersectedFeatures.forEach(function (feature) {
-                    var properties = feature.properties;
-                    var villageName = properties.village_name;
-
-                    // Calculate the area using turf.area
-                    var area = turf.area(feature);
-
-                    properties.area = area;
-
-                    if (summaryByVillage.hasOwnProperty(villageName)) {
-
-                        summaryByVillage[villageName].push(properties);
-                    } else {
-                        summaryByVillage[villageName] = [properties];
-                    }
-                });
-                const summaryJSON = JSON.stringify(summaryByVillage);
-                // lists.push(summaryJSON)
-                console.log(summaryJSON,"summaryJSON")
-                localStorage.setItem('Village', summaryJSON);
-                 return summaryJSON
-
-            } else {
-                console.log('No valid features found in the response.');
-            }
+  
+       
+        return new Promise((resolve, reject) => {
+            $.getJSON(urlm, function (data) {
+                if (data && data.features && data.features.length > 0) {
+                    var intersectedFeatures = [];
+                    data.features.forEach(function (feature) {
+                        var intersectedFeature = turf.intersect(feature, drawnPolygon);
+                        if (intersectedFeature && intersectedFeature.geometry.type !== 'GeometryCollection') {
+                            intersectedFeature.properties = feature.properties;
+                            intersectedFeatures.push(intersectedFeature);
+                        }
+                    });
+                    var intersectedLayer = L.geoJSON(intersectedFeatures, {
+                        style: {
+                            color: 'red',
+                            weight: 2
+                        }
+                    });
+                    intersectedLayer.addTo(map);
+                    intersectedLayer.eachLayer(function (layer) {
+                        var properties = layer.feature.properties;
+                        var area = turf.area(layer.feature);
+                        layer.bindPopup(`Area: ${area.toFixed(2)} sq meters<br>Properties: ${JSON.stringify(properties)}`);
+                    });
+                                        intersectedFeatures.forEach(function (feature) {
+                        var properties = feature.properties;
+                        var villageName = properties.village_name;
+                        var area = turf.area(feature);
+                        properties.area = area;
+                        summaryByVillage.push(properties);
+                    });
+                    resolve(summaryByVillage); 
+                } else {
+                    console.log('No valid features found in the response.');
+                    resolve([]); 
+                }
+            }).fail(function() {
+                console.error("Error fetching data for layer: " + layerName);
+                reject(); 
+            });
         });
     });
+    
+    const results = await Promise.all(requests);
+    let combinedSummary = [].concat(...results);
+    return combinedSummary;
 }
+
 
 // 

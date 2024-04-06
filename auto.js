@@ -675,28 +675,41 @@ function savevalues() {
         var bounds = L.geoJSON(pp).getBounds();
         map.fitBounds(bounds);
 
+        
         var layers = ["AutoDCR:Revenue_1"];
-        var url = "https://portal.geopulsea.com//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=";
-        var propertyName = "village_name,TPS_Name,Gut_No,geom";
-        var outputFormat = "application/json";
-        IntersectAreaWithPolygon(pp, layers, url, propertyName, bounds.toBBoxString(), outputFormat)
-console.log(coordinates,"coordinates")
-        $.ajax({
-            type: "POST",
-            url: "APIS/savevalues.php",
-            contentType: "application/json",
-            data: JSON.stringify({ coordinates: coordinates, 
-                    village_name:"sus",
-                    gut_num:"12",
-            
-            }),
-            success: function(response) {
-                console.log("Coordinates saved successfully");
-            },
-            error: function(xhr, status, error) {
-                console.error("Failed to save coordinates:", error);
-            }
-        });
+               var url = "https://portal.geopulsea.com//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=";
+               var propertyName = "village_name,TPS_Name,Gut_No,geom";
+               var outputFormat = "application/json";
+               IntersectAreaWithPolygon(pp, layers, url, propertyName, bounds.toBBoxString(), outputFormat)
+               console.log(coordinates,"coordinates")
+               var propertiesget = localStorage.getItem('properties')
+               var cqlFilterget = localStorage.getItem('cqlFilter')
+               const parsedData = JSON.parse(propertiesget);
+               const villageName = parsedData.village_name;
+               const guts = parsedData.Gut_No
+               console.log(villageName,"villageName",cqlFilterget,"cqlFilterget","cqlFilterget")
+              
+               $.ajax({
+                   type: "POST",
+                   url: "APIS/savevalues.php",
+                   contentType: "application/json",
+                   data: JSON.stringify({ coordinates: coordinates,
+                           village_name:villageName,
+                           gut_num:guts,
+                  
+                   }),
+                   success: function(response) {
+                       console.log("Coordinates saved successfully");
+                   },
+                   error: function(xhr, status, error) {
+                       console.error("Failed to save coordinates:", error);
+                   }
+               });
+        
+        
+        
+        
+        
 
 
 

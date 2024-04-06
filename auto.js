@@ -5,15 +5,15 @@ const API_URL = "http://localhost/autodcr/";
 
 // Add Basemap
 var map = L.map("map", {
-        center:[18.52, 73.89],
-        zoom: 11,
-        minZoom: 10,
-        maxZoom: 18,
-        boxZoom: true,
-        trackResize: true,
-        wheelPxPerZoomLevel: 40,
-        zoomAnimation: true,
-        
+    center: [18.52, 73.89],
+    zoom: 11,
+    minZoom: 10,
+    maxZoom: 18,
+    boxZoom: true,
+    trackResize: true,
+    wheelPxPerZoomLevel: 40,
+    zoomAnimation: true,
+
 });
 
 
@@ -175,15 +175,12 @@ map.on('draw:created', function (e) {
 
     // var bounds = layer.getBounds().toBBoxString();
     var drawnPolygon = layer.toGeoJSON();
-    console.log(drawnPolygon.geometry.type)
 
-    // Ensure the drawn polygon is a valid Polygon
     if (drawnPolygon.geometry.type === 'Polygon') {
         var polygonId = 'polygon_draw'
 
         drawnPolygons[polygonId] = layer.toGeoJSON().geometry.coordinates;
-        console.log(drawnPolygons, "drawnPolygons", "polygonCounter")
-        // IntersectAreaWithPolygon(drawnPolygon, layers, url, propertyName, bounds, outputFormat);
+      
     } else {
         console.log('Drawn geometry is not a valid Polygon.');
     }
@@ -218,7 +215,6 @@ $(document).ready(function () {
             });
     }
 });
-// autocompleteSuggestions
 
 $("#search_type").change(function () {
     var selectedValueVillage = $(this).val();
@@ -250,12 +246,7 @@ $("#search_type").change(function () {
                 var gutss = feature.properties.Gut_No;
                 gutvalues.add(gutss);
             });
-
-            // Convert the Set to an array
             var Uniqueguts = Array.from(gutvalues);
-            console.log(Uniqueguts, "Uniqueguts");
-
-            // Call the callback function if it's provided
             if (callback && typeof callback === "function") {
                 callback(Uniqueguts);
             }
@@ -264,7 +255,7 @@ $("#search_type").change(function () {
 
     // Call getvalues function and pass a callback function to handle Uniqueguts
     getvalues(function (Uniqueguts) {
-        console.log(Uniqueguts, "Uniqueguts");
+        // console.log(Uniqueguts, "Uniqueguts");
 
         var stateList = $('#stateList');
         stateList.empty();
@@ -307,7 +298,7 @@ $("#search_type").change(function () {
 
     $(document).on('change', '#stateList input[type="checkbox"]', function () {
         var cqlFilter = getSelectedValues();
-        console.log(cqlFilter, "Selected filters");
+        // console.log(cqlFilter, "Selected filters");
 
         // Update the map with the new filter
         FitbouCustomiseRevenue(cqlFilter);
@@ -334,7 +325,7 @@ $("#search_type").change(function () {
         } else {
             cqlFilterGut = ""
         }
-        console.log(cqlFilterGut, "cqlFilterGut")
+        // console.log(cqlFilterGut, "cqlFilterGut")
 
         var cqlFilter = "";
         if (cqlFilterGut && filters) {
@@ -497,110 +488,110 @@ function addCoordinateRow(table) {
     var latitudeMinutesCell = row.insertCell();
     var latitudeSecondsCell = row.insertCell();
     var actionCell = row.insertCell();
-// degreee-----------------------------------
+    // degreee-----------------------------------
     var longitudeDegreesInput = document.createElement('input');
     longitudeDegreesInput.setAttribute('type', 'number');
     longitudeDegreesInput.setAttribute('placeholder', '73°');
     longitudeDegreesInput.setAttribute('name', 'longitudeDegrees[]');
     // longitudeDegreesInput.setAttribute('readonly', 'readonly'); 
-    longitudeDegreesInput.value = '73'; 
-    longitudeDegreesInput.style.width = '50px'; 
-    longitudeDegreesInput.style.position = 'absolute'; 
+    longitudeDegreesInput.value = '73';
+    longitudeDegreesInput.style.width = '50px';
+    longitudeDegreesInput.style.position = 'absolute';
     longitudeDegreesInput.style.left = '5%';
     // longitudeDegreesInput.style.marginRight = '5px';
     longitudeDegreesInput.style.borderBottomLeftRadius = '5px';
     longitudeDegreesInput.style.borderTopLeftRadius = '5px';
-    longitudeDegreesInput.style.borderTop = '2px solid #3c3cb8'; 
-    longitudeDegreesInput.style.borderLeft = '2px solid #3c3cb8'; 
-    longitudeDegreesInput.style.borderBottom = '2px solid #3c3cb8'; 
-    longitudeDegreesInput.style.borderRight = '2px solid  #3c3cb8'; 
+    longitudeDegreesInput.style.borderTop = '2px solid #3c3cb8';
+    longitudeDegreesInput.style.borderLeft = '2px solid #3c3cb8';
+    longitudeDegreesInput.style.borderBottom = '2px solid #3c3cb8';
+    longitudeDegreesInput.style.borderRight = '2px solid  #3c3cb8';
 
 
 
-// minutes--------------------------------------------------
+    // minutes--------------------------------------------------
     var longitudeMinutesInput = document.createElement('input');
     longitudeMinutesInput.setAttribute('type', 'number');
     longitudeMinutesInput.setAttribute('placeholder', '51′');
     longitudeMinutesInput.setAttribute('name', 'longitudeMinutes[]');
-    longitudeMinutesInput.style.width = '50px'; 
+    longitudeMinutesInput.style.width = '50px';
     longitudeMinutesInput.style.position = 'absolute';
-    longitudeMinutesInput.style.left = '16%'; 
+    longitudeMinutesInput.style.left = '16%';
     // longitudeMinutesInput.style.marginRight = '5px';
     longitudeMinutesInput.style.borderTop = '2px solid  #3c3cb8';
-    longitudeMinutesInput.style.borderBottom = '2px solid  #3c3cb8'; 
-    longitudeMinutesInput.style.borderLeft = '2px solid  #bbb'; 
-    longitudeMinutesInput.style.borderRight = '2px solid  #bbb'; 
+    longitudeMinutesInput.style.borderBottom = '2px solid  #3c3cb8';
+    longitudeMinutesInput.style.borderLeft = '2px solid  #bbb';
+    longitudeMinutesInput.style.borderRight = '2px solid  #bbb';
 
 
-// second--------------------------------------------------------------
+    // second--------------------------------------------------------------
     var longitudeSecondsInput = document.createElement('input');
     longitudeSecondsInput.setAttribute('type', 'number');
     longitudeSecondsInput.setAttribute('placeholder', '24.43″');
     longitudeSecondsInput.setAttribute('name', 'longitudeSeconds[]');
-    longitudeSecondsInput.setAttribute('step', 'any'); 
-    longitudeSecondsInput.style.width = '65px'; 
-    longitudeSecondsInput.style.position = 'absolute'; 
-    longitudeSecondsInput.style.left = '28%'; 
+    longitudeSecondsInput.setAttribute('step', 'any');
+    longitudeSecondsInput.style.width = '65px';
+    longitudeSecondsInput.style.position = 'absolute';
+    longitudeSecondsInput.style.left = '28%';
     // longitudeSecondsInput.style.marginRight = '5px'; 
     longitudeSecondsInput.style.borderTop = '2px solid  #3c3cb8';
     longitudeSecondsInput.style.borderBottom = '2px solid #3c3cb8';
-    longitudeSecondsInput.style.borderRight = '2px solid #3c3cb8'; 
-    longitudeSecondsInput.style.borderLeft = '2px solid  #bbb'; 
-    longitudeSecondsInput.style.borderTopRightRadius = '5px'; 
-    longitudeSecondsInput.style.borderBottomRightRadius = '5px'; 
+    longitudeSecondsInput.style.borderRight = '2px solid #3c3cb8';
+    longitudeSecondsInput.style.borderLeft = '2px solid  #bbb';
+    longitudeSecondsInput.style.borderTopRightRadius = '5px';
+    longitudeSecondsInput.style.borderBottomRightRadius = '5px';
 
 
-// latdegree----------------------
-    
+    // latdegree----------------------
+
     var latitudeDegreesInput = document.createElement('input');
     latitudeDegreesInput.setAttribute('type', 'number');
     latitudeDegreesInput.setAttribute('placeholder', '18°');
     latitudeDegreesInput.setAttribute('name', 'latitudeDegrees[]');
-    latitudeDegreesInput.setAttribute('readonly', 'readonly'); 
-    latitudeDegreesInput.value = '18'; 
-    latitudeDegreesInput.style.width = '50px'; 
-    latitudeDegreesInput.style.position = 'absolute'; 
-    latitudeDegreesInput.style.left = '46%'; 
+    latitudeDegreesInput.setAttribute('readonly', 'readonly');
+    latitudeDegreesInput.value = '18';
+    latitudeDegreesInput.style.width = '50px';
+    latitudeDegreesInput.style.position = 'absolute';
+    latitudeDegreesInput.style.left = '46%';
     // latitudeDegreesInput.style.marginRight = '15px'; 
     latitudeDegreesInput.style.borderBottomLeftRadius = '5px';
     latitudeDegreesInput.style.borderTopLeftRadius = '5px';
-    latitudeDegreesInput.style.borderTop = '2px solid #3c3cb8'; 
-    latitudeDegreesInput.style.borderLeft = '2px solid #3c3cb8'; 
-    latitudeDegreesInput.style.borderBottom = '2px solid #3c3cb8'; 
-    latitudeDegreesInput.style.borderRight = '2px solid  #3c3cb8'; 
-    
+    latitudeDegreesInput.style.borderTop = '2px solid #3c3cb8';
+    latitudeDegreesInput.style.borderLeft = '2px solid #3c3cb8';
+    latitudeDegreesInput.style.borderBottom = '2px solid #3c3cb8';
+    latitudeDegreesInput.style.borderRight = '2px solid  #3c3cb8';
+
     // latMinute----------------------------
 
     var latitudeMinutesInput = document.createElement('input');
     latitudeMinutesInput.setAttribute('type', 'number');
     latitudeMinutesInput.setAttribute('placeholder', '51′');
     latitudeMinutesInput.setAttribute('name', 'latitudeMinutes[]');
-    latitudeMinutesInput.style.width = '45px'; 
-    latitudeMinutesInput.style.position = 'absolute'; 
+    latitudeMinutesInput.style.width = '45px';
+    latitudeMinutesInput.style.position = 'absolute';
     latitudeMinutesInput.style.left = '55%';
     latitudeMinutesInput.style.borderTop = '2px solid  #3c3cb8';
-    latitudeMinutesInput.style.borderBottom = '2px solid  #3c3cb8'; 
-    latitudeMinutesInput.style.borderLeft = '2px solid  #bbb'; 
+    latitudeMinutesInput.style.borderBottom = '2px solid  #3c3cb8';
+    latitudeMinutesInput.style.borderLeft = '2px solid  #bbb';
     latitudeMinutesInput.style.borderRight = '2px solid  #3c3cb8';
 
 
     // latsecond-----------------------------------------
-    
+
     var latitudeSecondsInput = document.createElement('input');
     latitudeSecondsInput.setAttribute('type', 'number');
     latitudeSecondsInput.setAttribute('placeholder', '24.43″');
     latitudeSecondsInput.setAttribute('name', 'latitudeSeconds[]');
-    latitudeSecondsInput.setAttribute('step', 'any'); 
-    latitudeSecondsInput.style.width = '65px'; 
-    latitudeSecondsInput.style.position = 'absolute'; 
+    latitudeSecondsInput.setAttribute('step', 'any');
+    latitudeSecondsInput.style.width = '65px';
+    latitudeSecondsInput.style.position = 'absolute';
     latitudeSecondsInput.style.left = '65%';
     latitudeSecondsInput.style.borderTop = '2px solid  #3c3cb8';
     latitudeSecondsInput.style.borderBottom = '2px solid #3c3cb8';
-    latitudeSecondsInput.style.borderRight = '2px solid #3c3cb8'; 
-    latitudeSecondsInput.style.borderLeft = '2px solid  #bbb'; 
-    latitudeSecondsInput.style.borderTopRightRadius = '5px'; 
-    latitudeSecondsInput.style.borderBottomRightRadius = '5px'; 
-  
+    latitudeSecondsInput.style.borderRight = '2px solid #3c3cb8';
+    latitudeSecondsInput.style.borderLeft = '2px solid  #bbb';
+    latitudeSecondsInput.style.borderTopRightRadius = '5px';
+    latitudeSecondsInput.style.borderBottomRightRadius = '5px';
+
 
 
     // latitudeSecondsInput.style.marginRight = '5px'; 
@@ -610,12 +601,12 @@ function addCoordinateRow(table) {
     latitudeDegreesCell.appendChild(latitudeDegreesInput);
     latitudeMinutesCell.appendChild(latitudeMinutesInput);
     latitudeSecondsCell.appendChild(latitudeSecondsInput);
-       
-    
+
+
     actionCell.innerHTML = '<button type="button" class="deleteRowBtn"><i class="fa-solid fa-trash-can"></i></button>';
     // Add event istener to delete button
     var deleteBtn = actionCell.querySelector('.deleteRowBtn');
-    
+
     deleteBtn.addEventListener('click', function () {
         row.remove();
     });
@@ -665,100 +656,144 @@ function parseDMS(degrees, minutes, seconds) {
     return parseFloat(degrees) + parseFloat(minutes) / 60 + parseFloat(seconds) / 3600;
 }
 
+function getSelectedValues1() {
+    var selectedValues = [];
+    $('input[type="checkbox"]:checked').each(function () {
+        var name = $(this).attr('name');
+        if (name !== undefined) {
+            selectedValues.push(name);
+        }
+    });
+    return selectedValues;
+}
+
+// Example usage
+// console.log(getSelectedValues1());
+
+
+// var initialCqlFilter = getSelectedValues();
+
+// for getting village nale
+let filters = '';
+
+$("#search_type").change(function () {
+    var selectedValueVillage = $(this).val();
+    var Village_name = 'village_name'
+    filters = `${Village_name} = '${selectedValueVillage}'`;
+});
+
+// Function to return the filters value
+function getFilters() {
+    return filters;
+}
+
 
 function savevalues() {
+    console.log(getFilters())
+    console.log(getSelectedValues1())
+    
     console.log(drawnPolygons, "drawnPolygons")
-    Object.keys(drawnPolygons).forEach(function (polygonId) {
+    Object.keys(drawnPolygons).forEach(async function (polygonId) {
         var coordinates = drawnPolygons[polygonId];
+        console.log(coordinates,"drawcoordinates")
         var pp = turf.polygon(coordinates);
         L.geoJSON(pp).addTo(map)
         var bounds = L.geoJSON(pp).getBounds();
         map.fitBounds(bounds);
-
-        
         var layers = ["AutoDCR:Revenue_1"];
-               var url = "https://portal.geopulsea.com//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=";
-               var propertyName = "village_name,TPS_Name,Gut_No,geom";
-               var outputFormat = "application/json";
-               IntersectAreaWithPolygon(pp, layers, url, propertyName, bounds.toBBoxString(), outputFormat)
-               console.log(coordinates,"coordinates")
-               var propertiesget = localStorage.getItem('properties')
-               var cqlFilterget = localStorage.getItem('cqlFilter')
-               const parsedData = JSON.parse(propertiesget);
-               const villageName = parsedData.village_name;
-               const guts = parsedData.Gut_No
-               console.log(villageName,"villageName",cqlFilterget,"cqlFilterget","cqlFilterget")
-              
-               $.ajax({
-                   type: "POST",
-                   url: "APIS/savevalues.php",
-                   contentType: "application/json",
-                   data: JSON.stringify({ coordinates: coordinates,
-                           village_name:villageName,
-                           gut_num:guts,
-                  
-                   }),
-                   success: function(response) {
-                       console.log("Coordinates saved successfully");
-                   },
-                   error: function(xhr, status, error) {
-                       console.error("Failed to save coordinates:", error);
-                   }
-               });
-        
-        
-        
-        
-        
+        var url = "https://portal.geopulsea.com//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=";
+        var propertyName = "village_name,TPS_Name,Gut_No,geom";
+        var outputFormat = "application/json";
+        var values =  await IntersectAreaWithPolygon(pp, layers, url, propertyName, bounds.toBBoxString(), outputFormat)
+        var cqlFilterget = localStorage.getItem('cqlFilter')
+        const selected_dropdown = JSON.stringify(cqlFilterget)
+        const villageName =  JSON.stringify(values);
+        const selected_guts = JSON.stringify(getSelectedValues1());
+        const selected_village = JSON.stringify(getFilters());
+        const coordinates1= coordinates[0].map(coord => [coord[0], coord[1]]);
 
+        $.ajax({
+            type: "POST",
+            url: "APIS/savevalues.php",
+            contentType: "application/json",
+            data: JSON.stringify({
+                coordinates: coordinates1,
+                village_name: villageName,
+                gut_num: selected_dropdown,
+                selectedvillage:selected_village,
+                selectedguts:selected_guts
 
+            }),
+            success: function (response) {
+                console.log(response)
+                console.log("Coordinates saved successfully");
+                localStorage.setItem('lastInsertedPlotBoundaryId', response.data.id);
+            },
+            error: function (xhr, status, error) {
+                console.error("Failed to save coordinates:", error);
+            }
+        });
 
-        localStorage.setItem('coordinates', JSON.stringify(coordinates));
     });
-    window.location.href = 'data.html';
+   window.location.href = 'data.html';
 }
 
-function IntersectAreaWithPolygon(drawnPolygon, layers, url, propertyName, bounds, outputFormat) {
-    layers.forEach(function (layerName) {
+async function IntersectAreaWithPolygon(drawnPolygon, layers, url, propertyName, bounds, outputFormat) {  
+    let summaryByVillage = [];
+    
+    let requests = layers.map(function (layerName) {
         var urlm = url + layerName +
             "&propertyName=" + propertyName + "&bbox=" +
             bounds +
             "&outputFormat=" + outputFormat;
-
-        $.getJSON(urlm, function (data) {
-            console.log(data);
-
-            if (data && data.features && data.features.length > 0) {
-                var intersectedFeatures = [];
-                data.features.forEach(function (feature) {
-                    var intersectedFeature = turf.intersect(feature, drawnPolygon);
-                    if (intersectedFeature && intersectedFeature.geometry.type !== 'GeometryCollection') {
-                        intersectedFeature.properties = feature.properties;
-                        intersectedFeatures.push(intersectedFeature);
-                    }
-                });
-                var intersectedLayer = L.geoJSON(intersectedFeatures, {
-                    style: {
-                        color: 'red',
-                        weight: 2
-                    }
-                });
-                intersectedLayer.addTo(map);
-                intersectedLayer.eachLayer(function (layer) {
-                    var properties = layer.feature.properties;
-                    var area = turf.area(layer.feature);
-                    layer.bindPopup(`Area: ${area.toFixed(2)} sq meters<br>Properties: ${JSON.stringify(properties)}`);
-                });
-
-                intersectedFeatures.forEach(function (feature) {
-                    var properties = feature.properties;
-                    localStorage.setItem('properties', JSON.stringify(properties))
-                });
-            } else {
-                console.log('No valid features found in the response.');
-            }
+  
+       
+        return new Promise((resolve, reject) => {
+            $.getJSON(urlm, function (data) {
+                if (data && data.features && data.features.length > 0) {
+                    var intersectedFeatures = [];
+                    data.features.forEach(function (feature) {
+                        var intersectedFeature = turf.intersect(feature, drawnPolygon);
+                        if (intersectedFeature && intersectedFeature.geometry.type !== 'GeometryCollection') {
+                            intersectedFeature.properties = feature.properties;
+                            intersectedFeatures.push(intersectedFeature);
+                        }
+                    });
+                    var intersectedLayer = L.geoJSON(intersectedFeatures, {
+                        style: {
+                            color: 'red',
+                            weight: 2
+                        }
+                    });
+                    intersectedLayer.addTo(map);
+                    intersectedLayer.eachLayer(function (layer) {
+                        var properties = layer.feature.properties;
+                        var area = turf.area(layer.feature);
+                        layer.bindPopup(`Area: ${area.toFixed(2)} sq meters<br>Properties: ${JSON.stringify(properties)}`);
+                    });
+                                        intersectedFeatures.forEach(function (feature) {
+                        var properties = feature.properties;
+                        var villageName = properties.village_name;
+                        var area = turf.area(feature);
+                        properties.area = area;
+                        summaryByVillage.push(properties);
+                    });
+                    resolve(summaryByVillage); 
+                } else {
+                    console.log('No valid features found in the response.');
+                    resolve([]); 
+                }
+            }).fail(function() {
+                console.error("Error fetching data for layer: " + layerName);
+                reject(); 
+            });
         });
     });
+    
+    const results = await Promise.all(requests);
+    let combinedSummary = [].concat(...results);
+    return combinedSummary;
 }
+
 
 // 

@@ -13,6 +13,8 @@ try {
     $villageName = $rawData['village_name'] ?? null;
     $gutNo = $rawData['gut_num'] ?? null;
     $geometry = $rawData['coordinates'] ?? null;
+    $selectedvillage = $rawData['selectedvillage'] ?? null;
+    $selectedguts = $rawData['selectedguts'] ?? null;
 
     
     if ($geometry === null) {
@@ -25,15 +27,20 @@ try {
     ];
     $geometryJSON = json_encode($geoJSON);
 
-    $query = "INSERT INTO PlotBoundary (village_name, gut_no, geometry) VALUES (:villageName, :gutNo, ST_GeomFromGeoJSON(:geometry))";
+    $query = "INSERT INTO PlotBoundary (village_name, gut_no, geometry,selectedvillage,selectedguts) VALUES (:villageName, :gutNo, ST_GeomFromGeoJSON(:geometry),:selectedvillage, :selectedguts)";
     $statement = $pdo->prepare($query);
     $statement->bindParam(':villageName', $villageName);
     $statement->bindParam(':gutNo', $gutNo);
     $statement->bindParam(':geometry', $geometryJSON);
+    $statement->bindParam(':selectedvillage', $selectedvillage);
+    $statement->bindParam(':selectedguts', $selectedguts);
 
     if ($statement->execute()) {
+        $lastInsertId = $pdo->lastInsertId();
         
-        echo json_encode(['success' => true, 'message' => 'Coordinates saved successfully']);
+        echo json_encode(['success' => true, 'message' => 'Coordinates saved successfully', 'data' => [
+            'id' => $lastInsertId
+        ]]);
     } else {
         throw new Exception("Failed to insert data into the database.");
     }

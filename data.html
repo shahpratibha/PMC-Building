@@ -23,18 +23,35 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+    const API_URL = "http://localhost/autodcr/";
+    var lastInsertedId = localStorage.getItem("lastInsertedPlotBoundaryId");
     // Retrieve data from localStorage and populate table
+    var table = $('#data-table');
     $(document).ready(function(){
         var properties = localStorage.getItem('properties');
         var cqlFilter = localStorage.getItem('cqlFilter');
         var coordinates = localStorage.getItem('coordinates');
 
         // Populate table with data
-        var table = $('#data-table');
+    
         table.append('<tr><td>Properties</td><td>' + properties + '</td></tr>');
         table.append('<tr><td>CQL Filter</td><td>' + cqlFilter + '</td></tr>');
         table.append('<tr><td>Coordinates</td><td>' + coordinates + '</td></tr>');
     });
+
+    $.ajax({
+  url: API_URL + "APIS/get_plot_boundary.php", // Path to the PHP script
+  type: "GET",
+  data: { id: lastInsertedId },
+  dataType: "json",
+  success: function (response) {
+  console.log(response);
+  table.append('<tr><td>Attributes</td><td>' + response?.data?.village_name + '</td></tr>');
+  },
+  error: function (error) {
+    console.error("AJAX request failed:", error);
+  },
+});
 </script>
 
 </body>

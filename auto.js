@@ -711,6 +711,7 @@ function savevalues() {
         const selected_guts = JSON.stringify(getSelectedValues1());
         const selected_village = JSON.stringify(getFilters());
         const coordinates1= coordinates[0].map(coord => [coord[0], coord[1]]);
+        console.log(cqlFilterget,"cqlFilterget",selected_dropdown,"selected_dropdown",villageName,"villageName",selected_guts,"selected_guts",selected_village,"selected_village")
 
         $.ajax({
             type: "POST",
@@ -735,7 +736,7 @@ function savevalues() {
         });
 
     });
-   window.location.href = 'data.html';
+//    window.location.href = 'data.html';
 }
 
 async function IntersectAreaWithPolygon(drawnPolygon, layers, url, propertyName, bounds, outputFormat) {  

@@ -1,58 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Page</title>
     <link rel="icon" href="png/pmcjpeg.png" type="image/x-icon">
     <link rel="stylesheet" href="data.css">
-   
+
 </head>
+
 <body>
 
-<div class="card">
-    <div class="card-header">
-        <h1>Data Page</h1>
+    <div class="card">
+        <div class="card-header">
+            <h1>Data Page</h1>
+        </div>
+        <div class="card-content">
+            <table id="data-table">
+                <!-- Table content will be populated dynamically -->
+            </table>
+        </div>
     </div>
-    <div class="card-content">
-        <table id="data-table">
-            <!-- Table content will be populated dynamically -->
-        </table>
-    </div>
-</div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    const API_URL = "http://localhost/autodcr/";
-    var lastInsertedId = localStorage.getItem("lastInsertedPlotBoundaryId");
-    // Retrieve data from localStorage and populate table
-    var table = $('#data-table');
-    $(document).ready(function(){
-        var properties = localStorage.getItem('properties');
-        var cqlFilter = localStorage.getItem('cqlFilter');
-        var coordinates = localStorage.getItem('coordinates');
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        const API_URL = "http://localhost/autodcr/";
+        var lastInsertedId = localStorage.getItem("lastInsertedPlotBoundaryId");
+        console.log(lastInsertedId, "lastInsertedId--------------")
+        // Retrieve data from localStorage and populate table
 
-        // Populate table with data
-    
-        table.append('<tr><td>Properties</td><td>' + properties + '</td></tr>');
-        table.append('<tr><td>CQL Filter</td><td>' + cqlFilter + '</td></tr>');
-        table.append('<tr><td>Coordinates</td><td>' + coordinates + '</td></tr>');
-    });
 
-    $.ajax({
-  url: API_URL + "APIS/get_plot_boundary.php", // Path to the PHP script
-  type: "GET",
-  data: { id: lastInsertedId },
-  dataType: "json",
-  success: function (response) {
-  console.log(response);
-  table.append('<tr><td>Attributes</td><td>' + response?.data?.village_name + '</td></tr>');
-  },
-  error: function (error) {
-    console.error("AJAX request failed:", error);
-  },
-});
-</script>
+
+        var table = $('#data-table');
+        $(document).ready(function () {
+            var properties = localStorage.getItem('properties');
+            var cqlFilter = localStorage.getItem('cqlFilter');
+            var coordinates = localStorage.getItem('coordinates');
+
+            // Populate table with data
+
+            table.append('<tr><td>Properties</td><td>' + properties + '</td></tr>');
+            table.append('<tr><td>CQL Filter</td><td>' + cqlFilter + '</td></tr>');
+            table.append('<tr><td>Coordinates</td><td>' + coordinates + '</td></tr>');
+        });
+
+        $.ajax({
+            url: API_URL + "APIS/get_plot_boundary.php", // Path to the PHP script
+            type: "GET",
+            data: { id: lastInsertedId },
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                table.append('<tr><td>Draw Village Name</td><td>' + response?.data?.village_name + '</td></tr>');
+                table.append('<tr><td>Selected Village From Dropdown</td><td>' + response?.data?.selectedvillage + '</td></tr>');
+                table.append('<tr><td>Selected Gut Number From Dropdown</td><td>' + response?.data?.selectedguts + '</td></tr>');
+                table.append('<tr><td>Coordinates</td><td>' + response?.data?.coordinates + '</td></tr>');
+
+            },
+            error: function (error) {
+                console.error("AJAX request failed:", error);
+            },
+        });
+    </script>
 
 </body>
+
 </html>

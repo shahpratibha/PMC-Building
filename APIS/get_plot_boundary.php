@@ -9,7 +9,8 @@ try {
 
     if ($id) {
         // Fetch a specific record by ID
-        $sql = "SELECT * FROM plotboundary WHERE id = ?";
+        $sql = "SELECT id, village_name,gut_no, selectedvillage,selectedguts, ST_AsText(geometry) AS coordinates FROM plotboundary WHERE id = ?";
+        // $sql = "SELECT * FROM plotboundary WHERE id = ?";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$id]);
         $record = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -25,7 +26,8 @@ try {
         }
     } else {
         // Fetch all records
-        $sql = "SELECT * FROM plotboundary";
+        // $sql = "SELECT * FROM plotboundary";
+        $sql = "SELECT id, village_name,gut_no, selectedvillage,selectedguts, ST_AsText(geometry) AS coordinates FROM plotboundary WHERE id = ?";
         $stmt = $pdo->query($sql);
         $records = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

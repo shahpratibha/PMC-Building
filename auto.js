@@ -1,6 +1,6 @@
 
 var map, geojson;
-const API_URL = "http://localhost/autodcr/";
+const API_URL = "http://localhost/Autodcr/";
 // const API_URL = "http://localhost/PMC-Project/";
 
 // Add Basemap
@@ -309,34 +309,10 @@ $("#search_type").change(function () {
         }).addTo(map).bringToFront();
     });
 
+
     // Function to get the selected checkbox values and construct the CQL filter
 
-    function getSelectedValues() {
-        var selectedValues = [];
-        $('input[type="checkbox"]:checked').each(function () {
-            var name = $(this).attr('name');
-            if (name !== undefined) {
-                selectedValues.push("'" + name + "'");
-            }
-        });
-        var cqlFilterGut = ""
-        if (selectedValues.length > 0) {
-            cqlFilterGut = "Gut_No IN (" + selectedValues.join(",") + ")";
-        } else {
-            cqlFilterGut = ""
-        }
-        // console.log(cqlFilterGut, "cqlFilterGut")
-
-        var cqlFilter = "";
-        if (cqlFilterGut && filters) {
-            cqlFilter = "(" + cqlFilterGut + ") AND (" + filters + ")";
-        } else {
-            cqlFilter = cqlFilterGut || filters;
-        }
-        localStorage.setItem('cqlFilter', cqlFilter);
-
-        return cqlFilter;
-    }
+    
 
     var initialCqlFilter = getSelectedValues();
 
@@ -344,6 +320,33 @@ $("#search_type").change(function () {
 
 
 })
+
+function getSelectedValues() {
+    var selectedValues = [];
+    $('input[type="checkbox"]:checked').each(function () {
+        var name = $(this).attr('name');
+        if (name !== undefined) {
+            selectedValues.push("'" + name + "'");
+        }
+    });
+    var cqlFilterGut = ""
+    if (selectedValues.length > 0) {
+        cqlFilterGut = "Gut_No IN (" + selectedValues.join(",") + ")";
+    } else {
+        cqlFilterGut = ""
+    }
+    // console.log(cqlFilterGut, "cqlFilterGut")
+
+    var cqlFilter = "";
+    if (cqlFilterGut && filters) {
+        cqlFilter = "(" + cqlFilterGut + ") AND (" + filters + ")";
+    } else {
+        cqlFilter = cqlFilterGut || filters;
+    }
+    localStorage.setItem('cqlFilter', cqlFilter);
+
+    return cqlFilter;
+}
 
 // Create a button element
 var button = L.control({ position: 'bottomright' });
@@ -631,6 +634,7 @@ document.getElementById('coordinateForm').addEventListener('submit', function (e
 
         // Push the coordinates to the array
         coordinates.push([parsedLatitude, parsedLongitude]);
+        // coordinates.push([parsedLongitude,parsedLatitude ]);
     });
 
     console.log(coordinates, ",coordinates");
@@ -645,7 +649,8 @@ document.getElementById('coordinateForm').addEventListener('submit', function (e
 
         var polygonId = 'polygon_coors'
         // polygonCounter++;
-        drawnPolygons[polygonId] = coordinates;
+        // drawnPolygons[polygonId] = coordinates;
+        drawnPolygons[polygonId] = polygon.toGeoJSON().geometry.coordinates;
 
         console.log(drawnPolygons, "drawnPolygons", "polygonCounter");
     }
@@ -689,8 +694,9 @@ function getFilters() {
 
 
 function savevalues() {
-    console.log(getFilters())
-    console.log(getSelectedValues1())
+    // console.log(getFilters())
+    // console.log(getSelectedValues1())
+    // console.log(getSelectedValues(),"getSelectedValues")
     
     console.log(drawnPolygons, "drawnPolygons")
     Object.keys(drawnPolygons).forEach(async function (polygonId) {
@@ -705,7 +711,7 @@ function savevalues() {
         var propertyName = "village_name,TPS_Name,Gut_No,geom";
         var outputFormat = "application/json";
         var values =  await IntersectAreaWithPolygon(pp, layers, url, propertyName, bounds.toBBoxString(), outputFormat)
-        var cqlFilterget = localStorage.getItem('cqlFilter')
+        var cqlFilterget = getSelectedValues()
         const selected_dropdown = JSON.stringify(cqlFilterget)
         const villageName =  JSON.stringify(values);
         const selected_guts = JSON.stringify(getSelectedValues1());
@@ -729,6 +735,7 @@ function savevalues() {
                 console.log(response)
                 console.log("Coordinates saved successfully");
                 localStorage.setItem('lastInsertedPlotBoundaryId', response.data.id);
+                console.log('lastInsertedPlotBoundaryId', response.data.id);
             },
             error: function (xhr, status, error) {
                 console.error("Failed to save coordinates:", error);
@@ -736,7 +743,7 @@ function savevalues() {
         });
 
     });
-//    window.location.href = 'data.html';
+   window.location.href = 'data.html';
 }
 
 async function IntersectAreaWithPolygon(drawnPolygon, layers, url, propertyName, bounds, outputFormat) {  

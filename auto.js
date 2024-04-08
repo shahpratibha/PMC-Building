@@ -732,10 +732,15 @@ function savevalues() {
 
             }),
             success: function (response) {
-                console.log(response)
+              
                 console.log("Coordinates saved successfully");
                 localStorage.setItem('lastInsertedPlotBoundaryId', response.data.id);
-                console.log('lastInsertedPlotBoundaryId', response.data.id);
+
+                if(response.data.id != undefined){
+                   window.location.href = 'data.html';
+                }
+                
+                
             },
             error: function (xhr, status, error) {
                 console.error("Failed to save coordinates:", error);
@@ -743,7 +748,7 @@ function savevalues() {
         });
 
     });
-   window.location.href = 'data.html';
+  
 }
 
 async function IntersectAreaWithPolygon(drawnPolygon, layers, url, propertyName, bounds, outputFormat) {  

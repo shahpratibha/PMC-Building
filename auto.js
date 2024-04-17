@@ -391,15 +391,98 @@ function FitbouCustomiseRevenue(filter) {
             "&outputFormat=application/json";
         $.getJSON(urlm, function (data) {
             geojson = L.geoJson(data, {});
-            console.log(geojson.getBounds()._northEast)
-            console.log(geojson.getBounds()._southWest)
+
+            var latitudeDegreesInput = document.querySelector('input[name="latitudeDegrees[]"]');
+            var latitudeMinutesInput = document.querySelector('input[name="latitudeMinutes[]"]');
             var longitudeDegreesInput = document.querySelector('input[name="longitudeDegrees[]"]');
-            longitudeDegreesInput.value = '85';
-            console.log(geojson.getBounds(),"geojson.getBounds()")
+            var longitudeMinutesInput = document.querySelector('input[name="longitudeMinutes[]"]');
+            
+
+            // Update latitude input field
+            latsouth = parseInt(Math.floor(geojson.getBounds()._southWest.lat))
+            latnorth = parseInt(Math.floor(geojson.getBounds()._northEast.lat))
+            latsouthM = parseInt(Math.floor((geojson.getBounds()._southWest.lat % 1)*60))
+            latnorthM = parseInt(Math.floor((geojson.getBounds()._northEast.lat % 1)*60))
+
+           
+            // for degree upadates lattitude
+            if (latsouth === latnorth) {
+                // console.log("heeee");
+                // console.log(latsouth, latnorth);
+                latitudeDegreesInput.removeAttribute('readonly');
+                latitudeDegreesInput.value = latsouth;
+                latitudeDegreesInput.setAttribute('readonly', 'readonly');
+            } else {
+                latitudeDegreesInput.removeAttribute('readonly');
+                latitudeDegreesInput.removeAttribute('value');
+                latitudeDegreesInput.setAttribute('min', latsouth);
+                latitudeDegreesInput.setAttribute('max', latnorth);
+            }
+            
+            // for minutes update only latitude
+
+            if (latsouthM === latnorthM) {
+                // console.log("heeee");
+                // console.log(latsouthM, latnorthM);
+                latitudeMinutesInput.removeAttribute('readonly');
+                latitudeMinutesInput.removeAttribute('value');
+                latitudeMinutesInput.value = latsouthM;
+                latitudeMinutesInput.setAttribute('readonly', 'readonly');
+            } else {
+                latitudeMinutesInput.removeAttribute('readonly');
+                latitudeMinutesInput.removeAttribute('value');
+                latitudeMinutesInput.setAttribute('min', latsouthM);
+                latitudeMinutesInput.setAttribute('max', latnorthM);
+            }
+
+            lngsouth = parseInt(Math.floor(geojson.getBounds()._southWest.lng))
+            lngnorth = parseInt(Math.floor(geojson.getBounds()._northEast.lng))
+            lngsouthM = parseInt(Math.floor((geojson.getBounds()._southWest.lng % 1)*60))
+            lngnorthM = parseInt(Math.floor((geojson.getBounds()._northEast.lng % 1)*60))
+            console.log(lngsouth,lngnorth)
+
+            // for longitude degree update
+            if(lngsouth === lngnorth){
+                // console.log("heeee")
+                // console.log(lngsouth,lngnorth)
+                longitudeDegreesInput.removeAttribute('value');
+                longitudeDegreesInput.value = lngnorth;
+                longitudeDegreesInput.setAttribute('readonly', 'readonly');
+            }else{
+
+            // Update longitude input field
+            // console.log("nooooooooooooooooo")
+            longitudeDegreesInput.removeAttribute('readonly');
+            longitudeDegreesInput.removeAttribute('value');
+            longitudeDegreesInput.setAttribute('min',lngsouth);
+            longitudeDegreesInput.setAttribute('max',lngnorth);
+            }
+
+            // for munites onlys longitude
+
+            if(lngsouthM === lngnorthM){
+                // console.log("heeee")
+                // console.log(lngsouth,lngnorth)
+                longitudeMinutesInput.removeAttribute('readonly')
+                longitudeMinutesInput.removeAttribute('value');
+                longitudeMinutesInput.value = lngnorthM;
+                longitudeMinutesInput.setAttribute('readonly', 'readonly');
+            }else{
+
+            // Update longitude input field
+            // console.log("nooooooooooooooooo")
+            longitudeMinutesInput.removeAttribute('readonly');
+            longitudeMinutesInput.removeAttribute('value');
+            longitudeMinutesInput.setAttribute('min',lngsouthM);
+            longitudeMinutesInput.setAttribute('max',lngnorthM);
+            }
+
             map.fitBounds(geojson.getBounds());
         });
     });
 }
+
+
 
 
 // for uploading kml/kmz file and loading on map 
@@ -508,21 +591,38 @@ document.getElementById('addRowBtn').addEventListener('click', function () {
 
 
 
+function updateFirstRowValues(table) {
+    var firstRow = table.rows[1]; // Index 0 is the header row
+    var longitudeDegreesInput = firstRow.cells[0].querySelector('input[name="longitudeDegrees[]"]');
+    var longitudeMinutesInput = firstRow.cells[1].querySelector('input[name="longitudeMinutes[]"]');
+    var latitudeDegreesInput = firstRow.cells[3].querySelector('input[name="latitudeDegrees[]"]');
+    var latitudeMinutesInput = firstRow.cells[4].querySelector('input[name="latitudeMinutes[]"]');
 
-// var drawnPolygons = {};
+    // Update the values and properties in the new row
+    var newLongitudeDegreesInput = table.rows[table.rows.length - 1].cells[0].querySelector('input[name="longitudeDegrees[]"]');
+    var newLongitudeMinutesInput = table.rows[table.rows.length - 1].cells[1].querySelector('input[name="longitudeMinutes[]"]');
+    var newLatitudeDegreesInput = table.rows[table.rows.length - 1].cells[3].querySelector('input[name="latitudeDegrees[]"]');
+    var newLatitudeMinutesInput = table.rows[table.rows.length - 1].cells[4].querySelector('input[name="latitudeMinutes[]"]');
 
+    newLongitudeDegreesInput.value = longitudeDegreesInput.value;
+    newLongitudeDegreesInput.setAttribute('min', longitudeDegreesInput.getAttribute('min'));
+    newLongitudeDegreesInput.setAttribute('max', longitudeDegreesInput.getAttribute('max'));
 
+    newLongitudeMinutesInput.value = longitudeMinutesInput.value;
+    newLongitudeMinutesInput.setAttribute('min', longitudeMinutesInput.getAttribute('min'));
+    newLongitudeMinutesInput.setAttribute('max', longitudeMinutesInput.getAttribute('max'));
 
-function convertToDMS(coordinate) {
-    var degrees = Math.floor(coordinate);
-    var minutes = Math.floor((coordinate - degrees) * 60);
-    var seconds = ((coordinate - degrees) * 60 - minutes) * 60;
-    return degrees + "° " + minutes + "' " + seconds.toFixed(2) + '"';
+    newLatitudeDegreesInput.value = latitudeDegreesInput.value;
+    newLatitudeDegreesInput.setAttribute('min', latitudeDegreesInput.getAttribute('min'));
+    newLatitudeDegreesInput.setAttribute('max', latitudeDegreesInput.getAttribute('max'));
+
+    newLatitudeMinutesInput.value = latitudeMinutesInput.value;
+    newLatitudeMinutesInput.setAttribute('min', latitudeMinutesInput.getAttribute('min'));
+    newLatitudeMinutesInput.setAttribute('max', latitudeMinutesInput.getAttribute('max'));
 }
-var latitude = 18.48912177;
 
 
-var latitudeDMS = convertToDMS(latitude);
+
 
 
 function addCoordinateRow(table) {
@@ -537,23 +637,23 @@ function addCoordinateRow(table) {
     var latitudeSecondsCell = row.insertCell();
     var actionCell = row.insertCell();
     // degreee-----------------------------------
+
     var longitudeDegreesInput = document.createElement('input');
     longitudeDegreesInput.setAttribute('type', 'number');
-    longitudeDegreesInput.setAttribute('placeholder', '73°');
+    longitudeDegreesInput.setAttribute('placeholder', '75°');
     longitudeDegreesInput.setAttribute('name', 'longitudeDegrees[]');
-    // longitudeDegreesInput.setAttribute('readonly', 'readonly'); 
+    longitudeDegreesInput.setAttribute('readonly', 'readonly');
     longitudeDegreesInput.value = '73';
     longitudeDegreesInput.style.width = '50px';
     longitudeDegreesInput.style.position = 'absolute';
     longitudeDegreesInput.style.left = '5%';
-    // longitudeDegreesInput.style.marginRight = '5px';
     longitudeDegreesInput.style.borderBottomLeftRadius = '5px';
     longitudeDegreesInput.style.borderTopLeftRadius = '5px';
     longitudeDegreesInput.style.borderTop = '2px solid #3c3cb8';
     longitudeDegreesInput.style.borderLeft = '2px solid #3c3cb8';
     longitudeDegreesInput.style.borderBottom = '2px solid #3c3cb8';
     longitudeDegreesInput.style.borderRight = '2px solid  #3c3cb8';
-
+    
 
 
     // minutes--------------------------------------------------
@@ -561,6 +661,7 @@ function addCoordinateRow(table) {
     longitudeMinutesInput.setAttribute('type', 'number');
     longitudeMinutesInput.setAttribute('placeholder', '51′');
     longitudeMinutesInput.setAttribute('name', 'longitudeMinutes[]');
+    longitudeMinutesInput.setAttribute('readonly', 'readonly');
     longitudeMinutesInput.style.width = '50px';
     longitudeMinutesInput.style.position = 'absolute';
     longitudeMinutesInput.style.left = '16%';
@@ -614,6 +715,7 @@ function addCoordinateRow(table) {
     latitudeMinutesInput.setAttribute('type', 'number');
     latitudeMinutesInput.setAttribute('placeholder', '51′');
     latitudeMinutesInput.setAttribute('name', 'latitudeMinutes[]');
+    latitudeMinutesInput.setAttribute('readonly', 'readonly');
     latitudeMinutesInput.style.width = '45px';
     latitudeMinutesInput.style.position = 'absolute';
     latitudeMinutesInput.style.left = '55%';
@@ -651,12 +753,15 @@ function addCoordinateRow(table) {
     latitudeSecondsCell.appendChild(latitudeSecondsInput);
 
 
+    updateFirstRowValues(table);
+
     actionCell.innerHTML = '<button type="button" class="deleteRowBtn"><i class="fa-solid fa-trash-can"></i></button>';
     // Add event istener to delete button
     var deleteBtn = actionCell.querySelector('.deleteRowBtn');
 
     deleteBtn.addEventListener('click', function () {
         row.remove();
+        updateFirstRowValues(table);
     });
 }
 
@@ -738,12 +843,12 @@ function savevalues() {
         map.fitBounds(bounds);
         var layers = ["AutoDCR:Revenue_1"];
         // Aviation_data
-        var layers1 = ["AutoDCR:Aviation_data"];
+        // var layers1 = ["AutoDCR:Aviation_data"];
         var url = "https://portal.geopulsea.com//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=";
         var propertyName = "village_name,TPS_Name,Gut_No,geom";
-        var propertyName1 = "zone,distance,elevation,geom";
+        // var propertyName1 = "zone,distance,elevation,geom";
         var outputFormat = "application/json";
-        IntersectwithASLM(pp, layers1, url, propertyName1, bounds.toBBoxString(), outputFormat)
+        // IntersectwithASLM(pp, layers1, url, propertyName1, bounds.toBBoxString(), outputFormat)
         var values =  await IntersectAreaWithPolygon(pp, layers, url, propertyName, bounds.toBBoxString(), outputFormat)
         // IntersectwithASLM(pp, layers, url, propertyName, bounds.toBBoxString(), outputFormat)
         var cqlFilterget = getSelectedValues()

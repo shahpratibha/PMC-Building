@@ -111,16 +111,33 @@ var Village_Boundary = L.tileLayer
     }).addTo(map);
 
 
+
+var aviation = L.tileLayer
+    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+        layers: "Aviation_data",
+        format: "image/png",
+        transparent: true,
+        tiled: true,
+        version: "1.1.0",
+        // attribution: "Revenue",
+        opacity: 1,
+    });
+    // .addTo(map);
+
+
 var WMSlayers = {
     "OSM": osm,
     "Esri": Esri_WorldImagery,
     "Satellite": googleSat,
 
+    Boundary: Boundary_Layer,
+    Aviation:aviation,
+    Village: Village_Boundary,
     Revenue: Revenue_Layer,
     PLU: PLU_Layer,
     DPRoad: DPRoad_Layer,
-    Boundary: Boundary_Layer,
-    Village: Village_Boundary
+    
+    
 
 
 };
@@ -361,6 +378,8 @@ button.addTo(map);
 
 
 
+
+
 function FitbouCustomiseRevenue(filter) {
     layers = ["AutoDCR:Revenue_1"];
     layers.forEach(function (layerName) {
@@ -372,6 +391,11 @@ function FitbouCustomiseRevenue(filter) {
             "&outputFormat=application/json";
         $.getJSON(urlm, function (data) {
             geojson = L.geoJson(data, {});
+            console.log(geojson.getBounds()._northEast)
+            console.log(geojson.getBounds()._southWest)
+            var longitudeDegreesInput = document.querySelector('input[name="longitudeDegrees[]"]');
+            longitudeDegreesInput.value = '85';
+            console.log(geojson.getBounds(),"geojson.getBounds()")
             map.fitBounds(geojson.getBounds());
         });
     });
@@ -457,11 +481,16 @@ function processCSV(kmlContent) {
 
 
 document.getElementById('toggleFormBtn').addEventListener('click', function () {
+    var selectedVillage = document.getElementById("search_type").value;
+    console.log(selectedVillage,"selectedVillage")
+
+    
     var formContainer = document.getElementById('formContainer');
     formContainer.style.display = (formContainer.style.display === 'none') ? 'block' : 'none';
 });
 
 document.getElementById('closeFormBtn').addEventListener('click', function () {
+
     var formContainer = document.getElementById('formContainer');
     formContainer.style.display = 'none';
 });
@@ -482,7 +511,23 @@ document.getElementById('addRowBtn').addEventListener('click', function () {
 
 // var drawnPolygons = {};
 
+
+
+function convertToDMS(coordinate) {
+    var degrees = Math.floor(coordinate);
+    var minutes = Math.floor((coordinate - degrees) * 60);
+    var seconds = ((coordinate - degrees) * 60 - minutes) * 60;
+    return degrees + "° " + minutes + "' " + seconds.toFixed(2) + '"';
+}
+var latitude = 18.48912177;
+
+
+var latitudeDMS = convertToDMS(latitude);
+
+
 function addCoordinateRow(table) {
+    // var selectedVillage = document.getElementById("search_type").value;
+    // console.log(selectedVillage,"selectedVillage")
     var row = table.insertRow();
     var longitudeDegreesCell = row.insertCell();
     var longitudeMinutesCell = row.insertCell();
@@ -631,10 +676,7 @@ document.getElementById('coordinateForm').addEventListener('submit', function (e
         // Parse DMS strings into decimal degrees
         var parsedLongitude = parseDMS(longitudeDegrees, longitudeMinutes, longitudeSeconds);
         var parsedLatitude = parseDMS(latitudeDegrees, latitudeMinutes, latitudeSeconds);
-
-        // Push the coordinates to the array
         coordinates.push([parsedLatitude, parsedLongitude]);
-        // coordinates.push([parsedLongitude,parsedLatitude ]);
     });
 
     console.log(coordinates, ",coordinates");
@@ -648,8 +690,6 @@ document.getElementById('coordinateForm').addEventListener('submit', function (e
         map.fitBounds(polygon.getBounds());
 
         var polygonId = 'polygon_coors'
-        // polygonCounter++;
-        // drawnPolygons[polygonId] = coordinates;
         drawnPolygons[polygonId] = polygon.toGeoJSON().geometry.coordinates;
 
         console.log(drawnPolygons, "drawnPolygons", "polygonCounter");
@@ -672,13 +712,7 @@ function getSelectedValues1() {
     return selectedValues;
 }
 
-// Example usage
-// console.log(getSelectedValues1());
 
-
-// var initialCqlFilter = getSelectedValues();
-
-// for getting village nale
 let filters = '';
 
 $("#search_type").change(function () {
@@ -694,11 +728,7 @@ function getFilters() {
 
 
 function savevalues() {
-    // console.log(getFilters())
-    // console.log(getSelectedValues1())
-    // console.log(getSelectedValues(),"getSelectedValues")
-    
-    console.log(drawnPolygons, "drawnPolygons")
+
     Object.keys(drawnPolygons).forEach(async function (polygonId) {
         var coordinates = drawnPolygons[polygonId];
         console.log(coordinates,"drawcoordinates")
@@ -707,10 +737,15 @@ function savevalues() {
         var bounds = L.geoJSON(pp).getBounds();
         map.fitBounds(bounds);
         var layers = ["AutoDCR:Revenue_1"];
+        // Aviation_data
+        var layers1 = ["AutoDCR:Aviation_data"];
         var url = "https://portal.geopulsea.com//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=";
         var propertyName = "village_name,TPS_Name,Gut_No,geom";
+        var propertyName1 = "zone,distance,elevation,geom";
         var outputFormat = "application/json";
+        IntersectwithASLM(pp, layers1, url, propertyName1, bounds.toBBoxString(), outputFormat)
         var values =  await IntersectAreaWithPolygon(pp, layers, url, propertyName, bounds.toBBoxString(), outputFormat)
+        // IntersectwithASLM(pp, layers, url, propertyName, bounds.toBBoxString(), outputFormat)
         var cqlFilterget = getSelectedValues()
         const selected_dropdown = JSON.stringify(cqlFilterget)
         const villageName =  JSON.stringify(values);
@@ -751,6 +786,32 @@ function savevalues() {
   
 }
 
+document.getElementById("getinfo").onclick = function() {
+    infovalues()
+};
+function infovalues() {
+    if (Object.keys(drawnPolygons).length === 0) {
+        alert("No coordinates drawn on map.");
+        return; // Exit the function early
+    }
+
+    Object.keys(drawnPolygons).forEach(async function (polygonId) {
+        var coordinates = drawnPolygons[polygonId];
+        console.log(coordinates,"drawcoordinates")
+        var pp = turf.polygon(coordinates);
+        L.geoJSON(pp).addTo(map)
+        var bounds = L.geoJSON(pp).getBounds();
+        map.fitBounds(bounds);
+        var layers1 = ["AutoDCR:Aviation_data"];
+        var url = "https://portal.geopulsea.com//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=";
+        var propertyName1 = "zone,distance,elevation,geom";
+        var outputFormat = "application/json";
+        IntersectwithASLM(pp, layers1, url, propertyName1, bounds.toBBoxString(), outputFormat)
+        console.log("working")
+
+    })
+};
+
 async function IntersectAreaWithPolygon(drawnPolygon, layers, url, propertyName, bounds, outputFormat) {  
     let summaryByVillage = [];
     
@@ -783,6 +844,7 @@ async function IntersectAreaWithPolygon(drawnPolygon, layers, url, propertyName,
                         var properties = layer.feature.properties;
                         var area = turf.area(layer.feature);
                         layer.bindPopup(`Area: ${area.toFixed(2)} sq meters<br>Properties: ${JSON.stringify(properties)}`);
+                        
                     });
                                         intersectedFeatures.forEach(function (feature) {
                         var properties = feature.properties;
@@ -809,4 +871,64 @@ async function IntersectAreaWithPolygon(drawnPolygon, layers, url, propertyName,
 }
 
 
-// 
+
+ function IntersectwithASLM(drawnPolygon, layers, url, propertyName, bounds, outputFormat) {  
+    var distancefromNDA = []
+    var distancefromPuneairport = []
+    let requests = layers.map(function (layerName) {
+        var urlm = url + layerName +
+            "&propertyName=" + propertyName + "&bbox=" +
+            bounds +
+            "&outputFormat=" + outputFormat;
+       
+        return new Promise((resolve, reject) => {
+            $.getJSON(urlm, function (data) {
+                if (data && data.features && data.features.length > 0) {
+                    var intersectedFeatures = [];
+                    data.features.forEach(function (feature) {
+                        var intersectedFeature = turf.intersect(feature, drawnPolygon);
+                        if (intersectedFeature && intersectedFeature.geometry.type !== 'GeometryCollection') {
+                            intersectedFeature.properties = feature.properties;
+                            intersectedFeatures.push(intersectedFeature);
+                            var nearestPoint = turf.nearestPointOnLine(turf.polygonToLine(intersectedFeature.geometry), turf.point([73.779043, 18.472787]));
+                            var distance = turf.distance(turf.point([73.779043, 18.472787]), nearestPoint, { units: 'meters' });
+                            distancefromNDA.push(distance)
+                            var nearestPoint = turf.nearestPointOnLine(turf.polygonToLine(intersectedFeature.geometry), turf.point([73.917901,  18.582915]));
+                            var distance1 = turf.distance(turf.point([73.917901,  18.582915]), nearestPoint, { units: 'meters' });
+                            distancefromPuneairport.push(distance1)
+                            
+                        }
+                    });
+                    var intersectedLayer = L.geoJSON(intersectedFeatures, {
+                        style: {
+                            color: 'red',
+                            weight: 2
+                        }
+                    });
+                    intersectedLayer.addTo(map);
+                    intersectedLayer.eachLayer(function (layer) {
+                        var properties = layer.feature.properties;
+                        var area = turf.area(layer.feature);
+                        layer.bindPopup(`Area: ${area.toFixed(2)} sq meters<br>Zone: ${JSON.stringify(properties.zone)} <br> Distance: ${JSON.stringify(properties.distance)}  <br> Elevation: ${JSON.stringify(properties.elevation)}<br> Distance fromNDA : ${distancefromNDA.map(d => d.toFixed(3))} Meters. <br> Distance fromPune airport : ${distancefromPuneairport.map(d => d.toFixed(3))} Meters.`);
+                        layer.openPopup();
+                    });
+                                        intersectedFeatures.forEach(function (feature) {
+                        var properties = feature.properties;
+                        var villageName = properties.village_name;
+                        var area = turf.area(feature);
+                        properties.area = area;
+                        // summaryByVillage.push(properties);
+                    });
+                    // resolve(summaryByVillage); 
+                } else {
+                    console.log('No valid features found in the response.');
+                    resolve([]); 
+                }
+            }).fail(function() {
+                console.error("Error fetching data for layer: " + layerName);
+                reject(); 
+            });
+        });
+    });
+
+}

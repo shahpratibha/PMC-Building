@@ -143,6 +143,117 @@ var WMSlayers = {
 };
 
 
+let handshaking_codes = [
+    {"name": "Aundh", "code": "ADCR001"},
+    {"name": "BALEWADI", "code": "ADCR002"},
+    {"name": "BANER", "code": "ADCR003"},
+    {"name": "Baner North", "code": "ADCR003a"},
+    {"name": "Baner south", "code": "ADCR003b"},
+    {"name": "Baner West", "code": "ADCR003c"},
+    {"name": "BAWDHAN", "code": "ADCR004"},
+    {"name": "Bopodi", "code": "ADCR005"},
+    {"name": "Erandwana", "code": "ADCR006"},
+    {"name": "Erandwana North", "code": "ADCR006a"},
+    {"name": "Erandwana South", "code": "ADCR006b"},
+    {"name": "Hingne-budruk", "code": "ADCR007"},
+    {"name": "KARVE NAGAR", "code": "ADCR008"},
+    {"name": "Khadki Navi", "code": "ADCR009"},
+    {"name": "KOTHRUD-NORTH", "code": "ADCR010"},
+    {"name": "Kothrud-South", "code": "ADCR011"},
+    {"name": "Pashan", "code": "ADCR012"},
+    {"name": "Shivaji Nagar", "code": "ADCR013"},
+    {"name": "SHIVAJI NAGAR-BHAMBURDA", "code": "ADCR014"},
+    {"name": "SHIVANE", "code": "ADCR015"},
+    {"name": "Shivane North", "code": "ADCR015a"},
+    {"name": "Shivane South", "code": "ADCR015b"},
+    {"name": "Warje", "code": "ADCR016"},
+    {"name": "Ambegaon Budruk-Ext", "code": "ADCR017"},
+    {"name": "Ambegaon Khurd-Ext", "code": "ADCR018"},
+    {"name": "AMBEGAON-BUDRUK", "code": "ADCR019"},
+    {"name": "AMBEGAON-KHURD", "code": "ADCR020"},
+    {"name": "Bhawani Peth", "code": "ADCR021"},
+    {"name": "Bibwewadi-Munjeri", "code": "ADCR022"},
+    {"name": "BUDHWAR PETH", "code": "ADCR023"},
+    {"name": "DHANKWADI", "code": "ADCR024"},
+    {"name": "DHANKWADI-EXT", "code": "ADCR025"},
+    {"name": "Dhanori", "code": "ADCR026"},
+    {"name": "DHANORI-EXT", "code": "ADCR027"},
+    {"name": "Dhayri", "code": "ADCR028"},
+    {"name": "Dhayri-Ext", "code": "ADCR029"},
+    {"name": "Fursungi", "code": "ADCR030"},
+    {"name": "Ganesh Peth", "code": "ADCR031"},
+    {"name": "GANJ PETH", "code": "ADCR032"},
+    {"name": "Ghorpade peth", "code": "ADCR033"},
+    {"name": "Ghorpadi", "code": "ADCR034"},
+    {"name": "Gultekdi", "code": "ADCR035"},
+    {"name": "Gurwar Peth", "code": "ADCR036"},
+    {"name": "Hadapsar", "code": "ADCR037"},
+    {"name": "HADAPSAR-EXT", "code": "ADCR038"},
+    {"name": "HINGANE-KHURD", "code": "ADCR039"},
+    {"name": "Kalas", "code": "ADCR040"},
+    {"name": "KALAS EXT", "code": "ADCR041"},
+    {"name": "KASBA PETH", "code": "ADCR042"},
+    {"name": "KATRAJ", "code": "ADCR043"},
+    {"name": "Katraj Ext", "code": "ADCR044"},
+    {"name": "Kharadi", "code": "ADCR045"},
+    {"name": "Kharadi East", "code": "ADCR045a"},
+    {"name": "Kharadi West", "code": "ADCR045b"},
+    {"name": "Kondhwa-Budruk", "code": "ADCR046"},
+    {"name": "Kondhwa-Budruk North", "code": "ADCR046a"},
+    {"name": "Kondhwa-Budruk South", "code": "ADCR046b"},
+    {"name": "Kondhwa-Khurd", "code": "ADCR047"},
+    {"name": "Kondwa khurd -EXT", "code": "ADCR048"},
+    {"name": "KOREGAON PARK", "code": "ADCR049"},
+    {"name": "KOTHRUD-EXT", "code": "ADCR050"},
+    {"name": "Lohagaon", "code": "ADCR051"},
+    {"name": "Lohagaon North", "code": "ADCR051a"},
+    {"name": "Lohagaon South", "code": "ADCR051b"},
+    {"name": "Lohgaon-Ext", "code": "ADCR052"},
+    {"name": "Lohgaon-Ext North", "code": "ADCR052a"},
+    {"name": "Lohgaon-Ext South", "code": "ADCR052b"},
+    {"name": "LULLANAGAR", "code": "ADCR053"},
+    {"name": "Mahatma Phule peth", "code": "ADCR054"},
+    {"name": "MANGALWAR PETH", "code": "ADCR055"},
+    {"name": "Market Yard", "code": "ADCR056"},
+    {"name": "Mohammadwadi", "code": "ADCR057"},
+    {"name": "Mundhwa", "code": "ADCR058"},
+    {"name": "Mundhwa North", "code": "ADCR058a"},
+    {"name": "Mundhwa South", "code": "ADCR058b"},
+    {"name": "Mundhwa-Keshavnagar", "code": "ADCR059"},
+    {"name": "MUNJERI", "code": "ADCR060"},
+    {"name": "Nana Peth", "code": "ADCR061"},
+    {"name": "NARAYAN PETH", "code": "ADCR062"},
+    {"name": "Navipeth", "code": "ADCR063"},
+    {"name": "Parvati North", "code": "ADCR064"},
+    {"name": "Parvati South", "code": "ADCR065"},
+    {"name": "RASTA PETH", "code": "ADCR066"},
+    {"name": "RAVIWAR PETH", "code": "ADCR067"},
+    {"name": "SADASHIV PETH", "code": "ADCR068"},
+    {"name": "Sadesatara  Nali-Hadapsar", "code": "ADCR069"},
+    {"name": "SANGANWADI TPS", "code": "ADCR070"},
+    {"name": "SHANIWAR PETH", "code": "ADCR071"},
+    {"name": "Shivane-Ext", "code": "ADCR072"},
+    {"name": "Shivane-Uttamnagar", "code": "ADCR073"},
+    {"name": "SHUKRAWAR PETH", "code": "ADCR074"},
+    {"name": "SOMWAR PETH", "code": "ADCR075"},
+    {"name": "Undri", "code": "ADCR076"},
+    {"name": "Undri-Ext", "code": "ADCR077"},
+    {"name": "Urali Devachi", "code": "ADCR078"},
+    {"name": "VADGAON-BUDRUK", "code": "ADCR079"},
+    {"name": "Vadgaon-Khurd", "code": "ADCR080"},
+    {"name": "Vadgaon-Sheri", "code": "ADCR081"},
+    {"name": "VadgaonSheri-ext", "code": "ADCR082"},
+    {"name": "Wanawadi", "code": "ADCR083"},
+    {"name": "Yerawada", "code": "ADCR084"},
+    {"name": "Yevlewadi", "code": "ADCR085"}
+] ;
+
+
+function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+}
+
 var control = new L.control.layers(baseLayers, WMSlayers).addTo(map);
 control.setPosition('topright');
 
@@ -208,6 +319,16 @@ map.on('draw:created', function (e) {
 $(document).ready(function () {
     trials();
 
+   
+    const handshakingCode = getQueryParam('village_name');
+
+    // Get the village_name from the URL
+    const villageEntry = handshaking_codes.find(entry => entry.code === handshakingCode);
+    const village_name = villageEntry ? villageEntry.name : null;
+
+    console.log(village_name);
+
+
     function trials() {
         var geoServerURL = "https://portal.geopulsea.com//geoserver/AutoDCR/wms?service=WFS&version=1.1.0&request=GetFeature&typeName=Revenue_1&propertyName=village_name&outputFormat=application/json";
 
@@ -221,10 +342,90 @@ $(document).ready(function () {
                 var select = document.getElementById("search_type");
                 villageSet.forEach(function (village) {
                     var option = document.createElement("option");
-                    option.text = village;
-                    option.value = village;
+                    option.text = village?.trim();
+                    option.value = village?.trim();
+                    //if village_name == option value set it as selected
                     select.appendChild(option);
                 });
+
+          
+                if (village_name && select) {
+                    select.value = village_name;
+                    var Village_name = 'village_name'
+                    let filters = `${Village_name} = '${village_name}'`;
+                
+                    FitbouCustomiseRevenue(filters)
+                    Revenue_Layer.setParams({
+                        CQL_FILTER: filters,
+                        maxZoom: 19.5,
+                        styles: "Highlight_polygon"
+                    }).addTo(map);
+                    
+                    function getvalues(callback) {
+                        var geoServerURL =
+                            "https://portal.geopulsea.com//geoserver/AutoDCR/wms?service=WFS&version=1.1.0&request=GetFeature&typeName=Revenue_1&propertyName=Gut_No&outputFormat=application/json";
+
+                        if (filters) {
+                            geoServerURL += "&CQL_FILTER=" + encodeURIComponent(filters);
+                        }
+
+                        $.getJSON(geoServerURL, function (data) {
+                            var gutvalues = new Set();
+
+                            // Populate the Set with gut numbers
+                            $.each(data.features, function (index, feature) {
+                                var gutss = feature.properties.Gut_No;
+                                gutvalues.add(gutss);
+                            });
+                            var Uniqueguts = Array.from(gutvalues);
+                            if (callback && typeof callback === "function") {
+                                callback(Uniqueguts);
+                            }
+                        });
+                    }
+                
+                    getvalues(function (Uniqueguts) {
+                        console.log(Uniqueguts, "Uniqueguts");
+                
+                        var stateList = $('#stateList');
+                        stateList.empty();
+                        // console.log(stateList,"stateList")
+                        _.each(Uniqueguts, function (state) {
+                            var listItem = $('<li><input name="' + state + '" type="checkbox"><label for="' + state + '">' + state + '</label></li>');
+                            stateList.append(listItem);
+                        });
+                
+                        // Events
+                        $('.dropdown-container')
+                            .on('click', '.dropdown-button', function () {
+                                $(this).siblings('.dropdown-list').toggle();
+                            })
+                            .on('input', '.dropdown-search', function () {
+                                var target = $(this);
+                                var dropdownList = target.closest('.dropdown-list');
+                                var search = target.val().toLowerCase();
+                
+                                if (!search) {
+                                    dropdownList.find('li').show();
+                                    return false;
+                                }
+                
+                                dropdownList.find('li').each(function () {
+                                    var text = $(this).text().toLowerCase();
+                                    var match = text.indexOf(search) > -1;
+                                    $(this).toggle(match);
+                                });
+                            })
+                            .on('change', '[type="checkbox"]', function () {
+                                var container = $(this).closest('.dropdown-container');
+                                var numChecked = container.find('[type="checkbox"]:checked').length;
+                                container.find('.quantity').text(numChecked || 'Any');
+                            });
+                
+                
+                    });
+                }
+              
             })
             .fail(function (jqxhr, textStatus, error) {
                 var err = textStatus + ", " + error;
@@ -249,12 +450,10 @@ $("#search_type").change(function () {
 
     function getvalues(callback) {
         var geoServerURL =
-            "https://portal.geopulsea.com//geoserver/AutoDCR/wms?service=WFS&version=1.1.0&request=GetFeature&typeName=Revenue_1&propertyName=Gut_No&outputFormat=application/json";
-
-        if (filters) {
+            "https://portal.geopulsea.com//geoserver/AutoDCR/wms?service=WFS&version=1.1.0&request=GetFeature&typeName=Revenue_1&propertyName=Gut_No&outputFormat=application/json";        if (filters) {
             geoServerURL += "&CQL_FILTER=" + encodeURIComponent(filters);
         }
-
+        
         $.getJSON(geoServerURL, function (data) {
             var gutvalues = new Set();
 

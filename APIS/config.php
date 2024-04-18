@@ -1,6 +1,6 @@
 <?php
 $host = 'database-1.c01x1jtcm1ms.ap-south-1.rds.amazonaws.com';
-$dbname = 'postgres';
+$dbname = 'autodcr';
 $username = 'postgres';
 $password = 'anup12345';
 

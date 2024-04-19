@@ -315,12 +315,14 @@ map.on('draw:created', function (e) {
 });
 
 
+const handshakingCode = getQueryParam('village_name');
+const token = getQueryParam('TOKEN');
+
 
 $(document).ready(function () {
     trials();
 
    
-    const handshakingCode = getQueryParam('village_name');
 
     // Get the village_name from the URL
     const villageEntry = handshaking_codes.find(entry => entry.code === handshakingCode);
@@ -385,8 +387,7 @@ $(document).ready(function () {
                     }
                 
                     getvalues(function (Uniqueguts) {
-                        console.log(Uniqueguts, "Uniqueguts");
-                
+                    
                         var stateList = $('#stateList');
                         stateList.empty();
                         // console.log(stateList,"stateList")
@@ -453,7 +454,7 @@ $("#search_type").change(function () {
             "https://portal.geopulsea.com//geoserver/AutoDCR/wms?service=WFS&version=1.1.0&request=GetFeature&typeName=Revenue_1&propertyName=Gut_No&outputFormat=application/json";        if (filters) {
             geoServerURL += "&CQL_FILTER=" + encodeURIComponent(filters);
         }
-        
+
         $.getJSON(geoServerURL, function (data) {
             var gutvalues = new Set();
 
@@ -983,7 +984,7 @@ document.getElementById('coordinateForm').addEventListener('submit', function (e
         coordinates.push([parsedLatitude, parsedLongitude]);
     });
 
-    console.log(coordinates, ",coordinates");
+
     markershow = [];
     // Add markers to the map
     if (coordinates.length < 4) {
@@ -1035,7 +1036,7 @@ function savevalues() {
 
     Object.keys(drawnPolygons).forEach(async function (polygonId) {
         var coordinates = drawnPolygons[polygonId];
-        console.log(coordinates,"drawcoordinates")
+        // console.log(coordinates,"drawcoordinates")
         var pp = turf.polygon(coordinates);
         L.geoJSON(pp).addTo(map)
         var bounds = L.geoJSON(pp).getBounds();
@@ -1056,7 +1057,7 @@ function savevalues() {
         const selected_guts = JSON.stringify(getSelectedValues1());
         const selected_village = JSON.stringify(getFilters());
         const coordinates1= coordinates[0].map(coord => [coord[0], coord[1]]);
-        console.log(cqlFilterget,"cqlFilterget",selected_dropdown,"selected_dropdown",villageName,"villageName",selected_guts,"selected_guts",selected_village,"selected_village")
+        // console.log(cqlFilterget,"cqlFilterget",selected_dropdown,"selected_dropdown",villageName,"villageName",selected_guts,"selected_guts",selected_village,"selected_village")
 
         $.ajax({
             type: "POST",
@@ -1075,9 +1076,9 @@ function savevalues() {
                 console.log("Coordinates saved successfully");
                 localStorage.setItem('lastInsertedPlotBoundaryId', response.data.id);
 
-                if(response.data.id != undefined){
-                   window.location.href = 'data.html';
-                }
+                // if(response.data.id != undefined){
+                //    window.location.href = 'data.html';
+                // }
                 
                 
             },
@@ -1086,6 +1087,53 @@ function savevalues() {
             }
         });
 
+        
+   
+		$.ajax({
+            url: ' http://115.124.100.250/AutoDCR.Integration/GisExim.svc/getPlotGISDetails',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                Token: token,
+                Parcel: {
+                    Location: [
+                        {
+                            LocationCode: handshakingCode,
+                            SurveyNo: selected_guts,
+                            PlotNo: '',
+                            CTS: '',
+                            Peth: '',
+                        },
+                    ],
+                    //blank
+                    LandUseZone: '',
+                    PlotGeoJSON: {
+                        type: 'Feature',
+                        properties: {
+                            PolygonKey: '8650',
+                            PolygonArea: '493.74',
+                            Centroid: [73.941016, 18.508117],
+                        },
+                        geometry: {
+                            type: 'Polygon',
+                            coordinates: [coordinates1],
+                        },
+                    },
+                    Buildings: [],
+                    NOCDocuments: [],
+                },
+            }),
+            success: function (response) {
+                console.log('API response received:', response);
+                   if(response.Status){
+                   window.location.href = 'data.html';
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error('Error calling API:', xhr.responseText);
+            },
+        });
+    
     });
   
 }

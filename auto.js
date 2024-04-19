@@ -1,7 +1,7 @@
 
 var map, geojson;
-const API_URL = "https://iwmsgis.pmc.gov.in/geopulse/autodcr/";
-// const API_URL = "http://localhost/PMC-Project/";
+// const API_URL = "https://iwmsgis.pmc.gov.in/geopulse/autodcr/";
+const API_URL = "http://localhost/PMC/autodcr";
 
 // Add Basemap
 var map = L.map("map", {

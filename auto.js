@@ -39,18 +39,6 @@ var Esri_WorldImagery = L.tileLayer(
 );
 var baseLayers = {};
 
-
-var Revenue_Layer = L.tileLayer
-    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
-        layers: "Revenue_1",
-        format: "image/png",
-        transparent: true,
-        tiled: true,
-        version: "1.1.0",
-        // attribution: "Revenue",
-        opacity: 1,
-    });
-
 // .addTo(map);
 
 
@@ -66,6 +54,22 @@ var Revenue_Layer1 = L.tileLayer
         opacity: 1,
     });
 
+
+
+
+    var Revenue_Layer = L.tileLayer
+    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+        layers: "Revenue_1",
+        format: "image/png",
+        transparent: true,
+        tiled: true,
+        version: "1.1.0",
+        // attribution: "Revenue",
+        opacity: 1,
+    });
+
+
+
 var PLU_Layer = L.tileLayer
     .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
         layers: "PLU_Ward",
@@ -76,6 +80,7 @@ var PLU_Layer = L.tileLayer
         // attribution: "Revenue",
         opacity: 1,
     });
+
 
 var DPRoad_Layer = L.tileLayer
     .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
@@ -129,16 +134,12 @@ var WMSlayers = {
     "OSM": osm,
     "Esri": Esri_WorldImagery,
     "Satellite": googleSat,
-
     Boundary: Boundary_Layer,
     Aviation: aviation,
     Village: Village_Boundary,
-    Revenue: Revenue_Layer,
+    Revenue: Revenue_Layer1,
     PLU: PLU_Layer,
     DPRoad: DPRoad_Layer,
-
-
-
 
 };
 
@@ -247,8 +248,6 @@ let handshaking_codes = [
     {"AutoDCR_Name": "Yerawada", "code": "ADCR084", "name": "YERWADA"},
     {"AutoDCR_Name": "Yevlewadi", "code": "ADCR085", "name": "Yevlewadi"}
 ] ;
-
-
 function getQueryParam(param) {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(param);
@@ -356,13 +355,15 @@ $(document).ready(function () {
                     select.value = village_name;
                     var Village_name = 'village_name'
                     let filters = `${Village_name} = '${village_name}'`;
+                    
 
                     FitbouCustomiseRevenue(filters)
                     Revenue_Layer.setParams({
                         CQL_FILTER: filters,
                         maxZoom: 19.5,
                         styles: "Highlight_polygon"
-                    }).addTo(map);
+                    });
+                    Revenue_Layer.addTo(map).bringToFront();
 
                     function getvalues(callback) {
                         if (!filters.trim()) {
@@ -457,7 +458,8 @@ $("#search_type").change(function () {
         CQL_FILTER: filters,
         maxZoom: 19.5,
         styles: "Highlight_polygon"
-    }).addTo(map);
+    });
+    Revenue_Layer.addTo(map).bringToFront();;
 
     function getvalues(callback) {
 
@@ -547,7 +549,8 @@ $(document).on('change', '#stateList input[type="checkbox"]', function () {
         CQL_FILTER: cqlFilter,
         maxZoom: 23,
         styles: "Highlight_polygon1"
-    }).addTo(map).bringToFront();
+    });
+    Revenue_Layer1.addTo(map).bringToFront();
 });
 
 
@@ -1072,22 +1075,18 @@ function savevalues() {
         var bounds = L.geoJSON(pp).getBounds();
         map.fitBounds(bounds);
         var layers = ["AutoDCR:Revenue_1"];
-        // Aviation_data
-        // var layers1 = ["AutoDCR:Aviation_data"];
+    
         var url = "https://portal.geopulsea.com//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=";
         var propertyName = "village_name,TPS_Name,Gut_No,geom";
-        // var propertyName1 = "zone,distance,elevation,geom";
         var outputFormat = "application/json";
-        // IntersectwithASLM(pp, layers1, url, propertyName1, bounds.toBBoxString(), outputFormat)
         var values = await IntersectAreaWithPolygon(pp, layers, url, propertyName, bounds.toBBoxString(), outputFormat)
-        // IntersectwithASLM(pp, layers, url, propertyName, bounds.toBBoxString(), outputFormat)
         var cqlFilterget = getSelectedValues()
         const selected_dropdown = JSON.stringify(cqlFilterget)
         const villageName = JSON.stringify(values);
         const selected_guts = JSON.stringify(getSelectedValues1());
         const selected_village = JSON.stringify(getFilters());
         const coordinates1 = coordinates[0].map(coord => [coord[0], coord[1]]);
-        // console.log(cqlFilterget,"cqlFilterget",selected_dropdown,"selected_dropdown",villageName,"villageName",selected_guts,"selected_guts",selected_village,"selected_village")
+        console.log(cqlFilterget,"cqlFilterget",selected_dropdown,"selected_dropdown",villageName,"villageName",selected_guts,"selected_guts",selected_village,"selected_village")
 
         $.ajax({
             type: "POST",
@@ -1106,7 +1105,7 @@ function savevalues() {
 
                 console.log("Coordinates saved successfully");
                 localStorage.setItem('lastInsertedPlotBoundaryId', response.data.id);
-
+                console.log("localstorage")
                 // if(response.data.id != undefined){
                    window.location.href = 'data.html';
                 // }

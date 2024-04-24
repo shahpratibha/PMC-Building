@@ -1,7 +1,7 @@
 
 var map, geojson;
-const API_URL = "https://iwmsgis.pmc.gov.in/geopulse/autodcr/";
-// const API_URL = "http://localhost/PMC/autodcr";
+// const API_URL = "https://iwmsgis.pmc.gov.in/geopulse/autodcr/";
+const API_URL = "http://localhost/PMC/autodcr";
 
 // Add Basemap
 var map = L.map("map", {
@@ -35,7 +35,7 @@ var Esri_WorldImagery = L.tileLayer(
     "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
     {
         maxZoom: 20,
-      }
+    }
 );
 var baseLayers = {};
 
@@ -122,7 +122,7 @@ var aviation = L.tileLayer
         // attribution: "Revenue",
         opacity: 1,
     });
-    // .addTo(map);
+// .addTo(map);
 
 
 var WMSlayers = {
@@ -131,122 +131,122 @@ var WMSlayers = {
     "Satellite": googleSat,
 
     Boundary: Boundary_Layer,
-    Aviation:aviation,
+    Aviation: aviation,
     Village: Village_Boundary,
     Revenue: Revenue_Layer,
     PLU: PLU_Layer,
     DPRoad: DPRoad_Layer,
-    
-    
+
+
 
 
 };
 
 
 let handshaking_codes = [
-    {"name": "Aundh", "code": "ADCR001"},
-    {"name": "BALEWADI", "code": "ADCR002"},
-    {"name": "BANER", "code": "ADCR003"},
-    {"name": "Baner North", "code": "ADCR003a"},
-    {"name": "Baner south", "code": "ADCR003b"},
-    {"name": "Baner West", "code": "ADCR003c"},
-    {"name": "BAWDHAN", "code": "ADCR004"},
-    {"name": "Bopodi", "code": "ADCR005"},
-    {"name": "Erandwana", "code": "ADCR006"},
-    {"name": "Erandwana North", "code": "ADCR006a"},
-    {"name": "Erandwana South", "code": "ADCR006b"},
-    {"name": "Hingne-budruk", "code": "ADCR007"},
-    {"name": "KARVE NAGAR", "code": "ADCR008"},
-    {"name": "Khadki Navi", "code": "ADCR009"},
-    {"name": "KOTHRUD-NORTH", "code": "ADCR010"},
-    {"name": "Kothrud-South", "code": "ADCR011"},
-    {"name": "Pashan", "code": "ADCR012"},
-    {"name": "Shivaji Nagar", "code": "ADCR013"},
-    {"name": "SHIVAJI NAGAR-BHAMBURDA", "code": "ADCR014"},
-    {"name": "SHIVANE", "code": "ADCR015"},
-    {"name": "Shivane North", "code": "ADCR015a"},
-    {"name": "Shivane South", "code": "ADCR015b"},
-    {"name": "Warje", "code": "ADCR016"},
-    {"name": "Ambegaon Budruk-Ext", "code": "ADCR017"},
-    {"name": "Ambegaon Khurd-Ext", "code": "ADCR018"},
-    {"name": "AMBEGAON-BUDRUK", "code": "ADCR019"},
-    {"name": "AMBEGAON-KHURD", "code": "ADCR020"},
-    {"name": "Bhawani Peth", "code": "ADCR021"},
-    {"name": "Bibwewadi-Munjeri", "code": "ADCR022"},
-    {"name": "BUDHWAR PETH", "code": "ADCR023"},
-    {"name": "DHANKWADI", "code": "ADCR024"},
-    {"name": "DHANKWADI-EXT", "code": "ADCR025"},
-    {"name": "Dhanori", "code": "ADCR026"},
-    {"name": "DHANORI-EXT", "code": "ADCR027"},
-    {"name": "Dhayri", "code": "ADCR028"},
-    {"name": "Dhayri-Ext", "code": "ADCR029"},
-    {"name": "Fursungi", "code": "ADCR030"},
-    {"name": "Ganesh Peth", "code": "ADCR031"},
-    {"name": "GANJ PETH", "code": "ADCR032"},
-    {"name": "Ghorpade peth", "code": "ADCR033"},
-    {"name": "Ghorpadi", "code": "ADCR034"},
-    {"name": "Gultekdi", "code": "ADCR035"},
-    {"name": "Gurwar Peth", "code": "ADCR036"},
-    {"name": "Hadapsar", "code": "ADCR037"},
-    {"name": "HADAPSAR-EXT", "code": "ADCR038"},
-    {"name": "HINGANE-KHURD", "code": "ADCR039"},
-    {"name": "Kalas", "code": "ADCR040"},
-    {"name": "KALAS EXT", "code": "ADCR041"},
-    {"name": "KASBA PETH", "code": "ADCR042"},
-    {"name": "KATRAJ", "code": "ADCR043"},
-    {"name": "Katraj Ext", "code": "ADCR044"},
-    {"name": "Kharadi", "code": "ADCR045"},
-    {"name": "Kharadi East", "code": "ADCR045a"},
-    {"name": "Kharadi West", "code": "ADCR045b"},
-    {"name": "Kondhwa-Budruk", "code": "ADCR046"},
-    {"name": "Kondhwa-Budruk North", "code": "ADCR046a"},
-    {"name": "Kondhwa-Budruk South", "code": "ADCR046b"},
-    {"name": "Kondhwa-Khurd", "code": "ADCR047"},
-    {"name": "Kondwa khurd -EXT", "code": "ADCR048"},
-    {"name": "KOREGAON PARK", "code": "ADCR049"},
-    {"name": "KOTHRUD-EXT", "code": "ADCR050"},
-    {"name": "Lohagaon", "code": "ADCR051"},
-    {"name": "Lohagaon North", "code": "ADCR051a"},
-    {"name": "Lohagaon South", "code": "ADCR051b"},
-    {"name": "Lohgaon-Ext", "code": "ADCR052"},
-    {"name": "Lohgaon-Ext North", "code": "ADCR052a"},
-    {"name": "Lohgaon-Ext South", "code": "ADCR052b"},
-    {"name": "LULLANAGAR", "code": "ADCR053"},
-    {"name": "Mahatma Phule peth", "code": "ADCR054"},
-    {"name": "MANGALWAR PETH", "code": "ADCR055"},
-    {"name": "Market Yard", "code": "ADCR056"},
-    {"name": "Mohammadwadi", "code": "ADCR057"},
-    {"name": "Mundhwa", "code": "ADCR058"},
-    {"name": "Mundhwa North", "code": "ADCR058a"},
-    {"name": "Mundhwa South", "code": "ADCR058b"},
-    {"name": "Mundhwa-Keshavnagar", "code": "ADCR059"},
-    {"name": "MUNJERI", "code": "ADCR060"},
-    {"name": "Nana Peth", "code": "ADCR061"},
-    {"name": "NARAYAN PETH", "code": "ADCR062"},
-    {"name": "Navipeth", "code": "ADCR063"},
-    {"name": "Parvati North", "code": "ADCR064"},
-    {"name": "Parvati South", "code": "ADCR065"},
-    {"name": "RASTA PETH", "code": "ADCR066"},
-    {"name": "RAVIWAR PETH", "code": "ADCR067"},
-    {"name": "SADASHIV PETH", "code": "ADCR068"},
-    {"name": "Sadesatara  Nali-Hadapsar", "code": "ADCR069"},
-    {"name": "SANGANWADI TPS", "code": "ADCR070"},
-    {"name": "SHANIWAR PETH", "code": "ADCR071"},
-    {"name": "Shivane-Ext", "code": "ADCR072"},
-    {"name": "Shivane-Uttamnagar", "code": "ADCR073"},
-    {"name": "SHUKRAWAR PETH", "code": "ADCR074"},
-    {"name": "SOMWAR PETH", "code": "ADCR075"},
-    {"name": "Undri", "code": "ADCR076"},
-    {"name": "Undri-Ext", "code": "ADCR077"},
-    {"name": "Urali Devachi", "code": "ADCR078"},
-    {"name": "VADGAON-BUDRUK", "code": "ADCR079"},
-    {"name": "Vadgaon-Khurd", "code": "ADCR080"},
-    {"name": "Vadgaon-Sheri", "code": "ADCR081"},
-    {"name": "VadgaonSheri-ext", "code": "ADCR082"},
-    {"name": "Wanawadi", "code": "ADCR083"},
-    {"name": "Yerawada", "code": "ADCR084"},
-    {"name": "Yevlewadi", "code": "ADCR085"}
-] ;
+    { "name": "Aundh", "code": "ADCR001", "AUTODCR_Name": "Aundh" },
+    { "name": "BALEWADI", "code": "ADCR002" },
+    { "name": "BANER", "code": "ADCR003" },
+    { "name": "Baner North", "code": "ADCR003a" },
+    { "name": "Baner south", "code": "ADCR003b" },
+    { "name": "Baner West", "code": "ADCR003c" },
+    { "name": "BAWDHAN", "code": "ADCR004" },
+    { "name": "Bopodi", "code": "ADCR005" },
+    { "name": "Erandwana", "code": "ADCR006" },
+    { "name": "Erandwana North", "code": "ADCR006a" },
+    { "name": "Erandwana South", "code": "ADCR006b" },
+    { "name": "Hingne-budruk", "code": "ADCR007" },
+    { "name": "KARVE NAGAR", "code": "ADCR008" },
+    { "name": "Khadki Navi", "code": "ADCR009" },
+    { "name": "KOTHRUD-NORTH", "code": "ADCR010" },
+    { "name": "Kothrud-South", "code": "ADCR011" },
+    { "name": "Pashan", "code": "ADCR012" },
+    { "name": "Shivaji Nagar", "code": "ADCR013" },
+    { "name": "SHIVAJI NAGAR-BHAMBURDA", "code": "ADCR014" },
+    { "name": "SHIVANE", "code": "ADCR015" },
+    { "name": "Shivane North", "code": "ADCR015a" },
+    { "name": "Shivane South", "code": "ADCR015b" },
+    { "name": "Warje", "code": "ADCR016" },
+    { "name": "Ambegaon Budruk-Ext", "code": "ADCR017" },
+    { "name": "Ambegaon Khurd-Ext", "code": "ADCR018" },
+    { "name": "AMBEGAON-BUDRUK", "code": "ADCR019", },
+    { "name": "AMBEGAON-KHURD", "code": "ADCR020" },
+    { "name": "Bhawani Peth", "code": "ADCR021" },
+    { "name": "Bibwewadi-Munjeri", "code": "ADCR022" },
+    { "name": "BUDHWAR PETH", "code": "ADCR023" },
+    { "name": "DHANKWADI", "code": "ADCR024" },
+    { "name": "DHANKWADI-EXT", "code": "ADCR025" },
+    { "name": "Dhanori", "code": "ADCR026" },
+    { "name": "DHANORI-EXT", "code": "ADCR027" },
+    { "name": "Dhayri", "code": "ADCR028" },
+    { "name": "Dhayri-Ext", "code": "ADCR029" },
+    { "name": "Fursungi", "code": "ADCR030" },
+    { "name": "Ganesh Peth", "code": "ADCR031" },
+    { "name": "GANJ PETH", "code": "ADCR032" },
+    { "name": "Ghorpade peth", "code": "ADCR033" },
+    { "name": "Ghorpadi", "code": "ADCR034" },
+    { "name": "Gultekdi", "code": "ADCR035" },
+    { "name": "Gurwar Peth", "code": "ADCR036" },
+    { "name": "Hadapsar", "code": "ADCR037" },
+    { "name": "HADAPSAR-EXT", "code": "ADCR038" },
+    { "name": "HINGANE-KHURD", "code": "ADCR039" },
+    { "name": "Kalas", "code": "ADCR040" },
+    { "name": "KALAS EXT", "code": "ADCR041" },
+    { "name": "KASBA PETH", "code": "ADCR042" },
+    { "name": "KATRAJ", "code": "ADCR043" },
+    { "name": "Katraj Ext", "code": "ADCR044" },
+    { "name": "Kharadi", "code": "ADCR045" },
+    { "name": "Kharadi East", "code": "ADCR045a" },
+    { "name": "Kharadi West", "code": "ADCR045b" },
+    { "name": "Kondhwa-Budruk", "code": "ADCR046" },
+    { "name": "Kondhwa-Budruk North", "code": "ADCR046a" },
+    { "name": "Kondhwa-Budruk South", "code": "ADCR046b" },
+    { "name": "Kondhwa-Khurd", "code": "ADCR047" },
+    { "name": "Kondwa khurd -EXT", "code": "ADCR048" },
+    { "name": "KOREGAON PARK", "code": "ADCR049" },
+    { "name": "KOTHRUD-EXT", "code": "ADCR050" },
+    { "name": "Lohagaon", "code": "ADCR051" },
+    { "name": "Lohagaon North", "code": "ADCR051a" },
+    { "name": "Lohagaon South", "code": "ADCR051b" },
+    { "name": "Lohgaon-Ext", "code": "ADCR052" },
+    { "name": "Lohgaon-Ext North", "code": "ADCR052a" },
+    { "name": "Lohgaon-Ext South", "code": "ADCR052b" },
+    { "name": "LULLANAGAR", "code": "ADCR053" },
+    { "name": "Mahatma Phule peth", "code": "ADCR054" },
+    { "name": "MANGALWAR PETH", "code": "ADCR055" },
+    { "name": "Market Yard", "code": "ADCR056" },
+    { "name": "Mohammadwadi", "code": "ADCR057" },
+    { "name": "Mundhwa", "code": "ADCR058" },
+    { "name": "Mundhwa North", "code": "ADCR058a" },
+    { "name": "Mundhwa South", "code": "ADCR058b" },
+    { "name": "Mundhwa-Keshavnagar", "code": "ADCR059" },
+    { "name": "MUNJERI", "code": "ADCR060" },
+    { "name": "Nana Peth", "code": "ADCR061" },
+    { "name": "NARAYAN PETH", "code": "ADCR062" },
+    { "name": "Navipeth", "code": "ADCR063" },
+    { "name": "Parvati North", "code": "ADCR064" },
+    { "name": "Parvati South", "code": "ADCR065" },
+    { "name": "RASTA PETH", "code": "ADCR066" },
+    { "name": "RAVIWAR PETH", "code": "ADCR067" },
+    { "name": "SADASHIV PETH", "code": "ADCR068" },
+    { "name": "Sadesatara  Nali-Hadapsar", "code": "ADCR069" },
+    { "name": "SANGANWADI TPS", "code": "ADCR070" },
+    { "name": "SHANIWAR PETH", "code": "ADCR071" },
+    { "name": "Shivane-Ext", "code": "ADCR072" },
+    { "name": "Shivane-Uttamnagar", "code": "ADCR073" },
+    { "name": "SHUKRAWAR PETH", "code": "ADCR074" },
+    { "name": "SOMWAR PETH", "code": "ADCR075" },
+    { "name": "Undri", "code": "ADCR076" },
+    { "name": "Undri-Ext", "code": "ADCR077" },
+    { "name": "Urali Devachi", "code": "ADCR078" },
+    { "name": "VADGAON-BUDRUK", "code": "ADCR079" },
+    { "name": "Vadgaon-Khurd", "code": "ADCR080" },
+    { "name": "Vadgaon-Sheri", "code": "ADCR081" },
+    { "name": "VadgaonSheri-ext", "code": "ADCR082" },
+    { "name": "Wanawadi", "code": "ADCR083" },
+    { "name": "Yerawada", "code": "ADCR084" },
+    { "name": "Yevlewadi", "code": "ADCR085" }
+];
 
 
 function getQueryParam(param) {
@@ -308,7 +308,7 @@ map.on('draw:created', function (e) {
         var polygonId = 'polygon_draw'
 
         drawnPolygons[polygonId] = layer.toGeoJSON().geometry.coordinates;
-      
+
     } else {
         console.log('Drawn geometry is not a valid Polygon.');
     }
@@ -317,12 +317,13 @@ map.on('draw:created', function (e) {
 
 const handshakingCode = getQueryParam('village_name');
 const token = getQueryParam('TOKEN');
+console.log(token, "token")
 
 
 $(document).ready(function () {
     trials();
 
-   
+
 
     // Get the village_name from the URL
     const villageEntry = handshaking_codes.find(entry => entry.code === handshakingCode);
@@ -350,19 +351,19 @@ $(document).ready(function () {
                     select.appendChild(option);
                 });
 
-          
+
                 if (village_name && select) {
                     select.value = village_name;
                     var Village_name = 'village_name'
                     let filters = `${Village_name} = '${village_name}'`;
-                
+
                     FitbouCustomiseRevenue(filters)
                     Revenue_Layer.setParams({
                         CQL_FILTER: filters,
                         maxZoom: 19.5,
                         styles: "Highlight_polygon"
                     }).addTo(map);
-                    
+
                     function getvalues(callback) {
                         var geoServerURL =
                             "https://portal.geopulsea.com//geoserver/AutoDCR/wms?service=WFS&version=1.1.0&request=GetFeature&typeName=Revenue_1&propertyName=Gut_No&outputFormat=application/json";
@@ -385,9 +386,9 @@ $(document).ready(function () {
                             }
                         });
                     }
-                
+
                     getvalues(function (Uniqueguts) {
-                    
+
                         var stateList = $('#stateList');
                         stateList.empty();
                         // console.log(stateList,"stateList")
@@ -395,7 +396,7 @@ $(document).ready(function () {
                             var listItem = $('<li><input name="' + state + '" type="checkbox"><label for="' + state + '">' + state + '</label></li>');
                             stateList.append(listItem);
                         });
-                
+
                         // Events
                         $('.dropdown-container')
                             .on('click', '.dropdown-button', function () {
@@ -405,12 +406,12 @@ $(document).ready(function () {
                                 var target = $(this);
                                 var dropdownList = target.closest('.dropdown-list');
                                 var search = target.val().toLowerCase();
-                
+
                                 if (!search) {
                                     dropdownList.find('li').show();
                                     return false;
                                 }
-                
+
                                 dropdownList.find('li').each(function () {
                                     var text = $(this).text().toLowerCase();
                                     var match = text.indexOf(search) > -1;
@@ -422,11 +423,11 @@ $(document).ready(function () {
                                 var numChecked = container.find('[type="checkbox"]:checked').length;
                                 container.find('.quantity').text(numChecked || 'Any');
                             });
-                
-                
+
+
                     });
                 }
-              
+
             })
             .fail(function (jqxhr, textStatus, error) {
                 var err = textStatus + ", " + error;
@@ -451,9 +452,9 @@ $("#search_type").change(function () {
 
     function getvalues(callback) {
         var geoServerURL =
-            "https://portal.geopulsea.com//geoserver/AutoDCR/wms?service=WFS&version=1.1.0&request=GetFeature&typeName=Revenue_1&propertyName=Gut_No&outputFormat=application/json";        if (filters) {
-            geoServerURL += "&CQL_FILTER=" + encodeURIComponent(filters);
-        }
+            "https://portal.geopulsea.com//geoserver/AutoDCR/wms?service=WFS&version=1.1.0&request=GetFeature&typeName=Revenue_1&propertyName=Gut_No&outputFormat=application/json"; if (filters) {
+                geoServerURL += "&CQL_FILTER=" + encodeURIComponent(filters);
+            }
 
         $.getJSON(geoServerURL, function (data) {
             var gutvalues = new Set();
@@ -511,35 +512,44 @@ $("#search_type").change(function () {
 
 
     });
-
-
-    $(document).on('change', '#stateList input[type="checkbox"]', function () {
-        var cqlFilter = getSelectedValues();
-        // console.log(cqlFilter, "Selected filters");
-
-        // Update the map with the new filter
-        FitbouCustomiseRevenue(cqlFilter);
-        Revenue_Layer1.setParams({
-            CQL_FILTER: cqlFilter,
-            maxZoom: 23,
-            styles: "Highlight_polygon1"
-        }).addTo(map).bringToFront();
-    });
-
-
-    // Function to get the selected checkbox values and construct the CQL filter
-
-    
-
     var initialCqlFilter = getSelectedValues();
-
-
-
 
 })
 
+$(document).on('change', '#stateList input[type="checkbox"]', function () {
+    console.log("hehehe")
+    getFiltersval()
+    var cqlFilter = getSelectedValues();
+    console.log(cqlFilter, "Selected filters");
+
+    // Update the map with the new filter
+    FitbouCustomiseRevenue(cqlFilter);
+    Revenue_Layer1.setParams({
+        CQL_FILTER: cqlFilter,
+        maxZoom: 23,
+        styles: "Highlight_polygon1"
+    }).addTo(map).bringToFront();
+});
+
+
+// Function to get the selected checkbox values and construct the CQL filter
+
+function getFiltersval() {
+    const villageEntry = handshaking_codes.find(entry => entry.code === handshakingCode);
+    const selectedValueVillage = villageEntry ? villageEntry.name : null;
+
+    // var selectedValueVillage = village_name
+    var Village_name = 'village_name'
+    filters = `${Village_name} = '${selectedValueVillage}'`;
+    console.log(filters, "filtersjjjjjjjjjjjjjjj")
+}
+
+
+
 function getSelectedValues() {
     var selectedValues = [];
+
+    console.log("pass")
     $('input[type="checkbox"]:checked').each(function () {
         var name = $(this).attr('name');
         if (name !== undefined) {
@@ -596,15 +606,15 @@ function FitbouCustomiseRevenue(filter) {
             var latitudeMinutesInput = document.querySelector('input[name="latitudeMinutes[]"]');
             var longitudeDegreesInput = document.querySelector('input[name="longitudeDegrees[]"]');
             var longitudeMinutesInput = document.querySelector('input[name="longitudeMinutes[]"]');
-            
+
 
             // Update latitude input field
             latsouth = parseInt(Math.floor(geojson.getBounds()._southWest.lat))
             latnorth = parseInt(Math.floor(geojson.getBounds()._northEast.lat))
-            latsouthM = parseInt(Math.floor((geojson.getBounds()._southWest.lat % 1)*60))
-            latnorthM = parseInt(Math.floor((geojson.getBounds()._northEast.lat % 1)*60))
+            latsouthM = parseInt(Math.floor((geojson.getBounds()._southWest.lat % 1) * 60))
+            latnorthM = parseInt(Math.floor((geojson.getBounds()._northEast.lat % 1) * 60))
 
-           
+
             // for degree upadates lattitude
             if (latsouth === latnorth) {
                 // console.log("heeee");
@@ -618,7 +628,7 @@ function FitbouCustomiseRevenue(filter) {
                 latitudeDegreesInput.setAttribute('min', latsouth);
                 latitudeDegreesInput.setAttribute('max', latnorth);
             }
-            
+
             // for minutes update only latitude
 
             if (latsouthM === latnorthM) {
@@ -637,44 +647,44 @@ function FitbouCustomiseRevenue(filter) {
 
             lngsouth = parseInt(Math.floor(geojson.getBounds()._southWest.lng))
             lngnorth = parseInt(Math.floor(geojson.getBounds()._northEast.lng))
-            lngsouthM = parseInt(Math.floor((geojson.getBounds()._southWest.lng % 1)*60))
-            lngnorthM = parseInt(Math.floor((geojson.getBounds()._northEast.lng % 1)*60))
-            console.log(lngsouth,lngnorth)
+            lngsouthM = parseInt(Math.floor((geojson.getBounds()._southWest.lng % 1) * 60))
+            lngnorthM = parseInt(Math.floor((geojson.getBounds()._northEast.lng % 1) * 60))
+            console.log(lngsouth, lngnorth)
 
             // for longitude degree update
-            if(lngsouth === lngnorth){
+            if (lngsouth === lngnorth) {
                 // console.log("heeee")
                 // console.log(lngsouth,lngnorth)
                 longitudeDegreesInput.removeAttribute('value');
                 longitudeDegreesInput.value = lngnorth;
                 longitudeDegreesInput.setAttribute('readonly', 'readonly');
-            }else{
+            } else {
 
-            // Update longitude input field
-            // console.log("nooooooooooooooooo")
-            longitudeDegreesInput.removeAttribute('readonly');
-            longitudeDegreesInput.removeAttribute('value');
-            longitudeDegreesInput.setAttribute('min',lngsouth);
-            longitudeDegreesInput.setAttribute('max',lngnorth);
+                // Update longitude input field
+                // console.log("nooooooooooooooooo")
+                longitudeDegreesInput.removeAttribute('readonly');
+                longitudeDegreesInput.removeAttribute('value');
+                longitudeDegreesInput.setAttribute('min', lngsouth);
+                longitudeDegreesInput.setAttribute('max', lngnorth);
             }
 
             // for munites onlys longitude
 
-            if(lngsouthM === lngnorthM){
+            if (lngsouthM === lngnorthM) {
                 // console.log("heeee")
                 // console.log(lngsouth,lngnorth)
                 longitudeMinutesInput.removeAttribute('readonly')
                 longitudeMinutesInput.removeAttribute('value');
                 longitudeMinutesInput.value = lngnorthM;
                 longitudeMinutesInput.setAttribute('readonly', 'readonly');
-            }else{
+            } else {
 
-            // Update longitude input field
-            // console.log("nooooooooooooooooo")
-            longitudeMinutesInput.removeAttribute('readonly');
-            longitudeMinutesInput.removeAttribute('value');
-            longitudeMinutesInput.setAttribute('min',lngsouthM);
-            longitudeMinutesInput.setAttribute('max',lngnorthM);
+                // Update longitude input field
+                // console.log("nooooooooooooooooo")
+                longitudeMinutesInput.removeAttribute('readonly');
+                longitudeMinutesInput.removeAttribute('value');
+                longitudeMinutesInput.setAttribute('min', lngsouthM);
+                longitudeMinutesInput.setAttribute('max', lngnorthM);
             }
 
             map.fitBounds(geojson.getBounds());
@@ -765,9 +775,9 @@ function processCSV(kmlContent) {
 
 document.getElementById('toggleFormBtn').addEventListener('click', function () {
     var selectedVillage = document.getElementById("search_type").value;
-    console.log(selectedVillage,"selectedVillage")
+    console.log(selectedVillage, "selectedVillage")
 
-    
+
     var formContainer = document.getElementById('formContainer');
     formContainer.style.display = (formContainer.style.display === 'none') ? 'block' : 'none';
 });
@@ -853,7 +863,7 @@ function addCoordinateRow(table) {
     longitudeDegreesInput.style.borderLeft = '2px solid #3c3cb8';
     longitudeDegreesInput.style.borderBottom = '2px solid #3c3cb8';
     longitudeDegreesInput.style.borderRight = '2px solid  #3c3cb8';
-    
+
 
 
     // minutes--------------------------------------------------
@@ -945,7 +955,7 @@ function addCoordinateRow(table) {
 
 
     // latitudeSecondsInput.style.marginRight = '5px'; 
-        longitudeDegreesCell.appendChild(longitudeDegreesInput);
+    longitudeDegreesCell.appendChild(longitudeDegreesInput);
     longitudeMinutesCell.appendChild(longitudeMinutesInput);
     longitudeSecondsCell.appendChild(longitudeSecondsInput);
     latitudeDegreesCell.appendChild(latitudeDegreesInput);
@@ -1032,6 +1042,7 @@ function getFilters() {
 }
 
 
+
 function savevalues() {
 
     Object.keys(drawnPolygons).forEach(async function (polygonId) {
@@ -1049,14 +1060,14 @@ function savevalues() {
         // var propertyName1 = "zone,distance,elevation,geom";
         var outputFormat = "application/json";
         // IntersectwithASLM(pp, layers1, url, propertyName1, bounds.toBBoxString(), outputFormat)
-        var values =  await IntersectAreaWithPolygon(pp, layers, url, propertyName, bounds.toBBoxString(), outputFormat)
+        var values = await IntersectAreaWithPolygon(pp, layers, url, propertyName, bounds.toBBoxString(), outputFormat)
         // IntersectwithASLM(pp, layers, url, propertyName, bounds.toBBoxString(), outputFormat)
         var cqlFilterget = getSelectedValues()
         const selected_dropdown = JSON.stringify(cqlFilterget)
-        const villageName =  JSON.stringify(values);
+        const villageName = JSON.stringify(values);
         const selected_guts = JSON.stringify(getSelectedValues1());
         const selected_village = JSON.stringify(getFilters());
-        const coordinates1= coordinates[0].map(coord => [coord[0], coord[1]]);
+        const coordinates1 = coordinates[0].map(coord => [coord[0], coord[1]]);
         // console.log(cqlFilterget,"cqlFilterget",selected_dropdown,"selected_dropdown",villageName,"villageName",selected_guts,"selected_guts",selected_village,"selected_village")
 
         $.ajax({
@@ -1067,30 +1078,33 @@ function savevalues() {
                 coordinates: coordinates1,
                 village_name: villageName,
                 gut_num: selected_dropdown,
-                selectedvillage:selected_village,
-                selectedguts:selected_guts
+                selectedvillage: selected_village,
+                selectedguts: selected_guts,
+                token: token
 
             }),
             success: function (response) {
-              
+
                 console.log("Coordinates saved successfully");
                 localStorage.setItem('lastInsertedPlotBoundaryId', response.data.id);
 
                 // if(response.data.id != undefined){
-                //    window.location.href = 'data.html';
+                   window.location.href = 'data.html';
                 // }
-                
-                
+
+
             },
             error: function (xhr, status, error) {
                 console.error("Failed to save coordinates:", error);
             }
         });
 
-        
-   
-		$.ajax({
-            url: ' http://115.124.100.250/AutoDCR.Integration/GisExim.svc/getPlotGISDetails',
+
+
+        $.ajax({
+            // url:'https://autodcr.pmc.gov.in/AutoDCR.GISIntegration/GisExim.svc/getPlotGISDetails',
+
+            url: 'http://115.124.100.250/AutoDCR.Integration/GisExim.svc/getPlotGISDetails',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({
@@ -1125,20 +1139,20 @@ function savevalues() {
             }),
             success: function (response) {
                 console.log('API response received:', response);
-                   if(response.Status){
-                   window.location.href = 'data.html';
+                if (response.Status) {
+                    window.location.href = 'data.html';
                 }
             },
             error: function (xhr, status, error) {
                 console.error('Error calling API:', xhr.responseText);
             },
         });
-    
+
     });
-  
+
 }
 
-document.getElementById("getinfo").onclick = function() {
+document.getElementById("getinfo").onclick = function () {
     infovalues()
 };
 function infovalues() {
@@ -1149,7 +1163,7 @@ function infovalues() {
 
     Object.keys(drawnPolygons).forEach(async function (polygonId) {
         var coordinates = drawnPolygons[polygonId];
-        console.log(coordinates,"drawcoordinates")
+        console.log(coordinates, "drawcoordinates")
         var pp = turf.polygon(coordinates);
         L.geoJSON(pp).addTo(map)
         var bounds = L.geoJSON(pp).getBounds();
@@ -1164,16 +1178,16 @@ function infovalues() {
     })
 };
 
-async function IntersectAreaWithPolygon(drawnPolygon, layers, url, propertyName, bounds, outputFormat) {  
+async function IntersectAreaWithPolygon(drawnPolygon, layers, url, propertyName, bounds, outputFormat) {
     let summaryByVillage = [];
-    
+
     let requests = layers.map(function (layerName) {
         var urlm = url + layerName +
             "&propertyName=" + propertyName + "&bbox=" +
             bounds +
             "&outputFormat=" + outputFormat;
-  
-       
+
+
         return new Promise((resolve, reject) => {
             $.getJSON(urlm, function (data) {
                 if (data && data.features && data.features.length > 0) {
@@ -1196,27 +1210,27 @@ async function IntersectAreaWithPolygon(drawnPolygon, layers, url, propertyName,
                         var properties = layer.feature.properties;
                         var area = turf.area(layer.feature);
                         layer.bindPopup(`Area: ${area.toFixed(2)} sq meters<br>Properties: ${JSON.stringify(properties)}`);
-                        
+
                     });
-                                        intersectedFeatures.forEach(function (feature) {
+                    intersectedFeatures.forEach(function (feature) {
                         var properties = feature.properties;
                         var villageName = properties.village_name;
                         var area = turf.area(feature);
                         properties.area = area;
                         summaryByVillage.push(properties);
                     });
-                    resolve(summaryByVillage); 
+                    resolve(summaryByVillage);
                 } else {
                     console.log('No valid features found in the response.');
-                    resolve([]); 
+                    resolve([]);
                 }
-            }).fail(function() {
+            }).fail(function () {
                 console.error("Error fetching data for layer: " + layerName);
-                reject(); 
+                reject();
             });
         });
     });
-    
+
     const results = await Promise.all(requests);
     let combinedSummary = [].concat(...results);
     return combinedSummary;
@@ -1224,7 +1238,7 @@ async function IntersectAreaWithPolygon(drawnPolygon, layers, url, propertyName,
 
 
 
- function IntersectwithASLM(drawnPolygon, layers, url, propertyName, bounds, outputFormat) {  
+function IntersectwithASLM(drawnPolygon, layers, url, propertyName, bounds, outputFormat) {
     var distancefromNDA = []
     var distancefromPuneairport = []
     let requests = layers.map(function (layerName) {
@@ -1232,7 +1246,7 @@ async function IntersectAreaWithPolygon(drawnPolygon, layers, url, propertyName,
             "&propertyName=" + propertyName + "&bbox=" +
             bounds +
             "&outputFormat=" + outputFormat;
-       
+
         return new Promise((resolve, reject) => {
             $.getJSON(urlm, function (data) {
                 if (data && data.features && data.features.length > 0) {
@@ -1245,10 +1259,10 @@ async function IntersectAreaWithPolygon(drawnPolygon, layers, url, propertyName,
                             var nearestPoint = turf.nearestPointOnLine(turf.polygonToLine(intersectedFeature.geometry), turf.point([73.779043, 18.472787]));
                             var distance = turf.distance(turf.point([73.779043, 18.472787]), nearestPoint, { units: 'meters' });
                             distancefromNDA.push(distance)
-                            var nearestPoint = turf.nearestPointOnLine(turf.polygonToLine(intersectedFeature.geometry), turf.point([73.917901,  18.582915]));
-                            var distance1 = turf.distance(turf.point([73.917901,  18.582915]), nearestPoint, { units: 'meters' });
+                            var nearestPoint = turf.nearestPointOnLine(turf.polygonToLine(intersectedFeature.geometry), turf.point([73.917901, 18.582915]));
+                            var distance1 = turf.distance(turf.point([73.917901, 18.582915]), nearestPoint, { units: 'meters' });
                             distancefromPuneairport.push(distance1)
-                            
+
                         }
                     });
                     var intersectedLayer = L.geoJSON(intersectedFeatures, {
@@ -1264,7 +1278,7 @@ async function IntersectAreaWithPolygon(drawnPolygon, layers, url, propertyName,
                         layer.bindPopup(`Area: ${area.toFixed(2)} sq meters<br>Zone: ${JSON.stringify(properties.zone)} <br> Distance: ${JSON.stringify(properties.distance)}  <br> Elevation: ${JSON.stringify(properties.elevation)}<br> Distance fromNDA : ${distancefromNDA.map(d => d.toFixed(3))} Meters. <br> Distance fromPune airport : ${distancefromPuneairport.map(d => d.toFixed(3))} Meters.`);
                         layer.openPopup();
                     });
-                                        intersectedFeatures.forEach(function (feature) {
+                    intersectedFeatures.forEach(function (feature) {
                         var properties = feature.properties;
                         var villageName = properties.village_name;
                         var area = turf.area(feature);
@@ -1274,11 +1288,11 @@ async function IntersectAreaWithPolygon(drawnPolygon, layers, url, propertyName,
                     // resolve(summaryByVillage); 
                 } else {
                     console.log('No valid features found in the response.');
-                    resolve([]); 
+                    resolve([]);
                 }
-            }).fail(function() {
+            }).fail(function () {
                 console.error("Error fetching data for layer: " + layerName);
-                reject(); 
+                reject();
             });
         });
     });

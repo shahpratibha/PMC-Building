@@ -160,3 +160,17 @@ L.control.zoom({
 }).addTo(map);
 
 
+// Assuming `coordinates` is a string like "[(18.52, 73.89), (18.53, 73.90)]"
+var coordinatesStr = localStorage.getItem('coordinates'); // Get coordinates as a string
+
+// Convert the string into an array of LatLng objects
+var coordinatesArr = JSON.parse(coordinatesStr).map(coord => {
+  // Assuming each coordinate is a tuple [latitude, longitude]
+  return L.latLng(coord[0], coord[1]);
+});
+
+// Create LatLngBounds from the array of LatLng objects
+var bounds = L.latLngBounds(coordinatesArr);
+
+// Fit the map's view to the bounds
+map.fitBounds(bounds);

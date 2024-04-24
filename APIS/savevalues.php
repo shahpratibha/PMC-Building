@@ -15,6 +15,7 @@ try {
     $geometry = $rawData['coordinates'] ?? null;
     $selectedvillage = $rawData['selectedvillage'] ?? null;
     $selectedguts = $rawData['selectedguts'] ?? null;
+    $token = $rawData['token'] ?? null;
 
     
     if ($geometry === null) {
@@ -27,13 +28,14 @@ try {
     ];
     $geometryJSON = json_encode($geoJSON);
 
-    $query = "INSERT INTO PlotBoundary (village_name, gut_no, geometry,selectedvillage,selectedguts) VALUES (:villageName, :gutNo, ST_GeomFromGeoJSON(:geometry),:selectedvillage, :selectedguts)";
+    $query = "INSERT INTO PlotBoundary (village_name, gut_no, geometry,selectedvillage,selectedguts,token) VALUES (:villageName, :gutNo, ST_GeomFromGeoJSON(:geometry),:selectedvillage, :selectedguts,:token)";
     $statement = $pdo->prepare($query);
     $statement->bindParam(':villageName', $villageName);
     $statement->bindParam(':gutNo', $gutNo);
     $statement->bindParam(':geometry', $geometryJSON);
     $statement->bindParam(':selectedvillage', $selectedvillage);
     $statement->bindParam(':selectedguts', $selectedguts);
+    $statement->bindParam(':token', $token);
 
     if ($statement->execute()) {
         $lastInsertId = $pdo->lastInsertId();

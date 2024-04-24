@@ -18,7 +18,7 @@
 				<a class="btn btn-outline-success" href="dashboard.html">explore map</a>
 			</div>
 
-			<div class="card-content">
+			<div class="card-content" style="overflow: scroll; scrollbar-width: thin;">
 				<table id="data-table">
 					<!-- Table content will be populated dynamically -->
 				</table>
@@ -43,13 +43,8 @@
 				var cqlFilter = localStorage.getItem('cqlFilter');
 				var coordinates = localStorage.getItem('coordinates');
 
-				// // Populate table with data
 
-				// table.append('<tr><td>Properties</td><td>' + properties + '</td></tr>');
-				// table.append('<tr><td>CQL Filter</td><td>' + cqlFilter + '</td></tr>');
-				// table.append('<tr><td>Coordinates</td><td>' + coordinates + '</td></tr>');
-
-						});
+			});
 
 			$.ajax({
 				url: API_URL + 'APIS/get_plot_boundary.php', // Path to the PHP script

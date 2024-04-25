@@ -366,6 +366,14 @@ $(document).ready(function () {
                     Revenue_Layer.addTo(map).bringToFront();
 
                     function getvalues(callback) {
+                        if (!filters.trim()) {
+                            // If filters are empty, call the callback with an empty array
+                            console.log("No filters provided, skipping data fetch.");
+                            if (callback && typeof callback === "function") {
+                                callback([]);
+                            }
+                            return; // Exit the function early
+                        }
                         var geoServerURL =
                             "https://portal.geopulsea.com//geoserver/AutoDCR/wms?service=WFS&version=1.1.0&request=GetFeature&typeName=Revenue_1&propertyName=Gut_No&outputFormat=application/json";
 
@@ -442,6 +450,7 @@ $("#search_type").change(function () {
     var Village_name = 'village_name'
     let filters = `${Village_name} = '${selectedValueVillage}'`;
 
+ 
     // Update Revenue_Layer with new CQL_FILTER
 
     FitbouCustomiseRevenue(filters)
@@ -453,6 +462,16 @@ $("#search_type").change(function () {
     Revenue_Layer.addTo(map).bringToFront();;
 
     function getvalues(callback) {
+
+        if (!filters.trim()) {
+            // If filters are empty, call the callback with an empty array
+            console.log("No filters provided, skipping data fetch.");
+            if (callback && typeof callback === "function") {
+                callback([]);
+            }
+            return; // Exit the function early
+        }
+
         var geoServerURL =
             "https://portal.geopulsea.com//geoserver/AutoDCR/wms?service=WFS&version=1.1.0&request=GetFeature&typeName=Revenue_1&propertyName=Gut_No&outputFormat=application/json"; if (filters) {
                 geoServerURL += "&CQL_FILTER=" + encodeURIComponent(filters);
@@ -571,7 +590,7 @@ function getSelectedValues() {
     if (cqlFilterGut && filters) {
         cqlFilter = "(" + cqlFilterGut + ") AND (" + filters + ")";
     } else {
-        cqlFilter = cqlFilterGut || filters;
+        cqlFilter = cqlFilterGut ;
     }
     localStorage.setItem('cqlFilter', cqlFilter);
 

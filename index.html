@@ -51,8 +51,7 @@
                     <input type="search" placeholder="SurveyNo/CTC/Plot" class="dropdown-search ps-2"/>
                     <ul id="stateList"></ul>
                 </div>
-
-
+            </div>
             </div>
 
             <div class="custom-button1">
@@ -68,8 +67,7 @@
 
            
             <div class="custom-buttoncsv">
-                <button id="toggleFormBtn" class="addbtn"> Add Coordinates
-                    <!-- <img src="png/search-coord.png" class="coordimg"> -->
+                <button id="toggleFormBtn" class="addbtn"> Add Coordinates  <span style="color: red;">*</span>      
                 </button>
                 <div id="formContainer" class="form-modal" style="display:none;">
                     <button id="closeFormBtn" class="close-btn"><i class="fa-solid fa-xmark xicon" style="font-size: 15px; color: #141414d3; top: 3%;
@@ -87,9 +85,34 @@
                         <button class="subbtn" type="submit">Submit</button>
                     </form>
                 </div>
+            </div> 
+
+
+
+ 
+            <!-- <div class="custom-buttoncsv">
+                <button id="toggleFormBtn" class="addbtn"> Add Coordinates
+                   
+                </button>
+                <div id="formContainer" class="form-modal" style="display:none;">
+                    <button id="closeFormBtn" class="close-btn"><i class="fa-solid fa-xmark xicon" style="font-size: 15px; color: #141414d3; top: 3%;
+                        position: absolute;
+                        left: -30%"></i></button>
+                    <form id="coordinateForm" style="text-align: center;">
+                        <table id="coordinateTable">
+                            <tr style="background-color: #bbb; padding: 5px; font-size: 13px;">
+                                <th class="p-1 px-5">Longitude</th>
+                                <th class="p-1 px-5">Latitude</th>
+                                <th class="p-1">Action</th>
+                            </tr>
+                        </table>
+                        <button class="addbtn" type="button" id="addRowBtn">Add More Coordinates <i class="fa-solid fa-circle-plus" style="color: #bbb;"></i></button>
+                        <button class="subbtn" type="submit" id="submitButton">Submit</button>
+                    </form>
+                </div>
             </div>
 
-
+ -->
 
         </div>
     </header>
@@ -130,12 +153,22 @@
         <script src='libs/jszip.min.js'></script>
         <script src='libs/papaparse.min.js'></script>
     
+        
 <!-- 
     <script rel="import" href="cdn_script_js.html"></script> -->
     <script src="select2.js"></script>
+    <!-- <script src="js/basemap_wms_layers.js"></script>  -->
     <script src="auto.js"></script>
     <script src="js/legend.js"></script>
+    
 
+    <!-- Used for close coordinate after click submit button -->
+    <script>
+        document.getElementById('submitButton').addEventListener('click', function(event) {
+            event.preventDefault(); 
+            document.getElementById('formContainer').style.display = 'none'; 
+        });
+    </script>
 
 
 

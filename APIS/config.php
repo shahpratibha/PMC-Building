@@ -1,8 +1,8 @@
 <?php
-$host = '123.63.98.155';
+$host = 'database-1.c01x1jtcm1ms.ap-south-1.rds.amazonaws.com';
 $dbname = 'autodcr';
 $username = 'postgres';
-$password = 'pmc992101';
+$password = 'anup12345';
 
 try {
     // Establish a connection to the database

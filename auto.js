@@ -1,6 +1,6 @@
 
 var map, geojson;
-const API_URL = "http://localhost/Autodcr/";
+const API_URL = "https://iwmsgis.pmc.gov.in/geopulse/autodcr/";
 // const API_URL = "http://localhost/PMC-Project/";
 
 // Add Basemap
@@ -490,59 +490,62 @@ function addCoordinateRow(table) {
     var latitudeDegreesCell = row.insertCell();
     var latitudeMinutesCell = row.insertCell();
     var latitudeSecondsCell = row.insertCell();
+    var heightfloatCell = row.insertCell();
+     var heightnumberCell = row.insertCell(); 
     var actionCell = row.insertCell();
-    // degreee-----------------------------------
-    var longitudeDegreesInput = document.createElement('input');
-    longitudeDegreesInput.setAttribute('type', 'number');
-    longitudeDegreesInput.setAttribute('placeholder', '73°');
-    longitudeDegreesInput.setAttribute('name', 'longitudeDegrees[]');
-    // longitudeDegreesInput.setAttribute('readonly', 'readonly'); 
-    longitudeDegreesInput.value = '73';
-    longitudeDegreesInput.style.width = '50px';
-    longitudeDegreesInput.style.position = 'absolute';
-    longitudeDegreesInput.style.left = '5%';
-    // longitudeDegreesInput.style.marginRight = '5px';
-    longitudeDegreesInput.style.borderBottomLeftRadius = '5px';
-    longitudeDegreesInput.style.borderTopLeftRadius = '5px';
-    longitudeDegreesInput.style.borderTop = '2px solid #3c3cb8';
-    longitudeDegreesInput.style.borderLeft = '2px solid #3c3cb8';
-    longitudeDegreesInput.style.borderBottom = '2px solid #3c3cb8';
-    longitudeDegreesInput.style.borderRight = '2px solid  #3c3cb8';
-
-
-
-    // minutes--------------------------------------------------
-    var longitudeMinutesInput = document.createElement('input');
-    longitudeMinutesInput.setAttribute('type', 'number');
-    longitudeMinutesInput.setAttribute('placeholder', '51′');
-    longitudeMinutesInput.setAttribute('name', 'longitudeMinutes[]');
-    longitudeMinutesInput.style.width = '50px';
-    longitudeMinutesInput.style.position = 'absolute';
-    longitudeMinutesInput.style.left = '16%';
-    // longitudeMinutesInput.style.marginRight = '5px';
-    longitudeMinutesInput.style.borderTop = '2px solid  #3c3cb8';
-    longitudeMinutesInput.style.borderBottom = '2px solid  #3c3cb8';
-    longitudeMinutesInput.style.borderLeft = '2px solid  #bbb';
-    longitudeMinutesInput.style.borderRight = '2px solid  #bbb';
-
-
-    // second--------------------------------------------------------------
-    var longitudeSecondsInput = document.createElement('input');
-    longitudeSecondsInput.setAttribute('type', 'number');
-    longitudeSecondsInput.setAttribute('placeholder', '24.43″');
-    longitudeSecondsInput.setAttribute('name', 'longitudeSeconds[]');
-    longitudeSecondsInput.setAttribute('step', 'any');
-    longitudeSecondsInput.style.width = '65px';
-    longitudeSecondsInput.style.position = 'absolute';
-    longitudeSecondsInput.style.left = '28%';
-    // longitudeSecondsInput.style.marginRight = '5px'; 
-    longitudeSecondsInput.style.borderTop = '2px solid  #3c3cb8';
-    longitudeSecondsInput.style.borderBottom = '2px solid #3c3cb8';
-    longitudeSecondsInput.style.borderRight = '2px solid #3c3cb8';
-    longitudeSecondsInput.style.borderLeft = '2px solid  #bbb';
-    longitudeSecondsInput.style.borderTopRightRadius = '5px';
-    longitudeSecondsInput.style.borderBottomRightRadius = '5px';
-
+     // degreee-----------------------------------
+     var longitudeDegreesInput = document.createElement('input');
+     longitudeDegreesInput.setAttribute('type', 'number');
+     longitudeDegreesInput.setAttribute('placeholder', '73°');
+     longitudeDegreesInput.setAttribute('name', 'longitudeDegrees[]');
+     // longitudeDegreesInput.setAttribute('readonly', 'readonly'); 
+     longitudeDegreesInput.value = '73';
+     longitudeDegreesInput.style.width = '40px';
+     longitudeDegreesInput.style.position = 'absolute';
+     longitudeDegreesInput.style.left = '1%';
+     // longitudeDegreesInput.style.marginRight = '5px';
+     longitudeDegreesInput.style.borderBottomLeftRadius = '5px';
+     longitudeDegreesInput.style.borderTopLeftRadius = '5px';
+     longitudeDegreesInput.style.borderTop = '2px solid #3c3cb8';
+     longitudeDegreesInput.style.borderLeft = '2px solid #3c3cb8';
+     longitudeDegreesInput.style.borderBottom = '2px solid #3c3cb8';
+     longitudeDegreesInput.style.borderRight = '2px solid  #bbb';
+ 
+ 
+ 
+     // minutes--------------------------------------------------
+     var longitudeMinutesInput = document.createElement('input');
+     longitudeMinutesInput.setAttribute('type', 'number');
+     longitudeMinutesInput.setAttribute('placeholder', '51′');
+     longitudeMinutesInput.setAttribute('name', 'longitudeMinutes[]');
+     longitudeMinutesInput.style.width = '40px';
+     longitudeMinutesInput.style.position = 'absolute';
+     longitudeMinutesInput.style.left = '8%';
+     // longitudeMinutesInput.style.marginRight = '5px';
+     longitudeMinutesInput.style.borderTop = '2px solid  #3c3cb8';
+     longitudeMinutesInput.style.borderBottom = '2px solid  #3c3cb8';
+     longitudeMinutesInput.style.borderLeft = '2px solid  #bbb';
+    //  longitudeMinutesInput.style.borderRight = '2px solid  #bbb';
+ 
+ 
+     // second--------------------------------------------------------------
+     var longitudeSecondsInput = document.createElement('input');
+     longitudeSecondsInput.setAttribute('type', 'number');
+     longitudeSecondsInput.setAttribute('placeholder', '24.43″');
+     longitudeSecondsInput.setAttribute('name', 'longitudeSeconds[]');
+     longitudeSecondsInput.setAttribute('step', 'any');
+     longitudeSecondsInput.style.width = '59px';
+     longitudeSecondsInput.style.position = 'absolute';
+     longitudeSecondsInput.style.left = '16%';
+     // longitudeSecondsInput.style.marginRight = '5px'; 
+     longitudeSecondsInput.style.borderTop = '2px solid  #3c3cb8';
+     longitudeSecondsInput.style.borderBottom = '2px solid #3c3cb8';
+     longitudeSecondsInput.style.borderRight = '2px solid #3c3cb8';
+     longitudeSecondsInput.style.borderLeft = '2px solid  #bbb';
+     longitudeSecondsInput.style.borderTopRightRadius = '5px';
+     longitudeSecondsInput.style.borderBottomRightRadius = '5px';
+ 
+   
 
     // latdegree----------------------
 
@@ -554,7 +557,7 @@ function addCoordinateRow(table) {
     latitudeDegreesInput.value = '18';
     latitudeDegreesInput.style.width = '50px';
     latitudeDegreesInput.style.position = 'absolute';
-    latitudeDegreesInput.style.left = '46%';
+    latitudeDegreesInput.style.left = '32%';
     // latitudeDegreesInput.style.marginRight = '15px'; 
     latitudeDegreesInput.style.borderBottomLeftRadius = '5px';
     latitudeDegreesInput.style.borderTopLeftRadius = '5px';
@@ -569,9 +572,9 @@ function addCoordinateRow(table) {
     latitudeMinutesInput.setAttribute('type', 'number');
     latitudeMinutesInput.setAttribute('placeholder', '51′');
     latitudeMinutesInput.setAttribute('name', 'latitudeMinutes[]');
-    latitudeMinutesInput.style.width = '45px';
+    latitudeMinutesInput.style.width = '40px';
     latitudeMinutesInput.style.position = 'absolute';
-    latitudeMinutesInput.style.left = '55%';
+    latitudeMinutesInput.style.left = '40%';
     latitudeMinutesInput.style.borderTop = '2px solid  #3c3cb8';
     latitudeMinutesInput.style.borderBottom = '2px solid  #3c3cb8';
     latitudeMinutesInput.style.borderLeft = '2px solid  #bbb';
@@ -585,9 +588,9 @@ function addCoordinateRow(table) {
     latitudeSecondsInput.setAttribute('placeholder', '24.43″');
     latitudeSecondsInput.setAttribute('name', 'latitudeSeconds[]');
     latitudeSecondsInput.setAttribute('step', 'any');
-    latitudeSecondsInput.style.width = '65px';
+    latitudeSecondsInput.style.width = '60px';
     latitudeSecondsInput.style.position = 'absolute';
-    latitudeSecondsInput.style.left = '65%';
+    latitudeSecondsInput.style.left = '48%';
     latitudeSecondsInput.style.borderTop = '2px solid  #3c3cb8';
     latitudeSecondsInput.style.borderBottom = '2px solid #3c3cb8';
     latitudeSecondsInput.style.borderRight = '2px solid #3c3cb8';
@@ -596,14 +599,46 @@ function addCoordinateRow(table) {
     latitudeSecondsInput.style.borderBottomRightRadius = '5px';
 
 
+    // number-----------------------------------
+    var heightfloatCellInput = document.createElement('input');
+    heightfloatCellInput.setAttribute('type', 'number');
+    heightfloatCellInput.setAttribute('placeholder', '247.66');
+    heightfloatCellInput.setAttribute('name', 'heightfloatCell[]');
+    // longitudeDegreesInput.setAttribute('readonly', 'readonly'); 
+    // heightfloatCellInput.value = '73';
+    heightfloatCellInput.style.width = '70px';
+    heightfloatCellInput.style.position = 'absolute';
+    heightfloatCellInput.style.left = '65%';
+    // longitudeDegreesInput.style.marginRight = '5px';
+    heightfloatCellInput.style.borderBottomLeftRadius = '5px';
+    heightfloatCellInput.style.borderTopLeftRadius = '5px';
+    heightfloatCellInput.style.borderTop = '2px solid #3c3cb8';
+    heightfloatCellInput.style.borderLeft = '2px solid #3c3cb8';
+    heightfloatCellInput.style.borderBottom = '2px solid #3c3cb8';
+    heightfloatCellInput.style.borderRight = '2px solid  #3c3cb8';
+    heightfloatCellInput.style.borderTopRightRadius = '5px';
+    heightfloatCellInput.style.borderBottomRightRadius = '5px';
+
+    
+
+ 
+    
+   
+    
+
+
 
     // latitudeSecondsInput.style.marginRight = '5px'; 
-        longitudeDegreesCell.appendChild(longitudeDegreesInput);
+    longitudeDegreesCell.appendChild(longitudeDegreesInput);
     longitudeMinutesCell.appendChild(longitudeMinutesInput);
     longitudeSecondsCell.appendChild(longitudeSecondsInput);
     latitudeDegreesCell.appendChild(latitudeDegreesInput);
     latitudeMinutesCell.appendChild(latitudeMinutesInput);
     latitudeSecondsCell.appendChild(latitudeSecondsInput);
+     heightfloatCell.appendChild(heightfloatCellInput);
+
+   
+
 
 
     actionCell.innerHTML = '<button type="button" class="deleteRowBtn"><i class="fa-solid fa-trash-can"></i></button>';

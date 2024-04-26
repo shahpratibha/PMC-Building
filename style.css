@@ -1,4 +1,4 @@
- #map {
+#map {
   position: absolute;
   top: 0;
   left: 0;
@@ -6,6 +6,11 @@
   width: 100vw;
   z-index: 0;
 }
+.px-4 {
+  padding-right: 2 rem !important;
+  padding-left: 2rem !important;
+}
+
 
 .logopng{
   height: 50px;
@@ -185,7 +190,7 @@
 
 }
 #coordinateTable{
-  margin-bottom: 5%;
+  margin-bottom: 4%;
 }
 .coordimg  {
   position: absolute;
@@ -227,7 +232,7 @@
 
 
 .form-modal {
-  width: 370px;
+  width: 450px;
   position: fixed;
   top: 10%;
   left: 63%;
@@ -262,7 +267,7 @@
 }
 
 .subbtn{
-  margin-top: 10px;
+  margin-top: 7px;
   background-color: green;
   border: 2px solid green;
   border-radius: 5px;
@@ -277,7 +282,9 @@
   font-weight: bold;
   color: #171717cf;
   padding: 5px 15px;
-  font-size: 10PX;
+  font-size: 12PX;
+  top: 600px
+  ;
   
 }
 
@@ -297,7 +304,7 @@
   background-color:transparent ;
   position: relative;
   top:15px;
-  right: 10%;
+  right: 17px;
   z-index: 99999;
   font-size: 14px;
   color:#f44336;
@@ -442,4 +449,13 @@ input[type="checkbox"] {
   font-size: 10px;
   font-weight: bold;
   color: #3d3a3abf;
+}
+/* element.style {
+  top: 60px;
+  display: block;
+} */
+.leaflet-draw-actions li:first-child a {
+  border-left: 0;
+  margin-left: 5px;
+  margin-top: 60px;
 }

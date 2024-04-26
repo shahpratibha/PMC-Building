@@ -1,7 +1,7 @@
 
 var map, geojson;
-const API_URL = "https://iwmsgis.pmc.gov.in/geopulse/autodcr/";
-// const API_URL = "http://localhost/PMC-Project/";
+// const API_URL = "https://iwmsgis.pmc.gov.in/geopulse/autodcr/";
+const API_URL = "http://localhost/PMC/autodcr";
 
 // Add Basemap
 var map = L.map("map", {
@@ -35,21 +35,9 @@ var Esri_WorldImagery = L.tileLayer(
     "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
     {
         maxZoom: 20,
-      }
+    }
 );
 var baseLayers = {};
-
-
-var Revenue_Layer = L.tileLayer
-    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
-        layers: "Revenue_1",
-        format: "image/png",
-        transparent: true,
-        tiled: true,
-        version: "1.1.0",
-        // attribution: "Revenue",
-        opacity: 1,
-    });
 
 // .addTo(map);
 
@@ -66,6 +54,22 @@ var Revenue_Layer1 = L.tileLayer
         opacity: 1,
     });
 
+
+
+
+    var Revenue_Layer = L.tileLayer
+    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+        layers: "Revenue_1",
+        format: "image/png",
+        transparent: true,
+        tiled: true,
+        version: "1.1.0",
+        // attribution: "Revenue",
+        opacity: 1,
+    });
+
+
+
 var PLU_Layer = L.tileLayer
     .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
         layers: "PLU_Ward",
@@ -76,6 +80,7 @@ var PLU_Layer = L.tileLayer
         // attribution: "Revenue",
         opacity: 1,
     });
+
 
 var DPRoad_Layer = L.tileLayer
     .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
@@ -111,20 +116,142 @@ var Village_Boundary = L.tileLayer
     }).addTo(map);
 
 
+
+var aviation = L.tileLayer
+    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+        layers: "Aviation_data",
+        format: "image/png",
+        transparent: true,
+        tiled: true,
+        version: "1.1.0",
+        // attribution: "Revenue",
+        opacity: 1,
+    });
+// .addTo(map);
+
+
 var WMSlayers = {
     "OSM": osm,
     "Esri": Esri_WorldImagery,
     "Satellite": googleSat,
-
-    Revenue: Revenue_Layer,
+    Boundary: Boundary_Layer,
+    Aviation: aviation,
+    Village: Village_Boundary,
+    Revenue: Revenue_Layer1,
     PLU: PLU_Layer,
     DPRoad: DPRoad_Layer,
-    Boundary: Boundary_Layer,
-    Village: Village_Boundary
-
 
 };
 
+
+let handshaking_codes = [
+    {"AutoDCR_Name": "Aundh", "code": "ADCR001", "name": "Aundh"},
+    {"AutoDCR_Name": "BALEWADI", "code": "ADCR002", "name": "BALEWADI"},
+    {"AutoDCR_Name": "BANER", "code": "ADCR003", "name": "BANER"},
+    {"AutoDCR_Name": "Baner North", "code": "ADCR003a", "name": "BANER"},
+    {"AutoDCR_Name": "Baner south", "code": "ADCR003b", "name": "BANER"},
+    {"AutoDCR_Name": "Baner West", "code": "ADCR003c", "name": "BANER"},
+    {"AutoDCR_Name": "BAWDHAN", "code": "ADCR004", "name": "BAWDHAN"},
+    {"AutoDCR_Name": "Bopodi", "code": "ADCR005", "name": "Bopodi"},
+    {"AutoDCR_Name": "Erandwana", "code": "ADCR006", "name": "Erandwana"},
+    {"AutoDCR_Name": "Erandwana North", "code": "ADCR006a", "name": "Erandwana"},
+    {"AutoDCR_Name": "Erandwana South", "code": "ADCR006b", "name": "Erandwana"},
+    {"AutoDCR_Name": "Hingne-budruk", "code": "ADCR007", "name": "Hingne-budruk"},
+    {"AutoDCR_Name": "KARVE NAGAR", "code": "ADCR008", "name": "KARVE NAGAR"},
+    {"AutoDCR_Name": "Khadki Navi", "code": "ADCR009", "name": "Khadki Navi"},
+    {"AutoDCR_Name": "KOTHRUD-NORTH", "code": "ADCR010", "name": "KOTHRUD"},
+    {"AutoDCR_Name": "Kothrud-South", "code": "ADCR011", "name": "KOTHRUD"},
+    {"AutoDCR_Name": "Pashan", "code": "ADCR012", "name": "Pashan"},
+    {"AutoDCR_Name": "Shivaji Nagar", "code": "ADCR013", "name": "TPS-I"},
+    {"AutoDCR_Name": "SHIVAJI NAGAR-BHAMBURDA", "code": "ADCR014", "name": "SHIVAJI NAGAR-BHAMBURDA"},
+    {"AutoDCR_Name": "SHIVANE", "code": "ADCR015", "name": "SHIVANE"},
+    {"AutoDCR_Name": "Shivane North", "code": "ADCR015a", "name": "SHIVANE"},
+    {"AutoDCR_Name": "Shivane South", "code": "ADCR015b", "name": "SHIVANE"},
+    {"AutoDCR_Name": "Warje", "code": "ADCR016", "name": "Warje"},
+    {"AutoDCR_Name": "Ambegaon Budruk-Ext", "code": "ADCR017", "name": "Ambegaon Budruk-Ext"},
+    {"AutoDCR_Name": "Ambegaon Khurd-Ext", "code": "ADCR018", "name": "Ambegaon Khurd-Ext"},
+    {"AutoDCR_Name": "AMBEGAON-BUDRUK", "code": "ADCR019", "name": "AMBEGAON-BUDRUK"},
+    {"AutoDCR_Name": "AMBEGAON-KHURD", "code": "ADCR020", "name": "AMBEGAON-KHURD"},
+    {"AutoDCR_Name": "Bhawani Peth", "code": "ADCR021", "name": "Bhawani Peth"},
+    {"AutoDCR_Name": "Bibwewadi-Munjeri", "code": "ADCR022", "name": "Bibwewadi-Munjeri"},
+    {"AutoDCR_Name": "BUDHWAR PETH", "code": "ADCR023", "name": "BUDHWAR PETH"},
+    {"AutoDCR_Name": "DHANKWADI", "code": "ADCR024", "name": "DHANKWADI"},
+    {"AutoDCR_Name": "DHANKWADI-EXT", "code": "ADCR025", "name": "DHANKWADI-EXT"},
+    {"AutoDCR_Name": "Dhanori", "code": "ADCR026", "name": "Dhanori"},
+    {"AutoDCR_Name": "DHANORI-EXT", "code": "ADCR027", "name": "DHANORI-EXT"},
+    {"AutoDCR_Name": "Dhayri", "code": "ADCR028", "name": "Dhayri"},
+    {"AutoDCR_Name": "Dhayri-Ext", "code": "ADCR029", "name": "Dhayri-Ext"},
+    {"AutoDCR_Name": "Fursungi", "code": "ADCR030", "name": "Fursungi"},
+    {"AutoDCR_Name": "Ganesh Peth", "code": "ADCR031", "name": "Ganesh Peth"},
+    {"AutoDCR_Name": "GANJ PETH", "code": "ADCR032", "name": "GANJ PETH"},
+    {"AutoDCR_Name": "Ghorpade peth", "code": "ADCR033", "name": "Ghorpade peth"},
+    {"AutoDCR_Name": "Ghorpadi", "code": "ADCR034", "name": "Ghorpadi"},
+    {"AutoDCR_Name": "Gultekdi", "code": "ADCR035", "name": "Gultekdi"},
+    {"AutoDCR_Name": "Gurwar Peth", "code": "ADCR036", "name": "Gurwar Peth"},
+    {"AutoDCR_Name": "Hadapsar", "code": "ADCR037", "name": "Hadapsar"},
+    {"AutoDCR_Name": "HADAPSAR-EXT", "code": "ADCR038", "name": "HADAPSAR-EXT"},
+    {"AutoDCR_Name": "HINGANE-KHURD", "code": "ADCR039", "name": "HINGANE-KHURD"},
+    {"AutoDCR_Name": "Kalas", "code": "ADCR040", "name": "Kalas"},
+    {"AutoDCR_Name": "KALAS EXT", "code": "ADCR041", "name": "KALAS EXT"},
+    {"AutoDCR_Name": "KASBA PETH", "code": "ADCR042", "name": "KASBA PETH"},
+    {"AutoDCR_Name": "KATRAJ", "code": "ADCR043", "name": "KATRAJ"},
+    {"AutoDCR_Name": "Katraj Ext", "code": "ADCR044", "name": "Katraj Ext"},
+    {"AutoDCR_Name": "Kharadi", "code": "ADCR045", "name": "Kharadi"},
+    {"AutoDCR_Name": "Kharadi East", "code": "ADCR045a", "name": "Kharadi"},
+    {"AutoDCR_Name": "Kharadi West", "code": "ADCR045b", "name": "Kharadi"},
+    {"AutoDCR_Name": "Kondhwa-Budruk", "code": "ADCR046", "name": "Kondhwa-Budruk"},
+    {"AutoDCR_Name": "Kondhwa-Budruk North", "code": "ADCR046a", "name": "Kondhwa-Budruk North"},
+    {"AutoDCR_Name": "Kondhwa-Budruk South", "code": "ADCR046b", "name": "Kondhwa-Budruk South"},
+    {"AutoDCR_Name": "Kondhwa-Khurd", "code": "ADCR047", "name": "Kondhwa-Khurd"},
+    {"AutoDCR_Name": "Kondwa khurd -EXT", "code": "ADCR048", "name": "Kondwa khurd -EXT"},
+    {"AutoDCR_Name": "KOREGAON PARK", "code": "ADCR049", "name": "KOREGAON PARK"},
+    {"AutoDCR_Name": "KOTHRUD-EXT", "code": "ADCR050", "name": "KOTHRUD-EXT"},
+    {"AutoDCR_Name": "Lohagaon", "code": "ADCR051", "name": "Lohagaon"},
+    {"AutoDCR_Name": "Lohagaon North", "code": "ADCR051a", "name": "Lohagaon"},
+    {"AutoDCR_Name": "Lohagaon South", "code": "ADCR051b", "name": "Lohagaon"},
+    {"AutoDCR_Name": "Lohgaon-Ext", "code": "ADCR052", "name": "Lohgaon-Ext"},
+    {"AutoDCR_Name": "Lohgaon-Ext North", "code": "ADCR052a", "name": "Lohgaon-Ext"},
+    {"AutoDCR_Name": "Lohgaon-Ext South", "code": "ADCR052b", "name": "Lohgaon-Ext"},
+    {"AutoDCR_Name": "LULLANAGAR", "code": "ADCR053", "name": "LULLANAGAR"},
+    {"AutoDCR_Name": "Mahatma Phule peth", "code": "ADCR054", "name": "Mahatma Phule peth"},
+    {"AutoDCR_Name": "MANGALWAR PETH", "code": "ADCR055", "name": "MANGALWAR PETH"},
+    {"AutoDCR_Name": "Market Yard", "code": "ADCR056", "name": "Market Yard"},
+    {"AutoDCR_Name": "Mohammadwadi", "code": "ADCR057", "name": "Mohammadwadi"},
+    {"AutoDCR_Name": "Mundhwa", "code": "ADCR058", "name": "Mundhwa"},
+    {"AutoDCR_Name": "Mundhwa North", "code": "ADCR058a", "name": "Mundhwa"},
+    {"AutoDCR_Name": "Mundhwa South", "code": "ADCR058b", "name": "Mundhwa"},
+    {"AutoDCR_Name": "Mundhwa-Keshavnagar", "code": "ADCR059", "name": "Mundhwa-Keshavnagar"},
+    {"AutoDCR_Name": "MUNJERI", "code": "ADCR060", "name": "MUNJERI"},
+    {"AutoDCR_Name": "Nana Peth", "code": "ADCR061", "name": "NANA PETH"},
+    {"AutoDCR_Name": "NARAYAN PETH", "code": "ADCR062", "name": "NARAYAN PETH"},
+    {"AutoDCR_Name": "Navipeth", "code": "ADCR063", "name": "NAVI PETH"},
+    {"AutoDCR_Name": "Parvati North", "code": "ADCR064", "name": "PARVATI"},
+    {"AutoDCR_Name": "Parvati South", "code": "ADCR065", "name": "PARVATI"},
+    {"AutoDCR_Name": "RASTA PETH", "code": "ADCR066", "name": "RASTA PETH"},
+    {"AutoDCR_Name": "RAVIWAR PETH", "code": "ADCR067", "name": "RAVIWAR PETH"},
+    {"AutoDCR_Name": "SADASHIV PETH", "code": "ADCR068", "name": "SADASHIV PETH"},
+    {"AutoDCR_Name": "Sadesatara  Nali-Hadapsar", "code": "ADCR069", "name": "Sadesatara  Nali-Hadapsar"},
+    {"AutoDCR_Name": "SANGANWADI TPS", "code": "ADCR070", "name": "SANGAMWADI TPS"},
+    {"AutoDCR_Name": "SHANIWAR PETH", "code": "ADCR071", "name": "SHANIWAR PETH"},
+    {"AutoDCR_Name": "Shivane-Ext", "code": "ADCR072", "name": "Shivane-Ext"},
+    {"AutoDCR_Name": "Shivane-Uttamnagar", "code": "ADCR073", "name": "SHIVANE"},
+    {"AutoDCR_Name": "SHUKRAWAR PETH", "code": "ADCR074", "name": "SHUKRAWAR PETH"},
+    {"AutoDCR_Name": "SOMWAR PETH", "code": "ADCR075", "name": "SOMWAR PETH"},
+    {"AutoDCR_Name": "Undri", "code": "ADCR076", "name": "Undri"},
+    {"AutoDCR_Name": "Undri-Ext", "code": "ADCR077", "name": "Undri-Ext"},
+    {"AutoDCR_Name": "Urali Devachi", "code": "ADCR078", "name": "Urali Devachi"},
+    {"AutoDCR_Name": "VADGAON-BUDRUK", "code": "ADCR079", "name": "VADGAON-BUDRUK"},
+    {"AutoDCR_Name": "Vadgaon-Khurd", "code": "ADCR080", "name": "Vadgaon-Khurd"},
+    {"AutoDCR_Name": "Vadgaon-Sheri", "code": "ADCR081", "name": "Vadgaon-Sheri"},
+    {"AutoDCR_Name": "VadgaonSheri-ext", "code": "ADCR082", "name": "VadgaonSheri-ext"},
+    {"AutoDCR_Name": "Wanawadi", "code": "ADCR083", "name": "WANAWADI"},
+    {"AutoDCR_Name": "Yerawada", "code": "ADCR084", "name": "YERWADA"},
+    {"AutoDCR_Name": "Yevlewadi", "code": "ADCR085", "name": "Yevlewadi"}
+] ;
+function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+}
 
 var control = new L.control.layers(baseLayers, WMSlayers).addTo(map);
 control.setPosition('topright');
@@ -180,16 +307,29 @@ map.on('draw:created', function (e) {
         var polygonId = 'polygon_draw'
 
         drawnPolygons[polygonId] = layer.toGeoJSON().geometry.coordinates;
-      
+
     } else {
         console.log('Drawn geometry is not a valid Polygon.');
     }
 });
 
 
+const handshakingCode = getQueryParam('village_name');
+const token = getQueryParam('TOKEN');
+console.log(token, "token")
+
 
 $(document).ready(function () {
     trials();
+
+
+
+    // Get the village_name from the URL
+    const villageEntry = handshaking_codes.find(entry => entry.code === handshakingCode);
+    const village_name = villageEntry ? villageEntry.name : null;
+
+    console.log(village_name);
+
 
     function trials() {
         var geoServerURL = "https://portal.geopulsea.com//geoserver/AutoDCR/wms?service=WFS&version=1.1.0&request=GetFeature&typeName=Revenue_1&propertyName=village_name&outputFormat=application/json";
@@ -204,10 +344,99 @@ $(document).ready(function () {
                 var select = document.getElementById("search_type");
                 villageSet.forEach(function (village) {
                     var option = document.createElement("option");
-                    option.text = village;
-                    option.value = village;
+                    option.text = village?.trim();
+                    option.value = village?.trim();
+                    //if village_name == option value set it as selected
                     select.appendChild(option);
                 });
+
+
+                if (village_name && select) {
+                    select.value = village_name;
+                    var Village_name = 'village_name'
+                    let filters = `${Village_name} = '${village_name}'`;
+                    
+
+                    FitbouCustomiseRevenue(filters)
+                    Revenue_Layer.setParams({
+                        CQL_FILTER: filters,
+                        maxZoom: 19.5,
+                        styles: "Highlight_polygon"
+                    });
+                    Revenue_Layer.addTo(map).bringToFront();
+
+                    function getvalues(callback) {
+                        if (!filters.trim()) {
+                            // If filters are empty, call the callback with an empty array
+                            console.log("No filters provided, skipping data fetch.");
+                            if (callback && typeof callback === "function") {
+                                callback([]);
+                            }
+                            return; // Exit the function early
+                        }
+                        var geoServerURL =
+                            "https://portal.geopulsea.com//geoserver/AutoDCR/wms?service=WFS&version=1.1.0&request=GetFeature&typeName=Revenue_1&propertyName=Gut_No&outputFormat=application/json";
+
+                        if (filters) {
+                            geoServerURL += "&CQL_FILTER=" + encodeURIComponent(filters);
+                        }
+
+                        $.getJSON(geoServerURL, function (data) {
+                            var gutvalues = new Set();
+
+                            // Populate the Set with gut numbers
+                            $.each(data.features, function (index, feature) {
+                                var gutss = feature.properties.Gut_No;
+                                gutvalues.add(gutss);
+                            });
+                            var Uniqueguts = Array.from(gutvalues);
+                            if (callback && typeof callback === "function") {
+                                callback(Uniqueguts);
+                            }
+                        });
+                    }
+
+                    getvalues(function (Uniqueguts) {
+
+                        var stateList = $('#stateList');
+                        stateList.empty();
+                        // console.log(stateList,"stateList")
+                        _.each(Uniqueguts, function (state) {
+                            var listItem = $('<li><input name="' + state + '" type="checkbox"><label for="' + state + '">' + state + '</label></li>');
+                            stateList.append(listItem);
+                        });
+
+                        // Events
+                        $('.dropdown-container')
+                            .on('click', '.dropdown-button', function () {
+                                $(this).siblings('.dropdown-list').toggle();
+                            })
+                            .on('input', '.dropdown-search', function () {
+                                var target = $(this);
+                                var dropdownList = target.closest('.dropdown-list');
+                                var search = target.val().toLowerCase();
+
+                                if (!search) {
+                                    dropdownList.find('li').show();
+                                    return false;
+                                }
+
+                                dropdownList.find('li').each(function () {
+                                    var text = $(this).text().toLowerCase();
+                                    var match = text.indexOf(search) > -1;
+                                    $(this).toggle(match);
+                                });
+                            })
+                            .on('change', '[type="checkbox"]', function () {
+                                var container = $(this).closest('.dropdown-container');
+                                var numChecked = container.find('[type="checkbox"]:checked').length;
+                                container.find('.quantity').text(numChecked || 'Any');
+                            });
+
+
+                    });
+                }
+
             })
             .fail(function (jqxhr, textStatus, error) {
                 var err = textStatus + ", " + error;
@@ -221,6 +450,7 @@ $("#search_type").change(function () {
     var Village_name = 'village_name'
     let filters = `${Village_name} = '${selectedValueVillage}'`;
 
+ 
     // Update Revenue_Layer with new CQL_FILTER
 
     FitbouCustomiseRevenue(filters)
@@ -228,15 +458,24 @@ $("#search_type").change(function () {
         CQL_FILTER: filters,
         maxZoom: 19.5,
         styles: "Highlight_polygon"
-    }).addTo(map);
+    });
+    Revenue_Layer.addTo(map).bringToFront();;
 
     function getvalues(callback) {
-        var geoServerURL =
-            "https://portal.geopulsea.com//geoserver/AutoDCR/wms?service=WFS&version=1.1.0&request=GetFeature&typeName=Revenue_1&propertyName=Gut_No&outputFormat=application/json";
 
-        if (filters) {
-            geoServerURL += "&CQL_FILTER=" + encodeURIComponent(filters);
+        if (!filters.trim()) {
+            // If filters are empty, call the callback with an empty array
+            console.log("No filters provided, skipping data fetch.");
+            if (callback && typeof callback === "function") {
+                callback([]);
+            }
+            return; // Exit the function early
         }
+
+        var geoServerURL =
+            "https://portal.geopulsea.com//geoserver/AutoDCR/wms?service=WFS&version=1.1.0&request=GetFeature&typeName=Revenue_1&propertyName=Gut_No&outputFormat=application/json"; if (filters) {
+                geoServerURL += "&CQL_FILTER=" + encodeURIComponent(filters);
+            }
 
         $.getJSON(geoServerURL, function (data) {
             var gutvalues = new Set();
@@ -294,35 +533,45 @@ $("#search_type").change(function () {
 
 
     });
-
-
-    $(document).on('change', '#stateList input[type="checkbox"]', function () {
-        var cqlFilter = getSelectedValues();
-        // console.log(cqlFilter, "Selected filters");
-
-        // Update the map with the new filter
-        FitbouCustomiseRevenue(cqlFilter);
-        Revenue_Layer1.setParams({
-            CQL_FILTER: cqlFilter,
-            maxZoom: 23,
-            styles: "Highlight_polygon1"
-        }).addTo(map).bringToFront();
-    });
-
-
-    // Function to get the selected checkbox values and construct the CQL filter
-
-    
-
     var initialCqlFilter = getSelectedValues();
-
-
-
 
 })
 
+$(document).on('change', '#stateList input[type="checkbox"]', function () {
+    console.log("hehehe")
+    getFiltersval()
+    var cqlFilter = getSelectedValues();
+    console.log(cqlFilter, "Selected filters");
+
+    // Update the map with the new filter
+    FitbouCustomiseRevenue(cqlFilter);
+    Revenue_Layer1.setParams({
+        CQL_FILTER: cqlFilter,
+        maxZoom: 23,
+        styles: "Highlight_polygon1"
+    });
+    Revenue_Layer1.addTo(map).bringToFront();
+});
+
+
+// Function to get the selected checkbox values and construct the CQL filter
+
+function getFiltersval() {
+    const villageEntry = handshaking_codes.find(entry => entry.code === handshakingCode);
+    const selectedValueVillage = villageEntry ? villageEntry.name : null;
+
+    // var selectedValueVillage = village_name
+    var Village_name = 'village_name'
+    filters = `${Village_name} = '${selectedValueVillage}'`;
+    console.log(filters, "filtersjjjjjjjjjjjjjjj")
+}
+
+
+
 function getSelectedValues() {
     var selectedValues = [];
+
+    console.log("pass")
     $('input[type="checkbox"]:checked').each(function () {
         var name = $(this).attr('name');
         if (name !== undefined) {
@@ -341,7 +590,7 @@ function getSelectedValues() {
     if (cqlFilterGut && filters) {
         cqlFilter = "(" + cqlFilterGut + ") AND (" + filters + ")";
     } else {
-        cqlFilter = cqlFilterGut || filters;
+        cqlFilter = cqlFilterGut ;
     }
     localStorage.setItem('cqlFilter', cqlFilter);
 
@@ -361,6 +610,8 @@ button.addTo(map);
 
 
 
+
+
 function FitbouCustomiseRevenue(filter) {
     layers = ["AutoDCR:Revenue_1"];
     layers.forEach(function (layerName) {
@@ -372,10 +623,98 @@ function FitbouCustomiseRevenue(filter) {
             "&outputFormat=application/json";
         $.getJSON(urlm, function (data) {
             geojson = L.geoJson(data, {});
+
+            var latitudeDegreesInput = document.querySelector('input[name="latitudeDegrees[]"]');
+            var latitudeMinutesInput = document.querySelector('input[name="latitudeMinutes[]"]');
+            var longitudeDegreesInput = document.querySelector('input[name="longitudeDegrees[]"]');
+            var longitudeMinutesInput = document.querySelector('input[name="longitudeMinutes[]"]');
+
+
+            // Update latitude input field
+            latsouth = parseInt(Math.floor(geojson.getBounds()._southWest.lat))
+            latnorth = parseInt(Math.floor(geojson.getBounds()._northEast.lat))
+            latsouthM = parseInt(Math.floor((geojson.getBounds()._southWest.lat % 1) * 60))
+            latnorthM = parseInt(Math.floor((geojson.getBounds()._northEast.lat % 1) * 60))
+
+
+            // for degree upadates lattitude
+            if (latsouth === latnorth) {
+                // console.log("heeee");
+                // console.log(latsouth, latnorth);
+                latitudeDegreesInput.removeAttribute('readonly');
+                latitudeDegreesInput.value = latsouth;
+                latitudeDegreesInput.setAttribute('readonly', 'readonly');
+            } else {
+                latitudeDegreesInput.removeAttribute('readonly');
+                latitudeDegreesInput.removeAttribute('value');
+                latitudeDegreesInput.setAttribute('min', latsouth);
+                latitudeDegreesInput.setAttribute('max', latnorth);
+            }
+
+            // for minutes update only latitude
+
+            if (latsouthM === latnorthM) {
+                // console.log("heeee");
+                // console.log(latsouthM, latnorthM);
+                latitudeMinutesInput.removeAttribute('readonly');
+                latitudeMinutesInput.removeAttribute('value');
+                latitudeMinutesInput.value = latsouthM;
+                latitudeMinutesInput.setAttribute('readonly', 'readonly');
+            } else {
+                latitudeMinutesInput.removeAttribute('readonly');
+                latitudeMinutesInput.removeAttribute('value');
+                latitudeMinutesInput.setAttribute('min', latsouthM);
+                latitudeMinutesInput.setAttribute('max', latnorthM);
+            }
+
+            lngsouth = parseInt(Math.floor(geojson.getBounds()._southWest.lng))
+            lngnorth = parseInt(Math.floor(geojson.getBounds()._northEast.lng))
+            lngsouthM = parseInt(Math.floor((geojson.getBounds()._southWest.lng % 1) * 60))
+            lngnorthM = parseInt(Math.floor((geojson.getBounds()._northEast.lng % 1) * 60))
+            console.log(lngsouth, lngnorth)
+
+            // for longitude degree update
+            if (lngsouth === lngnorth) {
+                // console.log("heeee")
+                // console.log(lngsouth,lngnorth)
+                longitudeDegreesInput.removeAttribute('value');
+                longitudeDegreesInput.value = lngnorth;
+                longitudeDegreesInput.setAttribute('readonly', 'readonly');
+            } else {
+
+                // Update longitude input field
+                // console.log("nooooooooooooooooo")
+                longitudeDegreesInput.removeAttribute('readonly');
+                longitudeDegreesInput.removeAttribute('value');
+                longitudeDegreesInput.setAttribute('min', lngsouth);
+                longitudeDegreesInput.setAttribute('max', lngnorth);
+            }
+
+            // for munites onlys longitude
+
+            if (lngsouthM === lngnorthM) {
+                // console.log("heeee")
+                // console.log(lngsouth,lngnorth)
+                longitudeMinutesInput.removeAttribute('readonly')
+                longitudeMinutesInput.removeAttribute('value');
+                longitudeMinutesInput.value = lngnorthM;
+                longitudeMinutesInput.setAttribute('readonly', 'readonly');
+            } else {
+
+                // Update longitude input field
+                // console.log("nooooooooooooooooo")
+                longitudeMinutesInput.removeAttribute('readonly');
+                longitudeMinutesInput.removeAttribute('value');
+                longitudeMinutesInput.setAttribute('min', lngsouthM);
+                longitudeMinutesInput.setAttribute('max', lngnorthM);
+            }
+
             map.fitBounds(geojson.getBounds());
         });
     });
 }
+
+
 
 
 // for uploading kml/kmz file and loading on map 
@@ -457,11 +796,16 @@ function processCSV(kmlContent) {
 
 
 document.getElementById('toggleFormBtn').addEventListener('click', function () {
+    var selectedVillage = document.getElementById("search_type").value;
+    console.log(selectedVillage, "selectedVillage")
+
+
     var formContainer = document.getElementById('formContainer');
     formContainer.style.display = (formContainer.style.display === 'none') ? 'block' : 'none';
 });
 
 document.getElementById('closeFormBtn').addEventListener('click', function () {
+
     var formContainer = document.getElementById('formContainer');
     formContainer.style.display = 'none';
 });
@@ -479,10 +823,43 @@ document.getElementById('addRowBtn').addEventListener('click', function () {
 
 
 
+function updateFirstRowValues(table) {
+    var firstRow = table.rows[1]; // Index 0 is the header row
+    var longitudeDegreesInput = firstRow.cells[0].querySelector('input[name="longitudeDegrees[]"]');
+    var longitudeMinutesInput = firstRow.cells[1].querySelector('input[name="longitudeMinutes[]"]');
+    var latitudeDegreesInput = firstRow.cells[3].querySelector('input[name="latitudeDegrees[]"]');
+    var latitudeMinutesInput = firstRow.cells[4].querySelector('input[name="latitudeMinutes[]"]');
 
-// var drawnPolygons = {};
+    // Update the values and properties in the new row
+    var newLongitudeDegreesInput = table.rows[table.rows.length - 1].cells[0].querySelector('input[name="longitudeDegrees[]"]');
+    var newLongitudeMinutesInput = table.rows[table.rows.length - 1].cells[1].querySelector('input[name="longitudeMinutes[]"]');
+    var newLatitudeDegreesInput = table.rows[table.rows.length - 1].cells[3].querySelector('input[name="latitudeDegrees[]"]');
+    var newLatitudeMinutesInput = table.rows[table.rows.length - 1].cells[4].querySelector('input[name="latitudeMinutes[]"]');
+
+    newLongitudeDegreesInput.value = longitudeDegreesInput.value;
+    newLongitudeDegreesInput.setAttribute('min', longitudeDegreesInput.getAttribute('min'));
+    newLongitudeDegreesInput.setAttribute('max', longitudeDegreesInput.getAttribute('max'));
+
+    newLongitudeMinutesInput.value = longitudeMinutesInput.value;
+    newLongitudeMinutesInput.setAttribute('min', longitudeMinutesInput.getAttribute('min'));
+    newLongitudeMinutesInput.setAttribute('max', longitudeMinutesInput.getAttribute('max'));
+
+    newLatitudeDegreesInput.value = latitudeDegreesInput.value;
+    newLatitudeDegreesInput.setAttribute('min', latitudeDegreesInput.getAttribute('min'));
+    newLatitudeDegreesInput.setAttribute('max', latitudeDegreesInput.getAttribute('max'));
+
+    newLatitudeMinutesInput.value = latitudeMinutesInput.value;
+    newLatitudeMinutesInput.setAttribute('min', latitudeMinutesInput.getAttribute('min'));
+    newLatitudeMinutesInput.setAttribute('max', latitudeMinutesInput.getAttribute('max'));
+}
+
+
+
+
 
 function addCoordinateRow(table) {
+    // var selectedVillage = document.getElementById("search_type").value;
+    // console.log(selectedVillage,"selectedVillage")
     var row = table.insertRow();
     var longitudeDegreesCell = row.insertCell();
     var longitudeMinutesCell = row.insertCell();
@@ -641,12 +1018,15 @@ function addCoordinateRow(table) {
 
 
 
+    updateFirstRowValues(table);
+
     actionCell.innerHTML = '<button type="button" class="deleteRowBtn"><i class="fa-solid fa-trash-can"></i></button>';
     // Add event istener to delete button
     var deleteBtn = actionCell.querySelector('.deleteRowBtn');
 
     deleteBtn.addEventListener('click', function () {
         row.remove();
+        updateFirstRowValues(table);
     });
 }
 
@@ -666,13 +1046,10 @@ document.getElementById('coordinateForm').addEventListener('submit', function (e
         // Parse DMS strings into decimal degrees
         var parsedLongitude = parseDMS(longitudeDegrees, longitudeMinutes, longitudeSeconds);
         var parsedLatitude = parseDMS(latitudeDegrees, latitudeMinutes, latitudeSeconds);
-
-        // Push the coordinates to the array
         coordinates.push([parsedLatitude, parsedLongitude]);
-        // coordinates.push([parsedLongitude,parsedLatitude ]);
     });
 
-    console.log(coordinates, ",coordinates");
+
     markershow = [];
     // Add markers to the map
     if (coordinates.length < 4) {
@@ -683,8 +1060,6 @@ document.getElementById('coordinateForm').addEventListener('submit', function (e
         map.fitBounds(polygon.getBounds());
 
         var polygonId = 'polygon_coors'
-        // polygonCounter++;
-        // drawnPolygons[polygonId] = coordinates;
         drawnPolygons[polygonId] = polygon.toGeoJSON().geometry.coordinates;
 
         console.log(drawnPolygons, "drawnPolygons", "polygonCounter");
@@ -707,13 +1082,7 @@ function getSelectedValues1() {
     return selectedValues;
 }
 
-// Example usage
-// console.log(getSelectedValues1());
 
-
-// var initialCqlFilter = getSelectedValues();
-
-// for getting village nale
 let filters = '';
 
 $("#search_type").change(function () {
@@ -728,30 +1097,28 @@ function getFilters() {
 }
 
 
+
 function savevalues() {
-    // console.log(getFilters())
-    // console.log(getSelectedValues1())
-    // console.log(getSelectedValues(),"getSelectedValues")
-    
-    console.log(drawnPolygons, "drawnPolygons")
+
     Object.keys(drawnPolygons).forEach(async function (polygonId) {
         var coordinates = drawnPolygons[polygonId];
-        console.log(coordinates,"drawcoordinates")
+        // console.log(coordinates,"drawcoordinates")
         var pp = turf.polygon(coordinates);
         L.geoJSON(pp).addTo(map)
         var bounds = L.geoJSON(pp).getBounds();
         map.fitBounds(bounds);
         var layers = ["AutoDCR:Revenue_1"];
+    
         var url = "https://portal.geopulsea.com//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=";
         var propertyName = "village_name,TPS_Name,Gut_No,geom";
         var outputFormat = "application/json";
-        var values =  await IntersectAreaWithPolygon(pp, layers, url, propertyName, bounds.toBBoxString(), outputFormat)
+        var values = await IntersectAreaWithPolygon(pp, layers, url, propertyName, bounds.toBBoxString(), outputFormat)
         var cqlFilterget = getSelectedValues()
         const selected_dropdown = JSON.stringify(cqlFilterget)
-        const villageName =  JSON.stringify(values);
+        const villageName = JSON.stringify(values);
         const selected_guts = JSON.stringify(getSelectedValues1());
         const selected_village = JSON.stringify(getFilters());
-        const coordinates1= coordinates[0].map(coord => [coord[0], coord[1]]);
+        const coordinates1 = coordinates[0].map(coord => [coord[0], coord[1]]);
         console.log(cqlFilterget,"cqlFilterget",selected_dropdown,"selected_dropdown",villageName,"villageName",selected_guts,"selected_guts",selected_village,"selected_village")
 
         $.ajax({
@@ -762,40 +1129,116 @@ function savevalues() {
                 coordinates: coordinates1,
                 village_name: villageName,
                 gut_num: selected_dropdown,
-                selectedvillage:selected_village,
-                selectedguts:selected_guts
+                selectedvillage: selected_village,
+                selectedguts: selected_guts,
+                token: token
 
             }),
             success: function (response) {
-              
+
                 console.log("Coordinates saved successfully");
                 localStorage.setItem('lastInsertedPlotBoundaryId', response.data.id);
-
-                if(response.data.id != undefined){
+                console.log("localstorage")
+                // if(response.data.id != undefined){
                    window.location.href = 'data.html';
-                }
-                
-                
+                // }
+
+
             },
             error: function (xhr, status, error) {
                 console.error("Failed to save coordinates:", error);
             }
         });
 
+
+
+        $.ajax({
+            // url:'https://autodcr.pmc.gov.in/AutoDCR.GISIntegration/GisExim.svc/getPlotGISDetails',
+
+            url: 'http://115.124.100.250/AutoDCR.Integration/GisExim.svc/getPlotGISDetails',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                Token: token,
+                Parcel: {
+                    Location: [
+                        {
+                            LocationCode: handshakingCode,
+                            SurveyNo: selected_guts,
+                            PlotNo: '',
+                            CTS: '',
+                            Peth: '',
+                        },
+                    ],
+                    //blank
+                    LandUseZone: '',
+                    PlotGeoJSON: {
+                        type: 'Feature',
+                        properties: {
+                            PolygonKey: '8650',
+                            PolygonArea: '493.74',
+                            Centroid: [73.941016, 18.508117],
+                        },
+                        geometry: {
+                            type: 'Polygon',
+                            coordinates: [coordinates1],
+                        },
+                    },
+                    Buildings: [],
+                    NOCDocuments: [],
+                },
+            }),
+            success: function (response) {
+                console.log('API response received:', response);
+                if (response.Status) {
+                    window.location.href = 'data.html';
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error('Error calling API:', xhr.responseText);
+            },
+        });
+
     });
-  
+
 }
 
-async function IntersectAreaWithPolygon(drawnPolygon, layers, url, propertyName, bounds, outputFormat) {  
+document.getElementById("getinfo").onclick = function () {
+    infovalues()
+};
+function infovalues() {
+    if (Object.keys(drawnPolygons).length === 0) {
+        alert("No coordinates drawn on map.");
+        return; // Exit the function early
+    }
+
+    Object.keys(drawnPolygons).forEach(async function (polygonId) {
+        var coordinates = drawnPolygons[polygonId];
+        console.log(coordinates, "drawcoordinates")
+        var pp = turf.polygon(coordinates);
+        L.geoJSON(pp).addTo(map)
+        var bounds = L.geoJSON(pp).getBounds();
+        map.fitBounds(bounds);
+        var layers1 = ["AutoDCR:Aviation_data"];
+        var url = "https://portal.geopulsea.com//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=";
+        var propertyName1 = "zone,distance,elevation,geom";
+        var outputFormat = "application/json";
+        IntersectwithASLM(pp, layers1, url, propertyName1, bounds.toBBoxString(), outputFormat)
+        console.log("working")
+
+    })
+};
+
+async function IntersectAreaWithPolygon(drawnPolygon, layers, url, propertyName, bounds, outputFormat) {
     let summaryByVillage = [];
-    
+
     let requests = layers.map(function (layerName) {
         var urlm = url + layerName +
             "&propertyName=" + propertyName + "&bbox=" +
             bounds +
             "&outputFormat=" + outputFormat;
-  
-       
+
+
         return new Promise((resolve, reject) => {
             $.getJSON(urlm, function (data) {
                 if (data && data.features && data.features.length > 0) {
@@ -818,30 +1261,91 @@ async function IntersectAreaWithPolygon(drawnPolygon, layers, url, propertyName,
                         var properties = layer.feature.properties;
                         var area = turf.area(layer.feature);
                         layer.bindPopup(`Area: ${area.toFixed(2)} sq meters<br>Properties: ${JSON.stringify(properties)}`);
+
                     });
-                                        intersectedFeatures.forEach(function (feature) {
+                    intersectedFeatures.forEach(function (feature) {
                         var properties = feature.properties;
                         var villageName = properties.village_name;
                         var area = turf.area(feature);
                         properties.area = area;
                         summaryByVillage.push(properties);
                     });
-                    resolve(summaryByVillage); 
+                    resolve(summaryByVillage);
                 } else {
                     console.log('No valid features found in the response.');
-                    resolve([]); 
+                    resolve([]);
                 }
-            }).fail(function() {
+            }).fail(function () {
                 console.error("Error fetching data for layer: " + layerName);
-                reject(); 
+                reject();
             });
         });
     });
-    
+
     const results = await Promise.all(requests);
     let combinedSummary = [].concat(...results);
     return combinedSummary;
 }
 
 
-// 
+
+function IntersectwithASLM(drawnPolygon, layers, url, propertyName, bounds, outputFormat) {
+    var distancefromNDA = []
+    var distancefromPuneairport = []
+    let requests = layers.map(function (layerName) {
+        var urlm = url + layerName +
+            "&propertyName=" + propertyName + "&bbox=" +
+            bounds +
+            "&outputFormat=" + outputFormat;
+
+        return new Promise((resolve, reject) => {
+            $.getJSON(urlm, function (data) {
+                if (data && data.features && data.features.length > 0) {
+                    var intersectedFeatures = [];
+                    data.features.forEach(function (feature) {
+                        var intersectedFeature = turf.intersect(feature, drawnPolygon);
+                        if (intersectedFeature && intersectedFeature.geometry.type !== 'GeometryCollection') {
+                            intersectedFeature.properties = feature.properties;
+                            intersectedFeatures.push(intersectedFeature);
+                            var nearestPoint = turf.nearestPointOnLine(turf.polygonToLine(intersectedFeature.geometry), turf.point([73.779043, 18.472787]));
+                            var distance = turf.distance(turf.point([73.779043, 18.472787]), nearestPoint, { units: 'meters' });
+                            distancefromNDA.push(distance)
+                            var nearestPoint = turf.nearestPointOnLine(turf.polygonToLine(intersectedFeature.geometry), turf.point([73.917901, 18.582915]));
+                            var distance1 = turf.distance(turf.point([73.917901, 18.582915]), nearestPoint, { units: 'meters' });
+                            distancefromPuneairport.push(distance1)
+
+                        }
+                    });
+                    var intersectedLayer = L.geoJSON(intersectedFeatures, {
+                        style: {
+                            color: 'red',
+                            weight: 2
+                        }
+                    });
+                    intersectedLayer.addTo(map);
+                    intersectedLayer.eachLayer(function (layer) {
+                        var properties = layer.feature.properties;
+                        var area = turf.area(layer.feature);
+                        layer.bindPopup(`Area: ${area.toFixed(2)} sq meters<br>Zone: ${JSON.stringify(properties.zone)} <br> Distance: ${JSON.stringify(properties.distance)}  <br> Elevation: ${JSON.stringify(properties.elevation)}<br> Distance fromNDA : ${distancefromNDA.map(d => d.toFixed(3))} Meters. <br> Distance fromPune airport : ${distancefromPuneairport.map(d => d.toFixed(3))} Meters.`);
+                        layer.openPopup();
+                    });
+                    intersectedFeatures.forEach(function (feature) {
+                        var properties = feature.properties;
+                        var villageName = properties.village_name;
+                        var area = turf.area(feature);
+                        properties.area = area;
+                        // summaryByVillage.push(properties);
+                    });
+                    // resolve(summaryByVillage); 
+                } else {
+                    console.log('No valid features found in the response.');
+                    resolve([]);
+                }
+            }).fail(function () {
+                console.error("Error fetching data for layer: " + layerName);
+                reject();
+            });
+        });
+    });
+
+}

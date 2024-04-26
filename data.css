@@ -5,6 +5,7 @@
     margin: 0;
     padding: 20px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
@@ -21,8 +22,8 @@
 .card-header {
     background-color: #bbb;
     color: #fff;
-    padding: 10px;
-    text-align: center;
+    /* padding: 10px; */
+    /* text-align: center; */
 }
 
 .card-content {

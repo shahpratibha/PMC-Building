@@ -195,7 +195,7 @@
 .coordimg  {
   position: absolute;
   top: 3.1%;
-  left:85%;
+  left:86%;
   z-index: 1000;
   width: 34px;
   height: 34px;
@@ -474,3 +474,120 @@ input[type="checkbox"] {
   margin-left: 5px;
   margin-top: 60px;
 }
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  input[type="search"] {
+    padding: px;
+    font-size: 12px;
+    border: 2px solid #3c3cb8;
+    border-radius: 5px;
+    width: 120px;
+}
+  .logopng {
+    height: 50px;
+    width: 50px;
+    /* border: 2px solid #bbb; */
+    border-radius: 10px;
+    /* background-color: white; */
+    padding: 5px;
+    position: absolute;
+    z-index: 9999;
+    top: 1%;
+}
+  #search_type {
+    position: absolute;
+    top: 20px;
+    left: 120px;
+    transform: translateX(-50%);
+    z-index: 999;
+    width: 120px;
+    border-radius: 10px;
+    padding: 5px;
+    font-size: 14px;
+    border: 2px solid #3c3cb8;
+    background-color: #fff;
+}
+.dropdown-container {
+  position: absolute;
+  top: 20px;
+  left: 270px;
+  transform: translateX(-50%);
+  z-index: 999;
+  width: 150px;
+  border-radius: 10px;
+  padding: 5px;
+  font-size: 14px;
+  background-color: #fff;
+  border: 2px solid #3c3cb8;
+}
+.coordimg1 {
+  position: absolute;
+  top: 213px;
+  left: 10px;
+  z-index: 1000;
+  width: 34px;
+  height: 34px;
+  background-color: white;
+  border: 2px solid #3c3cb8;
+  border-radius: 5px;
+  font-size: 15px;
+  color: #3c3cb8;
+  font-weight: bold;
+  /* padding: 5px 10px; */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.custom-button1 {
+  position: absolute;
+  top: 20px;
+  left: 355px;
+  z-index: 1000;
+  border: 2px solid #3c3cb8;
+  border-radius: 5px;
+  color: #3c3cb8;
+  background-color: white;
+  font-size: 17px;
+  padding: 3px 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.custom-buttoncsv {
+  position: absolute;
+  top: 20px;
+  left: 510px;
+  z-index: 1000;
+  background-color: white;
+  border: 2px solid #3c3cb8;
+  /* border: none; */
+  border-radius: 10px;
+  padding: px 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 35px;
+}
+.fa-solid fa-angle-down{
+  left: 50px;
+}
+.coordimg {
+  position: absolute;
+  top: 20px;
+  left: 650px;
+  /* right: 80px; */
+  z-index: 1000;
+  width: 34px;
+  height: 34px;
+  background-color: white;
+  border: 2px solid #3c3cb8;
+  border-radius: 5px;
+  font-size: 15px;
+  color: #3c3cb8;
+  font-weight: bold;
+  /* padding: 5px 10px; */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+}
+/* Desktop Media Query */
+@media screen and (min-width: 1025px) {
+  .ps{
+    margin-left: 40px;
+  }
+}
+

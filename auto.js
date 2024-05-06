@@ -1,7 +1,7 @@
 
 var map, geojson;
 // const API_URL = "https://iwmsgis.pmc.gov.in/geopulse/autodcr/";
-const API_URL = "http://localhost/autodcr/autodcr1/autodcr";
+const API_URL = "http://localhost/autodcr/";
 
 // Add Basemap
 var map = L.map("map", {
@@ -44,7 +44,7 @@ var baseLayers = {};
 
 // for only gut showing
 var Revenue_Layer1 = L.tileLayer
-    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
+    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
         layers: "Revenue_1",
         format: "image/png",
         transparent: true,
@@ -58,7 +58,7 @@ var Revenue_Layer1 = L.tileLayer
 
 
     var Revenue_Layer = L.tileLayer
-    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
+    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
         layers: "Revenue_1",
         format: "image/png",
         transparent: true,
@@ -71,7 +71,7 @@ var Revenue_Layer1 = L.tileLayer
 
 
 var PLU_Layer = L.tileLayer
-    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
+    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
         layers: "PLU_Ward",
         format: "image/png",
         transparent: true,
@@ -83,7 +83,7 @@ var PLU_Layer = L.tileLayer
 
 
 var DPRoad_Layer = L.tileLayer
-    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
+    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
         layers: "DP_Ward_Road",
         format: "image/png",
         transparent: true,
@@ -94,7 +94,7 @@ var DPRoad_Layer = L.tileLayer
     });
 
 var Boundary_Layer = L.tileLayer
-    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
+    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
         layers: "PMC_Boundary",
         format: "image/png",
         transparent: true,
@@ -105,7 +105,7 @@ var Boundary_Layer = L.tileLayer
     }).addTo(map);
 
 var Village_Boundary = L.tileLayer
-    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
+    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
         layers: "Village_Boundary",
         format: "image/png",
         transparent: true,
@@ -118,7 +118,7 @@ var Village_Boundary = L.tileLayer
 
 
 var aviation = L.tileLayer
-    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
+    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
         layers: "Aviation_data",
         format: "image/png",
         transparent: true,
@@ -347,7 +347,7 @@ $(document).ready(function () {
 
 
     function trials() {
-        var geoServerURL = "https://iwmsgis.pmc.gov.in//geoserver/AutoDCR/wms?service=WFS&version=1.1.0&request=GetFeature&typeName=Revenue_1&propertyName=village_name&outputFormat=application/json";
+        var geoServerURL = "https://portal.geopulsea.com//geoserver/AutoDCR/wms?service=WFS&version=1.1.0&request=GetFeature&typeName=Revenue_1&propertyName=village_name&outputFormat=application/json";
 
         $.getJSON(geoServerURL)
             .done(function (data) {
@@ -390,7 +390,7 @@ $(document).ready(function () {
                             return; // Exit the function early
                         }
                         var geoServerURL =
-                            "https://iwmsgis.pmc.gov.in//geoserver/AutoDCR/wms?service=WFS&version=1.1.0&request=GetFeature&typeName=Revenue_1&propertyName=Gut_No&outputFormat=application/json";
+                            "https://portal.geopulsea.com//geoserver/AutoDCR/wms?service=WFS&version=1.1.0&request=GetFeature&typeName=Revenue_1&propertyName=Gut_No&outputFormat=application/json";
 
                         if (filters) {
                             geoServerURL += "&CQL_FILTER=" + encodeURIComponent(filters);
@@ -488,7 +488,7 @@ $("#search_type").change(function () {
         }
 
         var geoServerURL =
-            "https://iwmsgis.pmc.gov.in//geoserver/AutoDCR/wms?service=WFS&version=1.1.0&request=GetFeature&typeName=Revenue_1&propertyName=Gut_No&outputFormat=application/json"; if (filters) {
+            "https://portal.geopulsea.com//geoserver/AutoDCR/wms?service=WFS&version=1.1.0&request=GetFeature&typeName=Revenue_1&propertyName=Gut_No&outputFormat=application/json"; if (filters) {
                 geoServerURL += "&CQL_FILTER=" + encodeURIComponent(filters);
             }
 
@@ -656,7 +656,7 @@ function FitbouCustomiseRevenue(filter) {
     layers = ["AutoDCR:Revenue_1"];
     layers.forEach(function (layerName) {
         var urlm =
-            "https://iwmsgis.pmc.gov.in//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=" +
+            "https://portal.geopulsea.com//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=" +
             layerName +
             "&CQL_FILTER=" +
             filter +
@@ -907,60 +907,62 @@ function addCoordinateRow(table) {
     var latitudeDegreesCell = row.insertCell();
     var latitudeMinutesCell = row.insertCell();
     var latitudeSecondsCell = row.insertCell();
+    var heightfloatCell = row.insertCell();
+     var heightnumberCell = row.insertCell(); 
     var actionCell = row.insertCell();
-    // degreee-----------------------------------
-
-    var longitudeDegreesInput = document.createElement('input');
-    longitudeDegreesInput.setAttribute('type', 'number');
-    longitudeDegreesInput.setAttribute('placeholder', '75°');
-    longitudeDegreesInput.setAttribute('name', 'longitudeDegrees[]');
-    longitudeDegreesInput.setAttribute('readonly', 'readonly');
-    longitudeDegreesInput.value = '73';
-    longitudeDegreesInput.style.width = '50px';
-    longitudeDegreesInput.style.position = 'absolute';
-    longitudeDegreesInput.style.left = '5%';
-    longitudeDegreesInput.style.borderBottomLeftRadius = '5px';
-    longitudeDegreesInput.style.borderTopLeftRadius = '5px';
-    longitudeDegreesInput.style.borderTop = '2px solid #3c3cb8';
-    longitudeDegreesInput.style.borderLeft = '2px solid #3c3cb8';
-    longitudeDegreesInput.style.borderBottom = '2px solid #3c3cb8';
-    longitudeDegreesInput.style.borderRight = '2px solid  #3c3cb8';
-
-
-
-    // minutes--------------------------------------------------
-    var longitudeMinutesInput = document.createElement('input');
-    longitudeMinutesInput.setAttribute('type', 'number');
-    longitudeMinutesInput.setAttribute('placeholder', '51′');
-    longitudeMinutesInput.setAttribute('name', 'longitudeMinutes[]');
-    longitudeMinutesInput.setAttribute('readonly', 'readonly');
-    longitudeMinutesInput.style.width = '50px';
-    longitudeMinutesInput.style.position = 'absolute';
-    longitudeMinutesInput.style.left = '16%';
-    // longitudeMinutesInput.style.marginRight = '5px';
-    longitudeMinutesInput.style.borderTop = '2px solid  #3c3cb8';
-    longitudeMinutesInput.style.borderBottom = '2px solid  #3c3cb8';
-    longitudeMinutesInput.style.borderLeft = '2px solid  #bbb';
-    longitudeMinutesInput.style.borderRight = '2px solid  #bbb';
-
-
-    // second--------------------------------------------------------------
-    var longitudeSecondsInput = document.createElement('input');
-    longitudeSecondsInput.setAttribute('type', 'number');
-    longitudeSecondsInput.setAttribute('placeholder', '24.43″');
-    longitudeSecondsInput.setAttribute('name', 'longitudeSeconds[]');
-    longitudeSecondsInput.setAttribute('step', 'any');
-    longitudeSecondsInput.style.width = '65px';
-    longitudeSecondsInput.style.position = 'absolute';
-    longitudeSecondsInput.style.left = '28%';
-    // longitudeSecondsInput.style.marginRight = '5px'; 
-    longitudeSecondsInput.style.borderTop = '2px solid  #3c3cb8';
-    longitudeSecondsInput.style.borderBottom = '2px solid #3c3cb8';
-    longitudeSecondsInput.style.borderRight = '2px solid #3c3cb8';
-    longitudeSecondsInput.style.borderLeft = '2px solid  #bbb';
-    longitudeSecondsInput.style.borderTopRightRadius = '5px';
-    longitudeSecondsInput.style.borderBottomRightRadius = '5px';
-
+     // degreee-----------------------------------
+     var longitudeDegreesInput = document.createElement('input');
+     longitudeDegreesInput.setAttribute('type', 'number');
+     longitudeDegreesInput.setAttribute('placeholder', '73°');
+     longitudeDegreesInput.setAttribute('name', 'longitudeDegrees[]');
+     // longitudeDegreesInput.setAttribute('readonly', 'readonly'); 
+     longitudeDegreesInput.value = '73';
+     longitudeDegreesInput.style.width = '40px';
+     longitudeDegreesInput.style.position = 'absolute';
+     longitudeDegreesInput.style.left = '1%';
+     // longitudeDegreesInput.style.marginRight = '5px';
+     longitudeDegreesInput.style.borderBottomLeftRadius = '5px';
+     longitudeDegreesInput.style.borderTopLeftRadius = '5px';
+     longitudeDegreesInput.style.borderTop = '2px solid #3c3cb8';
+     longitudeDegreesInput.style.borderLeft = '2px solid #3c3cb8';
+     longitudeDegreesInput.style.borderBottom = '2px solid #3c3cb8';
+     longitudeDegreesInput.style.borderRight = '2px solid  #bbb';
+ 
+ 
+ 
+     // minutes--------------------------------------------------
+     var longitudeMinutesInput = document.createElement('input');
+     longitudeMinutesInput.setAttribute('type', 'number');
+     longitudeMinutesInput.setAttribute('placeholder', '51′');
+     longitudeMinutesInput.setAttribute('name', 'longitudeMinutes[]');
+     longitudeMinutesInput.style.width = '40px';
+     longitudeMinutesInput.style.position = 'absolute';
+     longitudeMinutesInput.style.left = '8%';
+     // longitudeMinutesInput.style.marginRight = '5px';
+     longitudeMinutesInput.style.borderTop = '2px solid  #3c3cb8';
+     longitudeMinutesInput.style.borderBottom = '2px solid  #3c3cb8';
+     longitudeMinutesInput.style.borderLeft = '2px solid  #bbb';
+    //  longitudeMinutesInput.style.borderRight = '2px solid  #bbb';
+ 
+ 
+     // second--------------------------------------------------------------
+     var longitudeSecondsInput = document.createElement('input');
+     longitudeSecondsInput.setAttribute('type', 'number');
+     longitudeSecondsInput.setAttribute('placeholder', '24.43″');
+     longitudeSecondsInput.setAttribute('name', 'longitudeSeconds[]');
+     longitudeSecondsInput.setAttribute('step', 'any');
+     longitudeSecondsInput.style.width = '59px';
+     longitudeSecondsInput.style.position = 'absolute';
+     longitudeSecondsInput.style.left = '16%';
+     // longitudeSecondsInput.style.marginRight = '5px'; 
+     longitudeSecondsInput.style.borderTop = '2px solid  #3c3cb8';
+     longitudeSecondsInput.style.borderBottom = '2px solid #3c3cb8';
+     longitudeSecondsInput.style.borderRight = '2px solid #3c3cb8';
+     longitudeSecondsInput.style.borderLeft = '2px solid  #bbb';
+     longitudeSecondsInput.style.borderTopRightRadius = '5px';
+     longitudeSecondsInput.style.borderBottomRightRadius = '5px';
+ 
+   
 
     // latdegree----------------------
 
@@ -972,7 +974,7 @@ function addCoordinateRow(table) {
     latitudeDegreesInput.value = '18';
     latitudeDegreesInput.style.width = '50px';
     latitudeDegreesInput.style.position = 'absolute';
-    latitudeDegreesInput.style.left = '46%';
+    latitudeDegreesInput.style.left = '32%';
     // latitudeDegreesInput.style.marginRight = '15px'; 
     latitudeDegreesInput.style.borderBottomLeftRadius = '5px';
     latitudeDegreesInput.style.borderTopLeftRadius = '5px';
@@ -987,10 +989,9 @@ function addCoordinateRow(table) {
     latitudeMinutesInput.setAttribute('type', 'number');
     latitudeMinutesInput.setAttribute('placeholder', '51′');
     latitudeMinutesInput.setAttribute('name', 'latitudeMinutes[]');
-    latitudeMinutesInput.setAttribute('readonly', 'readonly');
-    latitudeMinutesInput.style.width = '45px';
+    latitudeMinutesInput.style.width = '40px';
     latitudeMinutesInput.style.position = 'absolute';
-    latitudeMinutesInput.style.left = '55%';
+    latitudeMinutesInput.style.left = '40%';
     latitudeMinutesInput.style.borderTop = '2px solid  #3c3cb8';
     latitudeMinutesInput.style.borderBottom = '2px solid  #3c3cb8';
     latitudeMinutesInput.style.borderLeft = '2px solid  #bbb';
@@ -1004,15 +1005,43 @@ function addCoordinateRow(table) {
     latitudeSecondsInput.setAttribute('placeholder', '24.43″');
     latitudeSecondsInput.setAttribute('name', 'latitudeSeconds[]');
     latitudeSecondsInput.setAttribute('step', 'any');
-    latitudeSecondsInput.style.width = '65px';
+    latitudeSecondsInput.style.width = '60px';
     latitudeSecondsInput.style.position = 'absolute';
-    latitudeSecondsInput.style.left = '65%';
+    latitudeSecondsInput.style.left = '48%';
     latitudeSecondsInput.style.borderTop = '2px solid  #3c3cb8';
     latitudeSecondsInput.style.borderBottom = '2px solid #3c3cb8';
     latitudeSecondsInput.style.borderRight = '2px solid #3c3cb8';
     latitudeSecondsInput.style.borderLeft = '2px solid  #bbb';
     latitudeSecondsInput.style.borderTopRightRadius = '5px';
     latitudeSecondsInput.style.borderBottomRightRadius = '5px';
+
+
+    // number-----------------------------------
+    var heightfloatCellInput = document.createElement('input');
+    heightfloatCellInput.setAttribute('type', 'number');
+    heightfloatCellInput.setAttribute('placeholder', '247.66');
+    heightfloatCellInput.setAttribute('name', 'heightfloatCell[]');
+    // longitudeDegreesInput.setAttribute('readonly', 'readonly'); 
+    // heightfloatCellInput.value = '73';
+    heightfloatCellInput.style.width = '70px';
+    heightfloatCellInput.style.position = 'absolute';
+    heightfloatCellInput.style.left = '65%';
+    // longitudeDegreesInput.style.marginRight = '5px';
+    heightfloatCellInput.style.borderBottomLeftRadius = '5px';
+    heightfloatCellInput.style.borderTopLeftRadius = '5px';
+    heightfloatCellInput.style.borderTop = '2px solid #3c3cb8';
+    heightfloatCellInput.style.borderLeft = '2px solid #3c3cb8';
+    heightfloatCellInput.style.borderBottom = '2px solid #3c3cb8';
+    heightfloatCellInput.style.borderRight = '2px solid  #3c3cb8';
+    heightfloatCellInput.style.borderTopRightRadius = '5px';
+    heightfloatCellInput.style.borderBottomRightRadius = '5px';
+
+    
+
+ 
+    
+   
+    
 
 
 
@@ -1023,6 +1052,10 @@ function addCoordinateRow(table) {
     latitudeDegreesCell.appendChild(latitudeDegreesInput);
     latitudeMinutesCell.appendChild(latitudeMinutesInput);
     latitudeSecondsCell.appendChild(latitudeSecondsInput);
+     heightfloatCell.appendChild(heightfloatCellInput);
+
+   
+
 
 
     updateFirstRowValues(table);
@@ -1153,7 +1186,7 @@ function savevalues() {
         map.fitBounds(bounds);
         var layers = ["AutoDCR:Revenue_1"];
     
-        var url = "https://iwmsgis.pmc.gov.in//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=";
+        var url = "https://portal.geopulsea.com//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=";
         var propertyName = "village_name,TPS_Name,Gut_No,geom";
         var outputFormat = "application/json";
         var values = await IntersectAreaWithPolygon(pp, layers, url, propertyName, bounds.toBBoxString(), outputFormat)
@@ -1239,7 +1272,7 @@ function submitForm() {
     map.fitBounds(bounds);
     var layers = ["AutoDCR:Revenue_1"];
 
-    var url = "https://iwmsgis.pmc.gov.in//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=";
+    var url = "https://portal.geopulsea.com//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=";
     var propertyName = "village_name,TPS_Name,Gut_No,geom";
     var outputFormat = "application/json";
     var values = await IntersectAreaWithPolygon(pp, layers, url, propertyName, bounds.toBBoxString(), outputFormat)
@@ -1262,7 +1295,7 @@ function submitForm() {
         url: "APIS/savevalues.php",
         contentType: "application/json",
         data: JSON.stringify({
-            coordinates: dmsCoordinates,
+            coordinates: coordinates1,
             village_name: villageName,
             gut_num: selected_dropdown,
             selectedvillage: selected_village,
@@ -1368,7 +1401,7 @@ function infovalues() {
         var bounds = L.geoJSON(pp).getBounds();
         map.fitBounds(bounds);
         var layers1 = ["AutoDCR:Aviation_data"];
-        var url = "https://iwmsgis.pmc.gov.in//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=";
+        var url = "https://portal.geopulsea.com//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=";
         var propertyName1 = "zone,distance,elevation,geom";
         var outputFormat = "application/json";
         IntersectwithASLM(pp, layers1, url, propertyName1, bounds.toBBoxString(), outputFormat)

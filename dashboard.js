@@ -54,7 +54,7 @@ var PlotBoundary_Layer = L.tileLayer
 
 
 var Revenue_Layer = L.tileLayer
-    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
         layers: "Revenue_1",
         format: "image/png",
         transparent: true,
@@ -69,7 +69,7 @@ var Revenue_Layer = L.tileLayer
 
 // for only gut showing
 var Revenue_Layer1 = L.tileLayer
-    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
         layers: "Revenue_1",
         format: "image/png",
         transparent: true,
@@ -80,7 +80,7 @@ var Revenue_Layer1 = L.tileLayer
     });
 
 var PLU_Layer = L.tileLayer
-    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
         layers: "PLU_Ward",
         format: "image/png",
         transparent: true,
@@ -91,7 +91,7 @@ var PLU_Layer = L.tileLayer
     });
 
 var DPRoad_Layer = L.tileLayer
-    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
         layers: "DP_Ward_Road",
         format: "image/png",
         transparent: true,
@@ -102,7 +102,7 @@ var DPRoad_Layer = L.tileLayer
     });
 
 var Boundary_Layer = L.tileLayer
-    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
         layers: "PMC_Boundary",
         format: "image/png",
         transparent: true,
@@ -113,7 +113,7 @@ var Boundary_Layer = L.tileLayer
     }).addTo(map);
 
 var Village_Boundary = L.tileLayer
-    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
         layers: "Village_Boundary",
         format: "image/png",
         transparent: true,
@@ -159,6 +159,7 @@ L.control.zoom({
 
 
 
+
 $(document).ready(function () {
 
 
@@ -171,6 +172,8 @@ $(document).ready(function () {
     
     
     var coordinatesArray = coordinatesString.split(",").map(Number);
+
+    // var coordinatesArray = coordinatesString.split(",").map(String);//Changed Number to String PH
 
     console.log(coordinatesArray ,"okkkkkkk");
 
@@ -188,3 +191,30 @@ map.fitBounds(bounds);
 })
 
 
+
+// $(document).ready(function () {
+//     // Initialize your Leaflet map instance
+//     var map = L.map('map').setView([51.505, -0.09], 13); // Set the initial view to some default values
+
+//     // Call your function to refresh WMS layer if it's defined
+//     if (typeof refreshWMSLayer === 'function') {
+//         refreshWMSLayer();
+//     }
+
+//     var lastInsertedId = localStorage.getItem('lastInsertedPlotBoundaryId');
+//     var coordinatesString = localStorage.getItem('coordinates');
+
+//     if (lastInsertedId && coordinatesString) { // Ensure localStorage items are not null
+//         var coordinatesArray = coordinatesString.split(",").map(Number);
+
+//         var coords = [];
+//         while (coordinatesArray.length > 0) {
+//             coords.push(coordinatesArray.splice(0, 2).reverse());
+//         }
+
+//         var bounds = L.latLngBounds(coords);
+//         map.fitBounds(bounds);
+//     } else {
+//         console.error("Either lastInsertedPlotBoundaryId or coordinates is missing in localStorage.");
+//     }
+// });

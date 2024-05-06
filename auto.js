@@ -1,7 +1,7 @@
 
 var map, geojson;
-// const API_URL = "https://iwmsgis.pmc.gov.in/geopulse/autodcr/";
-const API_URL = "http://localhost/autodcr/autodcr1/autodcr";
+const API_URL = "https://iwmsgis.pmc.gov.in/geopulse/autodcr/";
+// const API_URL = "http://localhost/autodcr/autodcr1/autodcr";
 
 // Add Basemap
 var map = L.map("map", {
@@ -44,7 +44,7 @@ var baseLayers = {};
 
 // for only gut showing
 var Revenue_Layer1 = L.tileLayer
-    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
         layers: "Revenue_1",
         format: "image/png",
         transparent: true,
@@ -58,7 +58,7 @@ var Revenue_Layer1 = L.tileLayer
 
 
     var Revenue_Layer = L.tileLayer
-    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
         layers: "Revenue_1",
         format: "image/png",
         transparent: true,
@@ -71,7 +71,7 @@ var Revenue_Layer1 = L.tileLayer
 
 
 var PLU_Layer = L.tileLayer
-    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
         layers: "PLU_Ward",
         format: "image/png",
         transparent: true,
@@ -83,7 +83,7 @@ var PLU_Layer = L.tileLayer
 
 
 var DPRoad_Layer = L.tileLayer
-    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
         layers: "DP_Ward_Road",
         format: "image/png",
         transparent: true,
@@ -94,7 +94,7 @@ var DPRoad_Layer = L.tileLayer
     });
 
 var Boundary_Layer = L.tileLayer
-    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
         layers: "PMC_Boundary",
         format: "image/png",
         transparent: true,
@@ -105,7 +105,7 @@ var Boundary_Layer = L.tileLayer
     }).addTo(map);
 
 var Village_Boundary = L.tileLayer
-    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
         layers: "Village_Boundary",
         format: "image/png",
         transparent: true,
@@ -118,7 +118,7 @@ var Village_Boundary = L.tileLayer
 
 
 var aviation = L.tileLayer
-    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
         layers: "Aviation_data",
         format: "image/png",
         transparent: true,
@@ -347,7 +347,7 @@ $(document).ready(function () {
 
 
     function trials() {
-        var geoServerURL = "https://portal.geopulsea.com//geoserver/AutoDCR/wms?service=WFS&version=1.1.0&request=GetFeature&typeName=Revenue_1&propertyName=village_name&outputFormat=application/json";
+        var geoServerURL = "https://iwmsgis.pmc.gov.in//geoserver/AutoDCR/wms?service=WFS&version=1.1.0&request=GetFeature&typeName=Revenue_1&propertyName=village_name&outputFormat=application/json";
 
         $.getJSON(geoServerURL)
             .done(function (data) {
@@ -390,7 +390,7 @@ $(document).ready(function () {
                             return; // Exit the function early
                         }
                         var geoServerURL =
-                            "https://portal.geopulsea.com//geoserver/AutoDCR/wms?service=WFS&version=1.1.0&request=GetFeature&typeName=Revenue_1&propertyName=Gut_No&outputFormat=application/json";
+                            "https://iwmsgis.pmc.gov.in//geoserver/AutoDCR/wms?service=WFS&version=1.1.0&request=GetFeature&typeName=Revenue_1&propertyName=Gut_No&outputFormat=application/json";
 
                         if (filters) {
                             geoServerURL += "&CQL_FILTER=" + encodeURIComponent(filters);
@@ -488,7 +488,7 @@ $("#search_type").change(function () {
         }
 
         var geoServerURL =
-            "https://portal.geopulsea.com//geoserver/AutoDCR/wms?service=WFS&version=1.1.0&request=GetFeature&typeName=Revenue_1&propertyName=Gut_No&outputFormat=application/json"; if (filters) {
+            "https://iwmsgis.pmc.gov.in//geoserver/AutoDCR/wms?service=WFS&version=1.1.0&request=GetFeature&typeName=Revenue_1&propertyName=Gut_No&outputFormat=application/json"; if (filters) {
                 geoServerURL += "&CQL_FILTER=" + encodeURIComponent(filters);
             }
 
@@ -624,6 +624,7 @@ button.onAdd = function (map) {
 button.addTo(map);
 
 
+var drawnPolygons = []; 
 
 
 // Listen for draw events
@@ -655,7 +656,7 @@ function FitbouCustomiseRevenue(filter) {
     layers = ["AutoDCR:Revenue_1"];
     layers.forEach(function (layerName) {
         var urlm =
-            "https://portal.geopulsea.com//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=" +
+            "https://iwmsgis.pmc.gov.in//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=" +
             layerName +
             "&CQL_FILTER=" +
             filter +
@@ -1063,7 +1064,25 @@ document.getElementById('coordinateForm').addEventListener('submit', function (e
         alert('Please enter at least four coordinates.');
         return;
     } else {
-        var polygon = L.polygon(coordinates).addTo(map);
+        var polygon = L.polygon(coordinates).addTo(map);// Function to open the legend div when clicked
+function openLegend() {
+    var legendDiv = document.querySelector('.info.legend');
+    legendDiv.style.display = 'block';
+}
+
+// Add event listener to open the legend div when clicked
+document.querySelector('.info.legend').addEventListener('click', openLegend);
+
+// Add event listener to close the legend div when clicked outside
+document.addEventListener('click', function(event) {
+    var legendDiv = document.querySelector('.info.legend');
+    // Check if the click occurred outside of the legend div
+    if (!legendDiv.contains(event.target)) {
+        // Clicked outside of the legend div, so hide it
+        legendDiv.style.display = 'none';
+    }
+});
+
         map.fitBounds(polygon.getBounds());
 
         var polygonId = 'polygon_coors'
@@ -1130,12 +1149,12 @@ function savevalues() {
         console.log(coordinates,"drawcoordinates1111111111111")
 
         var pp = turf.polygon(coordinates);
-        L.geoJSON(pp).addTo(map)
+        // L.geoJSON(pp).addTo(map)
         var bounds = L.geoJSON(pp).getBounds();
         map.fitBounds(bounds);
         var layers = ["AutoDCR:Revenue_1"];
     
-        var url = "https://portal.geopulsea.com//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=";
+        var url = "https://iwmsgis.pmc.gov.in//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=";
         var propertyName = "village_name,TPS_Name,Gut_No,geom";
         var outputFormat = "application/json";
         var values = await IntersectAreaWithPolygon(pp, layers, url, propertyName, bounds.toBBoxString(), outputFormat)
@@ -1164,7 +1183,7 @@ var exampleData = [
     ['Draw Village Name', villageName],
     ['Selected Village From Dropdown', selected_village],
     ['Selected Survey Number From Dropdown', selected_guts],
-    ['Coordinates', dmsCoordinates ]
+    ['Coordinates', dmsCoordinates]
     
 ];
 
@@ -1203,14 +1222,25 @@ function submitForm() {
      var coordinates = drawnPolygons[polygonId];
      localStorage.setItem('coordinates',coordinates);
      
+
+    //  // pragati code 
+
+    //  //[STRAT] Added new line PH
+    // const coordinatesDec = coordinates[0].map(coord => [coord[0], coord[1]]);
+    // // this is converting decimal degrees to degree minutes and seconds
+    // const dmsCoordinatesDec = coordinatesDec.map(coord => [convertToDMS(coord[0]), convertToDMS(coord[1])]);
+    // //[END] Added new line PH
+    // localStorage.setItem('coordinates',dmsCoordinatesDec);//Changed coordinates to dmsCoordinatesDec PH
+
+
     console.log(coordinates,"drawcoordinates")
     var pp = turf.polygon(coordinates);
-    L.geoJSON(pp).addTo(map)
+    // L.geoJSON(pp).addTo(map)
     var bounds = L.geoJSON(pp).getBounds();
     map.fitBounds(bounds);
     var layers = ["AutoDCR:Revenue_1"];
 
-    var url = "https://portal.geopulsea.com//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=";
+    var url = "https://iwmsgis.pmc.gov.in//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=";
     var propertyName = "village_name,TPS_Name,Gut_No,geom";
     var outputFormat = "application/json";
     var values = await IntersectAreaWithPolygon(pp, layers, url, propertyName, bounds.toBBoxString(), outputFormat)
@@ -1324,6 +1354,7 @@ function submitForm() {
 document.getElementById("getinfo").onclick = function () {
     infovalues()
 };
+
 function infovalues() {
     if (Object.keys(drawnPolygons).length === 0) {
         alert("No coordinates drawn on map.");
@@ -1338,7 +1369,7 @@ function infovalues() {
         var bounds = L.geoJSON(pp).getBounds();
         map.fitBounds(bounds);
         var layers1 = ["AutoDCR:Aviation_data"];
-        var url = "https://portal.geopulsea.com//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=";
+        var url = "https://iwmsgis.pmc.gov.in//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=";
         var propertyName1 = "zone,distance,elevation,geom";
         var outputFormat = "application/json";
         IntersectwithASLM(pp, layers1, url, propertyName1, bounds.toBBoxString(), outputFormat)
@@ -1368,19 +1399,19 @@ async function IntersectAreaWithPolygon(drawnPolygon, layers, url, propertyName,
                             intersectedFeatures.push(intersectedFeature);
                         }
                     });
-                    var intersectedLayer = L.geoJSON(intersectedFeatures, {
-                        style: {
-                            color: 'red',
-                            weight: 2
-                        }
-                    });
-                    intersectedLayer.addTo(map);
-                    intersectedLayer.eachLayer(function (layer) {
-                        var properties = layer.feature.properties;
-                        var area = turf.area(layer.feature);
-                        layer.bindPopup(`Area: ${area.toFixed(2)} sq meters<br>Properties: ${JSON.stringify(properties)}`);
+                    // var intersectedLayer = L.geoJSON(intersectedFeatures, {
+                    //     style: {
+                    //         color: 'white',
+                    //         weight: 2
+                    //     }
+                    // });
+                    // intersectedLayer.addTo(map);
+                    // intersectedLayer.eachLayer(function (layer) {
+                    //     var properties = layer.feature.properties;
+                    //     var area = turf.area(layer.feature);
+                    //     layer.bindPopup(`Area: ${area.toFixed(2)} sq meters<br>Properties: ${JSON.stringify(properties)}`);
 
-                    });
+                    // });
                     intersectedFeatures.forEach(function (feature) {
                         var properties = feature.properties;
                         var villageName = properties.village_name;
@@ -1440,7 +1471,7 @@ function IntersectwithASLM(drawnPolygon, layers, url, propertyName, bounds, outp
                             weight: 2
                         }
                     });
-                    intersectedLayer.addTo(map);
+                    // intersectedLayer.addTo(map);
                     intersectedLayer.eachLayer(function (layer) {
                         var properties = layer.feature.properties;
                         var area = turf.area(layer.feature);
@@ -1504,8 +1535,8 @@ function showTableModal(data) {
 
     data.forEach(function(row) {
         var rowHtml = '<tr>';
-        rowHtml += '<td>' + row[0] + '</td>'; // Column 1
-        rowHtml += '<td>' + row[1] + '</td>'; // Column 2
+        rowHtml += '<td>' + row[0] + '</td>'; 
+        rowHtml += '<td>' + row[1] + '</td>'; 
         rowHtml += '</tr>';
         $('#popup-table tbody').append(rowHtml);
     });

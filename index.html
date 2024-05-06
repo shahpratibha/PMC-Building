@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -29,16 +28,76 @@
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet-draw/dist/leaflet.draw.css" />
 
+    <style>
+        #popup-table {
+            width: 100%; 
+            max-width: 800px; 
+            margin: 0 auto; 
+        }
 
+        .table-responsive {
+        overflow-x: auto; 
+        max-width: 100%; 
+        }
+
+        
+    </style>
+    
 </head>
 
 <body>
+
+<!-- model for popup -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="dataPageModal" tabindex="-1" aria-labelledby="dataPageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                
+                <h5 class="modal-title" id="dataPageModalLabel">Data Table</h5>
+            
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive"> 
+                    <table class="table table-bordered" id="popup-table">
+                        <!-- Table content will be populated dynamically -->
+                        <thead>
+                            <tr>
+                                <th scope="col">Column 1</th>
+                                <th scope="col">Column 2</th>
+                                <!-- Add more columns if needed -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Table rows will be populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-between">
+                <!-- Add justify-content-center class -->
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal">Edit</button>
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" onclick="submitForm()">Submit</button>
+               
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- model for popup end -->
+
 
     <header class="header justify-content-between bg-transparent" id="header">
         <img src="png/pmcjpeg.png" alt="" class="logopng" >
 
         <div>
-      <select id="search_type" class="" aria-label="Select a village" >
+      <select id="search_type" class="mt-5" aria-label="Select a village" >
         <option value="">Select Village</option>
     </select>
             <div class="dropdown-container">
@@ -58,15 +117,17 @@
                 <input type="file" id="fileInput" accept=".kml" style="display:none;" title="Upload KML/KMZ/CSV File">
                 <label for="fileInput" class="upload-btn"><i class="fa-solid fa-file-arrow-up"></i> Upload KML/KMZ/CSV</label>
             </div>
+
             <button class="coordimg" id="getinfo">
                 <i class="fa-solid fa-info"></i>
             </button>
+            
             <button class="coordimg1" id="getinfo">
                 <i class="fa-solid fa-download"><a href="Elevation_Certificate_N.html"></a></i>
             </button>
 
            
-            <div class="custom-buttoncsv">
+            <!-- <div class="custom-buttoncsv">
                 <button id="toggleFormBtn" class="addbtn"> Add Coordinates  <span style="color: red;">*</span>      
                 </button>
                 <div id="formContainer" class="form-modal" style="display:none;">
@@ -85,19 +146,16 @@
                         <button class="subbtn" type="submit">Submit</button>
                     </form>
                 </div>
-            </div> 
+            </div>  -->
 
 
-
- 
-            <!-- <div class="custom-buttoncsv">
-                <button id="toggleFormBtn" class="addbtn"> Add Coordinates
-                   
+            <div class="custom-buttoncsv">
+                <button id="toggleFormBtn" class="addbtn"> Add Coordinates      
                 </button>
                 <div id="formContainer" class="form-modal" style="display:none;">
                     <button id="closeFormBtn" class="close-btn"><i class="fa-solid fa-xmark xicon" style="font-size: 15px; color: #141414d3; top: 3%;
-                        position: absolute;
-                        left: -30%"></i></button>
+                            position: absolute;
+                            left: -30%"></i></button>
                     <form id="coordinateForm" style="text-align: center;">
                         <table id="coordinateTable">
                             <tr style="background-color: #bbb; padding: 5px; font-size: 13px;">
@@ -107,16 +165,19 @@
                             </tr>
                         </table>
                         <button class="addbtn" type="button" id="addRowBtn">Add More Coordinates <i class="fa-solid fa-circle-plus" style="color: #bbb;"></i></button>
-                        <button class="subbtn" type="submit" id="submitButton">Submit</button>
+                        <button class="subbtn" type="submit">Submit</button>
                     </form>
                 </div>
             </div>
 
- -->
+
+
+   
 
         </div>
     </header>
 
+    
 
     <div id="content">
         <div id="map"></div>
@@ -153,22 +214,78 @@
         <script src='libs/jszip.min.js'></script>
         <script src='libs/papaparse.min.js'></script>
     
-        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.editable/1.0.0-rc.1/Leaflet.Editable.min.js"></script>
 <!-- 
     <script rel="import" href="cdn_script_js.html"></script> -->
     <script src="select2.js"></script>
-    <!-- <script src="js/basemap_wms_layers.js"></script>  -->
     <script src="auto.js"></script>
     <script src="js/legend.js"></script>
     
 
-    <!-- Used for close coordinate after click submit button -->
-    <script>
-        document.getElementById('submitButton').addEventListener('click', function(event) {
-            event.preventDefault(); 
-            document.getElementById('formContainer').style.display = 'none'; 
-        });
-    </script>
+
+
+<!-- code for the close coordinate -->
+
+<script>
+    document.querySelector(".subbtn").addEventListener("click", function() {
+         
+        document.getElementById("formContainer").style.display = "none";
+    });
+</script>
+
+
+<!-- code for close survey number-->
+
+
+
+<script>
+
+    function getUrlParameter(name) {
+        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+        var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+        var results = regex.exec(location.search);
+        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    };
+
+   
+    function performTaskBasedOnVillage(villageName) {
+        
+        console.log("Village Name:", villageName);
+        
+        if (villageName === "ADCR020") {
+            window.location.href = "http://localhost/autodcr/index.html";
+        }
+        
+    }
+
+  
+    function closeDropdown() {
+        var dropdownList = document.querySelector(".dropdown-list");
+        dropdownList.style.display = "none";
+    }
+
+   
+    document.addEventListener("click", function(event) {
+        var dropdownContainer = document.querySelector(".dropdown-container");
+        var dropdownList = document.querySelector(".dropdown-list");
+
+      
+        if (!dropdownContainer.contains(event.target) && event.target !== dropdownList) {
+            closeDropdown();
+        }
+    });
+
+   
+    var villageName = getUrlParameter('village_name');
+
+  
+    if (villageName) {
+        performTaskBasedOnVillage(villageName);
+    }
+</script>
+ 
+
+
 
 
 

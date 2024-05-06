@@ -1,7 +1,7 @@
 
 var map, geojson;
 // const API_URL = "https://iwmsgis.pmc.gov.in/geopulse/autodcr/";
-const API_URL = "http://localhost/PMC/autodcr";
+const API_URL = "http://localhost/autodcr/autodcr1/autodcr";
 
 // Add Basemap
 var map = L.map("map", {
@@ -314,6 +314,21 @@ map.on('draw:created', function (e) {
 });
 
 
+
+
+// // Function to handle the draw:edited event
+map.on('draw:edited', function(e) {
+    var layers = e.layers;
+    layers.eachLayer(function(layer) {
+        var polygonId = 'polygon_draw';
+        var newCoordinates = layer.toGeoJSON().geometry.coordinates;
+        drawnPolygons[polygonId] = newCoordinates;
+        updatePolygonInDatabase(polygonId, newCoordinates);
+    });
+});
+
+
+
 const handshakingCode = getQueryParam('village_name');
 const token = getQueryParam('TOKEN');
 console.log(token, "token")
@@ -609,6 +624,30 @@ button.onAdd = function (map) {
 button.addTo(map);
 
 
+
+
+// Listen for draw events
+map.on('draw:created', function (e) {
+    var layer = e.layer;
+    drawnPolygons.push(layer); // Add drawn polygon to array
+    updateButtonState();
+});
+
+map.on('draw:deleted', function (e) {
+    var layer = e.layer;
+    var index = drawnPolygons.indexOf(layer);
+    if (index !== -1) {
+        drawnPolygons.splice(index, 1); // Remove deleted polygon from array
+    }
+    updateButtonState();
+});
+
+function updateButtonState() {
+    var buttonElement = document.querySelector('.custom-button button');
+    if (buttonElement) {
+        buttonElement.disabled = drawnPolygons.length === 0;
+    }
+}
 
 
 
@@ -1016,6 +1055,7 @@ document.getElementById('coordinateForm').addEventListener('submit', function (e
         coordinates.push([parsedLatitude, parsedLongitude]);
     });
 
+    
 
     markershow = [];
     // Add markers to the map
@@ -1065,11 +1105,29 @@ function getFilters() {
 
 
 
-function savevalues() {
 
+function savevalues() {
+    console.log("111111111111111111",drawnPolygons)
+
+    if (Object.keys(drawnPolygons).length === 0) {
+        alert("Please draw a polygon / uload KML , KMZ , CSV / Add C0ordinates before proceeding.");
+    }else{
+    
     Object.keys(drawnPolygons).forEach(async function (polygonId) {
+        console.log("111111111111111111")
+
+        if (Object.keys(drawnPolygons).length === 0) {
+            
+            console.log("heheheeheh")
+            alert("Please draw a polygon / uload KML , KMZ , CSV / Add C0ordinates before proceeding.");
+        } else {
+            console.log("lllllllllllllllllll")
+            
+        
+        
         var coordinates = drawnPolygons[polygonId];
-        // console.log(coordinates,"drawcoordinates")
+        console.log(coordinates,"drawcoordinates1111111111111")
+
         var pp = turf.polygon(coordinates);
         L.geoJSON(pp).addTo(map)
         var bounds = L.geoJSON(pp).getBounds();
@@ -1085,90 +1143,182 @@ function savevalues() {
         const villageName = JSON.stringify(values);
         const selected_guts = JSON.stringify(getSelectedValues1());
         const selected_village = JSON.stringify(getFilters());
+       
         const coordinates1 = coordinates[0].map(coord => [coord[0], coord[1]]);
-        console.log(cqlFilterget,"cqlFilterget",selected_dropdown,"selected_dropdown",villageName,"villageName",selected_guts,"selected_guts",selected_village,"selected_village")
 
-        $.ajax({
-            type: "POST",
-            url: "APIS/savevalues.php",
-            contentType: "application/json",
-            data: JSON.stringify({
-                coordinates: coordinates1,
-                village_name: villageName,
-                gut_num: selected_dropdown,
-                selectedvillage: selected_village,
-                selectedguts: selected_guts,
-                token: token
-
-            }),
-            success: function (response) {
-
-                console.log("Coordinates saved successfully");
-                localStorage.setItem('lastInsertedPlotBoundaryId', response.data.id);
-                console.log("localstorage")
-                // if(response.data.id != undefined){
-                   window.location.href = 'data.html';
-                // }
+        // this is converting decimal degrees to degree minutes and seconds
+        const dmsCoordinates = coordinates1.map(coord => [convertToDMS(coord[0]), convertToDMS(coord[1])]);
+  
+        // console.log(dmsCoordinates);
+        // console.log(cqlFilterget,"cqlFilterget",selected_dropdown,"selected_dropdown",villageName,"villageName",selected_guts,"selected_guts",selected_village,"selected_village")
+        // alert("Data saved")
+        
+//  let dmsCoordinates = convertArrayToDMS(coordinates1);
+        // let dmsCoordinates = convertArrayToDMS(coordinates);
+console.log(dmsCoordinates,"000000000000",coordinates1,"coordinates1");
 
 
-            },
-            error: function (xhr, status, error) {
-                console.error("Failed to save coordinates:", error);
-            }
-        });
+        // Example usage:
+var exampleData = [
+    ['Draw Village Name', villageName],
+    ['Selected Village From Dropdown', selected_village],
+    ['Selected Survey Number From Dropdown', selected_guts],
+    ['Coordinates', dmsCoordinates ]
+    
+];
+
+showTableModal(exampleData);
+     
+    }
+    });
+}
+}
+
+
+// for conveting degree decimals to degree minutes and seconds
+
+///////////////////////////////////////////////
+
+
+function convertToDMS(decimal) {
+    const degrees = Math.floor(decimal);
+    const minutes = Math.floor((decimal - degrees) * 60);
+    const seconds = ((decimal - degrees - (minutes / 60)) * 3600).toFixed(2);
+    return `${degrees}° ${minutes}' ${seconds}"`;
+  }
+  
+ 
+// for conveting degree decimals to degree minutes and seconds
+
+///////////////////////////////////////////////
+
+
+function submitForm() {
+    // alert("Data Saved")
+    console.log(drawnPolygons,"drawnPolygonslllllllllll")
+
+    Object.keys(drawnPolygons).forEach(async function (polygonId) {
+    // var polygonId= "";
+     var coordinates = drawnPolygons[polygonId];
+     localStorage.setItem('coordinates',coordinates);
+     
+    console.log(coordinates,"drawcoordinates")
+    var pp = turf.polygon(coordinates);
+    L.geoJSON(pp).addTo(map)
+    var bounds = L.geoJSON(pp).getBounds();
+    map.fitBounds(bounds);
+    var layers = ["AutoDCR:Revenue_1"];
+
+    var url = "https://portal.geopulsea.com//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=";
+    var propertyName = "village_name,TPS_Name,Gut_No,geom";
+    var outputFormat = "application/json";
+    var values = await IntersectAreaWithPolygon(pp, layers, url, propertyName, bounds.toBBoxString(), outputFormat)
+    var cqlFilterget = getSelectedValues()
+    const selected_dropdown = JSON.stringify(cqlFilterget)
+    const villageName = JSON.stringify(values);
+    const selected_guts = JSON.stringify(getSelectedValues1());
+    const selected_village = JSON.stringify(getFilters());
+    const coordinates1 = coordinates[0].map(coord => [coord[0], coord[1]]);
+
+    const dmsCoordinates = coordinates1.map(coord => [convertToDMS(coord[0]), convertToDMS(coord[1])]);
+    console.log(cqlFilterget,"cqlFilterget",selected_dropdown,"selected_dropdown",villageName,"villageName",selected_guts,"selected_guts",selected_village,"selected_village","coordinate111111",coordinates1)
+    // alert("Data saved")
+
+    
+    
+
+    $.ajax({
+        type: "POST",
+        url: "APIS/savevalues.php",
+        contentType: "application/json",
+        data: JSON.stringify({
+            coordinates: dmsCoordinates,
+            village_name: villageName,
+            gut_num: selected_dropdown,
+            selectedvillage: selected_village,
+            selectedguts: selected_guts,
+            token: token
+
+        }),
+        success: function (response) {
+
+            console.log("Coordinates saved successfully",response);
+            localStorage.setItem('lastInsertedPlotBoundaryId', response.data.id);
+            // localStorage.setItem('coordinates',coordinates1);
+            console.log("localstorage")
+
+            window.location.href = 'dashboard.html';
+
+            // if(response.data.id != undefined){
+
+              
+            // }
+
+
+        },
+        error: function (xhr, status, error) {
+            console.error("Failed to save coordinates:", error);
+        }
+    });
+    
+    });
+    
+// }
 
 
 
-        $.ajax({
-            // url:'https://autodcr.pmc.gov.in/AutoDCR.GISIntegration/GisExim.svc/getPlotGISDetails',
+    $.ajax({
+        // url:'https://autodcr.pmc.gov.in/AutoDCR.GISIntegration/GisExim.svc/getPlotGISDetails',
 
-            url: 'http://115.124.100.250/AutoDCR.Integration/GisExim.svc/getPlotGISDetails',
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify({
-                Token: token,
-                Parcel: {
-                    Location: [
-                        {
-                            LocationCode: handshakingCode,
-                            SurveyNo: selected_guts,
-                            PlotNo: '',
-                            CTS: '',
-                            Peth: '',
-                        },
-                    ],
-                    //blank
-                    LandUseZone: '',
-                    PlotGeoJSON: {
-                        type: 'Feature',
-                        properties: {
-                            PolygonKey: '8650',
-                            PolygonArea: '493.74',
-                            Centroid: [73.941016, 18.508117],
-                        },
-                        geometry: {
-                            type: 'Polygon',
-                            coordinates: [coordinates1],
-                        },
+        url: 'http://115.124.100.250/AutoDCR.Integration/GisExim.svc/getPlotGISDetails',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({
+            Token: token,
+            Parcel: {
+                Location: [
+                    {
+                        LocationCode: handshakingCode,
+                        SurveyNo: selected_guts,
+                        PlotNo: '',
+                        CTS: '',
+                        Peth: '',
                     },
-                    Buildings: [],
-                    NOCDocuments: [],
+                ],
+                //blank
+                LandUseZone: '',
+                PlotGeoJSON: {
+                    type: 'Feature',
+                    properties: {
+                        PolygonKey: '8650',
+                        PolygonArea: '493.74',
+                        Centroid: [73.941016, 18.508117],
+                    },
+                    geometry: {
+                        type: 'Polygon',
+                        coordinates: [dmsCoordinates],
+                    },
                 },
-            }),
-            success: function (response) {
-                console.log('API response received:', response);
-                if (response.Status) {
-                    window.location.href = 'data.html';
-                }
+                Buildings: [],
+                NOCDocuments: [],
             },
-            error: function (xhr, status, error) {
-                console.error('Error calling API:', xhr.responseText);
-            },
-        });
-
+        }),
+        success: function (response) {
+            console.log('API response received:', response);
+            if (response.Status) {
+                window.location.href = 'data.html';
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error('Error calling API:', xhr.responseText);
+        },
     });
 
+    window.location.href = 'dashboard.html';
+
 }
+
+
 
 document.getElementById("getinfo").onclick = function () {
     infovalues()
@@ -1315,4 +1465,50 @@ function IntersectwithASLM(drawnPolygon, layers, url, propertyName, bounds, outp
         });
     });
 
+}
+
+
+// Add an event listener to the "Next" button
+$('#saveToAutoDCRButton').click(function () {
+    // Save edited polygon coordinates to localStorage
+    localStorage.setItem('editedCoordinates', JSON.stringify(drawnPolygons));
+    // Proceed to the data page
+    window.location.href = 'data.html';
+});
+
+
+
+// Function to show modal with table
+function showTableModal(data) {
+    var modal = $('#dataPageModal');
+    var table = modal.find('#popup-table tbody');
+
+    table.empty();
+
+    data.forEach(function(row) {
+        var tr = $('<tr>');
+        row.forEach(function(cell) {
+            tr.append('<td>' + cell + '</td>');
+        });
+        table.append(tr);
+    });
+
+    // Show modal
+    modal.modal('show');
+}
+
+function showTableModal(data) {
+    // Clear the existing table content
+    $('#popup-table tbody').empty();
+
+    data.forEach(function(row) {
+        var rowHtml = '<tr>';
+        rowHtml += '<td>' + row[0] + '</td>'; // Column 1
+        rowHtml += '<td>' + row[1] + '</td>'; // Column 2
+        rowHtml += '</tr>';
+        $('#popup-table tbody').append(rowHtml);
+    });
+
+    // Show the modal
+    $('#dataPageModal').modal('show');
 }

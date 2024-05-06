@@ -1,6 +1,6 @@
 
 var map, geojson;
-const API_URL = "http://localhost/autodcr/";
+const API_URL = "http://localhost/autodcr/autodcr1/autodcr";
 // const API_URL = "http://localhost/PMC-Project/";
 
 // Add Basemap
@@ -128,8 +128,7 @@ var WMSlayers = {
     "OSM": osm,
     "Esri": Esri_WorldImagery,
     "Satellite": googleSat,
-     
-    Plot:PlotBoundary_Layer,
+     Plot:PlotBoundary_Layer,
     Revenue: Revenue_Layer,
     PLU: PLU_Layer,
     DPRoad: DPRoad_Layer,
@@ -146,31 +145,46 @@ function refreshWMSLayer() {
     PlotBoundary_Layer.addTo(map);
   }
   
-  refreshWMSLayer();
-
 
 var control = new L.control.layers(baseLayers, WMSlayers).addTo(map);
 control.setPosition('topright');
 
 // Remove the default zoom control
-map.zoomControl.remove();
+// map.zoomControl.remove();
 
 L.control.zoom({
     position: 'bottomright' // Set position to bottom right
 }).addTo(map);
 
 
-// Assuming `coordinates` is a string like "[(18.52, 73.89), (18.53, 73.90)]"
-var coordinatesStr = localStorage.getItem('coordinates'); // Get coordinates as a string
 
-// Convert the string into an array of LatLng objects
-var coordinatesArr = JSON.parse(coordinatesStr).map(coord => {
-  // Assuming each coordinate is a tuple [latitude, longitude]
-  return L.latLng(coord[0], coord[1]);
-});
 
-// Create LatLngBounds from the array of LatLng objects
-var bounds = L.latLngBounds(coordinatesArr);
+$(document).ready(function () {
 
-// Fit the map's view to the bounds
+
+    refreshWMSLayer();
+
+
+    var lastInsertedId = localStorage.getItem('lastInsertedPlotBoundaryId');
+    var coordinatesString  = localStorage.getItem('coordinates')
+    console.log(lastInsertedId,"lastInsertedId", coordinatesString )
+    
+    
+    var coordinatesArray = coordinatesString.split(",").map(Number);
+
+    console.log(coordinatesArray ,"okkkkkkk");
+
+    var coords = [];
+while (coordinatesArray.length > 0) {
+    coords.push(coordinatesArray.splice(0, 2).reverse());
+}
+console.log(coords,"hhhhhhhhh");
+
+var bounds = L.latLngBounds(coords);
 map.fitBounds(bounds);
+
+
+
+})
+
+

@@ -1129,7 +1129,7 @@ function savevalues() {
     console.log("111111111111111111",drawnPolygons)
 
     if (Object.keys(drawnPolygons).length === 0) {
-        alert("Please draw a polygon / upload KML , KMZ , CSV / Add Co-ordinates ");
+        alert("Please draw a polygon / uload KML , KMZ , CSV / Add C0ordinates before proceeding.");
     }else{
     
     Object.keys(drawnPolygons).forEach(async function (polygonId) {
@@ -1138,8 +1138,7 @@ function savevalues() {
         if (Object.keys(drawnPolygons).length === 0) {
             
             console.log("heheheeheh")
-            alert("Please draw a polygon / upload KML , KMZ , CSV / Add Co-ordinates ");
-
+            alert("Please draw a polygon / uload KML , KMZ , CSV / Add C0ordinates before proceeding.");
         } else {
             console.log("lllllllllllllllllll")
             

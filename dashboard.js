@@ -1,6 +1,6 @@
 
 var map, geojson;
-const API_URL = "http://localhost/autodcr/autodcr1/autodcr";
+const API_URL = "http://localhost/autodcr/";
 // const API_URL = "http://localhost/PMC-Project/";
 
 // Add Basemap

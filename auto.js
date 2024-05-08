@@ -292,21 +292,30 @@ var drawControl = new L.Control.Draw({
 });
 map.addControl(drawControl);
 
+
+map.on(L.Draw.Event.CREATED, function (event) {
+    var layer = event.layer;
+    drawnItems.addLayer(layer);
+    console.log(layer,"///////////")
+});
+
 // save polygons into database variable
 
-var drawnPolygons = {};
+var drawnPolygons = [];
 
 map.on('draw:created', function (e) {
     var layer = e.layer;
     drawnItems.addLayer(layer);
+    console.log("000000000000draw",layer)
 
-    // var bounds = layer.getBounds().toBBoxString();
+
     var drawnPolygon = layer.toGeoJSON();
 
     if (drawnPolygon.geometry.type === 'Polygon') {
         var polygonId = 'polygon_draw'
 
         drawnPolygons[polygonId] = layer.toGeoJSON().geometry.coordinates;
+        console.log(drawnPolygons,"drawnPolygonsoooooooooooooooooo")
 
     } else {
         console.log('Drawn geometry is not a valid Polygon.');
@@ -314,18 +323,6 @@ map.on('draw:created', function (e) {
 });
 
 
-
-
-// // Function to handle the draw:edited event
-map.on('draw:edited', function(e) {
-    var layers = e.layers;
-    layers.eachLayer(function(layer) {
-        var polygonId = 'polygon_draw';
-        var newCoordinates = layer.toGeoJSON().geometry.coordinates;
-        drawnPolygons[polygonId] = newCoordinates;
-        updatePolygonInDatabase(polygonId, newCoordinates);
-    });
-});
 
 
 
@@ -624,7 +621,7 @@ button.onAdd = function (map) {
 button.addTo(map);
 
 
-var drawnPolygons = []; 
+// var drawnPolygons = []; 
 
 
 // Listen for draw events
@@ -799,13 +796,24 @@ document.getElementById('fileInput').addEventListener('change', function (e) {
 function processKML(kmlString) {
     var layer = omnivore.kml.parse(kmlString);
     if (layer.getBounds().isValid()) {
+        // console.log(layer._layers,"///////////",layer._layers[379])
+        
+
+        var polygonLayer = layer._layers[379];
+        drawnItems.addLayer(polygonLayer);
+        // drawnItems.addLayer(drawnPolygons)
+        // polygonLayer.editing.enable();
+        console.log("000000000000kml",polygonLayer)
+
+
         layer.addTo(map);
-        console.log(layer.toGeoJSON())
+        console.log(layer.toGeoJSON(),"lllllllllllllllll")
         // for saving coordinates
         var polygonId = 'polygon_kml'
         drawnPolygons[polygonId] = layer.toGeoJSON().features[0].geometry.coordinates;
         console.log(drawnPolygons, "drawnPolygons", "polygonCounter");
-
+        // drawnPolygons[polygonId].enableEdit();
+        
         map.fitBounds(layer.getBounds());
     } else {
         alert('Invalid KML/KMZ file.');
@@ -1038,13 +1046,6 @@ function addCoordinateRow(table) {
 
     
 
- 
-    
-   
-    
-
-
-
     // latitudeSecondsInput.style.marginRight = '5px'; 
     longitudeDegreesCell.appendChild(longitudeDegreesInput);
     longitudeMinutesCell.appendChild(longitudeMinutesInput);
@@ -1053,8 +1054,6 @@ function addCoordinateRow(table) {
     latitudeMinutesCell.appendChild(latitudeMinutesInput);
     latitudeSecondsCell.appendChild(latitudeSecondsInput);
      heightfloatCell.appendChild(heightfloatCellInput);
-
-   
 
 
 
@@ -1118,8 +1117,14 @@ document.addEventListener('click', function(event) {
 
         map.fitBounds(polygon.getBounds());
 
+        // var polygonLayer = polygon;
+        // drawnItems.addLayer(polygonLayer);
+        // console.log(polygonLayer,"polygonLayerbbbbbbbbbbbbbbbbb")
+
         var polygonId = 'polygon_coors'
         drawnPolygons[polygonId] = polygon.toGeoJSON().geometry.coordinates;
+
+
 
         console.log(drawnPolygons, "drawnPolygons", "polygonCounter");
     }
@@ -1156,6 +1161,14 @@ function getFilters() {
 }
 
 
+// drawnPolygons.forEach(function(polygonCoords) {
+//     console.log("kkkkkkkkkkkkkkkkkkk")
+//     // Create a polygon layer for each set of coordinates
+//     var polygon = L.polygon(polygonCoords, {editable: true}).addTo(map);
+    
+//     // Enable editing for the polygon
+//     polygon.enableEdit();
+// });
 
 
 function savevalues() {
@@ -1207,7 +1220,7 @@ function savevalues() {
         
 //  let dmsCoordinates = convertArrayToDMS(coordinates1);
         // let dmsCoordinates = convertArrayToDMS(coordinates);
-console.log(dmsCoordinates,"000000000000",coordinates1,"coordinates1");
+    console.log(dmsCoordinates,"000000000000",coordinates1,"coordinates1");
 
 
         // Example usage:
@@ -1295,7 +1308,7 @@ function submitForm() {
         url: "APIS/savevalues.php",
         contentType: "application/json",
         data: JSON.stringify({
-            coordinates: coordinates1,
+            coordinates: dmsCoordinates,
             village_name: villageName,
             gut_num: selected_dropdown,
             selectedvillage: selected_village,
@@ -1323,17 +1336,12 @@ function submitForm() {
             console.error("Failed to save coordinates:", error);
         }
     });
-    
-    });
-    
-// }
-
-
 
     $.ajax({
-        // url:'https://autodcr.pmc.gov.in/AutoDCR.GISIntegration/GisExim.svc/getPlotGISDetails',
+        url:'https://autodcr.pmc.gov.in/AutoDCR.GISIntegration/GisExim.svc/getPlotGISDetails',
 
-        url: 'http://115.124.100.250/AutoDCR.Integration/GisExim.svc/getPlotGISDetails',
+        // url: 'http://115.124.100.250/AutoDCR.Integration/GisExim.svc/getPlotGISDetails',
+
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify({
@@ -1369,15 +1377,70 @@ function submitForm() {
         success: function (response) {
             console.log('API response received:', response);
             if (response.Status) {
-                window.location.href = 'data.html';
+                // window.location.href = 'data.html';
             }
         },
         error: function (xhr, status, error) {
             console.error('Error calling API:', xhr.responseText);
         },
     });
-
     window.location.href = 'dashboard.html';
+    
+    });
+    
+// }
+
+
+
+    // $.ajax({
+    //     // url:'https://autodcr.pmc.gov.in/AutoDCR.GISIntegration/GisExim.svc/getPlotGISDetails',
+
+    //     url: 'http://115.124.100.250/AutoDCR.Integration/GisExim.svc/getPlotGISDetails',
+
+    //     type: 'POST',
+    //     contentType: 'application/json',
+    //     data: JSON.stringify({
+    //         Token: token,
+    //         Parcel: {
+    //             Location: [
+    //                 {
+    //                     LocationCode: handshakingCode,
+    //                     SurveyNo: selected_guts,
+    //                     PlotNo: '',
+    //                     CTS: '',
+    //                     Peth: '',
+    //                 },
+    //             ],
+    //             //blank
+    //             LandUseZone: '',
+    //             PlotGeoJSON: {
+    //                 type: 'Feature',
+    //                 properties: {
+    //                     PolygonKey: '8650',
+    //                     PolygonArea: '493.74',
+    //                     Centroid: [73.941016, 18.508117],
+    //                 },
+    //                 geometry: {
+    //                     type: 'Polygon',
+    //                     coordinates: [dmsCoordinates],
+    //                 },
+    //             },
+    //             Buildings: [],
+    //             NOCDocuments: [],
+    //         },
+    //     }),
+    //     success: function (response) {
+    //         console.log('API response received:', response);
+    //         if (response.Status) {
+    //             window.location.href = 'data.html';
+    //         }
+    //     },
+    //     error: function (xhr, status, error) {
+    //         console.error('Error calling API:', xhr.responseText);
+    //     },
+    // });
+
+    // window.location.href = 'dashboard.html';
 
 }
 

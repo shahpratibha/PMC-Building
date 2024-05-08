@@ -40,9 +40,13 @@
         max-width: 100%; 
         }
 
-        
-    </style>
-    
+        .text-center {
+        text-align: center;
+    }
+    .coordimg1 {
+        text-decoration: none;
+    } 
+    </style> 
 </head>
 
 <body>
@@ -55,10 +59,8 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                
-                <h5 class="modal-title" id="dataPageModalLabel">Data Table</h5>
-            
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <h5 class="modal-title fw-bold text-center" id="dataPageModalLabel">PARTICULARS</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>    
             </div>
             <div class="modal-body">
                 <div class="table-responsive"> 
@@ -66,8 +68,8 @@
                         <!-- Table content will be populated dynamically -->
                         <thead>
                             <tr>
-                                <th scope="col">Column 1</th>
-                                <th scope="col">Column 2</th>
+                                <th scope="col" class="text-center">Attribute</th>
+                                <th scope="col" class="text-center">Result</th>
                                 <!-- Add more columns if needed -->
                             </tr>
                         </thead>
@@ -122,10 +124,20 @@
                 <i class="fa-solid fa-info"></i>
             </button>
             
-            <button class="coordimg1" id="getinfo">
-                <i class="fa-solid fa-download"><a href="Elevation_Certificate_N.html"></a></i>
-            </button>
+            <!-- <button class="coordimg1" id="getinfo">
+               
+                <i class="fas fa-question"></i>
+            
+            </button> -->
 
+
+            <a href="User Guide for GeoTagging.pdf" class="coordimg1" id="getinfo">
+                <!-- <i class="fa-solid fa-download"><a href="Elevation_Certificate_N.html"></a></i> -->
+                <div style="display: flex; justify-content: center; align-items: center;">
+                    <i class="fas fa-question mt-2"></i>
+                </div>
+            </a>
+            
            
             <!-- <div class="custom-buttoncsv">
                 <button id="toggleFormBtn" class="addbtn"> Add Coordinates  <span style="color: red;">*</span>      
@@ -212,6 +224,7 @@
         <script src='libs/leaflet-omnivore.min.js'></script>
         <script src='libs/jszip.min.js'></script>
         <script src='libs/papaparse.min.js'></script>
+        <script src="https://unpkg.com/leaflet-editable"></script>
     
         <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.editable/1.0.0-rc.1/Leaflet.Editable.min.js"></script>
 <!-- 
@@ -287,6 +300,21 @@
 
 
 </script>
+
+
+<script>
+    document.getElementById("getinfo").addEventListener("mouseenter", function() {
+    var tooltip = this.querySelector(".tooltip");
+    tooltip.style.display = "block";
+});
+
+document.getElementById("getinfo").addEventListener("mouseleave", function() {
+    var tooltip = this.querySelector(".tooltip");
+    tooltip.style.display = "none";
+});
+
+</script>
+
 
     <script>
 

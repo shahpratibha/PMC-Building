@@ -44,7 +44,7 @@ var baseLayers = {};
 
 // for only gut showing
 var Revenue_Layer1 = L.tileLayer
-    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
         layers: "Revenue_1",
         format: "image/png",
         transparent: true,
@@ -57,8 +57,8 @@ var Revenue_Layer1 = L.tileLayer
 
 
 
-    var Revenue_Layer = L.tileLayer
-    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+var Revenue_Layer = L.tileLayer
+    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
         layers: "Revenue_1",
         format: "image/png",
         transparent: true,
@@ -71,7 +71,7 @@ var Revenue_Layer1 = L.tileLayer
 
 
 var PLU_Layer = L.tileLayer
-    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
         layers: "PLU_Ward",
         format: "image/png",
         transparent: true,
@@ -83,7 +83,7 @@ var PLU_Layer = L.tileLayer
 
 
 var DPRoad_Layer = L.tileLayer
-    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
         layers: "DP_Ward_Road",
         format: "image/png",
         transparent: true,
@@ -94,7 +94,7 @@ var DPRoad_Layer = L.tileLayer
     });
 
 var Boundary_Layer = L.tileLayer
-    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
         layers: "PMC_Boundary",
         format: "image/png",
         transparent: true,
@@ -105,7 +105,7 @@ var Boundary_Layer = L.tileLayer
     }).addTo(map);
 
 var Village_Boundary = L.tileLayer
-    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
         layers: "Village_Boundary",
         format: "image/png",
         transparent: true,
@@ -118,7 +118,7 @@ var Village_Boundary = L.tileLayer
 
 
 var aviation = L.tileLayer
-    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
         layers: "Aviation_data",
         format: "image/png",
         transparent: true,
@@ -127,7 +127,7 @@ var aviation = L.tileLayer
         // attribution: "Revenue",
         opacity: 1,
     });
-// .addTo(map);
+// .addTo(map);iwmsgis.pmc.gov.in
 
 
 var WMSlayers = {
@@ -145,109 +145,109 @@ var WMSlayers = {
 
 
 let handshaking_codes = [
-    {"AutoDCR_Name": "Aundh", "code": "ADCR001", "name": "Aundh"},
-    {"AutoDCR_Name": "BALEWADI", "code": "ADCR002", "name": "BALEWADI"},
-    {"AutoDCR_Name": "BANER", "code": "ADCR003", "name": "BANER"},
-    {"AutoDCR_Name": "Baner North", "code": "ADCR003a", "name": "BANER"},
-    {"AutoDCR_Name": "Baner south", "code": "ADCR003b", "name": "BANER"},
-    {"AutoDCR_Name": "Baner West", "code": "ADCR003c", "name": "BANER"},
-    {"AutoDCR_Name": "BAWDHAN", "code": "ADCR004", "name": "BAWDHAN"},
-    {"AutoDCR_Name": "Bopodi", "code": "ADCR005", "name": "Bopodi"},
-    {"AutoDCR_Name": "Erandwana", "code": "ADCR006", "name": "Erandwana"},
-    {"AutoDCR_Name": "Erandwana North", "code": "ADCR006a", "name": "Erandwana"},
-    {"AutoDCR_Name": "Erandwana South", "code": "ADCR006b", "name": "Erandwana"},
-    {"AutoDCR_Name": "Hingne-budruk", "code": "ADCR007", "name": "Hingne-budruk"},
-    {"AutoDCR_Name": "KARVE NAGAR", "code": "ADCR008", "name": "KARVE NAGAR"},
-    {"AutoDCR_Name": "Khadki Navi", "code": "ADCR009", "name": "Khadki Navi"},
-    {"AutoDCR_Name": "KOTHRUD-NORTH", "code": "ADCR010", "name": "KOTHRUD"},
-    {"AutoDCR_Name": "Kothrud-South", "code": "ADCR011", "name": "KOTHRUD"},
-    {"AutoDCR_Name": "Pashan", "code": "ADCR012", "name": "Pashan"},
-    {"AutoDCR_Name": "Shivaji Nagar", "code": "ADCR013", "name": "TPS-I"},
-    {"AutoDCR_Name": "SHIVAJI NAGAR-BHAMBURDA", "code": "ADCR014", "name": "SHIVAJI NAGAR-BHAMBURDA"},
-    {"AutoDCR_Name": "SHIVANE", "code": "ADCR015", "name": "SHIVANE"},
-    {"AutoDCR_Name": "Shivane North", "code": "ADCR015a", "name": "SHIVANE"},
-    {"AutoDCR_Name": "Shivane South", "code": "ADCR015b", "name": "SHIVANE"},
-    {"AutoDCR_Name": "Warje", "code": "ADCR016", "name": "Warje"},
-    {"AutoDCR_Name": "Ambegaon Budruk-Ext", "code": "ADCR017", "name": "Ambegaon Budruk-Ext"},
-    {"AutoDCR_Name": "Ambegaon Khurd-Ext", "code": "ADCR018", "name": "Ambegaon Khurd-Ext"},
-    {"AutoDCR_Name": "AMBEGAON-BUDRUK", "code": "ADCR019", "name": "AMBEGAON-BUDRUK"},
-    {"AutoDCR_Name": "AMBEGAON-KHURD", "code": "ADCR020", "name": "AMBEGAON-KHURD"},
-    {"AutoDCR_Name": "Bhawani Peth", "code": "ADCR021", "name": "Bhawani Peth"},
-    {"AutoDCR_Name": "Bibwewadi-Munjeri", "code": "ADCR022", "name": "Bibwewadi-Munjeri"},
-    {"AutoDCR_Name": "BUDHWAR PETH", "code": "ADCR023", "name": "BUDHWAR PETH"},
-    {"AutoDCR_Name": "DHANKWADI", "code": "ADCR024", "name": "DHANKWADI"},
-    {"AutoDCR_Name": "DHANKWADI-EXT", "code": "ADCR025", "name": "DHANKWADI-EXT"},
-    {"AutoDCR_Name": "Dhanori", "code": "ADCR026", "name": "Dhanori"},
-    {"AutoDCR_Name": "DHANORI-EXT", "code": "ADCR027", "name": "DHANORI-EXT"},
-    {"AutoDCR_Name": "Dhayri", "code": "ADCR028", "name": "Dhayri"},
-    {"AutoDCR_Name": "Dhayri-Ext", "code": "ADCR029", "name": "Dhayri-Ext"},
-    {"AutoDCR_Name": "Fursungi", "code": "ADCR030", "name": "Fursungi"},
-    {"AutoDCR_Name": "Ganesh Peth", "code": "ADCR031", "name": "Ganesh Peth"},
-    {"AutoDCR_Name": "GANJ PETH", "code": "ADCR032", "name": "GANJ PETH"},
-    {"AutoDCR_Name": "Ghorpade peth", "code": "ADCR033", "name": "Ghorpade peth"},
-    {"AutoDCR_Name": "Ghorpadi", "code": "ADCR034", "name": "Ghorpadi"},
-    {"AutoDCR_Name": "Gultekdi", "code": "ADCR035", "name": "Gultekdi"},
-    {"AutoDCR_Name": "Gurwar Peth", "code": "ADCR036", "name": "Gurwar Peth"},
-    {"AutoDCR_Name": "Hadapsar", "code": "ADCR037", "name": "Hadapsar"},
-    {"AutoDCR_Name": "HADAPSAR-EXT", "code": "ADCR038", "name": "HADAPSAR-EXT"},
-    {"AutoDCR_Name": "HINGANE-KHURD", "code": "ADCR039", "name": "HINGANE-KHURD"},
-    {"AutoDCR_Name": "Kalas", "code": "ADCR040", "name": "Kalas"},
-    {"AutoDCR_Name": "KALAS EXT", "code": "ADCR041", "name": "KALAS EXT"},
-    {"AutoDCR_Name": "KASBA PETH", "code": "ADCR042", "name": "KASBA PETH"},
-    {"AutoDCR_Name": "KATRAJ", "code": "ADCR043", "name": "KATRAJ"},
-    {"AutoDCR_Name": "Katraj Ext", "code": "ADCR044", "name": "Katraj Ext"},
-    {"AutoDCR_Name": "Kharadi", "code": "ADCR045", "name": "Kharadi"},
-    {"AutoDCR_Name": "Kharadi East", "code": "ADCR045a", "name": "Kharadi"},
-    {"AutoDCR_Name": "Kharadi West", "code": "ADCR045b", "name": "Kharadi"},
-    {"AutoDCR_Name": "Kondhwa-Budruk", "code": "ADCR046", "name": "Kondhwa-Budruk"},
-    {"AutoDCR_Name": "Kondhwa-Budruk North", "code": "ADCR046a", "name": "Kondhwa-Budruk North"},
-    {"AutoDCR_Name": "Kondhwa-Budruk South", "code": "ADCR046b", "name": "Kondhwa-Budruk South"},
-    {"AutoDCR_Name": "Kondhwa-Khurd", "code": "ADCR047", "name": "Kondhwa-Khurd"},
-    {"AutoDCR_Name": "Kondwa khurd -EXT", "code": "ADCR048", "name": "Kondwa khurd -EXT"},
-    {"AutoDCR_Name": "KOREGAON PARK", "code": "ADCR049", "name": "KOREGAON PARK"},
-    {"AutoDCR_Name": "KOTHRUD-EXT", "code": "ADCR050", "name": "KOTHRUD-EXT"},
-    {"AutoDCR_Name": "Lohagaon", "code": "ADCR051", "name": "Lohagaon"},
-    {"AutoDCR_Name": "Lohagaon North", "code": "ADCR051a", "name": "Lohagaon"},
-    {"AutoDCR_Name": "Lohagaon South", "code": "ADCR051b", "name": "Lohagaon"},
-    {"AutoDCR_Name": "Lohgaon-Ext", "code": "ADCR052", "name": "Lohgaon-Ext"},
-    {"AutoDCR_Name": "Lohgaon-Ext North", "code": "ADCR052a", "name": "Lohgaon-Ext"},
-    {"AutoDCR_Name": "Lohgaon-Ext South", "code": "ADCR052b", "name": "Lohgaon-Ext"},
-    {"AutoDCR_Name": "LULLANAGAR", "code": "ADCR053", "name": "LULLANAGAR"},
-    {"AutoDCR_Name": "Mahatma Phule peth", "code": "ADCR054", "name": "Mahatma Phule peth"},
-    {"AutoDCR_Name": "MANGALWAR PETH", "code": "ADCR055", "name": "MANGALWAR PETH"},
-    {"AutoDCR_Name": "Market Yard", "code": "ADCR056", "name": "Market Yard"},
-    {"AutoDCR_Name": "Mohammadwadi", "code": "ADCR057", "name": "Mohammadwadi"},
-    {"AutoDCR_Name": "Mundhwa", "code": "ADCR058", "name": "Mundhwa"},
-    {"AutoDCR_Name": "Mundhwa North", "code": "ADCR058a", "name": "Mundhwa"},
-    {"AutoDCR_Name": "Mundhwa South", "code": "ADCR058b", "name": "Mundhwa"},
-    {"AutoDCR_Name": "Mundhwa-Keshavnagar", "code": "ADCR059", "name": "Mundhwa-Keshavnagar"},
-    {"AutoDCR_Name": "MUNJERI", "code": "ADCR060", "name": "MUNJERI"},
-    {"AutoDCR_Name": "Nana Peth", "code": "ADCR061", "name": "NANA PETH"},
-    {"AutoDCR_Name": "NARAYAN PETH", "code": "ADCR062", "name": "NARAYAN PETH"},
-    {"AutoDCR_Name": "Navipeth", "code": "ADCR063", "name": "NAVI PETH"},
-    {"AutoDCR_Name": "Parvati North", "code": "ADCR064", "name": "PARVATI"},
-    {"AutoDCR_Name": "Parvati South", "code": "ADCR065", "name": "PARVATI"},
-    {"AutoDCR_Name": "RASTA PETH", "code": "ADCR066", "name": "RASTA PETH"},
-    {"AutoDCR_Name": "RAVIWAR PETH", "code": "ADCR067", "name": "RAVIWAR PETH"},
-    {"AutoDCR_Name": "SADASHIV PETH", "code": "ADCR068", "name": "SADASHIV PETH"},
-    {"AutoDCR_Name": "Sadesatara  Nali-Hadapsar", "code": "ADCR069", "name": "Sadesatara  Nali-Hadapsar"},
-    {"AutoDCR_Name": "SANGANWADI TPS", "code": "ADCR070", "name": "SANGAMWADI TPS"},
-    {"AutoDCR_Name": "SHANIWAR PETH", "code": "ADCR071", "name": "SHANIWAR PETH"},
-    {"AutoDCR_Name": "Shivane-Ext", "code": "ADCR072", "name": "Shivane-Ext"},
-    {"AutoDCR_Name": "Shivane-Uttamnagar", "code": "ADCR073", "name": "SHIVANE"},
-    {"AutoDCR_Name": "SHUKRAWAR PETH", "code": "ADCR074", "name": "SHUKRAWAR PETH"},
-    {"AutoDCR_Name": "SOMWAR PETH", "code": "ADCR075", "name": "SOMWAR PETH"},
-    {"AutoDCR_Name": "Undri", "code": "ADCR076", "name": "Undri"},
-    {"AutoDCR_Name": "Undri-Ext", "code": "ADCR077", "name": "Undri-Ext"},
-    {"AutoDCR_Name": "Urali Devachi", "code": "ADCR078", "name": "Urali Devachi"},
-    {"AutoDCR_Name": "VADGAON-BUDRUK", "code": "ADCR079", "name": "VADGAON-BUDRUK"},
-    {"AutoDCR_Name": "Vadgaon-Khurd", "code": "ADCR080", "name": "Vadgaon-Khurd"},
-    {"AutoDCR_Name": "Vadgaon-Sheri", "code": "ADCR081", "name": "Vadgaon-Sheri"},
-    {"AutoDCR_Name": "VadgaonSheri-ext", "code": "ADCR082", "name": "VadgaonSheri-ext"},
-    {"AutoDCR_Name": "Wanawadi", "code": "ADCR083", "name": "WANAWADI"},
-    {"AutoDCR_Name": "Yerawada", "code": "ADCR084", "name": "YERWADA"},
-    {"AutoDCR_Name": "Yevlewadi", "code": "ADCR085", "name": "Yevlewadi"}
-] ;
+    { "AutoDCR_Name": "Aundh", "code": "ADCR001", "name": "Aundh" },
+    { "AutoDCR_Name": "BALEWADI", "code": "ADCR002", "name": "BALEWADI" },
+    { "AutoDCR_Name": "BANER", "code": "ADCR003", "name": "BANER" },
+    { "AutoDCR_Name": "Baner North", "code": "ADCR003a", "name": "BANER" },
+    { "AutoDCR_Name": "Baner south", "code": "ADCR003b", "name": "BANER" },
+    { "AutoDCR_Name": "Baner West", "code": "ADCR003c", "name": "BANER" },
+    { "AutoDCR_Name": "BAWDHAN", "code": "ADCR004", "name": "BAWDHAN" },
+    { "AutoDCR_Name": "Bopodi", "code": "ADCR005", "name": "Bopodi" },
+    { "AutoDCR_Name": "Erandwana", "code": "ADCR006", "name": "Erandwana" },
+    { "AutoDCR_Name": "Erandwana North", "code": "ADCR006a", "name": "Erandwana" },
+    { "AutoDCR_Name": "Erandwana South", "code": "ADCR006b", "name": "Erandwana" },
+    { "AutoDCR_Name": "Hingne-budruk", "code": "ADCR007", "name": "Hingne-budruk" },
+    { "AutoDCR_Name": "KARVE NAGAR", "code": "ADCR008", "name": "KARVE NAGAR" },
+    { "AutoDCR_Name": "Khadki Navi", "code": "ADCR009", "name": "Khadki Navi" },
+    { "AutoDCR_Name": "KOTHRUD-NORTH", "code": "ADCR010", "name": "KOTHRUD" },
+    { "AutoDCR_Name": "Kothrud-South", "code": "ADCR011", "name": "KOTHRUD" },
+    { "AutoDCR_Name": "Pashan", "code": "ADCR012", "name": "Pashan" },
+    { "AutoDCR_Name": "Shivaji Nagar", "code": "ADCR013", "name": "TPS-I" },
+    { "AutoDCR_Name": "SHIVAJI NAGAR-BHAMBURDA", "code": "ADCR014", "name": "SHIVAJI NAGAR-BHAMBURDA" },
+    { "AutoDCR_Name": "SHIVANE", "code": "ADCR015", "name": "SHIVANE" },
+    { "AutoDCR_Name": "Shivane North", "code": "ADCR015a", "name": "SHIVANE" },
+    { "AutoDCR_Name": "Shivane South", "code": "ADCR015b", "name": "SHIVANE" },
+    { "AutoDCR_Name": "Warje", "code": "ADCR016", "name": "Warje" },
+    { "AutoDCR_Name": "Ambegaon Budruk-Ext", "code": "ADCR017", "name": "Ambegaon Budruk-Ext" },
+    { "AutoDCR_Name": "Ambegaon Khurd-Ext", "code": "ADCR018", "name": "Ambegaon Khurd-Ext" },
+    { "AutoDCR_Name": "AMBEGAON-BUDRUK", "code": "ADCR019", "name": "AMBEGAON-BUDRUK" },
+    { "AutoDCR_Name": "AMBEGAON-KHURD", "code": "ADCR020", "name": "AMBEGAON-KHURD" },
+    { "AutoDCR_Name": "Bhawani Peth", "code": "ADCR021", "name": "Bhawani Peth" },
+    { "AutoDCR_Name": "Bibwewadi-Munjeri", "code": "ADCR022", "name": "Bibwewadi-Munjeri" },
+    { "AutoDCR_Name": "BUDHWAR PETH", "code": "ADCR023", "name": "BUDHWAR PETH" },
+    { "AutoDCR_Name": "DHANKWADI", "code": "ADCR024", "name": "DHANKWADI" },
+    { "AutoDCR_Name": "DHANKWADI-EXT", "code": "ADCR025", "name": "DHANKWADI-EXT" },
+    { "AutoDCR_Name": "Dhanori", "code": "ADCR026", "name": "Dhanori" },
+    { "AutoDCR_Name": "DHANORI-EXT", "code": "ADCR027", "name": "DHANORI-EXT" },
+    { "AutoDCR_Name": "Dhayri", "code": "ADCR028", "name": "Dhayri" },
+    { "AutoDCR_Name": "Dhayri-Ext", "code": "ADCR029", "name": "Dhayri-Ext" },
+    { "AutoDCR_Name": "Fursungi", "code": "ADCR030", "name": "Fursungi" },
+    { "AutoDCR_Name": "Ganesh Peth", "code": "ADCR031", "name": "Ganesh Peth" },
+    { "AutoDCR_Name": "GANJ PETH", "code": "ADCR032", "name": "GANJ PETH" },
+    { "AutoDCR_Name": "Ghorpade peth", "code": "ADCR033", "name": "Ghorpade peth" },
+    { "AutoDCR_Name": "Ghorpadi", "code": "ADCR034", "name": "Ghorpadi" },
+    { "AutoDCR_Name": "Gultekdi", "code": "ADCR035", "name": "Gultekdi" },
+    { "AutoDCR_Name": "Gurwar Peth", "code": "ADCR036", "name": "Gurwar Peth" },
+    { "AutoDCR_Name": "Hadapsar", "code": "ADCR037", "name": "Hadapsar" },
+    { "AutoDCR_Name": "HADAPSAR-EXT", "code": "ADCR038", "name": "HADAPSAR-EXT" },
+    { "AutoDCR_Name": "HINGANE-KHURD", "code": "ADCR039", "name": "HINGANE-KHURD" },
+    { "AutoDCR_Name": "Kalas", "code": "ADCR040", "name": "Kalas" },
+    { "AutoDCR_Name": "KALAS EXT", "code": "ADCR041", "name": "KALAS EXT" },
+    { "AutoDCR_Name": "KASBA PETH", "code": "ADCR042", "name": "KASBA PETH" },
+    { "AutoDCR_Name": "KATRAJ", "code": "ADCR043", "name": "KATRAJ" },
+    { "AutoDCR_Name": "Katraj Ext", "code": "ADCR044", "name": "Katraj Ext" },
+    { "AutoDCR_Name": "Kharadi", "code": "ADCR045", "name": "Kharadi" },
+    { "AutoDCR_Name": "Kharadi East", "code": "ADCR045a", "name": "Kharadi" },
+    { "AutoDCR_Name": "Kharadi West", "code": "ADCR045b", "name": "Kharadi" },
+    { "AutoDCR_Name": "Kondhwa-Budruk", "code": "ADCR046", "name": "Kondhwa-Budruk" },
+    { "AutoDCR_Name": "Kondhwa-Budruk North", "code": "ADCR046a", "name": "Kondhwa-Budruk North" },
+    { "AutoDCR_Name": "Kondhwa-Budruk South", "code": "ADCR046b", "name": "Kondhwa-Budruk South" },
+    { "AutoDCR_Name": "Kondhwa-Khurd", "code": "ADCR047", "name": "Kondhwa-Khurd" },
+    { "AutoDCR_Name": "Kondwa khurd -EXT", "code": "ADCR048", "name": "Kondwa khurd -EXT" },
+    { "AutoDCR_Name": "KOREGAON PARK", "code": "ADCR049", "name": "KOREGAON PARK" },
+    { "AutoDCR_Name": "KOTHRUD-EXT", "code": "ADCR050", "name": "KOTHRUD-EXT" },
+    { "AutoDCR_Name": "Lohagaon", "code": "ADCR051", "name": "Lohagaon" },
+    { "AutoDCR_Name": "Lohagaon North", "code": "ADCR051a", "name": "Lohagaon" },
+    { "AutoDCR_Name": "Lohagaon South", "code": "ADCR051b", "name": "Lohagaon" },
+    { "AutoDCR_Name": "Lohgaon-Ext", "code": "ADCR052", "name": "Lohgaon-Ext" },
+    { "AutoDCR_Name": "Lohgaon-Ext North", "code": "ADCR052a", "name": "Lohgaon-Ext" },
+    { "AutoDCR_Name": "Lohgaon-Ext South", "code": "ADCR052b", "name": "Lohgaon-Ext" },
+    { "AutoDCR_Name": "LULLANAGAR", "code": "ADCR053", "name": "LULLANAGAR" },
+    { "AutoDCR_Name": "Mahatma Phule peth", "code": "ADCR054", "name": "Mahatma Phule peth" },
+    { "AutoDCR_Name": "MANGALWAR PETH", "code": "ADCR055", "name": "MANGALWAR PETH" },
+    { "AutoDCR_Name": "Market Yard", "code": "ADCR056", "name": "Market Yard" },
+    { "AutoDCR_Name": "Mohammadwadi", "code": "ADCR057", "name": "Mohammadwadi" },
+    { "AutoDCR_Name": "Mundhwa", "code": "ADCR058", "name": "Mundhwa" },
+    { "AutoDCR_Name": "Mundhwa North", "code": "ADCR058a", "name": "Mundhwa" },
+    { "AutoDCR_Name": "Mundhwa South", "code": "ADCR058b", "name": "Mundhwa" },
+    { "AutoDCR_Name": "Mundhwa-Keshavnagar", "code": "ADCR059", "name": "Mundhwa-Keshavnagar" },
+    { "AutoDCR_Name": "MUNJERI", "code": "ADCR060", "name": "MUNJERI" },
+    { "AutoDCR_Name": "Nana Peth", "code": "ADCR061", "name": "NANA PETH" },
+    { "AutoDCR_Name": "NARAYAN PETH", "code": "ADCR062", "name": "NARAYAN PETH" },
+    { "AutoDCR_Name": "Navipeth", "code": "ADCR063", "name": "NAVI PETH" },
+    { "AutoDCR_Name": "Parvati North", "code": "ADCR064", "name": "PARVATI" },
+    { "AutoDCR_Name": "Parvati South", "code": "ADCR065", "name": "PARVATI" },
+    { "AutoDCR_Name": "RASTA PETH", "code": "ADCR066", "name": "RASTA PETH" },
+    { "AutoDCR_Name": "RAVIWAR PETH", "code": "ADCR067", "name": "RAVIWAR PETH" },
+    { "AutoDCR_Name": "SADASHIV PETH", "code": "ADCR068", "name": "SADASHIV PETH" },
+    { "AutoDCR_Name": "Sadesatara  Nali-Hadapsar", "code": "ADCR069", "name": "Sadesatara  Nali-Hadapsar" },
+    { "AutoDCR_Name": "SANGANWADI TPS", "code": "ADCR070", "name": "SANGAMWADI TPS" },
+    { "AutoDCR_Name": "SHANIWAR PETH", "code": "ADCR071", "name": "SHANIWAR PETH" },
+    { "AutoDCR_Name": "Shivane-Ext", "code": "ADCR072", "name": "Shivane-Ext" },
+    { "AutoDCR_Name": "Shivane-Uttamnagar", "code": "ADCR073", "name": "SHIVANE" },
+    { "AutoDCR_Name": "SHUKRAWAR PETH", "code": "ADCR074", "name": "SHUKRAWAR PETH" },
+    { "AutoDCR_Name": "SOMWAR PETH", "code": "ADCR075", "name": "SOMWAR PETH" },
+    { "AutoDCR_Name": "Undri", "code": "ADCR076", "name": "Undri" },
+    { "AutoDCR_Name": "Undri-Ext", "code": "ADCR077", "name": "Undri-Ext" },
+    { "AutoDCR_Name": "Urali Devachi", "code": "ADCR078", "name": "Urali Devachi" },
+    { "AutoDCR_Name": "VADGAON-BUDRUK", "code": "ADCR079", "name": "VADGAON-BUDRUK" },
+    { "AutoDCR_Name": "Vadgaon-Khurd", "code": "ADCR080", "name": "Vadgaon-Khurd" },
+    { "AutoDCR_Name": "Vadgaon-Sheri", "code": "ADCR081", "name": "Vadgaon-Sheri" },
+    { "AutoDCR_Name": "VadgaonSheri-ext", "code": "ADCR082", "name": "VadgaonSheri-ext" },
+    { "AutoDCR_Name": "Wanawadi", "code": "ADCR083", "name": "WANAWADI" },
+    { "AutoDCR_Name": "Yerawada", "code": "ADCR084", "name": "YERWADA" },
+    { "AutoDCR_Name": "Yevlewadi", "code": "ADCR085", "name": "Yevlewadi" }
+];
 function getQueryParam(param) {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(param);
@@ -296,7 +296,7 @@ map.addControl(drawControl);
 map.on(L.Draw.Event.CREATED, function (event) {
     var layer = event.layer;
     drawnItems.addLayer(layer);
-    console.log(layer,"///////////")
+    console.log(layer, "///////////")
 });
 
 // save polygons into database variable
@@ -306,7 +306,7 @@ var drawnPolygons = [];
 map.on('draw:created', function (e) {
     var layer = e.layer;
     drawnItems.addLayer(layer);
-    console.log("000000000000draw",layer)
+    console.log("000000000000draw", layer)
 
 
     var drawnPolygon = layer.toGeoJSON();
@@ -315,7 +315,7 @@ map.on('draw:created', function (e) {
         var polygonId = 'polygon_draw'
 
         drawnPolygons[polygonId] = layer.toGeoJSON().geometry.coordinates;
-        console.log(drawnPolygons,"drawnPolygonsoooooooooooooooooo")
+        console.log(drawnPolygons, "drawnPolygonsoooooooooooooooooo")
 
     } else {
         console.log('Drawn geometry is not a valid Polygon.');
@@ -344,7 +344,7 @@ $(document).ready(function () {
 
 
     function trials() {
-        var geoServerURL = "https://portal.geopulsea.com//geoserver/AutoDCR/wms?service=WFS&version=1.1.0&request=GetFeature&typeName=Revenue_1&propertyName=village_name&outputFormat=application/json";
+        var geoServerURL = "https://iwmsgis.pmc.gov.in//geoserver/AutoDCR/wms?service=WFS&version=1.1.0&request=GetFeature&typeName=Revenue_1&propertyName=village_name&outputFormat=application/json";
 
         $.getJSON(geoServerURL)
             .done(function (data) {
@@ -367,7 +367,7 @@ $(document).ready(function () {
                     select.value = village_name;
                     var Village_name = 'village_name'
                     let filters = `${Village_name} = '${village_name}'`;
-                    
+
 
                     FitbouCustomiseRevenue(filters)
                     Revenue_Layer.setParams({
@@ -387,7 +387,7 @@ $(document).ready(function () {
                             return; // Exit the function early
                         }
                         var geoServerURL =
-                            "https://portal.geopulsea.com//geoserver/AutoDCR/wms?service=WFS&version=1.1.0&request=GetFeature&typeName=Revenue_1&propertyName=Gut_No&outputFormat=application/json";
+                            "https://iwmsgis.pmc.gov.in//geoserver/AutoDCR/wms?service=WFS&version=1.1.0&request=GetFeature&typeName=Revenue_1&propertyName=Gut_No&outputFormat=application/json";
 
                         if (filters) {
                             geoServerURL += "&CQL_FILTER=" + encodeURIComponent(filters);
@@ -462,7 +462,7 @@ $("#search_type").change(function () {
     var Village_name = 'village_name'
     let filters = `${Village_name} = '${selectedValueVillage}'`;
 
- 
+
     // Update Revenue_Layer with new CQL_FILTER
 
     FitbouCustomiseRevenue(filters)
@@ -485,7 +485,7 @@ $("#search_type").change(function () {
         }
 
         var geoServerURL =
-            "https://portal.geopulsea.com//geoserver/AutoDCR/wms?service=WFS&version=1.1.0&request=GetFeature&typeName=Revenue_1&propertyName=Gut_No&outputFormat=application/json"; if (filters) {
+            "https://iwmsgis.pmc.gov.in//geoserver/AutoDCR/wms?service=WFS&version=1.1.0&request=GetFeature&typeName=Revenue_1&propertyName=Gut_No&outputFormat=application/json"; if (filters) {
                 geoServerURL += "&CQL_FILTER=" + encodeURIComponent(filters);
             }
 
@@ -602,7 +602,7 @@ function getSelectedValues() {
     if (cqlFilterGut && filters) {
         cqlFilter = "(" + cqlFilterGut + ") AND (" + filters + ")";
     } else {
-        cqlFilter = cqlFilterGut ;
+        cqlFilter = cqlFilterGut;
     }
     localStorage.setItem('cqlFilter', cqlFilter);
 
@@ -653,7 +653,7 @@ function FitbouCustomiseRevenue(filter) {
     layers = ["AutoDCR:Revenue_1"];
     layers.forEach(function (layerName) {
         var urlm =
-            "https://portal.geopulsea.com//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=" +
+            "https://iwmsgis.pmc.gov.in//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=" +
             layerName +
             "&CQL_FILTER=" +
             filter +
@@ -784,7 +784,7 @@ document.getElementById('fileInput').addEventListener('change', function (e) {
             processKML(kmlContent);
         } else if (file.name.toLowerCase().endsWith('.csv')) {
 
-            processCSV(kmlContent)
+            processCSV(kmlContent);
 
         } else {
             alert('Invalid file file.');
@@ -796,36 +796,32 @@ document.getElementById('fileInput').addEventListener('change', function (e) {
 function processKML(kmlString) {
     var layer = omnivore.kml.parse(kmlString);
     if (layer.getBounds().isValid()) {
-        // console.log(layer._layers,"///////////",layer._layers[379])
-        
-
-        var polygonLayer = layer._layers[379];
-        drawnItems.addLayer(polygonLayer);
-        // drawnItems.addLayer(drawnPolygons)
-        // polygonLayer.editing.enable();
-        console.log("000000000000kml",polygonLayer)
-
-
+        const keysList = Object.keys(layer._layers);
+        keysList.forEach(key => {
+            var polygonLayer = layer._layers[key];
+            drawnItems.addLayer(polygonLayer);
+        });
         layer.addTo(map);
-        console.log(layer.toGeoJSON(),"lllllllllllllllll")
-        // for saving coordinates
         var polygonId = 'polygon_kml'
         drawnPolygons[polygonId] = layer.toGeoJSON().features[0].geometry.coordinates;
-        console.log(drawnPolygons, "drawnPolygons", "polygonCounter");
         // drawnPolygons[polygonId].enableEdit();
-        
+
         map.fitBounds(layer.getBounds());
     } else {
         alert('Invalid KML/KMZ file.');
     }
 }
 
+
 function processCSV(kmlContent) {
     var data = Papa.parse(kmlContent, { header: true, dynamicTyping: true }).data;
     data = data.filter(row => row.latitude !== null && row.longitude !== null);
     var polygon = L.polygon(data.map(coord => [coord.latitude, coord.longitude])).addTo(map);
+    console.log("oooooooooooooooooo",polygon)
     if (polygon.getBounds().isValid()) {
 
+        var polygonLayer = polygon;
+        drawnItems.addLayer(polygonLayer);
         // for saving coordinates
         var polygonId = 'polygon_csv'
         drawnPolygons[polygonId] = polygon.toGeoJSON().geometry.coordinates;
@@ -840,7 +836,6 @@ function processCSV(kmlContent) {
 
 
 // for adding coordinates manulay
-
 
 
 document.getElementById('toggleFormBtn').addEventListener('click', function () {
@@ -916,61 +911,61 @@ function addCoordinateRow(table) {
     var latitudeMinutesCell = row.insertCell();
     var latitudeSecondsCell = row.insertCell();
     var heightfloatCell = row.insertCell();
-     var heightnumberCell = row.insertCell(); 
+    var heightnumberCell = row.insertCell();
     var actionCell = row.insertCell();
-     // degreee-----------------------------------
-     var longitudeDegreesInput = document.createElement('input');
-     longitudeDegreesInput.setAttribute('type', 'number');
-     longitudeDegreesInput.setAttribute('placeholder', '73°');
-     longitudeDegreesInput.setAttribute('name', 'longitudeDegrees[]');
-     // longitudeDegreesInput.setAttribute('readonly', 'readonly'); 
-     longitudeDegreesInput.value = '73';
-     longitudeDegreesInput.style.width = '40px';
-     longitudeDegreesInput.style.position = 'absolute';
-     longitudeDegreesInput.style.left = '1%';
-     // longitudeDegreesInput.style.marginRight = '5px';
-     longitudeDegreesInput.style.borderBottomLeftRadius = '5px';
-     longitudeDegreesInput.style.borderTopLeftRadius = '5px';
-     longitudeDegreesInput.style.borderTop = '2px solid #3c3cb8';
-     longitudeDegreesInput.style.borderLeft = '2px solid #3c3cb8';
-     longitudeDegreesInput.style.borderBottom = '2px solid #3c3cb8';
-     longitudeDegreesInput.style.borderRight = '2px solid  #bbb';
- 
- 
- 
-     // minutes--------------------------------------------------
-     var longitudeMinutesInput = document.createElement('input');
-     longitudeMinutesInput.setAttribute('type', 'number');
-     longitudeMinutesInput.setAttribute('placeholder', '51′');
-     longitudeMinutesInput.setAttribute('name', 'longitudeMinutes[]');
-     longitudeMinutesInput.style.width = '40px';
-     longitudeMinutesInput.style.position = 'absolute';
-     longitudeMinutesInput.style.left = '8%';
-     // longitudeMinutesInput.style.marginRight = '5px';
-     longitudeMinutesInput.style.borderTop = '2px solid  #3c3cb8';
-     longitudeMinutesInput.style.borderBottom = '2px solid  #3c3cb8';
-     longitudeMinutesInput.style.borderLeft = '2px solid  #bbb';
+    // degreee-----------------------------------
+    var longitudeDegreesInput = document.createElement('input');
+    longitudeDegreesInput.setAttribute('type', 'number');
+    longitudeDegreesInput.setAttribute('placeholder', '73°');
+    longitudeDegreesInput.setAttribute('name', 'longitudeDegrees[]');
+    // longitudeDegreesInput.setAttribute('readonly', 'readonly'); 
+    longitudeDegreesInput.value = '73';
+    longitudeDegreesInput.style.width = '40px';
+    longitudeDegreesInput.style.position = 'absolute';
+    longitudeDegreesInput.style.left = '1%';
+    // longitudeDegreesInput.style.marginRight = '5px';
+    longitudeDegreesInput.style.borderBottomLeftRadius = '5px';
+    longitudeDegreesInput.style.borderTopLeftRadius = '5px';
+    longitudeDegreesInput.style.borderTop = '2px solid #3c3cb8';
+    longitudeDegreesInput.style.borderLeft = '2px solid #3c3cb8';
+    longitudeDegreesInput.style.borderBottom = '2px solid #3c3cb8';
+    longitudeDegreesInput.style.borderRight = '2px solid  #bbb';
+
+
+
+    // minutes--------------------------------------------------
+    var longitudeMinutesInput = document.createElement('input');
+    longitudeMinutesInput.setAttribute('type', 'number');
+    longitudeMinutesInput.setAttribute('placeholder', '51′');
+    longitudeMinutesInput.setAttribute('name', 'longitudeMinutes[]');
+    longitudeMinutesInput.style.width = '40px';
+    longitudeMinutesInput.style.position = 'absolute';
+    longitudeMinutesInput.style.left = '8%';
+    // longitudeMinutesInput.style.marginRight = '5px';
+    longitudeMinutesInput.style.borderTop = '2px solid  #3c3cb8';
+    longitudeMinutesInput.style.borderBottom = '2px solid  #3c3cb8';
+    longitudeMinutesInput.style.borderLeft = '2px solid  #bbb';
     //  longitudeMinutesInput.style.borderRight = '2px solid  #bbb';
- 
- 
-     // second--------------------------------------------------------------
-     var longitudeSecondsInput = document.createElement('input');
-     longitudeSecondsInput.setAttribute('type', 'number');
-     longitudeSecondsInput.setAttribute('placeholder', '24.43″');
-     longitudeSecondsInput.setAttribute('name', 'longitudeSeconds[]');
-     longitudeSecondsInput.setAttribute('step', 'any');
-     longitudeSecondsInput.style.width = '59px';
-     longitudeSecondsInput.style.position = 'absolute';
-     longitudeSecondsInput.style.left = '16%';
-     // longitudeSecondsInput.style.marginRight = '5px'; 
-     longitudeSecondsInput.style.borderTop = '2px solid  #3c3cb8';
-     longitudeSecondsInput.style.borderBottom = '2px solid #3c3cb8';
-     longitudeSecondsInput.style.borderRight = '2px solid #3c3cb8';
-     longitudeSecondsInput.style.borderLeft = '2px solid  #bbb';
-     longitudeSecondsInput.style.borderTopRightRadius = '5px';
-     longitudeSecondsInput.style.borderBottomRightRadius = '5px';
- 
-   
+
+
+    // second--------------------------------------------------------------
+    var longitudeSecondsInput = document.createElement('input');
+    longitudeSecondsInput.setAttribute('type', 'number');
+    longitudeSecondsInput.setAttribute('placeholder', '24.43″');
+    longitudeSecondsInput.setAttribute('name', 'longitudeSeconds[]');
+    longitudeSecondsInput.setAttribute('step', 'any');
+    longitudeSecondsInput.style.width = '59px';
+    longitudeSecondsInput.style.position = 'absolute';
+    longitudeSecondsInput.style.left = '16%';
+    // longitudeSecondsInput.style.marginRight = '5px'; 
+    longitudeSecondsInput.style.borderTop = '2px solid  #3c3cb8';
+    longitudeSecondsInput.style.borderBottom = '2px solid #3c3cb8';
+    longitudeSecondsInput.style.borderRight = '2px solid #3c3cb8';
+    longitudeSecondsInput.style.borderLeft = '2px solid  #bbb';
+    longitudeSecondsInput.style.borderTopRightRadius = '5px';
+    longitudeSecondsInput.style.borderBottomRightRadius = '5px';
+
+
 
     // latdegree----------------------
 
@@ -1044,7 +1039,7 @@ function addCoordinateRow(table) {
     heightfloatCellInput.style.borderTopRightRadius = '5px';
     heightfloatCellInput.style.borderBottomRightRadius = '5px';
 
-    
+
 
     // latitudeSecondsInput.style.marginRight = '5px'; 
     longitudeDegreesCell.appendChild(longitudeDegreesInput);
@@ -1053,7 +1048,7 @@ function addCoordinateRow(table) {
     latitudeDegreesCell.appendChild(latitudeDegreesInput);
     latitudeMinutesCell.appendChild(latitudeMinutesInput);
     latitudeSecondsCell.appendChild(latitudeSecondsInput);
-     heightfloatCell.appendChild(heightfloatCellInput);
+    heightfloatCell.appendChild(heightfloatCellInput);
 
 
 
@@ -1088,7 +1083,7 @@ document.getElementById('coordinateForm').addEventListener('submit', function (e
         coordinates.push([parsedLatitude, parsedLongitude]);
     });
 
-    
+
 
     markershow = [];
     // Add markers to the map
@@ -1097,29 +1092,25 @@ document.getElementById('coordinateForm').addEventListener('submit', function (e
         return;
     } else {
         var polygon = L.polygon(coordinates).addTo(map);// Function to open the legend div when clicked
-function openLegend() {
-    var legendDiv = document.querySelector('.info.legend');
-    legendDiv.style.display = 'block';
-}
+        function openLegend() {
+            var legendDiv = document.querySelector('.info.legend');
+            legendDiv.style.display = 'block';
+        }
 
-// Add event listener to open the legend div when clicked
-document.querySelector('.info.legend').addEventListener('click', openLegend);
+        // Add event listener to open the legend div when clicked
+        document.querySelector('.info.legend').addEventListener('click', openLegend);
 
-// Add event listener to close the legend div when clicked outside
-document.addEventListener('click', function(event) {
-    var legendDiv = document.querySelector('.info.legend');
-    // Check if the click occurred outside of the legend div
-    if (!legendDiv.contains(event.target)) {
-        // Clicked outside of the legend div, so hide it
-        legendDiv.style.display = 'none';
-    }
-});
+        // Add event listener to close the legend div when clicked outside
+        document.addEventListener('click', function (event) {
+            var legendDiv = document.querySelector('.info.legend');
+            // Check if the click occurred outside of the legend div
+            if (!legendDiv.contains(event.target)) {
+                // Clicked outside of the legend div, so hide it
+                legendDiv.style.display = 'none';
+            }
+        });
 
         map.fitBounds(polygon.getBounds());
-
-        // var polygonLayer = polygon;
-        // drawnItems.addLayer(polygonLayer);
-        // console.log(polygonLayer,"polygonLayerbbbbbbbbbbbbbbbbb")
 
         var polygonId = 'polygon_coors'
         drawnPolygons[polygonId] = polygon.toGeoJSON().geometry.coordinates;
@@ -1161,82 +1152,67 @@ function getFilters() {
 }
 
 
-// drawnPolygons.forEach(function(polygonCoords) {
-//     console.log("kkkkkkkkkkkkkkkkkkk")
-//     // Create a polygon layer for each set of coordinates
-//     var polygon = L.polygon(polygonCoords, {editable: true}).addTo(map);
-    
-//     // Enable editing for the polygon
-//     polygon.enableEdit();
-// });
-
-
 function savevalues() {
-    console.log("111111111111111111",drawnPolygons)
+    console.log("111111111111111111", drawnPolygons)
 
     if (Object.keys(drawnPolygons).length === 0) {
-        alert("Please draw a polygon / uload KML , KMZ , CSV / Add C0ordinates before proceeding.");
-    }else{
-    
-    Object.keys(drawnPolygons).forEach(async function (polygonId) {
-        console.log("111111111111111111")
+        alert("Please draw a polygon / upload KML , KMZ , CSV / Add Coordinates before proceeding.");
+    } else {
 
-        if (Object.keys(drawnPolygons).length === 0) {
-            
-            console.log("heheheeheh")
-            alert("Please draw a polygon / uload KML , KMZ , CSV / Add C0ordinates before proceeding.");
-        } else {
-            console.log("lllllllllllllllllll")
-            
-        
-        
-        var coordinates = drawnPolygons[polygonId];
-        console.log(coordinates,"drawcoordinates1111111111111")
+        Object.keys(drawnPolygons).forEach(async function (polygonId) {
+            console.log("111111111111111111")
 
-        var pp = turf.polygon(coordinates);
-        // L.geoJSON(pp).addTo(map)
-        var bounds = L.geoJSON(pp).getBounds();
-        map.fitBounds(bounds);
-        var layers = ["AutoDCR:Revenue_1"];
-    
-        var url = "https://portal.geopulsea.com//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=";
-        var propertyName = "village_name,TPS_Name,Gut_No,geom";
-        var outputFormat = "application/json";
-        var values = await IntersectAreaWithPolygon(pp, layers, url, propertyName, bounds.toBBoxString(), outputFormat)
-        var cqlFilterget = getSelectedValues()
-        const selected_dropdown = JSON.stringify(cqlFilterget)
-        const villageName = JSON.stringify(values);
-        const selected_guts = JSON.stringify(getSelectedValues1());
-        const selected_village = JSON.stringify(getFilters());
-       
-        const coordinates1 = coordinates[0].map(coord => [coord[0], coord[1]]);
+            if (Object.keys(drawnPolygons).length === 0) {
 
-        // this is converting decimal degrees to degree minutes and seconds
-        const dmsCoordinates = coordinates1.map(coord => [convertToDMS(coord[0]), convertToDMS(coord[1])]);
-  
-        // console.log(dmsCoordinates);
-        // console.log(cqlFilterget,"cqlFilterget",selected_dropdown,"selected_dropdown",villageName,"villageName",selected_guts,"selected_guts",selected_village,"selected_village")
-        // alert("Data saved")
-        
-//  let dmsCoordinates = convertArrayToDMS(coordinates1);
-        // let dmsCoordinates = convertArrayToDMS(coordinates);
-    console.log(dmsCoordinates,"000000000000",coordinates1,"coordinates1");
+                console.log("heheheeheh")
+                alert("Please draw a polygon / upload KML , KMZ , CSV / Add Coordinates before proceeding.");
+            } else {
+                console.log("lllllllllllllllllll")
 
 
-        // Example usage:
-var exampleData = [
-    ['Draw Village Name', villageName],
-    ['Selected Village From Dropdown', selected_village],
-    ['Selected Survey Number From Dropdown', selected_guts],
-    ['Coordinates', dmsCoordinates]
-    
-];
 
-showTableModal(exampleData);
-     
+                var coordinates = drawnPolygons[polygonId];
+                console.log(coordinates, "drawcoordinates1111111111111")
+
+                var pp = turf.polygon(coordinates);
+                // L.geoJSON(pp).addTo(map)
+                var bounds = L.geoJSON(pp).getBounds();
+                map.fitBounds(bounds);
+                var layers = ["AutoDCR:Revenue_1"];
+
+                var url = "https://iwmsgis.pmc.gov.in//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=";
+                var propertyName = "village_name,TPS_Name,Gut_No,geom";
+                var outputFormat = "application/json";
+                var values = await IntersectAreaWithPolygon(pp, layers, url, propertyName, bounds.toBBoxString(), outputFormat)
+                var cqlFilterget = getSelectedValues()
+                const selected_dropdown = JSON.stringify(cqlFilterget)
+                const villageName = JSON.stringify(values);
+                const selected_guts = JSON.stringify(getSelectedValues1());
+                const selected_village = JSON.stringify(getFilters());
+
+                const coordinates1 = coordinates[0].map(coord => [coord[0], coord[1]]);
+
+                // this is converting decimal degrees to degree minutes and seconds
+                const dmsCoordinates = coordinates1.map(coord => [convertToDMS(coord[0]), convertToDMS(coord[1])]);
+
+                
+                console.log(dmsCoordinates, "000000000000", coordinates1, "coordinates1");
+
+
+                // Example usage:
+                var exampleData = [
+                    ['Draw Village Name', villageName],
+                    ['Selected Village From Dropdown', selected_village],
+                    ['Selected Survey Number From Dropdown', selected_guts],
+                    ['Coordinates', dmsCoordinates]
+
+                ];
+
+                showTableModal(exampleData);
+
+            }
+        });
     }
-    });
-}
 }
 
 
@@ -1250,9 +1226,9 @@ function convertToDMS(decimal) {
     const minutes = Math.floor((decimal - degrees) * 60);
     const seconds = ((decimal - degrees - (minutes / 60)) * 3600).toFixed(2);
     return `${degrees}° ${minutes}' ${seconds}"`;
-  }
-  
- 
+}
+
+
 // for conveting degree decimals to degree minutes and seconds
 
 ///////////////////////////////////////////////
@@ -1260,188 +1236,123 @@ function convertToDMS(decimal) {
 
 function submitForm() {
     // alert("Data Saved")
-    console.log(drawnPolygons,"drawnPolygonslllllllllll")
+    console.log(drawnPolygons, "drawnPolygonslllllllllll")
 
     Object.keys(drawnPolygons).forEach(async function (polygonId) {
-    // var polygonId= "";
-     var coordinates = drawnPolygons[polygonId];
-     localStorage.setItem('coordinates',coordinates);
-     
-
-    //  // pragati code 
-
-    //  //[STRAT] Added new line PH
-    // const coordinatesDec = coordinates[0].map(coord => [coord[0], coord[1]]);
-    // // this is converting decimal degrees to degree minutes and seconds
-    // const dmsCoordinatesDec = coordinatesDec.map(coord => [convertToDMS(coord[0]), convertToDMS(coord[1])]);
-    // //[END] Added new line PH
-    // localStorage.setItem('coordinates',dmsCoordinatesDec);//Changed coordinates to dmsCoordinatesDec PH
+        // var polygonId= "";
+        var coordinates = drawnPolygons[polygonId];
+        localStorage.setItem('coordinates', coordinates);
 
 
-    console.log(coordinates,"drawcoordinates")
-    var pp = turf.polygon(coordinates);
-    // L.geoJSON(pp).addTo(map)
-    var bounds = L.geoJSON(pp).getBounds();
-    map.fitBounds(bounds);
-    var layers = ["AutoDCR:Revenue_1"];
+        console.log(coordinates, "drawcoordinates")
+        var pp = turf.polygon(coordinates);
+        // L.geoJSON(pp).addTo(map)
+        var bounds = L.geoJSON(pp).getBounds();
+        map.fitBounds(bounds);
+        var layers = ["AutoDCR:Revenue_1"];
 
-    var url = "https://portal.geopulsea.com//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=";
-    var propertyName = "village_name,TPS_Name,Gut_No,geom";
-    var outputFormat = "application/json";
-    var values = await IntersectAreaWithPolygon(pp, layers, url, propertyName, bounds.toBBoxString(), outputFormat)
-    var cqlFilterget = getSelectedValues()
-    const selected_dropdown = JSON.stringify(cqlFilterget)
-    const villageName = JSON.stringify(values);
-    const selected_guts = JSON.stringify(getSelectedValues1());
-    const selected_village = JSON.stringify(getFilters());
-    const coordinates1 = coordinates[0].map(coord => [coord[0], coord[1]]);
+        var url = "https://iwmsgis.pmc.gov.in//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=";
+        var propertyName = "village_name,TPS_Name,Gut_No,geom";
+        var outputFormat = "application/json";
+        var values = await IntersectAreaWithPolygon(pp, layers, url, propertyName, bounds.toBBoxString(), outputFormat)
+        var cqlFilterget = getSelectedValues()
+        const selected_dropdown = JSON.stringify(cqlFilterget)
+        const villageName = JSON.stringify(values);
+        const selected_guts = JSON.stringify(getSelectedValues1());
+        const selected_village = JSON.stringify(getFilters());
+        const coordinates1 = coordinates[0].map(coord => [coord[0], coord[1]]);
 
-    const dmsCoordinates = coordinates1.map(coord => [convertToDMS(coord[0]), convertToDMS(coord[1])]);
-    console.log(cqlFilterget,"cqlFilterget",selected_dropdown,"selected_dropdown",villageName,"villageName",selected_guts,"selected_guts",selected_village,"selected_village","coordinate111111",coordinates1)
-    // alert("Data saved")
-
-    
-    
-
-    $.ajax({
-        type: "POST",
-        url: "APIS/savevalues.php",
-        contentType: "application/json",
-        data: JSON.stringify({
-            coordinates: dmsCoordinates,
-            village_name: villageName,
-            gut_num: selected_dropdown,
-            selectedvillage: selected_village,
-            selectedguts: selected_guts,
-            token: token
-
-        }),
-        success: function (response) {
-
-            console.log("Coordinates saved successfully",response);
-            localStorage.setItem('lastInsertedPlotBoundaryId', response.data.id);
-            // localStorage.setItem('coordinates',coordinates1);
-            console.log("localstorage")
-
-            window.location.href = 'dashboard.html';
-
-            // if(response.data.id != undefined){
-
-              
-            // }
+        // const dmsCoordinates = coordinates1.map(coord => [convertToDMS(coord[0]), convertToDMS(coord[1])]);
+        console.log(cqlFilterget, "cqlFilterget", selected_dropdown, "selected_dropdown", villageName, "villageName", selected_guts, "selected_guts", selected_village, "selected_village", "coordinate111111", coordinates1)
+        // alert("Data saved")
 
 
-        },
-        error: function (xhr, status, error) {
-            console.error("Failed to save coordinates:", error);
-        }
-    });
 
-    $.ajax({
-        url:'https://autodcr.pmc.gov.in/AutoDCR.GISIntegration/GisExim.svc/getPlotGISDetails',
 
-        // url: 'http://115.124.100.250/AutoDCR.Integration/GisExim.svc/getPlotGISDetails',
+        $.ajax({
+            type: "POST",
+            url: "APIS/savevalues.php",
+            contentType: "application/json",
+            data: JSON.stringify({
+                coordinates: coordinates1,
+                village_name: villageName,
+                gut_num: selected_dropdown,
+                selectedvillage: selected_village,
+                selectedguts: selected_guts,
+                token: token
 
-        type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify({
-            Token: token,
-            Parcel: {
-                Location: [
-                    {
-                        LocationCode: handshakingCode,
-                        SurveyNo: selected_guts,
-                        PlotNo: '',
-                        CTS: '',
-                        Peth: '',
-                    },
-                ],
-                //blank
-                LandUseZone: '',
-                PlotGeoJSON: {
-                    type: 'Feature',
-                    properties: {
-                        PolygonKey: '8650',
-                        PolygonArea: '493.74',
-                        Centroid: [73.941016, 18.508117],
-                    },
-                    geometry: {
-                        type: 'Polygon',
-                        coordinates: [dmsCoordinates],
-                    },
-                },
-                Buildings: [],
-                NOCDocuments: [],
+            }),
+            success: function (response) {
+
+                console.log("Coordinates saved successfully", response);
+                localStorage.setItem('lastInsertedPlotBoundaryId', response.data.id);
+                // localStorage.setItem('coordinates',coordinates1);
+                console.log("localstorage")
+
+                window.location.href = 'dashboard.html';
+
+                // if(response.data.id != undefined){
+
+
+                // }
+
+
             },
-        }),
-        success: function (response) {
-            console.log('API response received:', response);
-            if (response.Status) {
-                // window.location.href = 'data.html';
+            error: function (xhr, status, error) {
+                console.error("Failed to save coordinates:", error);
             }
-        },
-        error: function (xhr, status, error) {
-            console.error('Error calling API:', xhr.responseText);
-        },
+        });
+
+        $.ajax({
+            url: 'https://autodcr.pmc.gov.in/AutoDCR.GISIntegration/GisExim.svc/getPlotGISDetails',
+
+            // url: 'http://115.124.100.250/AutoDCR.Integration/GisExim.svc/getPlotGISDetails',
+
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                Token: token,
+                Parcel: {
+                    Location: [
+                        {
+                            LocationCode: handshakingCode,
+                            SurveyNo: selected_guts,
+                            PlotNo: '',
+                            CTS: '',
+                            Peth: '',
+                        },
+                    ],
+                    //blank
+                    LandUseZone: '',
+                    PlotGeoJSON: {
+                        type: 'Feature',
+                        properties: {
+                            PolygonKey: '8650',
+                            PolygonArea: '493.74',
+                            Centroid: [73.941016, 18.508117],
+                        },
+                        geometry: {
+                            type: 'Polygon',
+                            coordinates: [coordinates1],
+                        },
+                    },
+                    Buildings: [],
+                    NOCDocuments: [],
+                },
+            }),
+            success: function (response) {
+                console.log('API response received:', response);
+                if (response.Status) {
+                    // window.location.href = 'data.html';
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error('Error calling API:', xhr.responseText);
+            },
+        });
+        window.location.href = 'dashboard.html';
+
     });
-    window.location.href = 'dashboard.html';
-    
-    });
-    
-// }
-
-
-
-    // $.ajax({
-    //     // url:'https://autodcr.pmc.gov.in/AutoDCR.GISIntegration/GisExim.svc/getPlotGISDetails',
-
-    //     url: 'http://115.124.100.250/AutoDCR.Integration/GisExim.svc/getPlotGISDetails',
-
-    //     type: 'POST',
-    //     contentType: 'application/json',
-    //     data: JSON.stringify({
-    //         Token: token,
-    //         Parcel: {
-    //             Location: [
-    //                 {
-    //                     LocationCode: handshakingCode,
-    //                     SurveyNo: selected_guts,
-    //                     PlotNo: '',
-    //                     CTS: '',
-    //                     Peth: '',
-    //                 },
-    //             ],
-    //             //blank
-    //             LandUseZone: '',
-    //             PlotGeoJSON: {
-    //                 type: 'Feature',
-    //                 properties: {
-    //                     PolygonKey: '8650',
-    //                     PolygonArea: '493.74',
-    //                     Centroid: [73.941016, 18.508117],
-    //                 },
-    //                 geometry: {
-    //                     type: 'Polygon',
-    //                     coordinates: [dmsCoordinates],
-    //                 },
-    //             },
-    //             Buildings: [],
-    //             NOCDocuments: [],
-    //         },
-    //     }),
-    //     success: function (response) {
-    //         console.log('API response received:', response);
-    //         if (response.Status) {
-    //             window.location.href = 'data.html';
-    //         }
-    //     },
-    //     error: function (xhr, status, error) {
-    //         console.error('Error calling API:', xhr.responseText);
-    //     },
-    // });
-
-    // window.location.href = 'dashboard.html';
-
 }
 
 
@@ -1464,7 +1375,7 @@ function infovalues() {
         var bounds = L.geoJSON(pp).getBounds();
         map.fitBounds(bounds);
         var layers1 = ["AutoDCR:Aviation_data"];
-        var url = "https://portal.geopulsea.com//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=";
+        var url = "https://iwmsgis.pmc.gov.in//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=";
         var propertyName1 = "zone,distance,elevation,geom";
         var outputFormat = "application/json";
         IntersectwithASLM(pp, layers1, url, propertyName1, bounds.toBBoxString(), outputFormat)
@@ -1494,19 +1405,7 @@ async function IntersectAreaWithPolygon(drawnPolygon, layers, url, propertyName,
                             intersectedFeatures.push(intersectedFeature);
                         }
                     });
-                    // var intersectedLayer = L.geoJSON(intersectedFeatures, {
-                    //     style: {
-                    //         color: 'white',
-                    //         weight: 2
-                    //     }
-                    // });
-                    // intersectedLayer.addTo(map);
-                    // intersectedLayer.eachLayer(function (layer) {
-                    //     var properties = layer.feature.properties;
-                    //     var area = turf.area(layer.feature);
-                    //     layer.bindPopup(`Area: ${area.toFixed(2)} sq meters<br>Properties: ${JSON.stringify(properties)}`);
-
-                    // });
+                    
                     intersectedFeatures.forEach(function (feature) {
                         var properties = feature.properties;
                         var villageName = properties.village_name;
@@ -1612,9 +1511,9 @@ function showTableModal(data) {
 
     table.empty();
 
-    data.forEach(function(row) {
+    data.forEach(function (row) {
         var tr = $('<tr>');
-        row.forEach(function(cell) {
+        row.forEach(function (cell) {
             tr.append('<td>' + cell + '</td>');
         });
         table.append(tr);
@@ -1628,10 +1527,10 @@ function showTableModal(data) {
     // Clear the existing table content
     $('#popup-table tbody').empty();
 
-    data.forEach(function(row) {
+    data.forEach(function (row) {
         var rowHtml = '<tr>';
-        rowHtml += '<td>' + row[0] + '</td>'; 
-        rowHtml += '<td>' + row[1] + '</td>'; 
+        rowHtml += '<td>' + row[0] + '</td>';
+        rowHtml += '<td>' + row[1] + '</td>';
         rowHtml += '</tr>';
         $('#popup-table tbody').append(rowHtml);
     });

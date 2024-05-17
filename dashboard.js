@@ -153,7 +153,7 @@ control.setPosition('topright');
 // map.zoomControl.remove();
 
 L.control.zoom({
-    position: 'bottomright' // Set position to bottom right
+    position: 'bottomright'
 }).addTo(map);
 
 
@@ -161,15 +161,11 @@ L.control.zoom({
 
 
 $(document).ready(function () {
-
-
     refreshWMSLayer();
-
 
     var lastInsertedId = localStorage.getItem('lastInsertedPlotBoundaryId');
     var coordinatesString  = localStorage.getItem('coordinates')
     console.log(lastInsertedId,"lastInsertedId", coordinatesString )
-    
     
     var coordinatesArray = coordinatesString.split(",").map(Number);
 
@@ -178,43 +174,38 @@ $(document).ready(function () {
     console.log(coordinatesArray ,"okkkkkkk");
 
     var coords = [];
-while (coordinatesArray.length > 0) {
+    while (coordinatesArray.length > 0) {
     coords.push(coordinatesArray.splice(0, 2).reverse());
-}
-console.log(coords,"hhhhhhhhh");
+   }
+  console.log(coords,"hhhhhhhhh");
 
-var bounds = L.latLngBounds(coords);
-map.fitBounds(bounds);
+  var bounds = L.latLngBounds(coords);
+ map.fitBounds(bounds);
 
-
-
-})
+ })
 
 
 
-// $(document).ready(function () {
-//     // Initialize your Leaflet map instance
-//     var map = L.map('map').setView([51.505, -0.09], 13); // Set the initial view to some default values
 
-//     // Call your function to refresh WMS layer if it's defined
-//     if (typeof refreshWMSLayer === 'function') {
-//         refreshWMSLayer();
-//     }
 
+// map.whenReady(function () {
+   
+//     refreshWMSLayer(); 
+    
 //     var lastInsertedId = localStorage.getItem('lastInsertedPlotBoundaryId');
 //     var coordinatesString = localStorage.getItem('coordinates');
-
-//     if (lastInsertedId && coordinatesString) { // Ensure localStorage items are not null
-//         var coordinatesArray = coordinatesString.split(",").map(Number);
-
-//         var coords = [];
-//         while (coordinatesArray.length > 0) {
-//             coords.push(coordinatesArray.splice(0, 2).reverse());
-//         }
-
-//         var bounds = L.latLngBounds(coords);
-//         map.fitBounds(bounds);
-//     } else {
-//         console.error("Either lastInsertedPlotBoundaryId or coordinates is missing in localStorage.");
+//     console.log(lastInsertedId, "lastInsertedId", coordinatesString);
+    
+//     var coordinatesArray = coordinatesString.split(",").map(Number);
+//     console.log(coordinatesArray, "Coordinates Array");
+    
+//     var coords = [];
+//     while (coordinatesArray.length > 0) {
+//         coords.push(coordinatesArray.splice(0, 2).reverse());
 //     }
+//     console.log(coords, "Processed Coordinates");
+//     var bounds = L.latLngBounds(coords);
+//     map.fitBounds(bounds); 
 // });
+
+

@@ -631,6 +631,14 @@ map.on('draw:created', function (e) {
     updateButtonState();
 });
 
+map.on('draw:edited', function (e) {
+    var layers = e.layers;
+    layers.eachLayer(function(layer) {
+        var polygonId = L.stamp(layer); 
+        drawnPolygons[polygonId] = layer;
+    });
+    updateButtonState();
+});
 map.on('draw:deleted', function (e) {
     var layer = e.layer;
     var index = drawnPolygons.indexOf(layer);
@@ -1152,70 +1160,115 @@ function getFilters() {
 }
 
 
-function savevalues() {
-    console.log("111111111111111111", drawnPolygons)
+// function savevalues() {
+//     console.log("111111111111111111", drawnPolygons)
+
+//     if (Object.keys(drawnPolygons).length === 0) {
+//         alert("Please draw a polygon / upload KML , KMZ , CSV / Add Coordinates before proceeding.");
+//     } else {
+
+//         Object.keys(drawnPolygons).forEach(async function (polygonId) {
+//             console.log("111111111111111111")
+
+//             if (Object.keys(drawnPolygons).length === 0) {
+
+//                 console.log("heheheeheh")
+//                 alert("Please draw a polygon / upload KML , KMZ , CSV / Add Coordinates before proceeding.");
+//             } else {
+//                 console.log("lllllllllllllllllll")
+
+
+
+//                 var coordinates = drawnPolygons[polygonId];
+//                 console.log(coordinates, "drawcoordinates1111111111111")
+
+//                 var pp = turf.polygon(coordinates);
+//                 // L.geoJSON(pp).addTo(map)
+//                 var bounds = L.geoJSON(pp).getBounds();
+//                 map.fitBounds(bounds);
+//                 var layers = ["AutoDCR:Revenue_1"];
+
+//                 var url = "https://iwmsgis.pmc.gov.in//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=";
+//                 var propertyName = "village_name,TPS_Name,Gut_No,geom";
+//                 var outputFormat = "application/json";
+//                 var values = await IntersectAreaWithPolygon(pp, layers, url, propertyName, bounds.toBBoxString(), outputFormat)
+//                 var cqlFilterget = getSelectedValues()
+//                 const selected_dropdown = JSON.stringify(cqlFilterget)
+//                 const villageName = JSON.stringify(values);
+//                 const selected_guts = JSON.stringify(getSelectedValues1());
+//                 const selected_village = JSON.stringify(getFilters());
+
+//                 const coordinates1 = coordinates[0].map(coord => [coord[0], coord[1]]);
+
+//                 // this is converting decimal degrees to degree minutes and seconds
+//                 const dmsCoordinates = coordinates1.map(coord => [convertToDMS(coord[0]), convertToDMS(coord[1])]);
+
+                
+//                 console.log(dmsCoordinates, "000000000000", coordinates1, "coordinates1");
+
+
+//                 // Example usage:
+//                 var exampleData = [
+//                     ['Draw Village Name', villageName],
+//                     ['Selected Village From Dropdown', selected_village],
+//                     ['Selected Survey Number From Dropdown', selected_guts],
+//                     ['Coordinates', dmsCoordinates]
+
+//                 ];
+
+//                 showTableModal(exampleData);
+
+//             }
+//         });
+//     }
+// }
+
+async function savevalues() {
+    console.log("Drawn polygons:", drawnPolygons);
 
     if (Object.keys(drawnPolygons).length === 0) {
         alert("Please draw a polygon / upload KML , KMZ , CSV / Add Coordinates before proceeding.");
     } else {
+        for (const polygonId in drawnPolygons) {
+            var layer = drawnPolygons[polygonId];
+            var drawnPolygon = layer.toGeoJSON();
+            var coordinates = drawnPolygon.geometry.coordinates;
 
-        Object.keys(drawnPolygons).forEach(async function (polygonId) {
-            console.log("111111111111111111")
+            console.log("Coordinates:", coordinates);
 
-            if (Object.keys(drawnPolygons).length === 0) {
+            var pp = turf.polygon(coordinates);
+            var bounds = L.geoJSON(pp).getBounds();
+            map.fitBounds(bounds);
+            var layers = ["AutoDCR:Revenue_1"];
 
-                console.log("heheheeheh")
-                alert("Please draw a polygon / upload KML , KMZ , CSV / Add Coordinates before proceeding.");
-            } else {
-                console.log("lllllllllllllllllll")
+            var url = "https://iwmsgis.pmc.gov.in//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=";
+            var propertyName = "village_name,TPS_Name,Gut_No,geom";
+            var outputFormat = "application/json";
+            var values = await IntersectAreaWithPolygon(pp, layers, url, propertyName, bounds.toBBoxString(), outputFormat);
+            var cqlFilterget = getSelectedValues();
+            const selected_dropdown = JSON.stringify(cqlFilterget);
+            const villageName = JSON.stringify(values);
+            const selected_guts = JSON.stringify(getSelectedValues1());
+            const selected_village = JSON.stringify(getFilters());
 
+            const coordinates1 = coordinates[0].map(coord => [coord[0], coord[1]]);
+            console.log(coordinates1,"edited")
+            // This is converting decimal degrees to degree minutes and seconds
+            const dmsCoordinates = coordinates1.map(coord => [convertToDMS(coord[0]), convertToDMS(coord[1])]);
 
+            console.log("DMS Coordinates:", dmsCoordinates);
 
-                var coordinates = drawnPolygons[polygonId];
-                console.log(coordinates, "drawcoordinates1111111111111")
+            var exampleData = [
+                ['Draw Village Name', villageName],
+                ['Selected Village From Dropdown', selected_village],
+                ['Selected Survey Number From Dropdown', selected_guts],
+                ['Coordinates', dmsCoordinates]
+            ];
 
-                var pp = turf.polygon(coordinates);
-                // L.geoJSON(pp).addTo(map)
-                var bounds = L.geoJSON(pp).getBounds();
-                map.fitBounds(bounds);
-                var layers = ["AutoDCR:Revenue_1"];
-
-                var url = "https://iwmsgis.pmc.gov.in//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=";
-                var propertyName = "village_name,TPS_Name,Gut_No,geom";
-                var outputFormat = "application/json";
-                var values = await IntersectAreaWithPolygon(pp, layers, url, propertyName, bounds.toBBoxString(), outputFormat)
-                var cqlFilterget = getSelectedValues()
-                const selected_dropdown = JSON.stringify(cqlFilterget)
-                const villageName = JSON.stringify(values);
-                const selected_guts = JSON.stringify(getSelectedValues1());
-                const selected_village = JSON.stringify(getFilters());
-
-                const coordinates1 = coordinates[0].map(coord => [coord[0], coord[1]]);
-
-                // this is converting decimal degrees to degree minutes and seconds
-                const dmsCoordinates = coordinates1.map(coord => [convertToDMS(coord[0]), convertToDMS(coord[1])]);
-
-                
-                console.log(dmsCoordinates, "000000000000", coordinates1, "coordinates1");
-
-
-                // Example usage:
-                var exampleData = [
-                    ['Draw Village Name', villageName],
-                    ['Selected Village From Dropdown', selected_village],
-                    ['Selected Survey Number From Dropdown', selected_guts],
-                    ['Coordinates', dmsCoordinates]
-
-                ];
-
-                showTableModal(exampleData);
-
-            }
-        });
+            showTableModal(exampleData);
+        }
     }
 }
-
-
 // for conveting degree decimals to degree minutes and seconds
 
 ///////////////////////////////////////////////
@@ -1234,21 +1287,23 @@ function convertToDMS(decimal) {
 ///////////////////////////////////////////////
 
 
-function submitForm() {
+async function submitForm() {
     // alert("Data Saved")
     console.log(drawnPolygons, "drawnPolygonslllllllllll")
 
-    Object.keys(drawnPolygons).forEach(async function (polygonId) {
+    for (const polygonId in drawnPolygons) {
         // var polygonId= "";
-        var coordinates = drawnPolygons[polygonId];
+        var layer = drawnPolygons[polygonId];
+        var drawnPolygon = layer.toGeoJSON();
+        var coordinates = drawnPolygon.geometry.coordinates;
         localStorage.setItem('coordinates', coordinates);
 
 
-        console.log(coordinates, "drawcoordinates")
+        console.log(coordinates, "updateed")
         var pp = turf.polygon(coordinates);
         // L.geoJSON(pp).addTo(map)
         var bounds = L.geoJSON(pp).getBounds();
-        map.fitBounds(bounds);
+        // map.fitBounds(bounds);
         var layers = ["AutoDCR:Revenue_1"];
 
         var url = "https://iwmsgis.pmc.gov.in//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=";
@@ -1352,7 +1407,7 @@ function submitForm() {
         });
         window.location.href = 'dashboard.html';
 
-    });
+    };
 }
 
 
@@ -1496,10 +1551,8 @@ function IntersectwithASLM(drawnPolygon, layers, url, propertyName, bounds, outp
 
 // Add an event listener to the "Next" button
 $('#saveToAutoDCRButton').click(function () {
-    // Save edited polygon coordinates to localStorage
     localStorage.setItem('editedCoordinates', JSON.stringify(drawnPolygons));
-    // Proceed to the data page
-    window.location.href = 'data.html';
+    window.location.href = 'dashboard.html';
 });
 
 

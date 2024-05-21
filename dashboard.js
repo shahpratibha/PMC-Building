@@ -42,7 +42,7 @@ var Esri_WorldImagery = L.tileLayer(
 var baseLayers = {};
 
 var PlotBoundary_Layer = L.tileLayer
-    .wms("https://pmc.geopulsea.com/geoserver/AutoDCR/wms", {
+    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
         layers: "plotboundary",
         format: "image/png",
         transparent: true,
@@ -150,12 +150,11 @@ var control = new L.control.layers(baseLayers, WMSlayers).addTo(map);
 control.setPosition('topright');
 
 // Remove the default zoom control
-// map.zoomControl.remove();
+map.zoomControl.remove();
 
 L.control.zoom({
     position: 'bottomright'
 }).addTo(map);
-
 
 
 

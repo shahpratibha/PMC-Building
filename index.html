@@ -40,9 +40,13 @@
         max-width: 100%; 
         }
 
-        
-    </style>
-    
+        .text-center {
+        text-align: center;
+    }
+    .coordimg1 {
+        text-decoration: none;
+    } 
+    </style> 
 </head>
 
 <body>
@@ -55,10 +59,8 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                
-                <h5 class="modal-title" id="dataPageModalLabel">Data Table</h5>
-            
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <h5 class="modal-title fw-bold text-center" id="dataPageModalLabel">PARTICULARS</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>    
             </div>
             <div class="modal-body">
                 <div class="table-responsive"> 
@@ -66,8 +68,8 @@
                         <!-- Table content will be populated dynamically -->
                         <thead>
                             <tr>
-                                <th scope="col">Column 1</th>
-                                <th scope="col">Column 2</th>
+                                <th scope="col" class="text-center">Attribute</th>
+                                <th scope="col" class="text-center">Result</th>
                                 <!-- Add more columns if needed -->
                             </tr>
                         </thead>
@@ -122,34 +124,21 @@
                 <i class="fa-solid fa-info"></i>
             </button>
             
-            <button class="coordimg1" id="getinfo">
-                <i class="fa-solid fa-download"><a href="Elevation_Certificate_N.html"></a></i>
-            </button>
+            <!-- <button class="coordimg1" id="getinfo">
+               
+                <i class="fas fa-question"></i>
+            
+            </button> -->
 
-           
-            <!-- <div class="custom-buttoncsv">
-                <button id="toggleFormBtn" class="addbtn"> Add Coordinates  <span style="color: red;">*</span>      
-                </button>
-                <div id="formContainer" class="form-modal" style="display:none;">
-                    <button id="closeFormBtn" class="close-btn"><i class="fa-solid fa-xmark xicon" style="font-size: 15px; color: #141414d3; top: 3%;
-                        position: absolute;
-                        left: -30%"></i></button>
-                    <form id="coordinateForm" style="text-align: center;">
-                        <table id="coordinateTable">
-                            <tr style="background-color: #bbb; padding: 5px; font-size: 13px;">
-                                <th class="p-1 px-4">Longitude</th>
-                                <th class="p-1 px-5">Latitude</th>
-                                <th class="p-1 px-4">Height</th>
-                                <th class="p-1 px-4">Action</th>
-                            </tr>
-                        </table>
-                        <button class="addbtn" type="button" id="addRowBtn">Add More Coordinates <i class="fa-solid fa-circle-plus" style="color: #bbb;"></i></button>
-                        <button class="subbtn" type="submit">Submit</button>
-                    </form>
+
+            <a href="AUTODCR GIS USER GUIDE (1).pdf" class="coordimg1" id="getinfo">
+                <!-- <i class="fa-solid fa-download"><a href="Elevation_Certificate_N.html"></a></i> -->
+                <div style="display: flex; justify-content: center; align-items: center;">
+                    <i class="fas fa-question mt-2"></i>
                 </div>
-            </div>  -->
-
-
+            </a>
+            
+           
             <div class="custom-buttoncsv">
                 <button id="toggleFormBtn" class="addbtn"> Add Coordinates      
                 </button>
@@ -162,8 +151,8 @@
                             <tr style="background-color: #bbb; padding: 5px; font-size: 13px;">
                                 <th class="p-1 px-4">Longitude</th>
                                 <th class="p-1 px-5">Latitude</th>
-                                <th class="p-1 px-4">Height</th>
-                                <th class="p-1 px-4">Action</th>
+                                <!-- <th class="p-1 px-4">Height</th> -->
+                                <th class="p-1 px-5">Action</th>
                             </tr>
                         </table>
                         <button class="addbtn" type="button" id="addRowBtn">Add More Coordinates <i class="fa-solid fa-circle-plus" style="color: #bbb;"></i></button>
@@ -171,10 +160,6 @@
                     </form>
                 </div>
             </div>
-
-
-
-   
 
         </div>
     </header>
@@ -216,6 +201,7 @@
         <script src='libs/leaflet-omnivore.min.js'></script>
         <script src='libs/jszip.min.js'></script>
         <script src='libs/papaparse.min.js'></script>
+        <script src="https://unpkg.com/leaflet-editable"></script>
     
         <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.editable/1.0.0-rc.1/Leaflet.Editable.min.js"></script>
 <!-- 
@@ -287,9 +273,24 @@
     }
 </script>
  
+<script>
 
 
+</script>
 
+
+<script>
+    document.getElementById("getinfo").addEventListener("mouseenter", function() {
+    var tooltip = this.querySelector(".tooltip");
+    tooltip.style.display = "block";
+});
+
+document.getElementById("getinfo").addEventListener("mouseleave", function() {
+    var tooltip = this.querySelector(".tooltip");
+    tooltip.style.display = "none";
+});
+
+</script>
 
 
     <script>

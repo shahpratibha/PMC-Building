@@ -1358,7 +1358,7 @@ async function submitForm() {
                 // localStorage.setItem('coordinates',coordinates1);
                 // console.log("localstorage")
 
-                // window.location.href = 'dashboard.html';
+                window.location.href = 'dashboard.html';
 
                 // if(response.data.id != undefined){
 
@@ -1419,7 +1419,7 @@ async function submitForm() {
                 console.error('Error calling API:', xhr.responseText);
             },
         });
-        // window.location.href = 'dashboard.html';
+        window.location.href = 'dashboard.html';
 
     };
 }

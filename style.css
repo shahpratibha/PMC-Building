@@ -211,7 +211,7 @@
 .coordimg1  {
   position: absolute;
   top: 3.1%;
-  left:60%;
+  left:90%;
   z-index: 1000;
   width: 34px;
   height: 34px;
@@ -590,4 +590,8 @@ input[type="checkbox"] {
     margin-left: 40px;
   }
 }
+
+
+
+
 

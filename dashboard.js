@@ -1,6 +1,6 @@
 
 var map, geojson;
-const API_URL = "http://localhost/autodcr/autodcr1/autodcr";
+const API_URL = "http://localhost/PMC/autodcr/";
 // const API_URL = "http://localhost/PMC-Project/";
 
 // Add Basemap
@@ -42,7 +42,7 @@ var Esri_WorldImagery = L.tileLayer(
 var baseLayers = {};
 
 var PlotBoundary_Layer = L.tileLayer
-    .wms("https://pmc.geopulsea.com/geoserver/AutoDCR/wms", {
+    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
         layers: "plotboundary",
         format: "image/png",
         transparent: true,
@@ -54,7 +54,7 @@ var PlotBoundary_Layer = L.tileLayer
 
 
 var Revenue_Layer = L.tileLayer
-    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
         layers: "Revenue_1",
         format: "image/png",
         transparent: true,
@@ -69,7 +69,7 @@ var Revenue_Layer = L.tileLayer
 
 // for only gut showing
 var Revenue_Layer1 = L.tileLayer
-    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
         layers: "Revenue_1",
         format: "image/png",
         transparent: true,
@@ -80,7 +80,7 @@ var Revenue_Layer1 = L.tileLayer
     });
 
 var PLU_Layer = L.tileLayer
-    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
         layers: "PLU_Ward",
         format: "image/png",
         transparent: true,
@@ -91,7 +91,7 @@ var PLU_Layer = L.tileLayer
     });
 
 var DPRoad_Layer = L.tileLayer
-    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
         layers: "DP_Ward_Road",
         format: "image/png",
         transparent: true,
@@ -102,7 +102,7 @@ var DPRoad_Layer = L.tileLayer
     });
 
 var Boundary_Layer = L.tileLayer
-    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
         layers: "PMC_Boundary",
         format: "image/png",
         transparent: true,
@@ -113,7 +113,7 @@ var Boundary_Layer = L.tileLayer
     }).addTo(map);
 
 var Village_Boundary = L.tileLayer
-    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
         layers: "Village_Boundary",
         format: "image/png",
         transparent: true,
@@ -150,41 +150,73 @@ var control = new L.control.layers(baseLayers, WMSlayers).addTo(map);
 control.setPosition('topright');
 
 // Remove the default zoom control
-// map.zoomControl.remove();
+map.zoomControl.remove();
 
 L.control.zoom({
-    position: 'bottomright' // Set position to bottom right
+    position: 'bottomright'
 }).addTo(map);
 
 
 
 
 $(document).ready(function () {
-
-
     refreshWMSLayer();
-
 
     var lastInsertedId = localStorage.getItem('lastInsertedPlotBoundaryId');
     var coordinatesString  = localStorage.getItem('coordinates')
-    console.log(lastInsertedId,"lastInsertedId", coordinatesString )
+    var boundss = localStorage.getItem('bounds')
+    // console.log('bounds',bounds);
+    // console.log(lastInsertedId,"lastInsertedId", coordinatesString )
     
-    
-    var coordinatesArray = coordinatesString.split(",").map(Number);
+    var coordinatesArray = boundss.split(",").map(Number);
+
+    // var coordinatesArray = coordinatesString.split(",").map(String);//Changed Number to String PH
 
     console.log(coordinatesArray ,"okkkkkkk");
 
+    // const coordsArray = coordinatesString.split(',').map(Number);
+
+    // Extract individual coordinates
+    // const coordinates = [
+    //   [coordsArray[1], coordsArray[0]], // (18.521047, 73.859429)
+    //   [coordsArray[3], coordsArray[2]]  // (18.521378, 73.85974)
+    // ];
+    
+
     var coords = [];
-while (coordinatesArray.length > 0) {
+    while (coordinatesArray.length > 0) {
     coords.push(coordinatesArray.splice(0, 2).reverse());
-}
-console.log(coords,"hhhhhhhhh");
+   }
+  console.log(coords,"hhhhhhhhh",bounds,"bounds");
 
-var bounds = L.latLngBounds(coords);
-map.fitBounds(bounds);
+  var bounds = L.latLngBounds(coords);
+  console.log('bounds1111',bounds);
+ map.fitBounds(bounds);
+
+ })
 
 
 
-})
+
+
+// map.whenReady(function () {
+   
+//     refreshWMSLayer(); 
+    
+//     var lastInsertedId = localStorage.getItem('lastInsertedPlotBoundaryId');
+//     var coordinatesString = localStorage.getItem('coordinates');
+//     console.log(lastInsertedId, "lastInsertedId", coordinatesString);
+    
+//     var coordinatesArray = coordinatesString.split(",").map(Number);
+//     console.log(coordinatesArray, "Coordinates Array");
+    
+//     var coords = [];
+//     while (coordinatesArray.length > 0) {
+//         coords.push(coordinatesArray.splice(0, 2).reverse());
+//     }
+//     console.log(coords, "Processed Coordinates");
+//     var bounds = L.latLngBounds(coords);
+//     map.fitBounds(bounds); 
+// });
 
 

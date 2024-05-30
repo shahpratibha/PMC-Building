@@ -2,6 +2,7 @@
 var map, geojson;
 // const API_URL = "https://iwmsgis.pmc.gov.in/geopulse/autodcr/";
 const API_URL = "http://localhost/autodcr/";
+// const API_URL = "http://localhost/geotap/autodcr/"
 
 // Add Basemap
 var map = L.map("map", {
@@ -153,9 +154,9 @@ let handshaking_codes = [
     { "AutoDCR_Name": "Baner West", "code": "ADCR003c", "name": "BANER" },
     { "AutoDCR_Name": "BAWDHAN", "code": "ADCR004", "name": "BAWDHAN" },
     { "AutoDCR_Name": "Bopodi", "code": "ADCR005", "name": "Bopodi" },
-    { "AutoDCR_Name": "Erandwana", "code": "ADCR006", "name": "Erandwana" },
-    { "AutoDCR_Name": "Erandwana North", "code": "ADCR006a", "name": "Erandwana" },
-    { "AutoDCR_Name": "Erandwana South", "code": "ADCR006b", "name": "Erandwana" },
+    // { "AutoDCR_Name": "Erandwana", "code": "ADCR006", "name": "Erandwana" },
+    { "AutoDCR_Name": "Erandwana North", "code": "ADCR006a", "name": "Erandwana North" },
+    { "AutoDCR_Name": "Erandwana South", "code": "ADCR006b", "name": "Erandwana South" },
     { "AutoDCR_Name": "Hingne-budruk", "code": "ADCR007", "name": "Hingne-budruk" },
     { "AutoDCR_Name": "KARVE NAGAR", "code": "ADCR008", "name": "KARVE NAGAR" },
     { "AutoDCR_Name": "Khadki Navi", "code": "ADCR009", "name": "Khadki Navi" },
@@ -186,7 +187,7 @@ let handshaking_codes = [
     { "AutoDCR_Name": "GANJ PETH", "code": "ADCR032", "name": "GANJ PETH" },
     { "AutoDCR_Name": "Ghorpade peth", "code": "ADCR033", "name": "Ghorpade peth" },
     { "AutoDCR_Name": "Ghorpadi", "code": "ADCR034", "name": "Ghorpadi" },
-    { "AutoDCR_Name": "Gultekdi", "code": "ADCR035", "name": "Gultekdi" },
+    { "AutoDCR_Name": "Gultekdi", "code": "ADCR035", "name": "TPS-III" },
     { "AutoDCR_Name": "Gurwar Peth", "code": "ADCR036", "name": "Gurwar Peth" },
     { "AutoDCR_Name": "Hadapsar", "code": "ADCR037", "name": "Hadapsar" },
     { "AutoDCR_Name": "HADAPSAR-EXT", "code": "ADCR038", "name": "HADAPSAR-EXT" },
@@ -196,9 +197,9 @@ let handshaking_codes = [
     { "AutoDCR_Name": "KASBA PETH", "code": "ADCR042", "name": "KASBA PETH" },
     { "AutoDCR_Name": "KATRAJ", "code": "ADCR043", "name": "KATRAJ" },
     { "AutoDCR_Name": "Katraj Ext", "code": "ADCR044", "name": "Katraj Ext" },
-    { "AutoDCR_Name": "Kharadi", "code": "ADCR045", "name": "Kharadi" },
-    { "AutoDCR_Name": "Kharadi East", "code": "ADCR045a", "name": "Kharadi" },
-    { "AutoDCR_Name": "Kharadi West", "code": "ADCR045b", "name": "Kharadi" },
+    // { "AutoDCR_Name": "Kharadi", "code": "ADCR045", "name": "Kharadi" },
+    { "AutoDCR_Name": "Kharadi East", "code": "ADCR045a", "name": "Kharadi East" },
+    { "AutoDCR_Name": "Kharadi West", "code": "ADCR045b", "name": "Kharadi West" },
     { "AutoDCR_Name": "Kondhwa-Budruk", "code": "ADCR046", "name": "Kondhwa-Budruk" },
     { "AutoDCR_Name": "Kondhwa-Budruk North", "code": "ADCR046a", "name": "Kondhwa-Budruk North" },
     { "AutoDCR_Name": "Kondhwa-Budruk South", "code": "ADCR046b", "name": "Kondhwa-Budruk South" },
@@ -206,20 +207,20 @@ let handshaking_codes = [
     { "AutoDCR_Name": "Kondwa khurd -EXT", "code": "ADCR048", "name": "Kondwa khurd -EXT" },
     { "AutoDCR_Name": "KOREGAON PARK", "code": "ADCR049", "name": "KOREGAON PARK" },
     { "AutoDCR_Name": "KOTHRUD-EXT", "code": "ADCR050", "name": "KOTHRUD-EXT" },
-    { "AutoDCR_Name": "Lohagaon", "code": "ADCR051", "name": "Lohagaon" },
-    { "AutoDCR_Name": "Lohagaon North", "code": "ADCR051a", "name": "Lohagaon" },
-    { "AutoDCR_Name": "Lohagaon South", "code": "ADCR051b", "name": "Lohagaon" },
-    { "AutoDCR_Name": "Lohgaon-Ext", "code": "ADCR052", "name": "Lohgaon-Ext" },
-    { "AutoDCR_Name": "Lohgaon-Ext North", "code": "ADCR052a", "name": "Lohgaon-Ext" },
-    { "AutoDCR_Name": "Lohgaon-Ext South", "code": "ADCR052b", "name": "Lohgaon-Ext" },
-    { "AutoDCR_Name": "LULLANAGAR", "code": "ADCR053", "name": "LULLANAGAR" },
+    // { "AutoDCR_Name": "Lohagaon", "code": "ADCR051", "name": "Lohagaon" },
+    { "AutoDCR_Name": "Lohagaon North", "code": "ADCR051a", "name": "Lohagaon North" },
+    { "AutoDCR_Name": "Lohagaon South", "code": "ADCR051b", "name": "Lohagaon South" },
+    // { "AutoDCR_Name": "Lohgaon-Ext", "code": "ADCR052", "name": "Lohgaon-Ext" },
+    { "AutoDCR_Name": "Lohgaon-Ext North", "code": "ADCR052a", "name": "Lohgaon-Ext North" },
+    { "AutoDCR_Name": "Lohgaon-Ext South", "code": "ADCR052b", "name": "Lohgaon-Ext South" },
+    { "AutoDCR_Name": "LULLANAGAR", "code": "ADCR053", "name": "TPS-III" },
     { "AutoDCR_Name": "Mahatma Phule peth", "code": "ADCR054", "name": "Mahatma Phule peth" },
     { "AutoDCR_Name": "MANGALWAR PETH", "code": "ADCR055", "name": "MANGALWAR PETH" },
-    { "AutoDCR_Name": "Market Yard", "code": "ADCR056", "name": "Market Yard" },
+    { "AutoDCR_Name": "Market Yard", "code": "ADCR056", "name": "TPS-III" },
     { "AutoDCR_Name": "Mohammadwadi", "code": "ADCR057", "name": "Mohammadwadi" },
-    { "AutoDCR_Name": "Mundhwa", "code": "ADCR058", "name": "Mundhwa" },
-    { "AutoDCR_Name": "Mundhwa North", "code": "ADCR058a", "name": "Mundhwa" },
-    { "AutoDCR_Name": "Mundhwa South", "code": "ADCR058b", "name": "Mundhwa" },
+    // { "AutoDCR_Name": "Mundhwa", "code": "ADCR058", "name": "Mundhwa" },
+    { "AutoDCR_Name": "Mundhwa North", "code": "ADCR058a", "name": "Mundhwa North" },
+    { "AutoDCR_Name": "Mundhwa South", "code": "ADCR058b", "name": "Mundhwa South" },
     { "AutoDCR_Name": "Mundhwa-Keshavnagar", "code": "ADCR059", "name": "Mundhwa-Keshavnagar" },
     { "AutoDCR_Name": "MUNJERI", "code": "ADCR060", "name": "MUNJERI" },
     { "AutoDCR_Name": "Nana Peth", "code": "ADCR061", "name": "NANA PETH" },
@@ -247,6 +248,7 @@ let handshaking_codes = [
     { "AutoDCR_Name": "Wanawadi", "code": "ADCR083", "name": "WANAWADI" },
     { "AutoDCR_Name": "Yerawada", "code": "ADCR084", "name": "YERWADA" },
     { "AutoDCR_Name": "Yevlewadi", "code": "ADCR085", "name": "Yevlewadi" }
+
 ];
 function getQueryParam(param) {
     const urlParams = new URLSearchParams(window.location.search);
@@ -293,34 +295,79 @@ var drawControl = new L.Control.Draw({
 map.addControl(drawControl);
 
 
-map.on(L.Draw.Event.CREATED, function (event) {
-    var layer = event.layer;
-    drawnItems.addLayer(layer);
-    console.log(layer, "///////////")
-});
+// map.on(L.Draw.Event.CREATED, function (event) {
+//     var layer = event.layer;
+//     drawnItems.addLayer(layer);
+//     // console.log(layer, "///////////")
+// });
 
 // save polygons into database variable
 
 var drawnPolygons = [];
 
-map.on('draw:created', function (e) {
-    var layer = e.layer;
+// map.on('draw:created', function (e) {
+//     var layer = e.layer;
+//     drawnItems.addLayer(layer);
+//     console.log("000000000000draw", layer)
+
+
+//     var drawnPolygon = layer.toGeoJSON();
+
+//     if (drawnPolygon.geometry.type === 'Polygon') {
+//         var polygonId = 'polygon_draw'
+
+//         drawnPolygons[polygonId] = layer.toGeoJSON().geometry.coordinates;
+//         // console.log(drawnPolygons, "drawnPolygonsoooooooooooooooooo")
+
+//     } else {
+//         console.log('Drawn geometry is not a valid Polygon.');
+//     }
+// });
+
+map.on(L.Draw.Event.CREATED, function (event) {
+    var layer = event.layer;
+    var polygonId = 'polygon_' + L.stamp(layer); // Use a unique ID for each polygon
+
     drawnItems.addLayer(layer);
-    console.log("000000000000draw", layer)
-
-
     var drawnPolygon = layer.toGeoJSON();
 
     if (drawnPolygon.geometry.type === 'Polygon') {
-        var polygonId = 'polygon_draw'
-
-        drawnPolygons[polygonId] = layer.toGeoJSON().geometry.coordinates;
-        console.log(drawnPolygons, "drawnPolygonsoooooooooooooooooo")
-
+        drawnPolygons[polygonId] = drawnPolygon.geometry.coordinates;
     } else {
         console.log('Drawn geometry is not a valid Polygon.');
     }
+
+    // Attach the polygonId to the layer for future reference
+    layer.polygonId = polygonId;
 });
+
+map.on('draw:edited', function (e) {
+    var layers = e.layers;
+    layers.eachLayer(function (layer) {
+        var polygonId = layer.polygonId; // Retrieve the polygonId from the layer
+        if (polygonId) {
+            drawnPolygons[polygonId] = layer.toGeoJSON().geometry.coordinates;
+        }
+    });
+    updateButtonState();
+});
+map.on('draw:deleted', function (e) {
+    var layer = e.layer;
+    var index = drawnPolygons.indexOf(layer);
+    if (index !== -1) {
+        drawnPolygons.splice(index, 1); // Remove deleted polygon from array
+    }
+    updateButtonState();
+});
+
+function updateButtonState() {
+    var buttonElement = document.querySelector('.custom-button button');
+    if (buttonElement) {
+        // buttonElement.disabled = drawnPolygons.length === 0;
+        buttonElement.disabled = Object.keys(drawnPolygons).length === 0;
+    }
+}
+
 
 
 
@@ -329,6 +376,8 @@ map.on('draw:created', function (e) {
 const handshakingCode = getQueryParam('village_name');
 const token = getQueryParam('TOKEN');
 console.log(token, "token")
+
+
 
 
 $(document).ready(function () {
@@ -341,6 +390,7 @@ $(document).ready(function () {
     const village_name = villageEntry ? villageEntry.name : null;
 
     console.log(village_name);
+    
 
 
     function trials() {
@@ -353,8 +403,14 @@ $(document).ready(function () {
                     villageSet.add(feature.properties.village_name);
                 });
 
+                
+                var villageArray = Array.from(villageSet).sort();
+                // console.log('villagerray',villageArray);
+
+                
+
                 var select = document.getElementById("search_type");
-                villageSet.forEach(function (village) {
+                villageArray.forEach(function (village) {
                     var option = document.createElement("option");
                     option.text = village?.trim();
                     option.value = village?.trim();
@@ -550,10 +606,10 @@ $("#search_type").change(function () {
 })
 
 $(document).on('change', '#stateList input[type="checkbox"]', function () {
-    console.log("hehehe")
+    // console.log("hehehe")
     getFiltersval()
     var cqlFilter = getSelectedValues();
-    console.log(cqlFilter, "Selected filters");
+    // console.log(cqlFilter, "Selected filters");
 
     // Update the map with the new filter
     FitbouCustomiseRevenue(cqlFilter);
@@ -575,7 +631,7 @@ function getFiltersval() {
     // var selectedValueVillage = village_name
     var Village_name = 'village_name'
     filters = `${Village_name} = '${selectedValueVillage}'`;
-    console.log(filters, "filtersjjjjjjjjjjjjjjj")
+    // console.log(filters, "filtersjjjjjjjjjjjjjjj")
 }
 
 
@@ -583,7 +639,7 @@ function getFiltersval() {
 function getSelectedValues() {
     var selectedValues = [];
 
-    console.log("pass")
+    // console.log("pass")
     $('input[type="checkbox"]:checked').each(function () {
         var name = $(this).attr('name');
         if (name !== undefined) {
@@ -620,40 +676,6 @@ button.onAdd = function (map) {
 
 button.addTo(map);
 
-
-// var drawnPolygons = []; 
-
-
-// Listen for draw events
-map.on('draw:created', function (e) {
-    var layer = e.layer;
-    drawnPolygons.push(layer); // Add drawn polygon to array
-    updateButtonState();
-});
-
-map.on('draw:edited', function (e) {
-    var layers = e.layers;
-    layers.eachLayer(function(layer) {
-        var polygonId = L.stamp(layer); 
-        drawnPolygons[polygonId] = layer;
-    });
-    updateButtonState();
-});
-map.on('draw:deleted', function (e) {
-    var layer = e.layer;
-    var index = drawnPolygons.indexOf(layer);
-    if (index !== -1) {
-        drawnPolygons.splice(index, 1); // Remove deleted polygon from array
-    }
-    updateButtonState();
-});
-
-function updateButtonState() {
-    var buttonElement = document.querySelector('.custom-button button');
-    if (buttonElement) {
-        buttonElement.disabled = drawnPolygons.length === 0;
-    }
-}
 
 
 
@@ -807,14 +829,29 @@ function processKML(kmlString) {
         const keysList = Object.keys(layer._layers);
         keysList.forEach(key => {
             var polygonLayer = layer._layers[key];
-            drawnItems.addLayer(polygonLayer);
-        });
-        layer.addTo(map);
-        var polygonId = 'polygon_kml'
-        drawnPolygons[polygonId] = layer.toGeoJSON().features[0].geometry.coordinates;
-        // drawnPolygons[polygonId].enableEdit();
 
-        map.fitBounds(layer.getBounds());
+            console.log('polygonLayer',polygonLayer);
+
+            drawnItems.addLayer(polygonLayer);
+
+            var polygonId = 'polygon_' + L.stamp(polygonLayer);
+            drawnPolygons[polygonId] = polygonLayer.toGeoJSON().geometry.coordinates;
+            console.log('hhhhhhhhhokkkk',polygonLayer.toGeoJSON().geometry.coordinates);
+
+            // Attach the polygonId to the layer for future reference
+            polygonLayer.polygonId = polygonId;
+        });
+        // layer.addTo(map);
+        // var polygonId = 'polygon_kml'
+        // drawnPolygons[polygonId] = layer.toGeoJSON().features[0].geometry.coordinates;
+        // drawnPolygons[polygonId].enableEdit();
+        // polygonLayer.polygonId = polygonId;
+//         map.fitBounds(layer.getBounds());
+//     } else {
+//         alert('Invalid KML/KMZ file.');
+//     }
+// }
+map.fitBounds(layer.getBounds());
     } else {
         alert('Invalid KML/KMZ file.');
     }
@@ -825,18 +862,29 @@ function processCSV(kmlContent) {
     var data = Papa.parse(kmlContent, { header: true, dynamicTyping: true }).data;
     data = data.filter(row => row.latitude !== null && row.longitude !== null);
     var polygon = L.polygon(data.map(coord => [coord.latitude, coord.longitude])).addTo(map);
-    console.log("oooooooooooooooooo",polygon)
+    console.log("oooooooooooooooooo", polygon)
     if (polygon.getBounds().isValid()) {
 
         var polygonLayer = polygon;
         drawnItems.addLayer(polygonLayer);
-        // for saving coordinates
-        var polygonId = 'polygon_csv'
-        drawnPolygons[polygonId] = polygon.toGeoJSON().geometry.coordinates;
-        console.log(drawnPolygons, "drawnPolygons", "polygonCounter");
+        // // for saving coordinates
+        // var polygonId = 'polygon_csv'
+        // drawnPolygons[polygonId] = polygon.toGeoJSON().geometry.coordinates;
+        // // console.log(drawnPolygons, "drawnPolygons", "polygonCounter");
 
+        var polygonId = 'polygon_' + L.stamp(polygon); // Use a unique ID for each polygon
+
+        // drawnItems.addLayer(polygon);
+
+        // Attach the polygonId to the layer for future reference
+        polygon.polygonId = polygonId;
+        
+        // Save coordinates
+        drawnPolygons[polygonId] = polygon.toGeoJSON().geometry.coordinates;
+        console.log('hhhhhhhhhokkkk',polygonLayer.toGeoJSON().geometry.coordinates);
 
         map.fitBounds(polygon.getBounds());
+
     } else {
         alert('Invalid csv file.');
     }
@@ -1099,31 +1147,44 @@ document.getElementById('coordinateForm').addEventListener('submit', function (e
         alert('Please enter at least four coordinates.');
         return;
     } else {
+        console.log(coordinates, "coordinates")
         var polygon = L.polygon(coordinates).addTo(map);// Function to open the legend div when clicked
         function openLegend() {
             var legendDiv = document.querySelector('.info.legend');
             legendDiv.style.display = 'block';
         }
 
-        // Add event listener to open the legend div when clicked
+
         document.querySelector('.info.legend').addEventListener('click', openLegend);
 
-        // Add event listener to close the legend div when clicked outside
         document.addEventListener('click', function (event) {
             var legendDiv = document.querySelector('.info.legend');
-            // Check if the click occurred outside of the legend div
             if (!legendDiv.contains(event.target)) {
-                // Clicked outside of the legend div, so hide it
                 legendDiv.style.display = 'none';
             }
         });
 
         map.fitBounds(polygon.getBounds());
 
-        var polygonId = 'polygon_coors'
+        // var polygonId = 'polygon_coors'
+
+
+
+        var polygonId = 'polygon_' + L.stamp(polygon); // Use a unique ID for each polygon
+
+        // drawnItems.addLayer(polygon);
+
+        // Attach the polygonId to the layer for future reference
+        polygon.polygonId = polygonId;
+
+
+
         drawnPolygons[polygonId] = polygon.toGeoJSON().geometry.coordinates;
 
+        console.log('888888888888',polygon.toGeoJSON().geometry.coordinates);
 
+        var polygonLayer = polygon;
+        drawnItems.addLayer(polygonLayer);
 
         console.log(drawnPolygons, "drawnPolygons", "polygonCounter");
     }
@@ -1160,68 +1221,6 @@ function getFilters() {
 }
 
 
-// function savevalues() {
-//     console.log("111111111111111111", drawnPolygons)
-
-//     if (Object.keys(drawnPolygons).length === 0) {
-//         alert("Please draw a polygon / upload KML , KMZ , CSV / Add Coordinates before proceeding.");
-//     } else {
-
-//         Object.keys(drawnPolygons).forEach(async function (polygonId) {
-//             console.log("111111111111111111")
-
-//             if (Object.keys(drawnPolygons).length === 0) {
-
-//                 console.log("heheheeheh")
-//                 alert("Please draw a polygon / upload KML , KMZ , CSV / Add Coordinates before proceeding.");
-//             } else {
-//                 console.log("lllllllllllllllllll")
-
-
-
-//                 var coordinates = drawnPolygons[polygonId];
-//                 console.log(coordinates, "drawcoordinates1111111111111")
-
-//                 var pp = turf.polygon(coordinates);
-//                 // L.geoJSON(pp).addTo(map)
-//                 var bounds = L.geoJSON(pp).getBounds();
-//                 map.fitBounds(bounds);
-//                 var layers = ["AutoDCR:Revenue_1"];
-
-//                 var url = "https://iwmsgis.pmc.gov.in//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=";
-//                 var propertyName = "village_name,TPS_Name,Gut_No,geom";
-//                 var outputFormat = "application/json";
-//                 var values = await IntersectAreaWithPolygon(pp, layers, url, propertyName, bounds.toBBoxString(), outputFormat)
-//                 var cqlFilterget = getSelectedValues()
-//                 const selected_dropdown = JSON.stringify(cqlFilterget)
-//                 const villageName = JSON.stringify(values);
-//                 const selected_guts = JSON.stringify(getSelectedValues1());
-//                 const selected_village = JSON.stringify(getFilters());
-
-//                 const coordinates1 = coordinates[0].map(coord => [coord[0], coord[1]]);
-
-//                 // this is converting decimal degrees to degree minutes and seconds
-//                 const dmsCoordinates = coordinates1.map(coord => [convertToDMS(coord[0]), convertToDMS(coord[1])]);
-
-                
-//                 console.log(dmsCoordinates, "000000000000", coordinates1, "coordinates1");
-
-
-//                 // Example usage:
-//                 var exampleData = [
-//                     ['Draw Village Name', villageName],
-//                     ['Selected Village From Dropdown', selected_village],
-//                     ['Selected Survey Number From Dropdown', selected_guts],
-//                     ['Coordinates', dmsCoordinates]
-
-//                 ];
-
-//                 showTableModal(exampleData);
-
-//             }
-//         });
-//     }
-// }
 
 async function savevalues() {
     console.log("Drawn polygons:", drawnPolygons);
@@ -1229,15 +1228,29 @@ async function savevalues() {
     if (Object.keys(drawnPolygons).length === 0) {
         alert("Please draw a polygon / upload KML , KMZ , CSV / Add Coordinates before proceeding.");
     } else {
-        for (const polygonId in drawnPolygons) {
-            var layer = drawnPolygons[polygonId];
-            var drawnPolygon = layer.toGeoJSON();
-            var coordinates = drawnPolygon.geometry.coordinates;
+        Object.keys(drawnPolygons).forEach(async function (polygonId) {
+            console.log(polygonId, "polygonIdpolygonIdpolygonIdpolygonIdpolygonIdpolygonId")
+            var coordinates = drawnPolygons[polygonId]
+            console.log('coordinates111111',coordinates);
 
-            console.log("Coordinates:", coordinates);
 
+            // console.log(drawnPolygons,"layerrrrssssssssddddddddddddd")
+
+            // for (const polygonId in drawnPolygons) {
+
+            //     var layer = drawnPolygons[polygonId];
+            //     // console.log(layer,"layerrrrssssssssddddddddddddd")
+            //      var drawnPolygon = layer.toGeoJSON();
+            //     //  console.log(drawnPolygon,"drawnPolygon")
+            //     var coordinates = drawnPolygon.geometry.coordinates;
             var pp = turf.polygon(coordinates);
-            var bounds = L.geoJSON(pp).getBounds();
+
+            var bbox = turf.bbox(pp); // bbox is [minX, minY, maxX, maxY]
+            var bounds = L.latLngBounds([
+                [bbox[1], bbox[0]], // Southwest coordinate (minY, minX)
+                [bbox[3], bbox[2]]  // Northeast coordinate (maxY, maxX)
+            ]);
+            // console.log('pp',pp);
             map.fitBounds(bounds);
             var layers = ["AutoDCR:Revenue_1"];
 
@@ -1252,11 +1265,11 @@ async function savevalues() {
             const selected_village = JSON.stringify(getFilters());
 
             const coordinates1 = coordinates[0].map(coord => [coord[0], coord[1]]);
-            console.log(coordinates1,"edited")
+            // console.log(coordinates1,"edited")
             // This is converting decimal degrees to degree minutes and seconds
             const dmsCoordinates = coordinates1.map(coord => [convertToDMS(coord[0]), convertToDMS(coord[1])]);
 
-            console.log("DMS Coordinates:", dmsCoordinates);
+            // console.log("DMS Coordinates:", dmsCoordinates);
 
             var exampleData = [
                 ['Draw Village Name', villageName],
@@ -1267,8 +1280,10 @@ async function savevalues() {
 
             showTableModal(exampleData);
         }
+        )
     }
 }
+// }
 // for conveting degree decimals to degree minutes and seconds
 
 ///////////////////////////////////////////////
@@ -1289,16 +1304,24 @@ function convertToDMS(decimal) {
 
 async function submitForm() {
     // alert("Data Saved")
-    console.log(drawnPolygons, "drawnPolygonslllllllllll")
+    // console.log(drawnPolygons, "drawnPolygonslllllllllll")
 
     for (const polygonId in drawnPolygons) {
         // var polygonId= "";
-        var layer = drawnPolygons[polygonId];
-        var drawnPolygon = layer.toGeoJSON();
-        var coordinates = drawnPolygon.geometry.coordinates;
+        var coordinates = drawnPolygons[polygonId];
+        console.log('coordinatessubmit',coordinates);
+        // console.log(layer,"layerlayer")
+        var pp = turf.polygon(coordinates);
+
         localStorage.setItem('coordinates', coordinates);
 
-
+        var bbox = turf.bbox(pp); // bbox is [minX, minY, maxX, maxY]
+        console.log(bbox, "bboc")
+        var bounds = L.latLngBounds([
+            [bbox[1], bbox[0]], // Southwest coordinate (minY, minX)
+            [bbox[3], bbox[2]]  // Northeast coordinate (maxY, maxX)
+        ]);
+        localStorage.setItem('bounds', bbox);
         console.log(coordinates, "updateed")
         var pp = turf.polygon(coordinates);
         // L.geoJSON(pp).addTo(map)
@@ -1339,10 +1362,10 @@ async function submitForm() {
             }),
             success: function (response) {
 
-                console.log("Coordinates saved successfully", response);
+                // console.log("Coordinates saved successfully", response);
                 localStorage.setItem('lastInsertedPlotBoundaryId', response.data.id);
                 // localStorage.setItem('coordinates',coordinates1);
-                console.log("localstorage")
+                // console.log("localstorage")
 
                 window.location.href = 'dashboard.html';
 
@@ -1398,7 +1421,7 @@ async function submitForm() {
             success: function (response) {
                 console.log('API response received:', response);
                 if (response.Status) {
-                    // window.location.href = 'data.html';
+                    window.location.href = 'data.html';
                 }
             },
             error: function (xhr, status, error) {
@@ -1409,7 +1432,6 @@ async function submitForm() {
 
     };
 }
-
 
 
 document.getElementById("getinfo").onclick = function () {
@@ -1424,7 +1446,7 @@ function infovalues() {
 
     Object.keys(drawnPolygons).forEach(async function (polygonId) {
         var coordinates = drawnPolygons[polygonId];
-        console.log(coordinates, "drawcoordinates")
+        // console.log(coordinates, "drawcoordinates")
         var pp = turf.polygon(coordinates);
         L.geoJSON(pp).addTo(map)
         var bounds = L.geoJSON(pp).getBounds();
@@ -1434,7 +1456,7 @@ function infovalues() {
         var propertyName1 = "zone,distance,elevation,geom";
         var outputFormat = "application/json";
         IntersectwithASLM(pp, layers1, url, propertyName1, bounds.toBBoxString(), outputFormat)
-        console.log("working")
+        // console.log("working")
 
     })
 };
@@ -1460,7 +1482,7 @@ async function IntersectAreaWithPolygon(drawnPolygon, layers, url, propertyName,
                             intersectedFeatures.push(intersectedFeature);
                         }
                     });
-                    
+
                     intersectedFeatures.forEach(function (feature) {
                         var properties = feature.properties;
                         var villageName = properties.village_name;

@@ -164,21 +164,33 @@ $(document).ready(function () {
 
     var lastInsertedId = localStorage.getItem('lastInsertedPlotBoundaryId');
     var coordinatesString  = localStorage.getItem('coordinates')
-    console.log(lastInsertedId,"lastInsertedId", coordinatesString )
+    var boundss = localStorage.getItem('bounds')
+    // console.log('bounds',bounds);
+    // console.log(lastInsertedId,"lastInsertedId", coordinatesString )
     
-    var coordinatesArray = coordinatesString.split(",").map(Number);
+    var coordinatesArray = boundss.split(",").map(Number);
 
     // var coordinatesArray = coordinatesString.split(",").map(String);//Changed Number to String PH
 
     console.log(coordinatesArray ,"okkkkkkk");
 
+    // const coordsArray = coordinatesString.split(',').map(Number);
+
+    // Extract individual coordinates
+    // const coordinates = [
+    //   [coordsArray[1], coordsArray[0]], // (18.521047, 73.859429)
+    //   [coordsArray[3], coordsArray[2]]  // (18.521378, 73.85974)
+    // ];
+    
+
     var coords = [];
     while (coordinatesArray.length > 0) {
     coords.push(coordinatesArray.splice(0, 2).reverse());
    }
-  console.log(coords,"hhhhhhhhh");
+  console.log(coords,"hhhhhhhhh",bounds,"bounds");
 
   var bounds = L.latLngBounds(coords);
+  console.log('bounds1111',bounds);
  map.fitBounds(bounds);
 
  })

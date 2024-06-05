@@ -172,7 +172,7 @@ $(document).ready(function () {
 
     // var coordinatesArray = coordinatesString.split(",").map(String);//Changed Number to String PH
 
-    console.log(coordinatesArray ,"okkkkkkk");
+    // console.log(coordinatesArray ,"okkkkkkk");
 
     // const coordsArray = coordinatesString.split(',').map(Number);
 
@@ -187,10 +187,10 @@ $(document).ready(function () {
     while (coordinatesArray.length > 0) {
     coords.push(coordinatesArray.splice(0, 2).reverse());
    }
-  console.log(coords,"hhhhhhhhh",bounds,"bounds");
+//   console.log(coords,"hhhhhhhhh",bounds,"bounds");
 
   var bounds = L.latLngBounds(coords);
-  console.log('bounds1111',bounds);
+//   console.log('bounds1111',bounds);
  map.fitBounds(bounds);
 
  })

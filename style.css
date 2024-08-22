@@ -75,6 +75,8 @@
   position: relative;
   top: 60px;
 }
+
+
 /* .leaflet-draw-draw-circlemarker{
   display: none;
 } */
@@ -181,7 +183,7 @@
   left: 64%;
   z-index: 1000;
   border: 2px solid #3c3cb8;
-  border-radius: 5px;
+  border-radius: 10px;
   color: #3c3cb8;
   background-color: white;
   font-size:17px;
@@ -208,10 +210,10 @@
   /* padding: 5px 10px; */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-.coordimg1  {
+/* .coordimg1  {
   position: absolute;
-  top: 3.1%;
-  left:90%;
+  top: 18%;
+  left:97%;
   z-index: 1000;
   width: 34px;
   height: 34px;
@@ -221,9 +223,169 @@
   font-size:15px;
   color: #3c3cb8;
   font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+} */
+
+
+
+
+
+
+/* tooltip for button */
+
+.coordimg1 {
+  position: absolute;
+  top: 140px;
+  left: 97%;
+  z-index: 1000;
+  width: 34px;
+  height: 34px;
+  background-color: white;
+  border: 2px solid #3c3cb8;
+  border-radius: 5px;
+  font-size: 15px;
+  color: #3c3cb8;
+  font-weight: bold;
   /* padding: 5px 10px; */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
 }
+
+.coordimg1::after {
+  content: "Help Button";
+  position: absolute;
+  top: 50%;
+  left: -350%; 
+  transform: translateY(-50%);
+  visibility: hidden;
+  background-color: black;
+  color: white;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 1001;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.coordimg1:hover::after {
+  visibility: visible;
+}
+
+
+/* .leaflet-draw-edit-remove {
+  position: relative; 
+  width: 34px;
+  height: 34px;
+  background-color: white;
+  border: 1px solid ;
+  font-size: 15px;
+  color: #3c3cb8;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.leaflet-draw-edit-remove::after {
+  content: "Delete";
+  position: absolute;
+  top: 50%;
+  left: calc(100% + 10px); 
+  transform: translateY(-50%);
+  visibility: hidden;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 1001;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.leaflet-draw-edit-remove:hover::after {
+  visibility: visible;
+} */
+
+
+
+/* .leaflet-draw-edit-edit {
+  position: relative; 
+  width: 34px;
+  height: 34px;
+  background-color: white;
+  border: 1px solid ;
+  font-size: 15px;
+  color: #3c3cb8;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.leaflet-draw-edit-edit::after {
+  content: "Edit";
+  position: absolute;
+  top: 50%;
+  left: calc(100% + 10px); 
+  transform: translateY(-50%);
+  visibility: hidden;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 5px;
+  padding: 3px 10px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 1001;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.leaflet-draw-edit-edit:hover::after {
+  visibility: visible;
+}
+
+ */
+
+/* .leaflet-draw-draw-polygon {
+  position: relative; 
+  width: 34px;
+  height: 34px;
+  background-color: white;
+  border: 1px solid ;
+  font-size: 15px;
+  color: #3c3cb8;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.leaflet-draw-draw-polygon::after {
+  content: "polygon";
+  position: absolute;
+  top: 50%;
+  left: calc(100% + 10px); 
+  transform: translateY(-50%);
+  visibility: hidden;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 5px;
+  padding: 3px 10px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 1001;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.leaflet-draw-draw-polygon:hover::after {
+  visibility: visible;
+} */
+
+
+
+
 
 #toggleFormBtn{
   border: none
@@ -241,8 +403,9 @@
   /* border: none; */
   border-radius: 10px;
   padding: px 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px  0px 10px black;
   height: 35px;
+  width: 145px;
 }
 
 
@@ -522,8 +685,8 @@ input[type="checkbox"] {
 }
 .coordimg1 {
   position: absolute;
-  top: 213px;
-  left: 10px;
+  top: 140px;
+  left: 95%;
   z-index: 1000;
   width: 34px;
   height: 34px;
@@ -549,19 +712,20 @@ input[type="checkbox"] {
   padding: 3px 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-.custom-buttoncsv {
+
+/* .custom-buttoncsv {
   position: absolute;
   top: 20px;
   left: 510px;
   z-index: 1000;
   background-color: white;
-  border: 2px solid #3c3cb8;
-  /* border: none; */
+  border: 2px solid green;
   border-radius: 10px;
   padding: px 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   height: 35px;
-}
+} */
+
 .fa-solid fa-angle-down{
   left: 50px;
 }
@@ -591,6 +755,31 @@ input[type="checkbox"] {
   }
 }
 
+
+
+
+
+
+/* Add thin lines to the table */
+.thin-lines {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.thin-lines th, .thin-lines td {
+  border: 1px solid #dddddd;
+  padding: 8px;
+  text-align: left;
+}
+
+/* finish/delete last point/cancel */
+
+.leaflet-touch .leaflet-draw-actions a {
+  font-size: 12px;
+  line-height: 30px;
+  height: 30px;
+  color: white;
+}
 
 
 

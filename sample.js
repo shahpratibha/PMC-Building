@@ -26,7 +26,7 @@ var baseLayers = {};
 
 
 var Revenue_Layer = L.tileLayer
-    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
         layers: "Revenue_1",
         format: "image/png",
         transparent: true,
@@ -41,7 +41,7 @@ var Revenue_Layer = L.tileLayer
 
 // for only gut showing
 var Revenue_Layer1 = L.tileLayer
-    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
         layers: "Revenue_1",
         format: "image/png",
         transparent: true,
@@ -52,7 +52,7 @@ var Revenue_Layer1 = L.tileLayer
     });
 
 var PLU_Layer = L.tileLayer
-    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
         layers: "PLU_Ward",
         format: "image/png",
         transparent: true,
@@ -63,7 +63,7 @@ var PLU_Layer = L.tileLayer
     });
 
 var DPRoad_Layer = L.tileLayer
-    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
         layers: "DP_Ward_Road",
         format: "image/png",
         transparent: true,
@@ -74,7 +74,7 @@ var DPRoad_Layer = L.tileLayer
     });
 
 var Boundary_Layer = L.tileLayer
-    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
         layers: "PMC_Boundary",
         format: "image/png",
         transparent: true,
@@ -85,7 +85,7 @@ var Boundary_Layer = L.tileLayer
     }).addTo(map);
 
 var Village_Boundary = L.tileLayer
-    .wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
         layers: "Village_Boundary",
         format: "image/png",
         transparent: true,
@@ -181,7 +181,7 @@ $(document).ready(function () {
     trials();
 
     function trials() {
-        var geoServerURL = "https://portal.geopulsea.com//geoserver/AutoDCR/wms?service=WFS&version=1.1.0&request=GetFeature&typeName=Revenue_1&propertyName=village_name&outputFormat=application/json";
+        var geoServerURL = "https://iwmsgis.pmc.gov.in//geoserver/AutoDCR/wms?service=WFS&version=1.1.0&request=GetFeature&typeName=Revenue_1&propertyName=village_name&outputFormat=application/json";
 
         $.getJSON(geoServerURL)
             .done(function (data) {
@@ -222,7 +222,7 @@ $("#search_type").change(function () {
 
     function getvalues(callback) {
         var geoServerURL =
-            "https://portal.geopulsea.com//geoserver/AutoDCR/wms?service=WFS&version=1.1.0&request=GetFeature&typeName=Revenue_1&propertyName=Gut_No&outputFormat=application/json";
+            "https://iwmsgis.pmc.gov.in//geoserver/AutoDCR/wms?service=WFS&version=1.1.0&request=GetFeature&typeName=Revenue_1&propertyName=Gut_No&outputFormat=application/json";
 
         if (filters) {
             geoServerURL += "&CQL_FILTER=" + encodeURIComponent(filters);
@@ -357,7 +357,7 @@ function FitbouCustomiseRevenue(filter) {
     layers = ["AutoDCR:Revenue_1"];
     layers.forEach(function (layerName) {
         var urlm =
-            "https://portal.geopulsea.com//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=" +
+            "https://iwmsgis.pmc.gov.in//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=" +
             layerName +
             "&CQL_FILTER=" +
             filter +
@@ -613,7 +613,7 @@ function savevalues() {
         console.log(bounds)
 
         var layers = ["AutoDCR:Revenue_1"];
-        var url = "https://portal.geopulsea.com//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=";
+        var url = "https://iwmsgis.pmc.gov.in//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=";
         var propertyName = "village_name,TPS_Name,Gut_No,geom";
         var outputFormat = "application/json";
         IntersectAreaWithPolygon(pp, layers, url, propertyName, bounds.toBBoxString(), outputFormat)

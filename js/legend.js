@@ -1,7 +1,7 @@
 
 // Now continue with your remaining JavaScript code...
 // GeoServer URL
-var geoserverUrl = "https://portal.geopulsea.com/geoserver";
+var geoserverUrl = "https://iwmsgis.pmc.gov.in/geoserver";
 
 var workspace = "AutoDCR";
 
@@ -171,7 +171,7 @@ legend.onAdd = function (map) {
 
   // Fetch capabilities to get all layers in the 'pmc' workspace
   fetch(
-    "https://portal.geopulsea.com/geoserver/ows?service=wms&version=1.3.0&request=GetCapabilities"
+    "https://iwmsgis.pmc.gov.in/geoserver/ows?service=wms&version=1.3.0&request=GetCapabilities"
   )
     .then((response) => response.text())
     .then((data) => {
@@ -233,17 +233,6 @@ map.options.scale = true; // Enables the scale control
 L.control.scale(
 ).addTo(map);
 
-// zoommm-----------------------
-
-// Remove the default zoom control
-// map.zoomControl.remove();
-
-// L.control.zoom({
-//     position: 'bottomright' // Set position to bottom right
-// }).addTo(map);
-
-
-// north image
 
 
 // Create a custom control for the north arrow

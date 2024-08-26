@@ -38,7 +38,11 @@ var Esri_WorldImagery = L.tileLayer(
         maxZoom: 20,
     }
 );
-var baseLayers = {};
+var baseLayers = {
+    "OSM": osm,
+    "Esri": Esri_WorldImagery,
+    "Satellite": googleSat,
+};
 
 // .addTo(map);
 
@@ -52,7 +56,7 @@ var Revenue_Layer1 = L.tileLayer
         tiled: true,
         version: "1.1.0",
         maxZoom: 19.9,
-        // attribution: "Revenue",
+        
         opacity: 1,
     });
 
@@ -67,7 +71,7 @@ var Revenue_Layer = L.tileLayer
         tiled: true,
         version: "1.1.0",
         maxZoom: 19.9,
-        // attribution: "Revenue",
+        
         opacity: 1,
     });
 
@@ -79,7 +83,7 @@ var JE_Names = L.tileLayer
         transparent: true,
         tiled: true,
         version: "1.1.0",
-        // attribution: "Revenue",
+        
         opacity: 1,
     });
 
@@ -92,7 +96,7 @@ var PLU_Layer = L.tileLayer
         transparent: true,
         tiled: true,
         version: "1.1.0",
-        // attribution: "Revenue",
+        
         opacity: 1,
     });
 
@@ -104,7 +108,6 @@ var DPRoad_Layer = L.tileLayer
         transparent: true,
         tiled: true,
         version: "1.1.0",
-        // attribution: "Revenue",
         opacity: 1,
     });
 
@@ -115,7 +118,6 @@ var Boundary_Layer = L.tileLayer
         transparent: true,
         tiled: true,
         version: "1.1.0",
-        // attribution: "Revenue",
         opacity: 1,
     }).addTo(map);
 
@@ -126,7 +128,6 @@ var TDR_Zones = L.tileLayer
         transparent: true,
         tiled: true,
         version: "1.1.0",
-        // attribution: "Revenue",
         opacity: 1,
     });
 
@@ -137,7 +138,7 @@ var TOD_Zones = L.tileLayer
         transparent: true,
         tiled: true,
         version: "1.1.0",
-        // attribution: "Revenue",
+        
         opacity: 1,
     });
 
@@ -151,7 +152,7 @@ var PMC_Reservation = L.tileLayer
         transparent: true,
         tiled: true,
         version: "1.1.0",
-        // attribution: "Revenue",
+        
         opacity: 1,
     });
 
@@ -162,7 +163,7 @@ var Red_Blue = L.tileLayer
         transparent: true,
         tiled: true,
         version: "1.1.0",
-        // attribution: "Revenue",
+        
         opacity: 1,
     });
 
@@ -173,7 +174,7 @@ var Yerwada_Jail = L.tileLayer
         transparent: true,
         tiled: true,
         version: "1.1.0",
-        // attribution: "Revenue",
+        
         opacity: 1,
     });
 
@@ -185,7 +186,7 @@ var Railway_Buffer = L.tileLayer
         transparent: true,
         tiled: true,
         version: "1.1.0",
-        // attribution: "Revenue",
+        
         opacity: 1,
     });
 
@@ -196,7 +197,7 @@ var PMC_Lake = L.tileLayer
         transparent: true,
         tiled: true,
         version: "1.1.0",
-        // attribution: "Revenue",
+        
         opacity: 1,
     });
 
@@ -207,7 +208,7 @@ var Monuments = L.tileLayer
         transparent: true,
         tiled: true,
         version: "1.1.0",
-        // attribution: "Revenue",
+        
         opacity: 1,
     });
 
@@ -222,7 +223,7 @@ var Village_Boundary = L.tileLayer
         transparent: true,
         tiled: true,
         version: "1.1.0",
-        // attribution: "Revenue",
+        
         opacity: 1,
     }).addTo(map);
 
@@ -235,7 +236,7 @@ var aviation = L.tileLayer
         transparent: true,
         tiled: true,
         version: "1.1.0",
-        // attribution: "Revenue",
+        
         opacity: 1,
     });
 
@@ -246,7 +247,7 @@ var Garden = L.tileLayer
         transparent: true,
         tiled: true,
         version: "1.1.0",
-        // attribution: "Revenue",
+        
         opacity: 1,
     });
 var DevelopmentRestriction = L.tileLayer
@@ -256,15 +257,13 @@ var DevelopmentRestriction = L.tileLayer
         transparent: true,
         tiled: true,
         version: "1.1.0",
-        // attribution: "Revenue",
+        
         opacity: 1,
     });
 
 
 var WMSlayers = {
-    "OSM": osm,
-    "Esri": Esri_WorldImagery,
-    "Satellite": googleSat,
+   
     Boundary: Boundary_Layer,
     Village: Village_Boundary,
     Revenue: Revenue_Layer1,

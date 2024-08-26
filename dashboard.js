@@ -1,7 +1,7 @@
 
 var map, geojson;
-// const API_URL = "http://localhost/autodcr/";
-const API_URL = "https://iwmsgis.pmc.gov.in/geopulse/autodcr/";
+const API_URL = "http://localhost/PMC/autodcr/";
+// const API_URL = "https://iwmsgis.pmc.gov.in/geopulse/autodcr/";
 // const API_URL = "http://localhost/PMC-Project/";
 
 // Add Basemap
@@ -13,13 +13,11 @@ var map = L.map("map", {
         boxZoom: true,
         trackResize: true,
         wheelPxPerZoomLevel: 40,
-        zoomAnimation: true,
-        
+        zoomAnimation: true,      
 });
 
 
 // var map = L.map("map", {}).setView([18.52, 73.895], 12, L.CRS.EPSG4326);
-
 var googleSat = L.tileLayer(
     "http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}",
     {
@@ -29,18 +27,18 @@ var googleSat = L.tileLayer(
 );
 
 var osm = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    // attribution:
-    //   '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-}).addTo(map);
+    }).addTo(map);
 
 var Esri_WorldImagery = L.tileLayer(
     "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
     {
-        // attribution:
-        //   "Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community",
     }
 );
-var baseLayers = {};
+var baseLayers = {
+    "OSM": osm,
+    "Esri": Esri_WorldImagery,
+    "Satellite": googleSat,
+};
 
 var PlotBoundary_Layer = L.tileLayer
   .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
@@ -96,29 +94,6 @@ var JE_Names = L.tileLayer
     });
 
 
-
-// var PLU_Layer = L.tileLayer
-//     .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
-//         layers: "PLU_Ward",
-//         format: "image/png",
-//         transparent: true,
-//         tiled: true,
-//         version: "1.1.0",
-//         // attribution: "Revenue",
-//         opacity: 1,
-//     });
-
-
-// var DPRoad_Layer = L.tileLayer
-//     .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
-//         layers: "DP_Ward_Road",
-//         format: "image/png",
-//         transparent: true,
-//         tiled: true,
-//         version: "1.1.0",
-//         // attribution: "Revenue",
-//         opacity: 1,
-//     });
 
 var Boundary_Layer = L.tileLayer
     .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
@@ -223,10 +198,6 @@ var Monuments = L.tileLayer
         opacity: 1,
     });
 
-
-
-
-
 var Village_Boundary = L.tileLayer
     .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
         layers: "Village_Boundary",
@@ -274,14 +245,10 @@ var DevelopmentRestriction = L.tileLayer
 
 
 var WMSlayers = {
-    "OSM": osm,
-    "Esri": Esri_WorldImagery,
-    "Satellite": googleSat,
+   
     Boundary: Boundary_Layer,
     Village: Village_Boundary,
     Revenue: Revenue_Layer1,
-    // PLU: PLU_Layer,
-    // DPRoad: DPRoad_Layer,
     JE_Names: JE_Names,
     TDR_Zones: TDR_Zones,
     TOD_Zones: TOD_Zones,
@@ -298,9 +265,8 @@ var WMSlayers = {
 };
 
 function refreshWMSLayer() {
-    // Remove the layer from the map
+
     map.removeLayer(PlotBoundary_Layer);
-    // Add the layer again
     PlotBoundary_Layer.addTo(map);
   }
   
@@ -324,8 +290,7 @@ $(document).ready(function () {
     var lastInsertedId = localStorage.getItem('lastInsertedPlotBoundaryId');
     var coordinatesString  = localStorage.getItem('coordinates')
     var boundss = localStorage.getItem('bounds')
-    // console.log('bounds',bounds);
-    // console.log(lastInsertedId,"lastInsertedId", coordinatesString )
+  
     
     var coordinatesArray = boundss.split(",").map(Number);
 
@@ -333,14 +298,6 @@ $(document).ready(function () {
 
     console.log(coordinatesArray ,"okkkkkkk");
 
-    // const coordsArray = coordinatesString.split(',').map(Number);
-
-    // Extract individual coordinates
-    // const coordinates = [
-    //   [coordsArray[1], coordsArray[0]], // (18.521047, 73.859429)
-    //   [coordsArray[3], coordsArray[2]]  // (18.521378, 73.85974)
-    // ];
-    
 
     var coords = [];
     while (coordinatesArray.length > 0) {
@@ -354,39 +311,9 @@ $(document).ready(function () {
 
  })
 
-
-
-
-
-// map.whenReady(function () {
-   
-//     refreshWMSLayer(); 
-    
-//     var lastInsertedId = localStorage.getItem('lastInsertedPlotBoundaryId');
-//     var coordinatesString = localStorage.getItem('coordinates');
-//     console.log(lastInsertedId, "lastInsertedId", coordinatesString);
-    
-//     var coordinatesArray = coordinatesString.split(",").map(Number);
-//     console.log(coordinatesArray, "Coordinates Array");
-    
-//     var coords = [];
-//     while (coordinatesArray.length > 0) {
-//         coords.push(coordinatesArray.splice(0, 2).reverse());
-//     }
-//     console.log(coords, "Processed Coordinates");
-//     var bounds = L.latLngBounds(coords);
-//     map.fitBounds(bounds); 
-// });
-
-
-
-
-//// var layers = ["pmc:Data", "pmc:Roads", "pmc:Reservations"]
 //Pop-Up show
 const layerDetails = {
-    "AutoDCR:plotboundary": ["id", "token",  "selectedvillage", "selectedguts", "entry_timestamp"],
- 
-  
+    "AutoDCR:plotboundary": ["id", "token",  "selectedvillage", "selectedguts", "entry_timestamp"], 
   };
   
   map.on("contextmenu", async (e) => {

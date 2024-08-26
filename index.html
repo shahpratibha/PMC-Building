@@ -7,9 +7,7 @@
     <title>PMC</title>
 
     <link rel="stylesheet" href="style.css">
-    <!-- <link rel="stylesheet" href="C_form.css"> -->
 
-    <!-- <link rel="import" href="cdn_link_css.html"> -->
 
     <link rel="icon" href="png/pmcjpeg.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
@@ -22,9 +20,7 @@
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
     <link rel="stylesheet" href="libs/Leaflet.MousePosition-master/src/L.Control.MousePosition.css">
-    <!-- <link rel="stylesheet" href="libs/polyline-measure/line-measure.css">
-    <link rel="stylesheet" href="libs/leaflet-measure-master/leaflet-measure.css"> -->
-    <!-- <link rel="stylesheet" href="libs/leaflet-wms-legend/leaflet.wmslegend.css"> -->
+   
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet-draw/dist/leaflet.draw.css" />
 
@@ -158,7 +154,7 @@
                     <i class="fa-solid fa-angle-down ps"></i>
                 </div>
                 <div class="dropdown-list" style="display: none;">
-                    <input type="search" placeholder="SurveyNo/CTC/Plot" class="dropdown-search ps-2" />
+                    <input type="search" placeholder="SurveyNo/CTC/Plot" class="dropdown-search ps-2" id="surveySearch" />
                     <ul id="stateList"></ul>
                 </div>
             </div>
@@ -307,22 +303,69 @@
 
         }
 
+// -----------------
 
-        function closeDropdown() {
-            var dropdownList = document.querySelector(".dropdown-list");
-            dropdownList.style.display = "none";
-        }
+function closeDropdown() {
+    var dropdownList = document.querySelector(".dropdown-list");
+    dropdownList.style.display = "none";
+}
+
+document.addEventListener("click", function (event) {
+    var dropdownContainer = document.querySelector(".dropdown-container");
+    var dropdownList = document.querySelector(".dropdown-list");
+
+    if (!dropdownContainer.contains(event.target) && event.target !== dropdownList) {
+        closeDropdown();
+    }
+});
 
 
-        document.addEventListener("click", function (event) {
-            var dropdownContainer = document.querySelector(".dropdown-container");
-            var dropdownList = document.querySelector(".dropdown-list");
+let typingTimer; // Timer identifier
+const doneTypingInterval = 500; // Time in milliseconds to wait after typing
+const surveySearchInput = document.getElementById("surveySearch");
 
+function validateSurveyNumber() {
+    var inputValue = surveySearchInput.value.trim(); // Get the trimmed input value
+    var stateList = document.getElementById("stateList");
+    var items = stateList.getElementsByTagName("li");
 
-            if (!dropdownContainer.contains(event.target) && event.target !== dropdownList) {
-                closeDropdown();
+    var found = false;
+    console.log("Input value:", inputValue); // Log the input value for debugging
+
+    for (var i = 0; i < items.length; i++) {
+        var item = items[i];
+        if (item) {  // Check if the item exists
+            var itemValue = item.textContent.trim(); // Get the text content of the item
+            console.log("Checking against:", itemValue); // Log each item value for debugging
+
+            // Compare the item text with the input value
+            if (itemValue === inputValue) {
+                found = true;
+                break;
             }
-        });
+        }
+    }
+
+    // Show validation alert if the survey number is not found
+    if (inputValue && !found) {
+        alert("Survey number not found. Please check the survey number. If you have coordinates, please insert them.");
+        // Clear the input box
+        surveySearchInput.value = "";
+    }
+}
+
+// On keyup, start the countdown to check the survey number
+surveySearchInput.addEventListener("keyup", function() {
+    clearTimeout(typingTimer);
+    typingTimer = setTimeout(validateSurveyNumber, doneTypingInterval);
+});
+
+// On keydown, clear the countdown 
+surveySearchInput.addEventListener("keydown", function() {
+    clearTimeout(typingTimer);
+});
+
+// -------------------------------------
 
 
         var villageName = getUrlParameter('village_name');
@@ -353,40 +396,10 @@
     </script>
 
 
-    <script>
-    //      document.getElementById('toggleFormBtn').addEventListener('click', function () {
-    //     alert(" Add coordinates is in clockwise or anticlockwise direction and add Atleast 4 coordinates. ");
-    //     document.getElementById('formContainer').style.display = 'block';
-    // });
-
-    // document.getElementById('closeFormBtn').addEventListener('click', function () {
-    //     document.getElementById('formContainer').style.display = 'none';
-    // });
-
-
-    // document.getElementById('coordinateForm').addEventListener('submit', function (e) {
-    //     e.preventDefault();
-
-    //     alert('Form submitted!');
-    // });
-
-    </script>
+  
 
 <script>
-    //code for print button 
-    // function printModal() {
-    //     var modalContent = document.getElementById('dataPageModal').innerHTML;
-    //     var printWindow = window.open('', '', 'height=600,width=800');
-    //     printWindow.document.write('<html><head><title>Print Modal</title>');
-    //     printWindow.document.write('<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">');
-    //     printWindow.document.write('</head><body >');
-    //     printWindow.document.write(modalContent);
-    //     printWindow.document.write('</body></html>');
-    //     printWindow.document.close();
-    //     printWindow.focus();
-    //     printWindow.print();
-    // }
-
+   
 
 
     function printModal() {

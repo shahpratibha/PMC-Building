@@ -55,7 +55,7 @@
     }
 ).addTo(map);
 
-        var Village_Boundary = L.tileLayer.wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+        var Village_Boundary = L.tileLayer.wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
             layers: "Village_Boundary",
             format: "image/png",
             transparent: true,
@@ -65,7 +65,7 @@
             maxZoom: 30,
         }).addTo(map);
 
-        var Exist_road = L.tileLayer.wms("https://portal.geopulsea.com/geoserver/pmc/wms", {
+        var Exist_road = L.tileLayer.wms("https://iwmsgis.pmc.gov.in/geoserver/pmc/wms", {
             layers: "Exist_Road",
             format: "image/png",
             transparent: true,
@@ -101,7 +101,7 @@
     var clickedPoint = latlng;
     var bufferedPoint = turf.buffer(turf.point([clickedPoint.lng, clickedPoint.lat]), buffer, {units: 'meters'});
     var bbox = turf.bbox(bufferedPoint);
-    var url = 'https://portal.geopulsea.com/geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=pmc:Exist_Road&outputFormat=application/json&bbox=' + bbox.join(',') + ',EPSG:4326';
+    var url = 'https://iwmsgis.pmc.gov.in/geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=pmc:Exist_Road&outputFormat=application/json&bbox=' + bbox.join(',') + ',EPSG:4326';
 
     return new Promise((resolve, reject) => {
         fetch(url)
@@ -164,7 +164,7 @@ map.on("draw:drawvertex", function (e) {
 //     var clickedPoint = e.latlng;
 //     var bufferedPoint = turf.buffer(turf.point([clickedPoint.lng, clickedPoint.lat]), buffer, {units: 'meters'});
 //     var bbox = turf.bbox(bufferedPoint);
-//     var url = 'https://portal.geopulsea.com/geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=pmc:Exist_Road&outputFormat=application/json&bbox=' + bbox.join(',') + ',EPSG:4326';
+//     var url = 'https://iwmsgis.pmc.gov.in/geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=pmc:Exist_Road&outputFormat=application/json&bbox=' + bbox.join(',') + ',EPSG:4326';
 
 //     fetch(url)
 //         .then(response => response.json())
@@ -256,7 +256,7 @@ map.on("draw:drawvertex", function (e) {
 
 // // Define the function to handle the mousemove event
 // function handleMousemove(e) {
-//     var url = 'https://portal.geopulsea.com/geoserver/ows?service=WMS&version=1.1.1&request=GetFeatureInfo&transparent=true&format=image/png&info_format=application/json&srs=EPSG:4326&bbox=' + map.getBounds().toBBoxString() + '&width=' + map.getSize().x + '&height=' + map.getSize().y + '&layers=pmc:Exist_Road&query_layers=pmc:Exist_Road&feature_count=10&x=' + Math.round(e.containerPoint.x) + '&y=' + Math.round(e.containerPoint.y);
+//     var url = 'https://iwmsgis.pmc.gov.in/geoserver/ows?service=WMS&version=1.1.1&request=GetFeatureInfo&transparent=true&format=image/png&info_format=application/json&srs=EPSG:4326&bbox=' + map.getBounds().toBBoxString() + '&width=' + map.getSize().x + '&height=' + map.getSize().y + '&layers=pmc:Exist_Road&query_layers=pmc:Exist_Road&feature_count=10&x=' + Math.round(e.containerPoint.x) + '&y=' + Math.round(e.containerPoint.y);
 
 //     if (url) {
 //         fetch(url)
@@ -357,7 +357,7 @@ map.on("draw:drawvertex", function (e) {
             layers = ["AutoDCR:Village_Boundary"];
             layers.forEach(function (layerName) {
                 var urlm =
-                    "https://portal.geopulsea.com//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=" +
+                    "https://iwmsgis.pmc.gov.in//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=" +
                     layerName +
                     "&CQL_FILTER=" +
                     filter +
@@ -369,7 +369,7 @@ map.on("draw:drawvertex", function (e) {
             });
         }
 
-        var wmsLayer = L.tileLayer.wms('https://portal.geopulsea.com//geoserver/ows?', {
+        var wmsLayer = L.tileLayer.wms('https://iwmsgis.pmc.gov.in//geoserver/ows?', {
             layers: 'AutoDCR:Village_Boundary',
             format: 'image/png',
             transparent: true
@@ -380,7 +380,7 @@ map.on("draw:drawvertex", function (e) {
         // var pointMarker;
 
         // map.on('mousemove', function (e) {
-        //     var url = 'https://portal.geopulsea.com/geoserver/ows?service=WMS&version=1.1.1&request=GetFeatureInfo&transparent=true&format=image/png&info_format=application/json&srs=EPSG:4326&bbox=' + map.getBounds().toBBoxString() + '&width=' + map.getSize().x + '&height=' + map.getSize().y + '&layers=AutoDCR:Village_Boundary&query_layers=AutoDCR:Village_Boundary&feature_count=10&x=' + Math.round(e.containerPoint.x) + '&y=' + Math.round(e.containerPoint.y);
+        //     var url = 'https://iwmsgis.pmc.gov.in/geoserver/ows?service=WMS&version=1.1.1&request=GetFeatureInfo&transparent=true&format=image/png&info_format=application/json&srs=EPSG:4326&bbox=' + map.getBounds().toBBoxString() + '&width=' + map.getSize().x + '&height=' + map.getSize().y + '&layers=AutoDCR:Village_Boundary&query_layers=AutoDCR:Village_Boundary&feature_count=10&x=' + Math.round(e.containerPoint.x) + '&y=' + Math.round(e.containerPoint.y);
 
         //     if (url) {
         //         fetch(url)
@@ -420,7 +420,7 @@ map.on("draw:drawvertex", function (e) {
 // var pointMarker = null; 
 // function handleMousemove(e) {
 //     // var pointMarker;
-//     var url = 'https://portal.geopulsea.com/geoserver/ows?service=WMS&version=1.1.1&request=GetFeatureInfo&transparent=true&format=image/png&info_format=application/json&srs=EPSG:4326&bbox=' + map.getBounds().toBBoxString() + '&width=' + map.getSize().x + '&height=' + map.getSize().y + '&layers=pmc:Exist_Road&query_layers=pmc:Exist_Road&feature_count=10&x=' + Math.round(e.containerPoint.x) + '&y=' + Math.round(e.containerPoint.y);
+//     var url = 'https://iwmsgis.pmc.gov.in/geoserver/ows?service=WMS&version=1.1.1&request=GetFeatureInfo&transparent=true&format=image/png&info_format=application/json&srs=EPSG:4326&bbox=' + map.getBounds().toBBoxString() + '&width=' + map.getSize().x + '&height=' + map.getSize().y + '&layers=pmc:Exist_Road&query_layers=pmc:Exist_Road&feature_count=10&x=' + Math.round(e.containerPoint.x) + '&y=' + Math.round(e.containerPoint.y);
 
 //     if (url) {
 //         fetch(url)
@@ -483,7 +483,7 @@ map.on("draw:drawvertex", function (e) {
         
         // map.on('mousemove', function (e) {
         //     var pointMarker;
-        //     var url = 'https://portal.geopulsea.com/geoserver/ows?service=WMS&version=1.1.1&request=GetFeatureInfo&transparent=true&format=image/png&info_format=application/json&srs=EPSG:4326&bbox=' + map.getBounds().toBBoxString() + '&width=' + map.getSize().x + '&height=' + map.getSize().y + '&layers=pmc:Exist_Road&query_layers=pmc:Exist_Road&feature_count=10&x=' + Math.round(e.containerPoint.x) + '&y=' + Math.round(e.containerPoint.y);
+        //     var url = 'https://iwmsgis.pmc.gov.in/geoserver/ows?service=WMS&version=1.1.1&request=GetFeatureInfo&transparent=true&format=image/png&info_format=application/json&srs=EPSG:4326&bbox=' + map.getBounds().toBBoxString() + '&width=' + map.getSize().x + '&height=' + map.getSize().y + '&layers=pmc:Exist_Road&query_layers=pmc:Exist_Road&feature_count=10&x=' + Math.round(e.containerPoint.x) + '&y=' + Math.round(e.containerPoint.y);
 
         //     if (url) {
         //         // console.log(url)

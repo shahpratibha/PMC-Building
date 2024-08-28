@@ -69,7 +69,7 @@ legendControl.onAdd = function (map) {
   div.style.overflowY = "auto";
   div.style.scrollbarWidth = "thin";
   div.style.backgroundColor = "white";
-  div.style.border = "1px solid #ccc";
+  div.style.border = "1px solid #3c3cb8";
   div.style.borderRadius = "10px";
   div.style.padding = "10px";
   div.style.transition = "all 0.3s ease-in-out"; // Add transition for smooth animation
@@ -100,7 +100,7 @@ collapseButton.onAdd = function (map) {
 
   // Apply styling
   button.style.backgroundColor = "white";
-  button.style.border = "2px solid #bbb";
+  button.style.border = "2px solid #3c3cb8";
   button.style.width = "35px";
   button.style.height = "35px";
   button.style.borderRadius = "5px";

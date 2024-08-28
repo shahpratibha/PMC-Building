@@ -89,6 +89,7 @@ var JE_Names = L.tileLayer
 
 
 
+
 var PLU_Layer = L.tileLayer
     .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
         layers: "PLU_Ward",
@@ -860,7 +861,8 @@ var button = L.control({ position: 'bottomright' });
 
 button.onAdd = function (map) {
     var div = L.DomUtil.create('div', 'custom-button');
-    div.innerHTML = '<button onclick="savevalues()" >Next  <i class="fa-regular fa-circle-right"></i></button>';
+    div.innerHTML = '<button onclick="savevalues()">Next <img src="png/formkit_submit.png" alt="" style="width: 20px; height: 19px; vertical-align: middle;"></button>';
+
     return div;
 };
 
@@ -1168,7 +1170,7 @@ function addCoordinateRow(table) {
     longitudeDegreesInput.value = '73';
     longitudeDegreesInput.style.width = '40px';
     longitudeDegreesInput.style.position = 'absolute';
-    longitudeDegreesInput.style.left = '1%';
+    longitudeDegreesInput.style.left = '6%';
     // longitudeDegreesInput.style.marginRight = '5px';
     longitudeDegreesInput.style.borderBottomLeftRadius = '5px';
     longitudeDegreesInput.style.borderTopLeftRadius = '5px';
@@ -1186,7 +1188,7 @@ function addCoordinateRow(table) {
     longitudeMinutesInput.setAttribute('name', 'longitudeMinutes[]');
     longitudeMinutesInput.style.width = '40px';
     longitudeMinutesInput.style.position = 'absolute';
-    longitudeMinutesInput.style.left = '8%';
+    longitudeMinutesInput.style.left = '14%';
     // longitudeMinutesInput.style.marginRight = '5px';
     longitudeMinutesInput.style.borderTop = '2px solid  #3c3cb8';
     longitudeMinutesInput.style.borderBottom = '2px solid  #3c3cb8';
@@ -1202,7 +1204,7 @@ function addCoordinateRow(table) {
     longitudeSecondsInput.setAttribute('step', 'any');
     longitudeSecondsInput.style.width = '59px';
     longitudeSecondsInput.style.position = 'absolute';
-    longitudeSecondsInput.style.left = '16%';
+    longitudeSecondsInput.style.left = '22%';
     // longitudeSecondsInput.style.marginRight = '5px'; 
     longitudeSecondsInput.style.borderTop = '2px solid  #3c3cb8';
     longitudeSecondsInput.style.borderBottom = '2px solid #3c3cb8';
@@ -1223,7 +1225,8 @@ function addCoordinateRow(table) {
     latitudeDegreesInput.value = '18';
     latitudeDegreesInput.style.width = '50px';
     latitudeDegreesInput.style.position = 'absolute';
-    latitudeDegreesInput.style.left = '32%';
+    latitudeDegreesInput.style.left = '39%';
+
     // latitudeDegreesInput.style.marginRight = '15px'; 
     latitudeDegreesInput.style.borderBottomLeftRadius = '5px';
     latitudeDegreesInput.style.borderTopLeftRadius = '5px';
@@ -1240,7 +1243,7 @@ function addCoordinateRow(table) {
     latitudeMinutesInput.setAttribute('name', 'latitudeMinutes[]');
     latitudeMinutesInput.style.width = '40px';
     latitudeMinutesInput.style.position = 'absolute';
-    latitudeMinutesInput.style.left = '40%';
+    latitudeMinutesInput.style.left = '47%';
     latitudeMinutesInput.style.borderTop = '2px solid  #3c3cb8';
     latitudeMinutesInput.style.borderBottom = '2px solid  #3c3cb8';
     latitudeMinutesInput.style.borderLeft = '2px solid  #bbb';
@@ -1256,7 +1259,7 @@ function addCoordinateRow(table) {
     latitudeSecondsInput.setAttribute('step', 'any');
     latitudeSecondsInput.style.width = '60px';
     latitudeSecondsInput.style.position = 'absolute';
-    latitudeSecondsInput.style.left = '48%';
+    latitudeSecondsInput.style.left = '55%';
     latitudeSecondsInput.style.borderTop = '2px solid  #3c3cb8';
     latitudeSecondsInput.style.borderBottom = '2px solid #3c3cb8';
     latitudeSecondsInput.style.borderRight = '2px solid #3c3cb8';
@@ -1274,7 +1277,9 @@ function addCoordinateRow(table) {
     // heightfloatCellInput.value = '73';
     heightfloatCellInput.style.width = '70px';
     heightfloatCellInput.style.position = 'absolute';
-    heightfloatCellInput.style.left = '65%';
+    heightfloatCellInput.style.left = '75%';
+    heightfloatCellInput.style.left = '74%';
+
     // longitudeDegreesInput.style.marginRight = '5px';
     heightfloatCellInput.style.borderBottomLeftRadius = '5px';
     heightfloatCellInput.style.borderTopLeftRadius = '5px';
@@ -1300,7 +1305,8 @@ function addCoordinateRow(table) {
 
     updateFirstRowValues(table);
 
-    actionCell.innerHTML = '<button type="button" class="deleteRowBtn"><i class="fa-solid fa-trash-can"></i></button>';
+    actionCell.innerHTML = '<button type="button" class="deleteRowBtn"><img src="png/delete.svg" alt="Delete" style=""></button>';
+
     // Add event istener to delete button
     var deleteBtn = actionCell.querySelector('.deleteRowBtn');
 

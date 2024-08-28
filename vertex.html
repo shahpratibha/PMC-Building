@@ -31,7 +31,7 @@
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        var Village_Boundary = L.tileLayer.wms("https://portal.geopulsea.com/geoserver/AutoDCR/wms", {
+        var Village_Boundary = L.tileLayer.wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
             layers: "Village_Boundary",
             format: "image/png",
             transparent: true,
@@ -41,7 +41,7 @@
             maxZoom: 30,
         }).addTo(map);
 
-        var Exist_road = L.tileLayer.wms("https://portal.geopulsea.com/geoserver/pmc/wms", {
+        var Exist_road = L.tileLayer.wms("https://iwmsgis.pmc.gov.in/geoserver/pmc/wms", {
             layers: "Exist_Road",
             format: "image/png",
             transparent: true,
@@ -146,7 +146,7 @@
 var pointMarker;
 
 map.on('mousemove', function (e) {
-    var url = 'https://portal.geopulsea.com/geoserver/ows?service=WMS&version=1.1.1&request=GetFeatureInfo&transparent=true&format=image/png&info_format=application/json&srs=EPSG:4326&bbox=' + map.getBounds().toBBoxString() + '&width=' + map.getSize().x + '&height=' + map.getSize().y + '&layers=pmc:Exist_Road&query_layers=pmc:Exist_Road&feature_count=10&x=' + Math.round(e.containerPoint.x) + '&y=' + Math.round(e.containerPoint.y);
+    var url = 'https://iwmsgis.pmc.gov.in/geoserver/ows?service=WMS&version=1.1.1&request=GetFeatureInfo&transparent=true&format=image/png&info_format=application/json&srs=EPSG:4326&bbox=' + map.getBounds().toBBoxString() + '&width=' + map.getSize().x + '&height=' + map.getSize().y + '&layers=pmc:Exist_Road&query_layers=pmc:Exist_Road&feature_count=10&x=' + Math.round(e.containerPoint.x) + '&y=' + Math.round(e.containerPoint.y);
 
     if (url) {
         // console.log(url)

@@ -1,7 +1,7 @@
 
 // Now continue with your remaining JavaScript code...
 // GeoServer URL
-var geoserverUrl = "https://portal.geopulsea.com/geoserver";
+var geoserverUrl = "https://iwmsgis.pmc.gov.in/geoserver";
 
 var workspace = "AutoDCR";
 
@@ -69,7 +69,7 @@ legendControl.onAdd = function (map) {
   div.style.overflowY = "auto";
   div.style.scrollbarWidth = "thin";
   div.style.backgroundColor = "white";
-  div.style.border = "1px solid #ccc";
+  div.style.border = "1px solid #3c3cb8";
   div.style.borderRadius = "10px";
   div.style.padding = "10px";
   div.style.transition = "all 0.3s ease-in-out"; // Add transition for smooth animation
@@ -100,7 +100,7 @@ collapseButton.onAdd = function (map) {
 
   // Apply styling
   button.style.backgroundColor = "white";
-  button.style.border = "2px solid #bbb";
+  button.style.border = "2px solid #3c3cb8";
   button.style.width = "35px";
   button.style.height = "35px";
   button.style.borderRadius = "5px";
@@ -171,7 +171,7 @@ legend.onAdd = function (map) {
 
   // Fetch capabilities to get all layers in the 'pmc' workspace
   fetch(
-    "https://portal.geopulsea.com/geoserver/ows?service=wms&version=1.3.0&request=GetCapabilities"
+    "https://iwmsgis.pmc.gov.in/geoserver/ows?service=wms&version=1.3.0&request=GetCapabilities"
   )
     .then((response) => response.text())
     .then((data) => {
@@ -233,17 +233,6 @@ map.options.scale = true; // Enables the scale control
 L.control.scale(
 ).addTo(map);
 
-// zoommm-----------------------
-
-// Remove the default zoom control
-// map.zoomControl.remove();
-
-// L.control.zoom({
-//     position: 'bottomright' // Set position to bottom right
-// }).addTo(map);
-
-
-// north image
 
 
 // Create a custom control for the north arrow
@@ -256,7 +245,7 @@ var northArrowControl = L.Control.extend({
     var container = L.DomUtil.create("div", "leaflet-bar leaflet-control");
     container.innerHTML =
       // '<div class="north-arrow" ><i class="fas fa-long-arrow-alt-up p-1"  style="width: 20px; background-color:white;  height: 20px;"></i></div>';
-      '<img  src="png/002-cardinal-point.png" class="border-0;" alt="" style="width: 30px;  height:50px;">';
+      '<img  src="png/002-cardinal-point.png" class="border-0;" alt="" style="width: 30px;  background-color:white; height:50px; ">';
     return container;
   },
 });

@@ -1,8 +1,8 @@
 <?php
-$host = 'database-1.c01x1jtcm1ms.ap-south-1.rds.amazonaws.com';
-$dbname = 'autodcr';
+$host = 'iwmsgis.pmc.gov.in';
+$dbname = 'AutoDCR';
 $username = 'postgres';
-$password = 'anup12345';
+$password = "pmc992101";
 
 try {
     // Establish a connection to the database

@@ -1,11 +1,46 @@
+document.addEventListener('DOMContentLoaded', function () {
+    var originalMap, newMap;
 
-var map, geojson;
-const API_URL = "http://localhost/PMC/autodcr/";
+    function initializeMaps() {
+ 
+
+        // Initialize the new map
+        var newMap = L.map("newMap", {
+    center: [18.52, 73.89],
+    zoom: 11,
+    minZoom: 12,
+    maxZoom: 18,
+    boxZoom: true,
+    trackResize: true,
+    wheelPxPerZoomLevel: 40,
+    zoomAnimation: true,
+
+});
+        // newMap = L.map('newMap').setView([51.505, -0.09], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(newMap);
+       
+    }
+
+    // Trigger map resize when the modal is shown
+    $('#dataPageModal').on('shown.bs.modal', function () {
+        initializeMaps();
+    
+        newMap.invalidateSize();
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+
+var newMap, geojson;
+// const API_URL = "http://localhost/PMC/autodcr/";
 // const API_URL = "https://iwmsgis.pmc.gov.in/geopulse/autodcr/";
 // const API_URL = "http://localhost/PMC-Project/";
 
 // Add Basemap
-var map = L.map("map", {
+function initializeMaps() {
+var newMap = L.map("newMap", {
         center:[18.52, 73.89],
         zoom: 12,
         minZoom: 10,
@@ -27,7 +62,7 @@ var googleSat = L.tileLayer(
 );
 
 var osm = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    }).addTo(map);
+    }).addTo(newMap);
 
 var Esri_WorldImagery = L.tileLayer(
     "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
@@ -49,7 +84,7 @@ var PlotBoundary_Layer = L.tileLayer
         version: "1.1.0",
         // attribution: "Revenue",
         opacity: 1,
-    }).addTo(map);
+    }).addTo(newMap);
 
 
 
@@ -104,7 +139,7 @@ var Boundary_Layer = L.tileLayer
         version: "1.1.0",
         // attribution: "Revenue",
         opacity: 1,
-    }).addTo(map);
+    }).addTo(newMap);
 
 var TDR_Zones = L.tileLayer
     .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
@@ -207,7 +242,7 @@ var Village_Boundary = L.tileLayer
         version: "1.1.0",
         // attribution: "Revenue",
         opacity: 1,
-    }).addTo(map);
+    }).addTo(newMap);
 
 
 
@@ -267,19 +302,19 @@ var WMSlayers = {
 function refreshWMSLayer() {
 
     map.removeLayer(PlotBoundary_Layer);
-    PlotBoundary_Layer.addTo(map);
+    PlotBoundary_Layer.addTo(newMap);
   }
   
 
-var control = new L.control.layers(baseLayers, WMSlayers).addTo(map);
+var control = new L.control.layers(baseLayers, WMSlayers).addTo(newMap);
 control.setPosition('topright');
 
 // Remove the default zoom control
-map.zoomControl.remove();
+newMap.zoomControl.remove();
 
 L.control.zoom({
     position: 'bottomright'
-}).addTo(map);
+}).addTo(newMap);
 
 
 
@@ -311,37 +346,13 @@ $(document).ready(function () {
 
  })
 
-//Pop-Up show
-const layerDetails = {
-    "AutoDCR:plotboundary": ["id", "token",  "selectedvillage", "selectedguts", "entry_timestamp"], 
-  };
-  
-  map.on("contextmenu", async (e) => {
-    let bbox = map.getBounds().toBBoxString();
-    let size = map.getSize();
-  
-    for (let layer in layerDetails) {
-        let selectedKeys = layerDetails[layer];
-        let urrr = `https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetFeatureInfo&FORMAT=image%2Fpng&TRANSPARENT=true&QUERY_LAYERS=${layer}&STYLES&LAYERS=${layer}&exceptions=application%2Fvnd.ogc.se_inimage&INFO_FORMAT=application/json&FEATURE_COUNT=50&X=${Math.round(e.containerPoint.x)}&Y=${Math.round(e.containerPoint.y)}&SRS=EPSG%3A4326&WIDTH=${size.x}&HEIGHT=${size.y}&BBOX=${bbox}`;
-  
-        try {
-            let response = await fetch(urrr);
-            let html = await response.json();
-  
-            var htmldata = html.features[0].properties;
-            let txtk1 = "";
-            for (let key of selectedKeys) {
-                if (htmldata.hasOwnProperty(key)) {
-                    let value = htmldata[key];
-                    txtk1 += "<tr><td>" + key + "</td><td>" + value +"</td></tr>";
-                }
-            }
-  
-            let detaildata1 = "<div style='max-height: 350px; max-height: 250px;'><table  style='width:110%;' class='popup-table' >" + txtk1 + "</td></tr><tr><td>Co-Ordinates</td><td>" + e.latlng + "</td></tr></table></div>";
-  
-            L.popup().setLatLng(e.latlng).setContent(detaildata1).openOn(map);
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
-    }
-  });
+}   
+    // Trigger map resize when the modal is shown
+    $('#dataPageModal').on('shown.bs.modal', function () {
+        initializeMaps();
+    
+        newMap.invalidateSize();
+    });
+});
+
+

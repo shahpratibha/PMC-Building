@@ -1,14 +1,14 @@
 
 var map, geojson;
-// const API_URL = "https://iwmsgis.pmc.gov.in/geopulse/autodcr/";
-const API_URL = "http://localhost/PMC/autodcr/";
+const API_URL = "https://iwmsgis.pmc.gov.in/geopulse/autodcr/";
+// const API_URL = "http://localhost/autodcr/";
 // const API_URL = "http://localhost/geotap/autodcr/"
 
 // Add Basemap
 var map = L.map("map", {
     center: [18.52, 73.89],
     zoom: 11,
-    minZoom: 10,
+    minZoom: 12,
     maxZoom: 18,
     boxZoom: true,
     trackResize: true,
@@ -38,7 +38,11 @@ var Esri_WorldImagery = L.tileLayer(
         maxZoom: 20,
     }
 );
-var baseLayers = {};
+var baseLayers = {
+    "OSM": osm,
+    "Esri": Esri_WorldImagery,
+    "Satellite": googleSat,
+};
 
 // .addTo(map);
 
@@ -51,7 +55,8 @@ var Revenue_Layer1 = L.tileLayer
         transparent: true,
         tiled: true,
         version: "1.1.0",
-        // attribution: "Revenue",
+        maxZoom: 19.9,
+
         opacity: 1,
     });
 
@@ -65,9 +70,23 @@ var Revenue_Layer = L.tileLayer
         transparent: true,
         tiled: true,
         version: "1.1.0",
-        // attribution: "Revenue",
+        maxZoom: 19.9,
+
         opacity: 1,
     });
+
+
+var JE_Names = L.tileLayer
+    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
+        layers: "JE_Names",
+        format: "image/png",
+        transparent: true,
+        tiled: true,
+        version: "1.1.0",
+
+        opacity: 1,
+    });
+
 
 
 
@@ -78,7 +97,7 @@ var PLU_Layer = L.tileLayer
         transparent: true,
         tiled: true,
         version: "1.1.0",
-        // attribution: "Revenue",
+
         opacity: 1,
     });
 
@@ -90,7 +109,6 @@ var DPRoad_Layer = L.tileLayer
         transparent: true,
         tiled: true,
         version: "1.1.0",
-        // attribution: "Revenue",
         opacity: 1,
     });
 
@@ -101,9 +119,103 @@ var Boundary_Layer = L.tileLayer
         transparent: true,
         tiled: true,
         version: "1.1.0",
-        // attribution: "Revenue",
         opacity: 1,
     }).addTo(map);
+
+var TDR_Zones = L.tileLayer
+    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
+        layers: "TDR_Zones",
+        format: "image/png",
+        transparent: true,
+        tiled: true,
+        version: "1.1.0",
+        opacity: 1,
+    });
+
+var TOD_Zones = L.tileLayer
+    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
+        layers: "TOD_Zones",
+        format: "image/png",
+        transparent: true,
+        tiled: true,
+        version: "1.1.0",
+
+        opacity: 1,
+    });
+
+
+
+
+var PMC_Reservation = L.tileLayer
+    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
+        layers: "PMC_Reservation",
+        format: "image/png",
+        transparent: true,
+        tiled: true,
+        version: "1.1.0",
+
+        opacity: 1,
+    });
+
+var Red_Blue = L.tileLayer
+    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
+        layers: "Red_Blue",
+        format: "image/png",
+        transparent: true,
+        tiled: true,
+        version: "1.1.0",
+
+        opacity: 1,
+    });
+
+var Yerwada_Jail = L.tileLayer
+    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
+        layers: "Yerwada_Jail",
+        format: "image/png",
+        transparent: true,
+        tiled: true,
+        version: "1.1.0",
+
+        opacity: 1,
+    });
+
+
+var Railway_Buffer = L.tileLayer
+    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
+        layers: "Railway_Buffer",
+        format: "image/png",
+        transparent: true,
+        tiled: true,
+        version: "1.1.0",
+
+        opacity: 1,
+    });
+
+var PMC_Lake = L.tileLayer
+    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
+        layers: "Lake",
+        format: "image/png",
+        transparent: true,
+        tiled: true,
+        version: "1.1.0",
+
+        opacity: 1,
+    });
+
+var Monuments = L.tileLayer
+    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
+        layers: "Monuments",
+        format: "image/png",
+        transparent: true,
+        tiled: true,
+        version: "1.1.0",
+
+        opacity: 1,
+    });
+
+
+
+
 
 var Village_Boundary = L.tileLayer
     .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
@@ -112,7 +224,7 @@ var Village_Boundary = L.tileLayer
         transparent: true,
         tiled: true,
         version: "1.1.0",
-        // attribution: "Revenue",
+
         opacity: 1,
     }).addTo(map);
 
@@ -125,131 +237,55 @@ var aviation = L.tileLayer
         transparent: true,
         tiled: true,
         version: "1.1.0",
-        // attribution: "Revenue",
+
         opacity: 1,
     });
-// .addTo(map);iwmsgis.pmc.gov.in
+
+var Garden = L.tileLayer
+    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
+        layers: "Garden",
+        format: "image/png",
+        transparent: true,
+        tiled: true,
+        version: "1.1.0",
+
+        opacity: 1,
+    });
+var DevelopmentRestriction = L.tileLayer
+    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
+        layers: "DevelopmentRestriction",
+        format: "image/png",
+        transparent: true,
+        tiled: true,
+        version: "1.1.0",
+
+        opacity: 1,
+    });
 
 
 var WMSlayers = {
-    "OSM": osm,
-    "Esri": Esri_WorldImagery,
-    "Satellite": googleSat,
+
     Boundary: Boundary_Layer,
-    Aviation: aviation,
     Village: Village_Boundary,
     Revenue: Revenue_Layer1,
     PLU: PLU_Layer,
     DPRoad: DPRoad_Layer,
+    JE_Names: JE_Names,
+    TDR_Zones: TDR_Zones,
+    TOD_Zones: TOD_Zones,
+    PMC_Reservation: PMC_Reservation,
+    Garden: Garden,
+    DevelopmentRestriction: DevelopmentRestriction,
+    Yerwada_Jail: Yerwada_Jail,
+    Red_Blue: Red_Blue,
+    Railway_Buffer: Railway_Buffer,
+    PMC_Lake: PMC_Lake,
+    Monuments: Monuments,
+    Aviation: aviation
 
 };
 
 
-let handshaking_codes = [
-    { "AutoDCR_Name": "Aundh", "code": "ADCR001", "name": "Aundh" },
-    { "AutoDCR_Name": "BALEWADI", "code": "ADCR002", "name": "BALEWADI" },
-    { "AutoDCR_Name": "BANER", "code": "ADCR003", "name": "BANER" },
-    { "AutoDCR_Name": "Baner North", "code": "ADCR003a", "name": "BANER" },
-    { "AutoDCR_Name": "Baner south", "code": "ADCR003b", "name": "BANER" },
-    { "AutoDCR_Name": "Baner West", "code": "ADCR003c", "name": "BANER" },
-    { "AutoDCR_Name": "BAWDHAN", "code": "ADCR004", "name": "BAWDHAN" },
-    { "AutoDCR_Name": "Bopodi", "code": "ADCR005", "name": "Bopodi" },
-    // { "AutoDCR_Name": "Erandwana", "code": "ADCR006", "name": "Erandwana" },
-    { "AutoDCR_Name": "Erandwana North", "code": "ADCR006a", "name": "Erandwana North" },
-    { "AutoDCR_Name": "Erandwana South", "code": "ADCR006b", "name": "Erandwana South" },
-    { "AutoDCR_Name": "Hingne-budruk", "code": "ADCR007", "name": "Hingne-budruk" },
-    { "AutoDCR_Name": "KARVE NAGAR", "code": "ADCR008", "name": "KARVE NAGAR" },
-    { "AutoDCR_Name": "Khadki Navi", "code": "ADCR009", "name": "Khadki Navi" },
-    { "AutoDCR_Name": "KOTHRUD-NORTH", "code": "ADCR010", "name": "KOTHRUD" },
-    { "AutoDCR_Name": "Kothrud-South", "code": "ADCR011", "name": "KOTHRUD" },
-    { "AutoDCR_Name": "Pashan", "code": "ADCR012", "name": "Pashan" },
-    { "AutoDCR_Name": "Shivaji Nagar", "code": "ADCR013", "name": "TPS-I" },
-    { "AutoDCR_Name": "SHIVAJI NAGAR-BHAMBURDA", "code": "ADCR014", "name": "SHIVAJI NAGAR-BHAMBURDA" },
-    { "AutoDCR_Name": "SHIVANE", "code": "ADCR015", "name": "SHIVANE" },
-    { "AutoDCR_Name": "Shivane North", "code": "ADCR015a", "name": "SHIVANE" },
-    { "AutoDCR_Name": "Shivane South", "code": "ADCR015b", "name": "SHIVANE" },
-    { "AutoDCR_Name": "Warje", "code": "ADCR016", "name": "Warje" },
-    { "AutoDCR_Name": "Ambegaon Budruk-Ext", "code": "ADCR017", "name": "Ambegaon Budruk-Ext" },
-    { "AutoDCR_Name": "Ambegaon Khurd-Ext", "code": "ADCR018", "name": "Ambegaon Khurd-Ext" },
-    { "AutoDCR_Name": "AMBEGAON-BUDRUK", "code": "ADCR019", "name": "AMBEGAON-BUDRUK" },
-    { "AutoDCR_Name": "AMBEGAON-KHURD", "code": "ADCR020", "name": "AMBEGAON-KHURD" },
-    { "AutoDCR_Name": "Bhawani Peth", "code": "ADCR021", "name": "Bhawani Peth" },
-    { "AutoDCR_Name": "Bibwewadi-Munjeri", "code": "ADCR022", "name": "Bibwewadi-Munjeri" },
-    { "AutoDCR_Name": "BUDHWAR PETH", "code": "ADCR023", "name": "BUDHWAR PETH" },
-    { "AutoDCR_Name": "DHANKWADI", "code": "ADCR024", "name": "DHANKWADI" },
-    { "AutoDCR_Name": "DHANKWADI-EXT", "code": "ADCR025", "name": "DHANKWADI-EXT" },
-    { "AutoDCR_Name": "Dhanori", "code": "ADCR026", "name": "Dhanori" },
-    { "AutoDCR_Name": "DHANORI-EXT", "code": "ADCR027", "name": "DHANORI-EXT" },
-    { "AutoDCR_Name": "Dhayri", "code": "ADCR028", "name": "Dhayri" },
-    { "AutoDCR_Name": "Dhayri-Ext", "code": "ADCR029", "name": "Dhayri-Ext" },
-    { "AutoDCR_Name": "Fursungi", "code": "ADCR030", "name": "Fursungi" },
-    { "AutoDCR_Name": "Ganesh Peth", "code": "ADCR031", "name": "Ganesh Peth" },
-    { "AutoDCR_Name": "GANJ PETH", "code": "ADCR032", "name": "GANJ PETH" },
-    { "AutoDCR_Name": "Ghorpade peth", "code": "ADCR033", "name": "Ghorpade peth" },
-    { "AutoDCR_Name": "Ghorpadi", "code": "ADCR034", "name": "Ghorpadi" },
-    { "AutoDCR_Name": "Gultekdi", "code": "ADCR035", "name": "TPS-III" },
-    { "AutoDCR_Name": "Gurwar Peth", "code": "ADCR036", "name": "Gurwar Peth" },
-    { "AutoDCR_Name": "Hadapsar", "code": "ADCR037", "name": "Hadapsar" },
-    { "AutoDCR_Name": "HADAPSAR-EXT", "code": "ADCR038", "name": "HADAPSAR-EXT" },
-    { "AutoDCR_Name": "HINGANE-KHURD", "code": "ADCR039", "name": "HINGANE-KHURD" },
-    { "AutoDCR_Name": "Kalas", "code": "ADCR040", "name": "Kalas" },
-    { "AutoDCR_Name": "KALAS EXT", "code": "ADCR041", "name": "KALAS EXT" },
-    { "AutoDCR_Name": "KASBA PETH", "code": "ADCR042", "name": "KASBA PETH" },
-    { "AutoDCR_Name": "KATRAJ", "code": "ADCR043", "name": "KATRAJ" },
-    { "AutoDCR_Name": "Katraj Ext", "code": "ADCR044", "name": "Katraj Ext" },
-    // { "AutoDCR_Name": "Kharadi", "code": "ADCR045", "name": "Kharadi" },
-    { "AutoDCR_Name": "Kharadi East", "code": "ADCR045a", "name": "Kharadi East" },
-    { "AutoDCR_Name": "Kharadi West", "code": "ADCR045b", "name": "Kharadi West" },
-    { "AutoDCR_Name": "Kondhwa-Budruk", "code": "ADCR046", "name": "Kondhwa-Budruk" },
-    { "AutoDCR_Name": "Kondhwa-Budruk North", "code": "ADCR046a", "name": "Kondhwa-Budruk North" },
-    { "AutoDCR_Name": "Kondhwa-Budruk South", "code": "ADCR046b", "name": "Kondhwa-Budruk South" },
-    { "AutoDCR_Name": "Kondhwa-Khurd", "code": "ADCR047", "name": "Kondhwa-Khurd" },
-    { "AutoDCR_Name": "Kondwa khurd -EXT", "code": "ADCR048", "name": "Kondwa khurd -EXT" },
-    { "AutoDCR_Name": "KOREGAON PARK", "code": "ADCR049", "name": "KOREGAON PARK" },
-    { "AutoDCR_Name": "KOTHRUD-EXT", "code": "ADCR050", "name": "KOTHRUD-EXT" },
-    // { "AutoDCR_Name": "Lohagaon", "code": "ADCR051", "name": "Lohagaon" },
-    { "AutoDCR_Name": "Lohagaon North", "code": "ADCR051a", "name": "Lohagaon North" },
-    { "AutoDCR_Name": "Lohagaon South", "code": "ADCR051b", "name": "Lohagaon South" },
-    // { "AutoDCR_Name": "Lohgaon-Ext", "code": "ADCR052", "name": "Lohgaon-Ext" },
-    { "AutoDCR_Name": "Lohgaon-Ext North", "code": "ADCR052a", "name": "Lohgaon-Ext North" },
-    { "AutoDCR_Name": "Lohgaon-Ext South", "code": "ADCR052b", "name": "Lohgaon-Ext South" },
-    { "AutoDCR_Name": "LULLANAGAR", "code": "ADCR053", "name": "TPS-III" },
-    { "AutoDCR_Name": "Mahatma Phule peth", "code": "ADCR054", "name": "Mahatma Phule peth" },
-    { "AutoDCR_Name": "MANGALWAR PETH", "code": "ADCR055", "name": "MANGALWAR PETH" },
-    { "AutoDCR_Name": "Market Yard", "code": "ADCR056", "name": "TPS-III" },
-    { "AutoDCR_Name": "Mohammadwadi", "code": "ADCR057", "name": "Mohammadwadi" },
-    // { "AutoDCR_Name": "Mundhwa", "code": "ADCR058", "name": "Mundhwa" },
-    { "AutoDCR_Name": "Mundhwa North", "code": "ADCR058a", "name": "Mundhwa North" },
-    { "AutoDCR_Name": "Mundhwa South", "code": "ADCR058b", "name": "Mundhwa South" },
-    { "AutoDCR_Name": "Mundhwa-Keshavnagar", "code": "ADCR059", "name": "Mundhwa-Keshavnagar" },
-    { "AutoDCR_Name": "MUNJERI", "code": "ADCR060", "name": "MUNJERI" },
-    { "AutoDCR_Name": "Nana Peth", "code": "ADCR061", "name": "NANA PETH" },
-    { "AutoDCR_Name": "NARAYAN PETH", "code": "ADCR062", "name": "NARAYAN PETH" },
-    { "AutoDCR_Name": "Navipeth", "code": "ADCR063", "name": "NAVI PETH" },
-    { "AutoDCR_Name": "Parvati North", "code": "ADCR064", "name": "PARVATI" },
-    { "AutoDCR_Name": "Parvati South", "code": "ADCR065", "name": "PARVATI" },
-    { "AutoDCR_Name": "RASTA PETH", "code": "ADCR066", "name": "RASTA PETH" },
-    { "AutoDCR_Name": "RAVIWAR PETH", "code": "ADCR067", "name": "RAVIWAR PETH" },
-    { "AutoDCR_Name": "SADASHIV PETH", "code": "ADCR068", "name": "SADASHIV PETH" },
-    { "AutoDCR_Name": "Sadesatara  Nali-Hadapsar", "code": "ADCR069", "name": "Sadesatara  Nali-Hadapsar" },
-    { "AutoDCR_Name": "SANGANWADI TPS", "code": "ADCR070", "name": "SANGAMWADI TPS" },
-    { "AutoDCR_Name": "SHANIWAR PETH", "code": "ADCR071", "name": "SHANIWAR PETH" },
-    { "AutoDCR_Name": "Shivane-Ext", "code": "ADCR072", "name": "Shivane-Ext" },
-    { "AutoDCR_Name": "Shivane-Uttamnagar", "code": "ADCR073", "name": "SHIVANE" },
-    { "AutoDCR_Name": "SHUKRAWAR PETH", "code": "ADCR074", "name": "SHUKRAWAR PETH" },
-    { "AutoDCR_Name": "SOMWAR PETH", "code": "ADCR075", "name": "SOMWAR PETH" },
-    { "AutoDCR_Name": "Undri", "code": "ADCR076", "name": "Undri" },
-    { "AutoDCR_Name": "Undri-Ext", "code": "ADCR077", "name": "Undri-Ext" },
-    { "AutoDCR_Name": "Urali Devachi", "code": "ADCR078", "name": "Urali Devachi" },
-    { "AutoDCR_Name": "VADGAON-BUDRUK", "code": "ADCR079", "name": "VADGAON-BUDRUK" },
-    { "AutoDCR_Name": "Vadgaon-Khurd", "code": "ADCR080", "name": "Vadgaon-Khurd" },
-    { "AutoDCR_Name": "Vadgaon-Sheri", "code": "ADCR081", "name": "Vadgaon-Sheri" },
-    { "AutoDCR_Name": "VadgaonSheri-ext", "code": "ADCR082", "name": "VadgaonSheri-ext" },
-    { "AutoDCR_Name": "Wanawadi", "code": "ADCR083", "name": "WANAWADI" },
-    { "AutoDCR_Name": "Yerawada", "code": "ADCR084", "name": "YERWADA" },
-    { "AutoDCR_Name": "Yevlewadi", "code": "ADCR085", "name": "Yevlewadi" }
-
-];
 function getQueryParam(param) {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(param);
@@ -262,12 +298,12 @@ control.setPosition('topright');
 map.zoomControl.remove();
 
 L.control.zoom({
-    position: 'bottomright' // Set position to bottom right
+    position: 'bottomright'
 }).addTo(map);
+
 
 // draw-----------------------------------------------------
 var drawnItems = new L.FeatureGroup().addTo(map);
-// map.addLayer(drawnItems);
 
 var drawControl = new L.Control.Draw({
     edit: {
@@ -295,34 +331,9 @@ var drawControl = new L.Control.Draw({
 map.addControl(drawControl);
 
 
-// map.on(L.Draw.Event.CREATED, function (event) {
-//     var layer = event.layer;
-//     drawnItems.addLayer(layer);
-//     // console.log(layer, "///////////")
-// });
-
-// save polygons into database variable
 
 var drawnPolygons = [];
 
-// map.on('draw:created', function (e) {
-//     var layer = e.layer;
-//     drawnItems.addLayer(layer);
-//     console.log("000000000000draw", layer)
-
-
-//     var drawnPolygon = layer.toGeoJSON();
-
-//     if (drawnPolygon.geometry.type === 'Polygon') {
-//         var polygonId = 'polygon_draw'
-
-//         drawnPolygons[polygonId] = layer.toGeoJSON().geometry.coordinates;
-//         // console.log(drawnPolygons, "drawnPolygonsoooooooooooooooooo")
-
-//     } else {
-//         console.log('Drawn geometry is not a valid Polygon.');
-//     }
-// });
 
 map.on(L.Draw.Event.CREATED, function (event) {
     var layer = event.layer;
@@ -334,8 +345,9 @@ map.on(L.Draw.Event.CREATED, function (event) {
     if (drawnPolygon.geometry.type === 'Polygon') {
         drawnPolygons[polygonId] = drawnPolygon.geometry.coordinates;
     } else {
-        console.log('Drawn geometry is not a valid Polygon.');
+        // //console.log('Drawn geometry is not a valid Polygon.');
     }
+
 
     // Attach the polygonId to the layer for future reference
     layer.polygonId = polygonId;
@@ -360,6 +372,10 @@ map.on('draw:deleted', function (e) {
     updateButtonState();
 });
 
+
+
+
+
 function updateButtonState() {
     var buttonElement = document.querySelector('.custom-button button');
     if (buttonElement) {
@@ -369,65 +385,81 @@ function updateButtonState() {
 }
 
 
-
-
-
-
 const handshakingCode = getQueryParam('village_name');
 const token = getQueryParam('TOKEN');
-console.log(token, "token")
+// //console.log(token, "token");
 
 
 $(document).ready(function () {
-    trials();
 
-
-
-    // Get the village_name from the URL
     const villageEntry = handshaking_codes.find(entry => entry.code === handshakingCode);
     const village_name = villageEntry ? villageEntry.name : null;
+    const TpsName = villageEntry ? villageEntry.tps_name : null;
 
-    console.log(village_name);
-
-
+    trials()
     function trials() {
-        var geoServerURL = "https://iwmsgis.pmc.gov.in//geoserver/AutoDCR/wms?service=WFS&version=1.1.0&request=GetFeature&typeName=Revenue_1&propertyName=village_name&outputFormat=application/json";
+
+        var villageArray = [];  // Properly declare villageArray
+
+        if (village_name) {
+            villageArray.push(village_name);
+        }
+        if (Array.isArray(TpsName)) {
+            villageArray.push(...TpsName);  // Spread operator to add all TpsName values
+        } else if (TpsName) {
+            villageArray.push(TpsName);  // Add single TpsName value
+        }
+
+        // villageArray =[]
+        var cqlFilter = "village_name IN('" + village_name + "') OR TPS_Name IN('" + TpsName + "')";
+        // //console.log(cqlFilter, "filterr")
+
+        var geoServerURL = "https://iwmsgis.pmc.gov.in//geoserver/AutoDCR/wms?service=WFS&version=1.1.0&request=GetFeature&typeName=Revenue_1&propertyName=village_name&outputFormat=application/json&CQL_FILTER=" + encodeURIComponent(cqlFilter);
 
         $.getJSON(geoServerURL)
             .done(function (data) {
-                var villageSet = new Set();
-                data.features.forEach(function (feature) {
-                    villageSet.add(feature.properties.village_name);
-                });
-
+                villageArray = villageArray.sort();
+                // //console.log(villageArray, "villageArray")
                 var select = document.getElementById("search_type");
-                villageSet.forEach(function (village) {
+                villageArray.forEach(function (village) {
                     var option = document.createElement("option");
                     option.text = village?.trim();
                     option.value = village?.trim();
                     //if village_name == option value set it as selected
                     select.appendChild(option);
+
                 });
 
 
+                // $("#search_type").prop("disabled", true);
+
                 if (village_name && select) {
                     select.value = village_name;
+                    // //console.log(select.value, "pppppp")
                     var Village_name = 'village_name'
-                    let filters = `${Village_name} = '${village_name}'`;
+                    // let filters = `${Village_name} = '${village_name}'`;
+                    var selectedValue = document.getElementById("search_type").value;
+                    // //console.log("gheheheehehehheeh", selectedValue)
+
+                    // var selectedValueVillage = village_name
+                    var Village_name = 'village_name'
+                    // filters = `${Village_name} = '${selectedValueVillage}'`;
+                    filters = `village_name ='${selectedValue}' OR TPS_Name ='${selectedValue}'`;
 
 
                     FitbouCustomiseRevenue(filters)
                     Revenue_Layer.setParams({
                         CQL_FILTER: filters,
-                        maxZoom: 19.5,
+                        maxZoom: 19.9,
                         styles: "Highlight_polygon"
                     });
+
                     Revenue_Layer.addTo(map).bringToFront();
 
                     function getvalues(callback) {
                         if (!filters.trim()) {
                             // If filters are empty, call the callback with an empty array
-                            console.log("No filters provided, skipping data fetch.");
+                            // //console.log("No filters provided, skipping data fetch.");
                             if (callback && typeof callback === "function") {
                                 callback([]);
                             }
@@ -449,17 +481,29 @@ $(document).ready(function () {
                                 gutvalues.add(gutss);
                             });
                             var Uniqueguts = Array.from(gutvalues);
+                            Uniqueguts.sort((a, b) => {
+                                if (a < b) {
+                                    return -1;
+                                }
+                                if (a > b) {
+                                    return 1;
+                                }
+                                return 0;
+                            });
+                            // //console.log(Uniqueguts, "Uniqueguts")
                             if (callback && typeof callback === "function") {
                                 callback(Uniqueguts);
                             }
                         });
                     }
 
+
+
                     getvalues(function (Uniqueguts) {
 
                         var stateList = $('#stateList');
                         stateList.empty();
-                        // console.log(stateList,"stateList")
+                        // //console.log(stateList,"stateList")
                         _.each(Uniqueguts, function (state) {
                             var listItem = $('<li><input name="' + state + '" type="checkbox"><label for="' + state + '">' + state + '</label></li>');
                             stateList.append(listItem);
@@ -491,40 +535,79 @@ $(document).ready(function () {
                                 var numChecked = container.find('[type="checkbox"]:checked').length;
                                 container.find('.quantity').text(numChecked || 'Any');
                             });
-
-
                     });
                 }
 
             })
             .fail(function (jqxhr, textStatus, error) {
                 var err = textStatus + ", " + error;
-                console.log("Request Failed: " + err);
             });
     }
 });
 
+
 $("#search_type").change(function () {
+    const villageEntry = handshaking_codes.find(entry => entry.code === handshakingCode);
+    const village_name = villageEntry ? villageEntry.name : null;
+    const TpsName = villageEntry ? villageEntry.tps_name : null;
     var selectedValueVillage = $(this).val();
-    var Village_name = 'village_name'
-    let filters = `${Village_name} = '${selectedValueVillage}'`;
+    // //console.log(selectedValueVillage, "selectedValueVillage")
+    let filters;
 
+    // Check if selectedValueVillage exists in village_name column
+    if (village_name && village_name.includes(selectedValueVillage)) {
+        filters = `village_name ='${selectedValueVillage}'`;
+    } else {
+        // Check if selectedValueVillage exists in TPS_Name column
+        if (TpsName && TpsName.includes(selectedValueVillage)) {
+            filters = `TPS_Name ='${selectedValueVillage}'`;
+        } else {
+            // If neither column matches selectedValueVillage
+            filters = `village_name ='${selectedValueVillage}' AND TPS_Name ='${selectedValueVillage}'`;
+        }
+    }
 
-    // Update Revenue_Layer with new CQL_FILTER
 
     FitbouCustomiseRevenue(filters)
     Revenue_Layer.setParams({
         CQL_FILTER: filters,
-        maxZoom: 19.5,
+        maxZoom: 19.9,
         styles: "Highlight_polygon"
     });
-    Revenue_Layer.addTo(map).bringToFront();;
+    Revenue_Layer.addTo(map).bringToFront();
+
+
+
+
+    function populateDropdown(gutValues) {
+        const stateList = $('#stateList');
+        stateList.empty(); // Clear previous options
+
+        if (gutValues.length === 0) {
+            stateList.append('<li>No options available</li>');
+            return;
+        }
+
+        gutValues.forEach(gut => {
+            stateList.append(`<li>${gut}</li>`);
+        });
+    }
+
+    // Event handling for dropdown display
+    $('.dropdown-button').click(function () {
+        $('.dropdown-list').toggle();
+    });
+
+    $(document).click(function (event) {
+        if (!$(event.target).closest('.dropdown-container').length) {
+            $('.dropdown-list').hide();
+        }
+    });
 
     function getvalues(callback) {
 
         if (!filters.trim()) {
-            // If filters are empty, call the callback with an empty array
-            console.log("No filters provided, skipping data fetch.");
+            // //console.log("No filters provided, skipping data fetch.");
             if (callback && typeof callback === "function") {
                 callback([]);
             }
@@ -545,19 +628,23 @@ $("#search_type").change(function () {
                 gutvalues.add(gutss);
             });
             var Uniqueguts = Array.from(gutvalues);
+
+            // //console.log("Unique Gut Numbers:", Uniqueguts);
+
             if (callback && typeof callback === "function") {
                 callback(Uniqueguts);
             }
         });
     }
 
-    // Call getvalues function and pass a callback function to handle Uniqueguts
+
+
     getvalues(function (Uniqueguts) {
-        // console.log(Uniqueguts, "Uniqueguts");
+        // //console.log(Uniqueguts, "Uniqueguts");
 
         var stateList = $('#stateList');
         stateList.empty();
-        // console.log(stateList,"stateList")
+        // //console.log(stateList,"stateList")
         _.each(Uniqueguts, function (state) {
             var listItem = $('<li><input name="' + state + '" type="checkbox"><label for="' + state + '">' + state + '</label></li>');
             stateList.append(listItem);
@@ -597,19 +684,24 @@ $("#search_type").change(function () {
 })
 
 $(document).on('change', '#stateList input[type="checkbox"]', function () {
-    // console.log("hehehe")
+    // //console.log("hehehe")
     getFiltersval()
     var cqlFilter = getSelectedValues();
-    // console.log(cqlFilter, "Selected filters");
-
-    // Update the map with the new filter
-    FitbouCustomiseRevenue(cqlFilter);
-    Revenue_Layer1.setParams({
-        CQL_FILTER: cqlFilter,
-        maxZoom: 23,
-        styles: "Highlight_polygon1"
-    });
-    Revenue_Layer1.addTo(map).bringToFront();
+    // //console.log(cqlFilter, "Selected filters");
+    if (cqlFilter) {
+        // Update the map with the new filter
+        FitbouCustomiseRevenue(cqlFilter);
+        Revenue_Layer1.setParams({
+            CQL_FILTER: cqlFilter,
+            maxZoom: 19.9,
+            styles: "Highlight_polygon1"
+        });
+        Revenue_Layer1.addTo(map).bringToFront();
+    }
+    else {
+        // FitbouCustomiseRevenue(cqlFilter);
+        // //console.log("No filters selected");
+    }
 });
 
 
@@ -619,10 +711,8 @@ function getFiltersval() {
     const villageEntry = handshaking_codes.find(entry => entry.code === handshakingCode);
     const selectedValueVillage = villageEntry ? villageEntry.name : null;
 
-    // var selectedValueVillage = village_name
-    var Village_name = 'village_name'
-    filters = `${Village_name} = '${selectedValueVillage}'`;
-    // console.log(filters, "filtersjjjjjjjjjjjjjjj")
+
+    //console.log(filters, "filtersjjjjjjjjjjjjjjj")
 }
 
 
@@ -630,9 +720,10 @@ function getFiltersval() {
 function getSelectedValues() {
     var selectedValues = [];
 
-    // console.log("pass")
+    // //console.log("pass")
     $('input[type="checkbox"]:checked').each(function () {
         var name = $(this).attr('name');
+        // //console.log(name, "selecffffffffffffff")
         if (name !== undefined) {
             selectedValues.push("'" + name + "'");
         }
@@ -643,7 +734,7 @@ function getSelectedValues() {
     } else {
         cqlFilterGut = ""
     }
-    // console.log(cqlFilterGut, "cqlFilterGut")
+    // //console.log(cqlFilterGut, "cqlFilterGut")
 
     var cqlFilter = "";
     if (cqlFilterGut && filters) {
@@ -661,7 +752,8 @@ var button = L.control({ position: 'bottomright' });
 
 button.onAdd = function (map) {
     var div = L.DomUtil.create('div', 'custom-button');
-    div.innerHTML = '<button onclick="savevalues()" >Next  <i class="fa-regular fa-circle-right"></i></button>';
+    div.innerHTML = '<button onclick="savevalues()">Next <img src="png/formkit_submit.png" alt="" style="width: 20px; height: 19px; vertical-align: middle;"></button>';
+
     return div;
 };
 
@@ -697,8 +789,8 @@ function FitbouCustomiseRevenue(filter) {
 
             // for degree upadates lattitude
             if (latsouth === latnorth) {
-                // console.log("heeee");
-                // console.log(latsouth, latnorth);
+                // //console.log("heeee");
+                // //console.log(latsouth, latnorth);
                 latitudeDegreesInput.removeAttribute('readonly');
                 latitudeDegreesInput.value = latsouth;
                 latitudeDegreesInput.setAttribute('readonly', 'readonly');
@@ -712,8 +804,8 @@ function FitbouCustomiseRevenue(filter) {
             // for minutes update only latitude
 
             if (latsouthM === latnorthM) {
-                // console.log("heeee");
-                // console.log(latsouthM, latnorthM);
+                // //console.log("heeee");
+                // //console.log(latsouthM, latnorthM);
                 latitudeMinutesInput.removeAttribute('readonly');
                 latitudeMinutesInput.removeAttribute('value');
                 latitudeMinutesInput.value = latsouthM;
@@ -729,19 +821,19 @@ function FitbouCustomiseRevenue(filter) {
             lngnorth = parseInt(Math.floor(geojson.getBounds()._northEast.lng))
             lngsouthM = parseInt(Math.floor((geojson.getBounds()._southWest.lng % 1) * 60))
             lngnorthM = parseInt(Math.floor((geojson.getBounds()._northEast.lng % 1) * 60))
-            console.log(lngsouth, lngnorth)
+            //console.log(lngsouth, lngnorth)
 
             // for longitude degree update
             if (lngsouth === lngnorth) {
-                // console.log("heeee")
-                // console.log(lngsouth,lngnorth)
+                // //console.log("heeee")
+                // //console.log(lngsouth,lngnorth)
                 longitudeDegreesInput.removeAttribute('value');
                 longitudeDegreesInput.value = lngnorth;
                 longitudeDegreesInput.setAttribute('readonly', 'readonly');
             } else {
 
                 // Update longitude input field
-                // console.log("nooooooooooooooooo")
+                // //console.log("nooooooooooooooooo")
                 longitudeDegreesInput.removeAttribute('readonly');
                 longitudeDegreesInput.removeAttribute('value');
                 longitudeDegreesInput.setAttribute('min', lngsouth);
@@ -751,8 +843,8 @@ function FitbouCustomiseRevenue(filter) {
             // for munites onlys longitude
 
             if (lngsouthM === lngnorthM) {
-                // console.log("heeee")
-                // console.log(lngsouth,lngnorth)
+                // //console.log("heeee")
+                // //console.log(lngsouth,lngnorth)
                 longitudeMinutesInput.removeAttribute('readonly')
                 longitudeMinutesInput.removeAttribute('value');
                 longitudeMinutesInput.value = lngnorthM;
@@ -760,7 +852,7 @@ function FitbouCustomiseRevenue(filter) {
             } else {
 
                 // Update longitude input field
-                // console.log("nooooooooooooooooo")
+                // //console.log("nooooooooooooooooo")
                 longitudeMinutesInput.removeAttribute('readonly');
                 longitudeMinutesInput.removeAttribute('value');
                 longitudeMinutesInput.setAttribute('min', lngsouthM);
@@ -821,13 +913,13 @@ function processKML(kmlString) {
         keysList.forEach(key => {
             var polygonLayer = layer._layers[key];
 
-            console.log('polygonLayer',polygonLayer);
+            // //console.log('polygonLayer', polygonLayer);
 
             drawnItems.addLayer(polygonLayer);
 
             var polygonId = 'polygon_' + L.stamp(polygonLayer);
             drawnPolygons[polygonId] = polygonLayer.toGeoJSON().geometry.coordinates;
-            console.log('hhhhhhhhhokkkk',polygonLayer.toGeoJSON().geometry.coordinates);
+            // //console.log('hhhhhhhhhokkkk', polygonLayer.toGeoJSON().geometry.coordinates);
 
             // Attach the polygonId to the layer for future reference
             polygonLayer.polygonId = polygonId;
@@ -837,12 +929,12 @@ function processKML(kmlString) {
         // drawnPolygons[polygonId] = layer.toGeoJSON().features[0].geometry.coordinates;
         // drawnPolygons[polygonId].enableEdit();
         // polygonLayer.polygonId = polygonId;
-//         map.fitBounds(layer.getBounds());
-//     } else {
-//         alert('Invalid KML/KMZ file.');
-//     }
-// }
-map.fitBounds(layer.getBounds());
+        //         map.fitBounds(layer.getBounds());
+        //     } else {
+        //         alert('Invalid KML/KMZ file.');
+        //     }
+        // }
+        map.fitBounds(layer.getBounds());
     } else {
         alert('Invalid KML/KMZ file.');
     }
@@ -853,7 +945,7 @@ function processCSV(kmlContent) {
     var data = Papa.parse(kmlContent, { header: true, dynamicTyping: true }).data;
     data = data.filter(row => row.latitude !== null && row.longitude !== null);
     var polygon = L.polygon(data.map(coord => [coord.latitude, coord.longitude])).addTo(map);
-    console.log("oooooooooooooooooo", polygon)
+    // //console.log("oooooooooooooooooo", polygon)
     if (polygon.getBounds().isValid()) {
 
         var polygonLayer = polygon;
@@ -861,7 +953,7 @@ function processCSV(kmlContent) {
         // // for saving coordinates
         // var polygonId = 'polygon_csv'
         // drawnPolygons[polygonId] = polygon.toGeoJSON().geometry.coordinates;
-        // // console.log(drawnPolygons, "drawnPolygons", "polygonCounter");
+        // // //console.log(drawnPolygons, "drawnPolygons", "polygonCounter");
 
         var polygonId = 'polygon_' + L.stamp(polygon); // Use a unique ID for each polygon
 
@@ -869,10 +961,10 @@ function processCSV(kmlContent) {
 
         // Attach the polygonId to the layer for future reference
         polygon.polygonId = polygonId;
-        
+
         // Save coordinates
         drawnPolygons[polygonId] = polygon.toGeoJSON().geometry.coordinates;
-        console.log('hhhhhhhhhokkkk',polygonLayer.toGeoJSON().geometry.coordinates);
+        // //console.log('hhhhhhhhhokkkk', polygonLayer.toGeoJSON().geometry.coordinates);
 
         map.fitBounds(polygon.getBounds());
 
@@ -887,7 +979,7 @@ function processCSV(kmlContent) {
 
 document.getElementById('toggleFormBtn').addEventListener('click', function () {
     var selectedVillage = document.getElementById("search_type").value;
-    console.log(selectedVillage, "selectedVillage")
+    //console.log(selectedVillage, "selectedVillage")
 
 
     var formContainer = document.getElementById('formContainer');
@@ -949,7 +1041,7 @@ function updateFirstRowValues(table) {
 
 function addCoordinateRow(table) {
     // var selectedVillage = document.getElementById("search_type").value;
-    // console.log(selectedVillage,"selectedVillage")
+    // //console.log(selectedVillage,"selectedVillage")
     var row = table.insertRow();
     var longitudeDegreesCell = row.insertCell();
     var longitudeMinutesCell = row.insertCell();
@@ -969,7 +1061,7 @@ function addCoordinateRow(table) {
     longitudeDegreesInput.value = '73';
     longitudeDegreesInput.style.width = '40px';
     longitudeDegreesInput.style.position = 'absolute';
-    longitudeDegreesInput.style.left = '1%';
+    longitudeDegreesInput.style.left = '6%';
     // longitudeDegreesInput.style.marginRight = '5px';
     longitudeDegreesInput.style.borderBottomLeftRadius = '5px';
     longitudeDegreesInput.style.borderTopLeftRadius = '5px';
@@ -987,7 +1079,7 @@ function addCoordinateRow(table) {
     longitudeMinutesInput.setAttribute('name', 'longitudeMinutes[]');
     longitudeMinutesInput.style.width = '40px';
     longitudeMinutesInput.style.position = 'absolute';
-    longitudeMinutesInput.style.left = '8%';
+    longitudeMinutesInput.style.left = '14%';
     // longitudeMinutesInput.style.marginRight = '5px';
     longitudeMinutesInput.style.borderTop = '2px solid  #3c3cb8';
     longitudeMinutesInput.style.borderBottom = '2px solid  #3c3cb8';
@@ -1003,7 +1095,7 @@ function addCoordinateRow(table) {
     longitudeSecondsInput.setAttribute('step', 'any');
     longitudeSecondsInput.style.width = '59px';
     longitudeSecondsInput.style.position = 'absolute';
-    longitudeSecondsInput.style.left = '16%';
+    longitudeSecondsInput.style.left = '22%';
     // longitudeSecondsInput.style.marginRight = '5px'; 
     longitudeSecondsInput.style.borderTop = '2px solid  #3c3cb8';
     longitudeSecondsInput.style.borderBottom = '2px solid #3c3cb8';
@@ -1024,7 +1116,8 @@ function addCoordinateRow(table) {
     latitudeDegreesInput.value = '18';
     latitudeDegreesInput.style.width = '50px';
     latitudeDegreesInput.style.position = 'absolute';
-    latitudeDegreesInput.style.left = '32%';
+    latitudeDegreesInput.style.left = '39%';
+
     // latitudeDegreesInput.style.marginRight = '15px'; 
     latitudeDegreesInput.style.borderBottomLeftRadius = '5px';
     latitudeDegreesInput.style.borderTopLeftRadius = '5px';
@@ -1041,7 +1134,7 @@ function addCoordinateRow(table) {
     latitudeMinutesInput.setAttribute('name', 'latitudeMinutes[]');
     latitudeMinutesInput.style.width = '40px';
     latitudeMinutesInput.style.position = 'absolute';
-    latitudeMinutesInput.style.left = '40%';
+    latitudeMinutesInput.style.left = '47%';
     latitudeMinutesInput.style.borderTop = '2px solid  #3c3cb8';
     latitudeMinutesInput.style.borderBottom = '2px solid  #3c3cb8';
     latitudeMinutesInput.style.borderLeft = '2px solid  #bbb';
@@ -1057,7 +1150,7 @@ function addCoordinateRow(table) {
     latitudeSecondsInput.setAttribute('step', 'any');
     latitudeSecondsInput.style.width = '60px';
     latitudeSecondsInput.style.position = 'absolute';
-    latitudeSecondsInput.style.left = '48%';
+    latitudeSecondsInput.style.left = '55%';
     latitudeSecondsInput.style.borderTop = '2px solid  #3c3cb8';
     latitudeSecondsInput.style.borderBottom = '2px solid #3c3cb8';
     latitudeSecondsInput.style.borderRight = '2px solid #3c3cb8';
@@ -1075,7 +1168,9 @@ function addCoordinateRow(table) {
     // heightfloatCellInput.value = '73';
     heightfloatCellInput.style.width = '70px';
     heightfloatCellInput.style.position = 'absolute';
-    heightfloatCellInput.style.left = '65%';
+    heightfloatCellInput.style.left = '75%';
+    heightfloatCellInput.style.left = '74%';
+
     // longitudeDegreesInput.style.marginRight = '5px';
     heightfloatCellInput.style.borderBottomLeftRadius = '5px';
     heightfloatCellInput.style.borderTopLeftRadius = '5px';
@@ -1101,7 +1196,8 @@ function addCoordinateRow(table) {
 
     updateFirstRowValues(table);
 
-    actionCell.innerHTML = '<button type="button" class="deleteRowBtn"><i class="fa-solid fa-trash-can"></i></button>';
+    actionCell.innerHTML = '<button type="button" class="deleteRowBtn"><img src="png/delete.svg" alt="Delete" style=""></button>';
+
     // Add event istener to delete button
     var deleteBtn = actionCell.querySelector('.deleteRowBtn');
 
@@ -1115,7 +1211,7 @@ document.getElementById('coordinateForm').addEventListener('submit', function (e
     event.preventDefault();
     var formData = new FormData(this);
     var coordinates = [];
-    console.log("Form submitted. Form data:", formData);
+    // //console.log("Form submitted. Form data:", formData);
     // Process form data here
     formData.getAll('longitudeDegrees[]').forEach(function (longitudeDegrees, index) {
         var longitudeMinutes = formData.getAll('longitudeMinutes[]')[index];
@@ -1138,16 +1234,13 @@ document.getElementById('coordinateForm').addEventListener('submit', function (e
         alert('Please enter at least four coordinates.');
         return;
     } else {
-        console.log(coordinates, "coordinates")
+        // //console.log(coordinates, "coordinates")
         var polygon = L.polygon(coordinates).addTo(map);// Function to open the legend div when clicked
         function openLegend() {
             var legendDiv = document.querySelector('.info.legend');
             legendDiv.style.display = 'block';
         }
-
-
         document.querySelector('.info.legend').addEventListener('click', openLegend);
-
         document.addEventListener('click', function (event) {
             var legendDiv = document.querySelector('.info.legend');
             if (!legendDiv.contains(event.target)) {
@@ -1157,27 +1250,14 @@ document.getElementById('coordinateForm').addEventListener('submit', function (e
 
         map.fitBounds(polygon.getBounds());
 
-        // var polygonId = 'polygon_coors'
-
-
-
         var polygonId = 'polygon_' + L.stamp(polygon); // Use a unique ID for each polygon
-
-        // drawnItems.addLayer(polygon);
-
-        // Attach the polygonId to the layer for future reference
         polygon.polygonId = polygonId;
-
-
-
         drawnPolygons[polygonId] = polygon.toGeoJSON().geometry.coordinates;
-
-        console.log('888888888888',polygon.toGeoJSON().geometry.coordinates);
-
+        // //console.log('888888888888', polygon.toGeoJSON().geometry.coordinates);
         var polygonLayer = polygon;
         drawnItems.addLayer(polygonLayer);
 
-        console.log(drawnPolygons, "drawnPolygons", "polygonCounter");
+        // //console.log(drawnPolygons, "drawnPolygons", "polygonCounter");
     }
 });
 
@@ -1203,7 +1283,8 @@ let filters = '';
 $("#search_type").change(function () {
     var selectedValueVillage = $(this).val();
     var Village_name = 'village_name'
-    filters = `${Village_name} = '${selectedValueVillage}'`;
+    var TPS_name = 'TPS_Name'
+    filters = `${Village_name} = '${selectedValueVillage}' OR ${TPS_name} = '${selectedValueVillage}'`;
 });
 
 // Function to return the filters value
@@ -1214,26 +1295,17 @@ function getFilters() {
 
 
 async function savevalues() {
-    console.log("Drawn polygons:", drawnPolygons);
+    // //console.log("Drawn polygons:", drawnPolygons);
 
     if (Object.keys(drawnPolygons).length === 0) {
         alert("Please draw a polygon / upload KML , KMZ , CSV / Add Coordinates before proceeding.");
     } else {
         Object.keys(drawnPolygons).forEach(async function (polygonId) {
-            console.log(polygonId, "polygonIdpolygonIdpolygonIdpolygonIdpolygonIdpolygonId")
+            // //console.log(polygonId, "polygonIdpolygonIdpolygonIdpolygonIdpolygonIdpolygonId")
             var coordinates = drawnPolygons[polygonId]
-            console.log('coordinates111111',coordinates);
+            // //console.log('coordinates111111', coordinates);
 
 
-            // console.log(drawnPolygons,"layerrrrssssssssddddddddddddd")
-
-            // for (const polygonId in drawnPolygons) {
-
-            //     var layer = drawnPolygons[polygonId];
-            //     // console.log(layer,"layerrrrssssssssddddddddddddd")
-            //      var drawnPolygon = layer.toGeoJSON();
-            //     //  console.log(drawnPolygon,"drawnPolygon")
-            //     var coordinates = drawnPolygon.geometry.coordinates;
             var pp = turf.polygon(coordinates);
 
             var bbox = turf.bbox(pp); // bbox is [minX, minY, maxX, maxY]
@@ -1241,7 +1313,7 @@ async function savevalues() {
                 [bbox[1], bbox[0]], // Southwest coordinate (minY, minX)
                 [bbox[3], bbox[2]]  // Northeast coordinate (maxY, maxX)
             ]);
-            // console.log('pp',pp);
+            // //console.log('pp',pp);
             map.fitBounds(bounds);
             var layers = ["AutoDCR:Revenue_1"];
 
@@ -1255,21 +1327,229 @@ async function savevalues() {
             const selected_guts = JSON.stringify(getSelectedValues1());
             const selected_village = JSON.stringify(getFilters());
 
+
+            // new added___________________________________________
+
+            var layers2 = ["AutoDCR:TOD_Zones", "AutoDCR:TDR_Zones", "AutoDCR:JE_Names", "AutoDCR:DevelopmentRestriction", "AutoDCR:Garden",
+                "AutoDCR:PMC_Reservation", "AutoDCR:Red_Blue", "AutoDCR:Yerwada_Jail", "AutoDCR:Railway_Buffer", "AutoDCR:Lake", "AutoDCR:Monuments", "AutoDCR:Aviation_data"];
+            var restriction_details = await Intersection(pp, layers2, url, propertyName, bounds.toBBoxString(), outputFormat)
+            //console.log(restriction_details, "restriction_details")
+
+
+
+            // Start building the HTML table
+            let htmlTable = "<table class='thin-lines'>";
+
+            htmlTable += "<tr>";
+            htmlTable += "<th>Layer Name</th>";
+            htmlTable += "<th>Attribute</th>";
+            htmlTable += "<th>% of Area Affected</th>";
+            htmlTable += "</tr>";
+
+            // Loop through each key in the data
+            for (let key in restriction_details) {
+                // Start a new row for each key
+                htmlTable += "<tr>";
+
+                // Add the key to the first column
+                htmlTable += "<td>" + key + "</td>";
+
+                // Add the first value of the key to the second column
+                htmlTable += "<td>" + restriction_details[key][0][0] + "</td>";
+
+                // Add the second value of the key to the third column
+                htmlTable += "<td>" + restriction_details[key][0][1] + "</td>";
+
+                // Close the row
+                htmlTable += "</tr>";
+            }
+
+            // Close the table
+            htmlTable += "</table>";
+
+            //console.log(htmlTable);
+
+            var restriction_detail = JSON.stringify(restriction_details)
+
+            // code for lat and lag show in table 
+            function generateCoordinatesTable(dmsCoordinates) {
+
+                let uniqueCoordinates = [];
+                let seenCoordinates = new Set();
+
+                dmsCoordinates.forEach((coord) => {
+                    let coordString = `${coord[0]}_${coord[1]}`;
+                    if (!seenCoordinates.has(coordString)) {
+                        uniqueCoordinates.push(coord);
+                        seenCoordinates.add(coordString);
+                    }
+                });
+
+                let tableHtml = `
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">Sr. No.</th>
+                        <th scope="col">Latitude</th>
+                        <th scope="col">Longitude</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
+                uniqueCoordinates.forEach((coord, index) => {
+                    tableHtml += `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>${coord[0]}</td>
+                    <td>${coord[1]}</td>
+                </tr>
+            `;
+                });
+
+                tableHtml += `
+            </tbody>
+        </table>
+        `;
+
+                return tableHtml;
+            }
+
+            function showTableModal(data) {
+                var modal = $('#dataPageModal');
+                var table = modal.find('#popup-table tbody');
+
+                // Clear existing rows
+                table.empty();
+
+                data.forEach(function (item) {
+                    var attribute = item[0];
+                    var result = item[1];
+                    //console.log(item, "item")
+
+                    if (attribute === 'Coordinates') {
+                        // Generate nested table HTML for coordinates
+                        var coordinatesTableHtml = generateCoordinatesTable(result);
+
+                        // Append a row with nested table HTML
+                        table.append(`
+                    <tr>
+                        <td>${attribute}</td>
+                        <td>${coordinatesTableHtml}</td>
+                    </tr>
+                `);
+                
+                        //console.log(coordinatesTableHtml, "coordinatesTableHtml")
+                    }
+                    // else if{}
+                     else {
+                        // For other attributes, just append them normally
+                        table.append(`
+                    <tr>
+                        <td>${attribute}</td>
+                        <td>${result}</td>
+                    </tr>
+                `);
+                    }
+                 
+                });
+
+                // Show the modal
+                modal.modal('show');
+            }
+
+
             const coordinates1 = coordinates[0].map(coord => [coord[0], coord[1]]);
-            // console.log(coordinates1,"edited")
+            const correctedCoordinates = coordinates1.map(coord => [coord[1], coord[0]]);
+            console.log(correctedCoordinates, "correctedCoordinates");
+            // console.log(coordinates1,"coordinates221")
+            const mapBounds = L.latLngBounds(correctedCoordinates);
+            // //console.log(coordinates1,"edited")
             // This is converting decimal degrees to degree minutes and seconds
             const dmsCoordinates = coordinates1.map(coord => [convertToDMS(coord[0]), convertToDMS(coord[1])]);
+            console.log(dmsCoordinates, "dmsCoordinates")
 
-            // console.log("DMS Coordinates:", dmsCoordinates);
+            // Create a div for the map dynamically
+            var mspd = `<div id="newMap" style="height: 250px; width: 100%; margin-top: 20px; .leaflet-touch .leaflet-bar a {
+                    width: 20px;
+                    height: 21px;
+                    line-height: 30px;
+                    }"></div>`;
 
+            // Example data for the table
             var exampleData = [
+                ['\Preview map', mspd],
                 ['Draw Village Name', villageName],
                 ['Selected Village From Dropdown', selected_village],
                 ['Selected Survey Number From Dropdown', selected_guts],
-                ['Coordinates', dmsCoordinates]
+                ['Coordinates', dmsCoordinates],
+
+                ['Restrictions', htmlTable]
             ];
 
             showTableModal(exampleData);
+
+            // Initialize the map only after the modal is shown
+            $('#dataPageModal').on('shown.bs.modal', function () {
+                if (document.getElementById("newMap")) {
+                    // Initialize the new map
+                    newMap = L.map("newMap", {
+                        center: [18.52, 73.89], // Default center
+                        zoom: 11,
+                        minZoom: 12,
+                        maxZoom: 18,
+                        boxZoom: true,
+                        trackResize: true,
+                        wheelPxPerZoomLevel: 40,
+                        zoomAnimation: true,
+                    });
+
+                    var Esri_WorldImagery = L.tileLayer(
+                        "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+                        {
+                            maxZoom: 18,
+                        }
+                    ).addTo(newMap);
+
+                    let polygon;
+
+                        // Function to update the polygon
+                        function updatePolygon(newCoordinates) {
+                           
+                            if (polygon) {
+                                // Remove the old polygon
+                                newMap.removeLayer(polygon);
+                            }
+
+                            // Create a new polygon
+                            polygon = L.polygon(newCoordinates, {
+                                color: 'blue',
+                                weight: 3,
+                                fillOpacity: 0.2
+                            }).addTo(newMap);
+                        }
+
+                        // Example usage with correctedCoordinates
+                        updatePolygon(correctedCoordinates);
+                        console.log(correctedCoordinates,"newCoordinates1")
+                    // Ensure the map has loaded fully before fitting to bounds
+                    setTimeout(function () {
+                        newMap.invalidateSize();
+                        newMap.fitBounds(mapBounds);
+
+                        console.log(correctedCoordinates,"newCoordinates1")
+                        // L.polygon(correctedCoordinates, {
+                        //     color: 'blue',       // Border color
+                        //     weight: 3,          // Border thickness
+                        //     fillOpacity: 0.2    // Transparency for the filled area
+                        // }).addTo(newMap);
+                        
+
+                    }, 500); // Increased timeout for map loading
+                }
+            });
+
+
         }
         )
     }
@@ -1295,25 +1575,25 @@ function convertToDMS(decimal) {
 
 async function submitForm() {
     // alert("Data Saved")
-    // console.log(drawnPolygons, "drawnPolygonslllllllllll")
+    // //console.log(drawnPolygons, "drawnPolygonslllllllllll")
 
     for (const polygonId in drawnPolygons) {
         // var polygonId= "";
         var coordinates = drawnPolygons[polygonId];
-        console.log('coordinatessubmit',coordinates);
-        // console.log(layer,"layerlayer")
+        // //console.log('coordinatessubmit', coordinates);
+        // //console.log(layer,"layerlayer")
         var pp = turf.polygon(coordinates);
 
         localStorage.setItem('coordinates', coordinates);
 
         var bbox = turf.bbox(pp); // bbox is [minX, minY, maxX, maxY]
-        console.log(bbox, "bboc")
+        // //console.log(bbox, "bboc")
         var bounds = L.latLngBounds([
             [bbox[1], bbox[0]], // Southwest coordinate (minY, minX)
             [bbox[3], bbox[2]]  // Northeast coordinate (maxY, maxX)
         ]);
         localStorage.setItem('bounds', bbox);
-        console.log(coordinates, "updateed")
+        // //console.log(coordinates, "updateed")
         var pp = turf.polygon(coordinates);
         // L.geoJSON(pp).addTo(map)
         var bounds = L.geoJSON(pp).getBounds();
@@ -1332,7 +1612,7 @@ async function submitForm() {
         const coordinates1 = coordinates[0].map(coord => [coord[0], coord[1]]);
 
         // const dmsCoordinates = coordinates1.map(coord => [convertToDMS(coord[0]), convertToDMS(coord[1])]);
-        console.log(cqlFilterget, "cqlFilterget", selected_dropdown, "selected_dropdown", villageName, "villageName", selected_guts, "selected_guts", selected_village, "selected_village", "coordinate111111", coordinates1)
+        // //console.log(cqlFilterget, "cqlFilterget", selected_dropdown, "selected_dropdown", villageName, "villageName", selected_guts, "selected_guts", selected_village, "selected_village", "coordinate111111", coordinates1)
         // alert("Data saved")
 
 
@@ -1353,10 +1633,10 @@ async function submitForm() {
             }),
             success: function (response) {
 
-                // console.log("Coordinates saved successfully", response);
+                // //console.log("Coordinates saved successfully", response);
                 localStorage.setItem('lastInsertedPlotBoundaryId', response.data.id);
                 // localStorage.setItem('coordinates',coordinates1);
-                // console.log("localstorage")
+                // //console.log("localstorage")
 
                 window.location.href = 'dashboard.html';
 
@@ -1368,7 +1648,7 @@ async function submitForm() {
 
             },
             error: function (xhr, status, error) {
-                console.error("Failed to save coordinates:", error);
+                // console.error("Failed to save coordinates:", error);
             }
         });
 
@@ -1410,9 +1690,9 @@ async function submitForm() {
                 },
             }),
             success: function (response) {
-                console.log('API response received:', response);
+                //console.log('API response received:', response);
                 if (response.Status) {
-                    // window.location.href = 'data.html';
+                    window.location.href = 'data.html';
                 }
             },
             error: function (xhr, status, error) {
@@ -1432,23 +1712,25 @@ document.getElementById("getinfo").onclick = function () {
 
 function infovalues() {
     if (Object.keys(drawnPolygons).length === 0) {
-        alert("No coordinates drawn on map.");
+        // alert("No coordinates drawn on map.");
         return; // Exit the function early
     }
 
     Object.keys(drawnPolygons).forEach(async function (polygonId) {
         var coordinates = drawnPolygons[polygonId];
-        // console.log(coordinates, "drawcoordinates")
+        // //console.log(coordinates, "drawcoordinates")
         var pp = turf.polygon(coordinates);
         L.geoJSON(pp).addTo(map)
         var bounds = L.geoJSON(pp).getBounds();
         map.fitBounds(bounds);
+        var layers2 = ["AutoDCR:Aviation_data", "AutoDCR:TOD_Zones", "AutoDCR:TDR_Zones", "AutoDCR:JE_Names"];
         var layers1 = ["AutoDCR:Aviation_data"];
         var url = "https://iwmsgis.pmc.gov.in//geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=";
         var propertyName1 = "zone,distance,elevation,geom";
         var outputFormat = "application/json";
         IntersectwithASLM(pp, layers1, url, propertyName1, bounds.toBBoxString(), outputFormat)
-        // console.log("working")
+        var restriction_details = await Intersection(pp, layers2, url, propertyName1, bounds.toBBoxString(), outputFormat)
+        //console.log(restriction_details, "restriction_details")
 
     })
 };
@@ -1461,8 +1743,6 @@ async function IntersectAreaWithPolygon(drawnPolygon, layers, url, propertyName,
             "&propertyName=" + propertyName + "&bbox=" +
             bounds +
             "&outputFormat=" + outputFormat;
-
-
         return new Promise((resolve, reject) => {
             $.getJSON(urlm, function (data) {
                 if (data && data.features && data.features.length > 0) {
@@ -1484,7 +1764,7 @@ async function IntersectAreaWithPolygon(drawnPolygon, layers, url, propertyName,
                     });
                     resolve(summaryByVillage);
                 } else {
-                    console.log('No valid features found in the response.');
+                    //console.log('No valid features found in the response.');
                     resolve([]);
                 }
             }).fail(function () {
@@ -1504,12 +1784,12 @@ async function IntersectAreaWithPolygon(drawnPolygon, layers, url, propertyName,
 function IntersectwithASLM(drawnPolygon, layers, url, propertyName, bounds, outputFormat) {
     var distancefromNDA = []
     var distancefromPuneairport = []
-    let requests = layers.map(function (layerName) {
+    layers.map(function (layerName) {
         var urlm = url + layerName +
             "&propertyName=" + propertyName + "&bbox=" +
             bounds +
             "&outputFormat=" + outputFormat;
-
+        // //console.log(urlm)
         return new Promise((resolve, reject) => {
             $.getJSON(urlm, function (data) {
                 if (data && data.features && data.features.length > 0) {
@@ -1537,8 +1817,9 @@ function IntersectwithASLM(drawnPolygon, layers, url, propertyName, bounds, outp
                     // intersectedLayer.addTo(map);
                     intersectedLayer.eachLayer(function (layer) {
                         var properties = layer.feature.properties;
+                        // //console.log(properties, "properties")
                         var area = turf.area(layer.feature);
-                        layer.bindPopup(`Area: ${area.toFixed(2)} sq meters<br>Zone: ${JSON.stringify(properties.zone)} <br> Distance: ${JSON.stringify(properties.distance)}  <br> Elevation: ${JSON.stringify(properties.elevation)}<br> Distance fromNDA : ${distancefromNDA.map(d => d.toFixed(3))} Meters. <br> Distance fromPune airport : ${distancefromPuneairport.map(d => d.toFixed(3))} Meters.`);
+                        layer.bindPopup(`Area: ${area.toFixed(2)} sq meters<br>Zone: ${JSON.stringify(properties.Aviation_Zone)} <br> Distance: ${JSON.stringify(properties.Aviation_Distance)}  <br> Elevation: ${JSON.stringify(properties.Aviation_Elevation)}<br> Distance fromNDA : ${distancefromNDA.map(d => d.toFixed(3))} Meters. <br> Distance fromPune airport : ${distancefromPuneairport.map(d => d.toFixed(3))} Meters.`);
                         layer.openPopup();
                     });
                     intersectedFeatures.forEach(function (feature) {
@@ -1550,7 +1831,7 @@ function IntersectwithASLM(drawnPolygon, layers, url, propertyName, bounds, outp
                     });
                     // resolve(summaryByVillage); 
                 } else {
-                    console.log('No valid features found in the response.');
+                    //console.log('No valid features found in the response.');
                     resolve([]);
                 }
             }).fail(function () {
@@ -1563,6 +1844,109 @@ function IntersectwithASLM(drawnPolygon, layers, url, propertyName, bounds, outp
 }
 
 
+
+// new added___________________________________________
+
+async function Intersection(drawnPolygon, layers, url, propertyName, bounds, outputFormat) {
+    var intersectvalues = {}; // Create an empty object instead of an array
+
+    let attributes = {
+        'EE_Name': 'EE_Name', 'DE_Name': 'DE_Name', 'JE_Name': 'JE_Name', 'TDR_Zone': 'TDR_Zone', 'TOD_Remark': 'TOD_Zone', 'stationnam': "MetroStationname",
+        'Archelogy': "Archelogy", 'Decision': "Dp_Reservation", 'property_u': "Garden", 'Yerwada_Jail': 'Yerwada_Jail', 'flood_line': 'Red_Line_Blue_Line', 'Railway_buffer': 'Railway_Buffer', 'PMC_Lakes': 'PMC_Lake',
+        'monument_n': 'Monuments', 'Aviation_Zone': 'CCZM_Zone', 'Aviation_Distance': 'CCZM_Distance', 'Aviation_Elevation': 'CCZM_Elevation'
+    };
+    try {
+        for (let layerName of layers) {
+            var urlm = url + layerName + "&&bbox=" + bounds + "&outputFormat=" + outputFormat;
+            const data = await $.getJSON(urlm);
+            if (data && data.features && data.features.length > 0) {
+                var intersectedFeatures = [];
+                data.features.forEach(function (feature) {
+                    var intersectedFeature = turf.intersect(feature, drawnPolygon);
+                    if (intersectedFeature && intersectedFeature.geometry.type !== 'GeometryCollection') {
+                        intersectedFeature.properties = feature.properties;
+                        intersectedFeatures.push(intersectedFeature);
+                    }
+                });
+                var intersectedLayer = L.geoJSON(intersectedFeatures);
+
+                intersectedLayer.eachLayer(function (layer) {
+                    var properties = layer.feature.properties;
+                    var geometry = layer.feature.geometry;
+
+                    // Calculate area if the geometry is a polygon
+                    if (geometry.type === 'Polygon' || geometry.type === 'MultiPolygon') {
+                        var area = turf.area(geometry); // Calculate area using Turf.js
+                        properties['area'] = area; // Add area to the properties
+                    }
+                    // //console.log(properties, "HHHHHHHH");
+                    let keay = Object.keys(attributes);
+                    for (let ind in keay) {
+                        let key = keay[ind];
+                        if (properties.hasOwnProperty(key)) {
+                            let value = properties[key];
+                            let attributes_value = attributes[key];
+                            if (!intersectvalues[attributes_value]) {
+                                intersectvalues[attributes_value] = []; // Create an array for each key if it doesn't exist
+                            }
+                            const percent = (properties['area'] / turf.area(drawnPolygon) * 100).toFixed(0);
+
+                            let combinedValue = [value, percent]; // Create an array with the current value and 'area' value
+                            intersectvalues[attributes_value].push(combinedValue); // Push the combined array into the array
+                            // //console.log(attributes_value, combinedValue, "workingsss");
+                        }
+                    }
+
+                    // //console.log(properties, "HHHHHHHH");
+                    // let keay = Object.keys(attributes);
+                    // for (let ind in keay) {
+                    //     let key = keay[ind];
+                    //     if (properties.hasOwnProperty(key)) {
+                    //         let value = properties[key];
+                    //         value.push(properties['area'])
+                    //         let attributes_value = attributes[key];
+                    //         if (!intersectvalues[attributes_value]) {
+                    //             intersectvalues[attributes_value] = []; // Create an array for each key if it doesn't exist
+                    //         }
+                    //         intersectvalues[attributes_value].push(value); // Push value into the array
+                    //         //console.log(attributes_value, value, "workingsss");
+                    //     //     let pp = value+"area"
+                    //     // intersectvalues[pp] = properties['area'];
+
+                    //     }
+
+                    // }
+                    // Include 'area' property in intersectvalues
+
+
+                });
+                // intersectedLayer.eachLayer(function (layer) {
+                //     var properties = layer.feature.properties;
+                //     for (let key of attributes) {
+                //         if (properties.hasOwnProperty(key)) {
+                //             let value = properties[key];
+                //             if (!intersectvalues[key]) {
+                //                 intersectvalues[key] = []; // Create an array for each key if it doesn't exist
+                //             }
+                //             intersectvalues[key].push(value); // Push value into the array
+                //             //console.log(value, "workingsss");
+                //         }
+                //     }
+                // });
+            } else {
+                //console.log('No valid features found in the response.');
+            }
+        }
+        return intersectvalues;
+    } catch (error) {
+        console.error("Error in fetching restriction details:", error);
+        throw error;
+    }
+}
+
+
+
+
 // Add an event listener to the "Next" button
 $('#saveToAutoDCRButton').click(function () {
     localStorage.setItem('editedCoordinates', JSON.stringify(drawnPolygons));
@@ -1572,36 +1956,79 @@ $('#saveToAutoDCRButton').click(function () {
 
 
 // Function to show modal with table
-function showTableModal(data) {
-    var modal = $('#dataPageModal');
-    var table = modal.find('#popup-table tbody');
+// function showTableModal(data) {
+//     var modal = $('#dataPageModal');
+//     var table = modal.find('#popup-table tbody');
 
-    table.empty();
+//     table.empty();
 
-    data.forEach(function (row) {
-        var tr = $('<tr>');
-        row.forEach(function (cell) {
-            tr.append('<td>' + cell + '</td>');
-        });
-        table.append(tr);
-    });
+//     data.forEach(function (row) {
+//         var tr = $('<tr>');
+//         row.forEach(function (cell) {
+//             tr.append('<td>' + cell + '</td>');
+//         });
+//         table.append(tr);
+//     });
 
-    // Show modal
-    modal.modal('show');
-}
+//     // Show modal
+//     modal.modal('show');
+// }
 
-function showTableModal(data) {
-    // Clear the existing table content
-    $('#popup-table tbody').empty();
+// function showTableModal(data) {
+//     // Clear the existing table content
+//     $('#popup-table tbody').empty();
 
-    data.forEach(function (row) {
-        var rowHtml = '<tr>';
-        rowHtml += '<td>' + row[0] + '</td>';
-        rowHtml += '<td>' + row[1] + '</td>';
-        rowHtml += '</tr>';
-        $('#popup-table tbody').append(rowHtml);
-    });
+//     data.forEach(function (row) {
+//         var rowHtml = '<tr>';
+//         rowHtml += '<td>' + row[0] + '</td>';
+//         rowHtml += '<td>' + row[1] + '</td>';
+//         rowHtml += '</tr>';
+//         $('#popup-table tbody').append(rowHtml);
+//     });
 
-    // Show the modal
-    $('#dataPageModal').modal('show');
-}
+//     // Show the modal
+//     $('#dataPageModal').modal('show');
+// }
+
+
+// function showTableModal(data) {
+//     var modal = $('#dataPageModal');
+//     var table = modal.find('#popup-table tbody');
+
+//     // Clear existing rows
+//     table.empty();
+
+//     data.forEach(function (item) {
+//         var attribute = item[0];
+//         var result = item[1];
+//         //console.log(item,"item")
+
+//         if (attribute === 'Coordinates') {
+//             // Generate nested table HTML for coordinates
+//             var coordinatesTableHtml = generateCoordinatesTable(result);
+
+//             // Append a row with nested table HTML
+//             table.append(`
+//                 <tr>
+//                     <td>${attribute}</td>
+//                     <td>${coordinatesTableHtml}</td>
+//                 </tr>
+//             `);
+//             //console.log(coordinatesTableHtml,"coordinatesTableHtml")
+//         } else {
+//             // For other attributes, just append them normally
+//             table.append(`
+//                 <tr>
+//                     <td>${attribute}</td>
+//                     <td>${result}</td>
+//                 </tr>
+//             `);
+//         }
+//     });
+
+//     // Show the modal
+//     modal.modal('show');
+// }
+
+
+

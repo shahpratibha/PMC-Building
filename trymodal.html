@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="libs/Leaflet.MousePosition-master/src/L.Control.MousePosition.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet-draw/dist/leaflet.draw.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-measure@3.1.0/dist/leaflet-measure.css" />
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-measure@3.1.0/dist/leaflet-measure.css" /> -->
 
 
     <style>
-        #popup-table {
+        /* #popup-table {
             width: 100%;
             max-width: 800px;
             margin: 0 auto;
@@ -79,58 +79,54 @@
             max-height: 400px;
             /* Adjust this height as needed */
             overflow-y: auto;
-        }
+        } */
     </style>
 </head>
 
 <body>
 
-    <!-- model for popup -->
-
-
     <!-- Modal -->
-    <div class="modal fade" id="dataPageModal" tabindex="-1" aria-labelledby="dataPageModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title fw-bold text-center" id="dataPageModalLabel">PARTICULARS</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<div class="modal fade" id="dataPageModal" tabindex="-1" aria-labelledby="dataPageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+              
+                <h5 class="modal-title fw-bold text-center" id="dataPageModalLabel">PARTICULARS</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="newMap" style="height: 250px; width: 100%; margin-top: 20px;"></div>
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="popup-table">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-center">Attribute</th>
+                                <th scope="col" class="text-center">Result</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Example Attribute</td>
+                                <td>Example Result</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div>
-
-                </div>
-                <div class="modal-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered" id="popup-table">
-                            <thead>
-                                <tr>
-                                    <th scope="col" class="text-center">Attribute</th>
-                                    <th scope="col" class="text-center">Result</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Example Attribute</td>
-                                    <td>Example Result</td>
-                                </tr>
-                            </tbody>
-
-                        </table>
-                    </div>
-                </div>
-                <div class="modal-footer d-flex justify-content-between">
-                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Edit</button>
-                    <button type="button" class="btn btn-success" data-bs-dismiss="modal"
-                        onclick="submitForm()">Submit</button>
-                    <!-- <button type="button" class="btn btn-primary" onclick="printModal()">Print</button> -->
-
-                    <button type="button" class="btn btn-success" onclick="printModal()">
-                        <i class="fas fa-print"></i>
-                    </button>
-                </div>
+              
+            </div>
+            <div class="modal-footer d-flex justify-content-between">
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal">Edit</button>
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" onclick="submitForm()">Submit</button>
+                <button type="button" class="btn btn-success" onclick="printModal()">
+                    <i class="fas fa-print"></i>
+                </button>
             </div>
         </div>
     </div>
+</div>
+
+
+    <!-- --------------------------------------------------------------------------------------- -->
     <header class="header justify-content-between bg-transparent" id="header">
         <img src="png/pmcjpeg.png" alt="" class="logopng">
 
@@ -154,45 +150,28 @@
         </div>
 
         <div class="custom-button1">
-            <input id="fileInput" type="file" accept=".kml" style="display:none;" title="Upload KML/KMZ/CSV File">
-            <label  class="upload-btn">
-              <img src="png/upload.svg" alt="" class="upload-icon"> Upload PDF file here
+            <input  id="fileInput" accept=".kml" style="display:none;" title="Upload KML/KMZ/CSV File">
+            <label for="fileInput" class="upload-btn">
+                <img src="png/upload.svg" alt="" class="upload-icon"> Upload PDF file here
             </label>
             <div id="uploadModal" class="modal">
-              <div class="content">
-                <span class="close">&times;</span>
-                <h4 class="uploadheading">Upload your file KML/KMZ/CSV</h4>
-                <div id="uploadBox" class="upload-box">
-                  <p>Drag and drop a file here or
-                  <button type="button" id="uploadLink">Upload a file</button>
-                  </p>
-                </div>
-                <div id="fileDetails" class="file-details" style="display:none;">
-                  
-                    <div class="file-info">
-                        <!-- <img src="png/pdf.svg" alt="PDF icon" style="width:30px; height:30px;"> -->
-                        <span id="fileName"></span>
-                        <a href="#" id="viewFileLink" target="_blank">View File</a>
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h4>upload your file here</h4>
+                    <div id="uploadBox" class="upload-box">
+                        <p>Drag and drop a file here or</p>
+                        <button type="file" id="uploadLink">Choose a file</button>
+                        <!-- <input type="file" id="fileUpload" style="display:none;"> hello -->
                     </div>
-                    <button id="removeFileBtn" class="remove-btn">
-                        Remove File
-                        <img src="png/remove.svg" alt="Remove Icon" class="remove-icon">
-                    </button>
-                                        
-                    <button id="continueBtn" class="continue-btn" disabled>Submit
-                        <img src="png/formkit_submit.png" alt="Submit Icon" class="continue-icon">
-                    </button>
-                    
-                    
+                    <div id="fileDetails" style="display:none;">
+                        <p id="fileName"></p>
+                        <a id="viewFileLink" href="#" target="_blank">View File</a>
+                        <button id="removeFileBtn">Remove File</button>
+                    </div>
+                    <button id="continueBtn" disabled>Continue</button>
                 </div>
-                
-                <!-- Hidden file input element -->
-                <input type="file" id="fileUpload" style="display:none;">
-                
-              </div>
             </div>
-          </div>
-          
+        </div>
 
         <a href="AUTODCR GIS USER GUIDE (1).pdf" class="coordimg1" id="getinfo" target="_blank">
             <div style="display: flex; justify-content: center; align-items: center;">
@@ -207,19 +186,18 @@
             </button>
             
             <div id="formContainer" class="form-modal" style="display:none;">
-                <button id="closeFormBtn" class="close-btn">
-                    <i class="fa-solid fa-xmark xicon" style="font-size: 18px; color: #141414d3;"></i>
-                </button>
-                                <h5 style="text-align: center;">Add your co-ordinates here</h5>
+                <button id="closeFormBtn" class="close-btn"><i class="fa-solid fa-xmark xicon" style="font-size: 18px; color: #141414d3; top: 3%;
+                            position: absolute;
+                            left: -30%"></i></button>
+                                <h5 style="text-align: center; margin-bottom: px;">Add your co-ordinates here</h5>
 
                 <form id="coordinateForm" style="text-align: center;">
                     <table id="coordinateTable">
-                        <tr class="table-row-spacing">
-    <th class="p-1 px-5">Longitude</th>
-    <th class="p-1 px-5">Latitude</th>
-    <th class="p-1 px-5">Action</th>
-</tr>
-
+                        <tr style=" padding: 5px; font-size: 13px;">
+                            <th class="p-1 px-5">Longitude</th>
+                            <th class="p-1 px-5">Latitude</th>
+                            <th class="p-1 px-5">Action</th>
+                        </tr>
                     </table>
                     <button class="addbtn custom-btn " type="button" id="addRowBtn">
                         Add More Coordinates
@@ -256,8 +234,8 @@
     <script
         src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     <script src="libs/Leaflet.MousePosition-master/src/L.Control.MousePosition.js"></script>
-    <script src="libs/polyline-measure/line-measure.js"></script>
-    <script src="libs/leaflet-measure-master/leaflet-measure.js"></script>
+    <!-- <script src="libs/polyline-measure/line-measure.js"></script>
+    <script src="libs/leaflet-measure-master/leaflet-measure.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6.3.0/turf.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.0/html2canvas.min.js"></script>
@@ -274,11 +252,12 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.editable/1.0.0-rc.1/Leaflet.Editable.min.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/leaflet-measure@3.1.0/dist/leaflet-measure.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/leaflet-measure@3.1.0/dist/leaflet-measure.js"></script> -->
 
     <script src="select2.js"></script>
 
     <script src="auto.js"></script>
+    <script src="js/trymodal.js"></script>
     <script src="js/legend.js"></script>
     <script src="handshaking_codes.js"></script>
 
@@ -414,6 +393,9 @@
     </script>
 
 
+<script>
+  
+</script>
 
 
     <script>
@@ -480,94 +462,63 @@ function printModal() {
         }
 // uplod 
 document.addEventListener('DOMContentLoaded', function () {
-    const uploadBtn = document.querySelector('.upload-btn');
-    const fileInput = document.getElementById('fileInput');
-    const modal = document.getElementById('uploadModal');
-    const closeBtn = document.querySelector('.close');
-    const uploadLink = document.getElementById('uploadLink');
-    const uploadBox = document.getElementById('uploadBox');
-    const fileDetails = document.getElementById('fileDetails');
-    const fileName = document.getElementById('fileName');
-    const viewFileLink = document.getElementById('viewFileLink');
-    const removeFileBtn = document.getElementById('removeFileBtn');
-    const continueBtn = document.getElementById('continueBtn');
-    
-    // Allowed file types
-    const allowedExtensions = ['kml', 'kmz', 'csv'];
-    let fileErrorAlertShown = false; // Flag to track if the error alert has been shown
+        const uploadBtn = document.querySelector('.upload-btn');
+        const fileUpload = document.getElementById('fileUpload');
+        const modal = document.getElementById('uploadModal');
+        const closeBtn = document.querySelector('.close');
+        const uploadLink = document.getElementById('uploadLink');
+        const uploadBox = document.getElementById('uploadBox');
+        const fileDetails = document.getElementById('fileDetails');
+        const fileName = document.getElementById('fileName');
+        const viewFileLink = document.getElementById('viewFileLink');
+        const removeFileBtn = document.getElementById('removeFileBtn');
+        const continueBtn = document.getElementById('continueBtn');
 
-    // Show the modal when the upload button is clicked
-    uploadBtn.addEventListener('click', function () {
-        resetUploadForm(); // Reset the form each time the modal is opened
-        modal.style.display = 'block';
-    });
+        uploadBtn.addEventListener('click', function () {
+            modal.style.display = 'block';
+        });
 
-    // Close the modal when the close button is clicked
-    closeBtn.addEventListener('click', function () {
-        modal.style.display = 'none';
-        resetUploadForm(); // Reset the form after closing the modal
-    });
-
-    // Close the modal if the user clicks outside of it
-    window.addEventListener('click', function (event) {
-        if (event.target === modal) {
+        closeBtn.addEventListener('click', function () {
             modal.style.display = 'none';
-            resetUploadForm(); // Reset the form after closing the modal
-        }
-    });
+        });
 
-    // Trigger file input click when the uploadLink button is clicked
-    uploadLink.addEventListener('click', function () {
-        fileInput.click();
-    });
+        window.addEventListener('click', function (event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
 
-    // Handle file selection
-    fileInput.addEventListener('change', function() {
-        const file = fileInput.files[0];
-        if (file) {
-            const fileExtension = file.name.split('.').pop().toLowerCase();
-            if (allowedExtensions.includes(fileExtension)) {
+        uploadLink.addEventListener('click', function (e) {
+            e.preventDefault();
+            fileUpload.click();
+        });
+
+        fileUpload.addEventListener('change', function() {
+            const file = fileUpload.files[0];
+            if (file) {
                 fileName.textContent = file.name;
                 viewFileLink.href = URL.createObjectURL(file);
                 fileDetails.style.display = 'block';
                 uploadBox.style.display = 'none';
                 continueBtn.disabled = false;
-                fileErrorAlertShown = false; // Reset the error alert flag
-            } else {
-                if (!fileErrorAlertShown) { // Show alert only if it hasn't been shown already
-                    // alert("Invalid file type! Only KML, KMZ, or CSV files are allowed.");
-                    fileErrorAlertShown = true; // Set the flag to true to prevent duplicate alerts
-                }
-                resetUploadForm(); // Reset form to remove invalid file
             }
-        }
+        });
+
+        removeFileBtn.addEventListener('click', function () {
+            fileUpload.value = '';
+            fileDetails.style.display = 'none';
+            uploadBox.style.display = 'block';
+            continueBtn.disabled = true;
+        });
+
+        continueBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            alert("Proceeding with the file: " + fileName.textContent);
+        });
     });
-
-    // Handle file removal
-    removeFileBtn.addEventListener('click', function () {
-        resetUploadForm();
-    });
-
-    // Handle form submission
-    continueBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        alert("File uploaded successfully!"); // Display success alert
-        resetUploadForm(); // Clear file details after successful upload
-        modal.style.display = 'none'; // Close the modal after resetting the form
-    });
-
-    // Function to reset the upload form
-    function resetUploadForm() {
-        fileInput.value = ''; // Clear the file input
-        fileDetails.style.display = 'none'; // Hide file details
-        uploadBox.style.display = 'block'; // Show upload box
-        continueBtn.disabled = true; // Disable the continue button
-        fileName.textContent = ''; // Clear the file name
-        viewFileLink.href = '#'; // Reset the file link
-    }
-});
-
 </script>
+
+
 </body>
 
 </html>

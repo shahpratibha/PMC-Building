@@ -124,7 +124,7 @@ collapseButton.onAdd = function (map) {
       legendDiv.style.height = "40vh";
       legendDiv.style.width = "200px";
       legendDiv.style.top ="12%";
-      legendDiv.style.border =" 1px solid #3c3cb8";
+      legendDiv.style.border ="2px solid #3c3cb8";
 
       legendDiv.style.right ="3%";
       legendDiv.style.scrollbarWidth = "thin";

@@ -1225,7 +1225,7 @@ function addCoordinateRow(table) {
     latitudeDegreesInput.value = '18';
     latitudeDegreesInput.style.width = '50px';
     latitudeDegreesInput.style.position = 'absolute';
-    latitudeDegreesInput.style.left = '39%';
+    latitudeDegreesInput.style.left = '40%';
 
     // latitudeDegreesInput.style.marginRight = '15px'; 
     latitudeDegreesInput.style.borderBottomLeftRadius = '5px';
@@ -1243,7 +1243,7 @@ function addCoordinateRow(table) {
     latitudeMinutesInput.setAttribute('name', 'latitudeMinutes[]');
     latitudeMinutesInput.style.width = '40px';
     latitudeMinutesInput.style.position = 'absolute';
-    latitudeMinutesInput.style.left = '47%';
+    latitudeMinutesInput.style.left = '48%';
     latitudeMinutesInput.style.borderTop = '2px solid  #3c3cb8';
     latitudeMinutesInput.style.borderBottom = '2px solid  #3c3cb8';
     latitudeMinutesInput.style.borderLeft = '2px solid  #bbb';
@@ -1259,7 +1259,7 @@ function addCoordinateRow(table) {
     latitudeSecondsInput.setAttribute('step', 'any');
     latitudeSecondsInput.style.width = '60px';
     latitudeSecondsInput.style.position = 'absolute';
-    latitudeSecondsInput.style.left = '55%';
+    latitudeSecondsInput.style.left = '56%';
     latitudeSecondsInput.style.borderTop = '2px solid  #3c3cb8';
     latitudeSecondsInput.style.borderBottom = '2px solid #3c3cb8';
     latitudeSecondsInput.style.borderRight = '2px solid #3c3cb8';
@@ -1277,9 +1277,7 @@ function addCoordinateRow(table) {
     // heightfloatCellInput.value = '73';
     heightfloatCellInput.style.width = '70px';
     heightfloatCellInput.style.position = 'absolute';
-    heightfloatCellInput.style.left = '75%';
     heightfloatCellInput.style.left = '74%';
-
     // longitudeDegreesInput.style.marginRight = '5px';
     heightfloatCellInput.style.borderBottomLeftRadius = '5px';
     heightfloatCellInput.style.borderTopLeftRadius = '5px';
@@ -1288,6 +1286,7 @@ function addCoordinateRow(table) {
     heightfloatCellInput.style.borderBottom = '2px solid #3c3cb8';
     heightfloatCellInput.style.borderRight = '2px solid  #3c3cb8';
     heightfloatCellInput.style.borderTopRightRadius = '5px';
+    // heightfloatCellInput.style.top = '76px';
     heightfloatCellInput.style.borderBottomRightRadius = '5px';
 
 

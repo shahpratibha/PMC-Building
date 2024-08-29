@@ -1,6 +1,7 @@
 
 var map, geojson;
 const API_URL = "https://iwmsgis.pmc.gov.in/geopulse/autodcr/";
+const geoserver_url = "https://iwmsgis.pmc.gov.in/geoserver"
 // const API_URL = "http://localhost/autodcr/";
 // const API_URL = "http://localhost/geotap/autodcr/"
 
@@ -18,7 +19,7 @@ var map = L.map("map", {
 });
 
 
-// var map = L.map("map", {}).setView([18.52, 73.895], 12, L.CRS.EPSG4326);
+
 
 var googleSat = L.tileLayer(
     "http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}",
@@ -38,25 +39,21 @@ var Esri_WorldImagery = L.tileLayer(
         maxZoom: 20,
     }
 );
-var baseLayers = {
-    "OSM": osm,
-    "Esri": Esri_WorldImagery,
-    "Satellite": googleSat,
-};
+var baseLayers = {};
 
 // .addTo(map);
 
 
 // for only gut showing
 var Revenue_Layer1 = L.tileLayer
-    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
+    .wms(geoserver_url + "/AutoDCR/wms", {
         layers: "Revenue_1",
         format: "image/png",
         transparent: true,
         tiled: true,
         version: "1.1.0",
         maxZoom: 19.9,
-
+        // attribution: "Revenue",
         opacity: 1,
     });
 
@@ -64,82 +61,84 @@ var Revenue_Layer1 = L.tileLayer
 
 
 var Revenue_Layer = L.tileLayer
-    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
+    .wms(geoserver_url + "/AutoDCR/wms", {
         layers: "Revenue_1",
         format: "image/png",
         transparent: true,
         tiled: true,
         version: "1.1.0",
         maxZoom: 19.9,
-
+        // attribution: "Revenue",
         opacity: 1,
     });
 
 
 var JE_Names = L.tileLayer
-    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
+    .wms(geoserver_url + "/AutoDCR/wms", {
         layers: "JE_Names",
         format: "image/png",
         transparent: true,
         tiled: true,
         version: "1.1.0",
-
+        // attribution: "Revenue",
         opacity: 1,
     });
 
 
 
-
 var PLU_Layer = L.tileLayer
-    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
+    .wms(geoserver_url + "/AutoDCR/wms", {
         layers: "PLU_Ward",
         format: "image/png",
         transparent: true,
         tiled: true,
         version: "1.1.0",
-
+        // attribution: "Revenue",
         opacity: 1,
     });
 
 
 var DPRoad_Layer = L.tileLayer
-    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
+    .wms(geoserver_url + "/AutoDCR/wms", {
         layers: "DP_Ward_Road",
         format: "image/png",
         transparent: true,
         tiled: true,
         version: "1.1.0",
+        // attribution: "Revenue",
         opacity: 1,
     });
 
 var Boundary_Layer = L.tileLayer
-    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
+    .wms(geoserver_url + "/AutoDCR/wms", {
         layers: "PMC_Boundary",
         format: "image/png",
         transparent: true,
         tiled: true,
         version: "1.1.0",
+        // attribution: "Revenue",
         opacity: 1,
     }).addTo(map);
 
 var TDR_Zones = L.tileLayer
-    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
+    .wms(geoserver_url + "/AutoDCR/wms", {
         layers: "TDR_Zones",
         format: "image/png",
         transparent: true,
         tiled: true,
         version: "1.1.0",
+        // attribution: "Revenue",
         opacity: 1,
     });
 
 var TOD_Zones = L.tileLayer
-    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
+    .wms(geoserver_url + "/AutoDCR/wms", {
         layers: "TOD_Zones",
         format: "image/png",
         transparent: true,
         tiled: true,
         version: "1.1.0",
-
+        // attribution: "Revenue",
         opacity: 1,
     });
 
@@ -147,69 +146,69 @@ var TOD_Zones = L.tileLayer
 
 
 var PMC_Reservation = L.tileLayer
-    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
+    .wms(geoserver_url + "/AutoDCR/wms", {
         layers: "PMC_Reservation",
         format: "image/png",
         transparent: true,
         tiled: true,
         version: "1.1.0",
-
+        // attribution: "Revenue",
         opacity: 1,
     });
 
 var Red_Blue = L.tileLayer
-    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
+    .wms(geoserver_url + "/AutoDCR/wms", {
         layers: "Red_Blue",
         format: "image/png",
         transparent: true,
         tiled: true,
         version: "1.1.0",
-
+        // attribution: "Revenue",
         opacity: 1,
     });
 
 var Yerwada_Jail = L.tileLayer
-    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
+    .wms(geoserver_url + "/AutoDCR/wms", {
         layers: "Yerwada_Jail",
         format: "image/png",
         transparent: true,
         tiled: true,
         version: "1.1.0",
-
+        // attribution: "Revenue",
         opacity: 1,
     });
 
 
 var Railway_Buffer = L.tileLayer
-    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
+    .wms(geoserver_url + "/AutoDCR/wms", {
         layers: "Railway_Buffer",
         format: "image/png",
         transparent: true,
         tiled: true,
         version: "1.1.0",
-
+        // attribution: "Revenue",
         opacity: 1,
     });
 
 var PMC_Lake = L.tileLayer
-    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
+    .wms(geoserver_url + "/AutoDCR/wms", {
         layers: "Lake",
         format: "image/png",
         transparent: true,
         tiled: true,
         version: "1.1.0",
-
+        // attribution: "Revenue",
         opacity: 1,
     });
 
 var Monuments = L.tileLayer
-    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
+    .wms(geoserver_url + "/AutoDCR/wms", {
         layers: "Monuments",
         format: "image/png",
         transparent: true,
         tiled: true,
         version: "1.1.0",
-
+        // attribution: "Revenue",
         opacity: 1,
     });
 
@@ -218,53 +217,55 @@ var Monuments = L.tileLayer
 
 
 var Village_Boundary = L.tileLayer
-    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
+    .wms(geoserver_url + "/AutoDCR/wms", {
         layers: "Village_Boundary",
         format: "image/png",
         transparent: true,
         tiled: true,
         version: "1.1.0",
-
+        // attribution: "Revenue",
         opacity: 1,
     }).addTo(map);
 
 
 
 var aviation = L.tileLayer
-    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
+    .wms(geoserver_url + "/AutoDCR/wms", {
         layers: "Aviation_data",
         format: "image/png",
         transparent: true,
         tiled: true,
         version: "1.1.0",
-
+        // attribution: "Revenue",
         opacity: 1,
     });
 
 var Garden = L.tileLayer
-    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
+    .wms(geoserver_url + "/AutoDCR/wms", {
         layers: "Garden",
         format: "image/png",
         transparent: true,
         tiled: true,
         version: "1.1.0",
-
+        // attribution: "Revenue",
         opacity: 1,
     });
 var DevelopmentRestriction = L.tileLayer
-    .wms("https://iwmsgis.pmc.gov.in/geoserver/AutoDCR/wms", {
+    .wms(geoserver_url + "/AutoDCR/wms", {
         layers: "DevelopmentRestriction",
         format: "image/png",
         transparent: true,
         tiled: true,
         version: "1.1.0",
-
+        // attribution: "Revenue",
         opacity: 1,
     });
 
 
 var WMSlayers = {
-
+    "OSM": osm,
+    "Esri": Esri_WorldImagery,
+    "Satellite": googleSat,
     Boundary: Boundary_Layer,
     Village: Village_Boundary,
     Revenue: Revenue_Layer1,
@@ -302,6 +303,18 @@ L.control.zoom({
 }).addTo(map);
 
 
+var measureControl = new L.Control.Measure({
+    position: 'topright',
+    primaryLengthUnit: 'meters', // can be 'feet', 'meters', 'miles', 'kilometers'
+    secondaryLengthUnit: 'kilometers',
+    primaryAreaUnit: 'sqmeters', // can be 'acres', 'hectares', 'sqmeters', 'sqfeet'
+    secondaryAreaUnit: 'hectares',
+    activeColor: '#ABE67E', // Base color for map features while actively measuring
+    completedColor: '#C8F2BE' // Base color for permanent features generated from completed measure
+});
+map.addControl(measureControl);
+
+
 // draw-----------------------------------------------------
 var drawnItems = new L.FeatureGroup().addTo(map);
 
@@ -337,7 +350,7 @@ var drawnPolygons = [];
 
 map.on(L.Draw.Event.CREATED, function (event) {
     var layer = event.layer;
-    var polygonId = 'polygon_' + L.stamp(layer); // Use a unique ID for each polygon
+    var polygonId = 'polygon_' + L.stamp(layer);
 
     drawnItems.addLayer(layer);
     var drawnPolygon = layer.toGeoJSON();
@@ -345,11 +358,9 @@ map.on(L.Draw.Event.CREATED, function (event) {
     if (drawnPolygon.geometry.type === 'Polygon') {
         drawnPolygons[polygonId] = drawnPolygon.geometry.coordinates;
     } else {
-        // //console.log('Drawn geometry is not a valid Polygon.');
+        console.log('Drawn geometry is not a valid Polygon.');
     }
 
-
-    // Attach the polygonId to the layer for future reference
     layer.polygonId = polygonId;
 });
 
@@ -372,10 +383,6 @@ map.on('draw:deleted', function (e) {
     updateButtonState();
 });
 
-
-
-
-
 function updateButtonState() {
     var buttonElement = document.querySelector('.custom-button button');
     if (buttonElement) {
@@ -384,22 +391,151 @@ function updateButtonState() {
     }
 }
 
-
 const handshakingCode = getQueryParam('village_name');
 const token = getQueryParam('TOKEN');
-// //console.log(token, "token");
+// console.log(token, "token");
+
 
 
 $(document).ready(function () {
+
+
+
+
 
     const villageEntry = handshaking_codes.find(entry => entry.code === handshakingCode);
     const village_name = villageEntry ? villageEntry.name : null;
     const TpsName = villageEntry ? villageEntry.tps_name : null;
 
+
+
+
+    // Fetch data from the API first
+    // Extract the data from the API response
+    $.ajax({
+        type: "GET",
+        url: "https://autodcr.pmc.gov.in/AutoDCR.PMC.Support/GISAPI/GISAPI.asmx/GetPreApprovalData",
+        data: { TokenNo: token }, // Pass the token as a parameter
+        success: function (data) {
+            // let data = JSON.parse(apiResponse);
+            console.log(data,"llllllllllll")
+            // Prepare the payload for saving to the database
+            let payload = {
+                token: data.Token,
+                village_name: data.SiteAddress[0]?.Area || '',
+                gut_num: data.SiteAddress[0]?.SurveyNo || '',
+                // selectedvillage: data.SiteAddress[0]?.Area || '',
+                // selectedguts: data.SiteAddress[0]?.HissaNo || '',
+                applyfor: data.CaseInformation?.ApplyFor || '',
+                projecttype: data.CaseInformation?.ProjectType || '',
+                casetype: data.CaseInformation?.CaseType || '',
+                proposaltype: data.CaseInformation?.ProposalType || '',
+                // locationzone: data.CaseInformation?.LocationZone || '',
+                tdrzone: data.CaseInformation?.TDRZONE || '',
+                // tdrarea: data.CaseInformation?.TDRArea || 0,
+                // case_info_area: data.CaseInformation?.AREA || '',
+                grossplotarea: data.CaseInformation.GrossPlotArea,
+                // existingarea: data.CaseInformation?.ExistingArea || 0,
+                // proportionateinternalroadarea: data.CaseInformation?.ProportionateInternalRoadArea || 0,
+                // premiumfsi: JSON.stringify(data.CaseInformation?.PremiumFSI || {}),
+                // ancillaryareafsi: data.CaseInformation?.AncillaryAreaFSI || 0,
+                // totalpremiumfsi: data.CaseInformation?.TotalPremiumFSI || 0,
+                // accommodationreservation: data.CaseInformation?.AccommodationReservation || '',
+                // typeofaccommodationreservation: data.CaseInformation?.TypeOfAccommodationReservation || '',
+                // specialproject: data.CaseInformation?.SpecialProject || '',
+                // whetherincentive: data.CaseInformation?.WhetherIncentive || '',
+                // surveyno: data.SiteAddress[0]?.SurveyNo || '',
+                // finalplotno: data.SiteAddress[0]?.FinalPlotNo || '',
+                // hissano: data.SiteAddress[0]?.HissaNo || '',
+                // ctsno: data.SiteAddress[0]?.CtsNo || '',
+                // plotno: data.SiteAddress[0]?.PlotNo || '',
+                // societyname: data.SiteAddress[0]?.SocietyName || '',
+                // pincode: data.SiteAddress[0]?.PinCode || '',
+                // plottype: data.PlotAbuttingDetails[0]?.PlotType || '',
+                // readyreckonervaluationofplot: data.PlotAbuttingDetails[0]?.ReadyReckonerValuationOfPlot || 0,
+                plot_det_area: data.PlotDetails[0]?.Area || '',
+                // areazone: data.PlotDetails[0]?.AreaZone || '',
+                // r7for: data.PlotDetails[0]?.R7for || '',
+                // propertytdrzone: data.PlotDetails[0]?.PropertyTDRZone || '',
+                // receivingtdrzone: data.PlotDetails[0]?.ReceivingTDRZone || '',
+                developmentzonedp: data.PlotDetails[0]?.DevelopmentZoneDP || ''
+            };
+            console.log(payload,JSON.stringify(data))
+            console.log("grossplotarea: ",data.CaseInformation.GrossPlotArea)
+
+            displayPayloadInDiv(payload);
+
+            function generateTableFromPayload(payload) {
+                var tableHtml = '<table class="table table-bordered">';
+
+                // Create table header
+                tableHtml += '<thead><tr><th>Attribute</th><th>Value</th></tr></thead>';
+
+                // Create table body
+                tableHtml += '<tbody>';
+
+                // Iterate over the payload object and add rows to the table
+                for (var key in payload) {
+                    if (payload.hasOwnProperty(key)) {
+                        var value = payload[key];
+                        tableHtml += '<tr><td>' + key + '</td><td>' + formatValue(value) + '</td></tr>';
+                    }
+                }
+
+                tableHtml += '</tbody></table>';
+                return tableHtml;
+            }
+
+            function formatValue(value) {
+                // Format the value based on its type
+                if (typeof value === 'object') {
+                    return JSON.stringify(value, null, 2); // Convert object to JSON string
+                }
+                return value || 'N/A'; // Handle undefined or null values
+            }
+
+
+            function displayPayloadInDiv(payload) {
+                var tableHtml = generateTableFromPayload(payload);
+                var container = document.getElementById('tablefromautoDcr');
+                container.innerHTML = tableHtml;
+            }
+
+
+
+
+            // Send the extracted data to savevalues.php
+            // $.ajax({
+            //     type: "POST",
+            //     url: "APIS/savevalues.php",
+            //     contentType: "application/json",
+            //     data: JSON.stringify(payload),
+            //     success: function (response) {
+            //         if (response.status === 'success') {
+            //             alert("Data saved successfully");
+            //         } else if (response.status === 'error' && response.message === 'Token already exists in the database.') {
+            //             alert('Token already exists. Please check the details or use a different token.');
+            //         } else {
+            //             console.error("Failed to save data:", response.message);
+            //         }
+            //     },
+            //     error: function (xhr, status, error) {
+            //         console.error("Failed to save data:", error);
+            //     }
+            // });
+        },
+        error: function (xhr, status, error) {
+            console.error("Failed to fetch data from API:", error);
+        }
+    });
+
+
+
+
     trials()
     function trials() {
 
-        var villageArray = [];  // Properly declare villageArray
+        var villageArray = [];
 
         if (village_name) {
             villageArray.push(village_name);
@@ -410,16 +546,15 @@ $(document).ready(function () {
             villageArray.push(TpsName);  // Add single TpsName value
         }
 
-        // villageArray =[]
         var cqlFilter = "village_name IN('" + village_name + "') OR TPS_Name IN('" + TpsName + "')";
-        // //console.log(cqlFilter, "filterr")
+        // console.log(cqlFilter, "filterr")
 
         var geoServerURL = "https://iwmsgis.pmc.gov.in//geoserver/AutoDCR/wms?service=WFS&version=1.1.0&request=GetFeature&typeName=Revenue_1&propertyName=village_name&outputFormat=application/json&CQL_FILTER=" + encodeURIComponent(cqlFilter);
 
         $.getJSON(geoServerURL)
             .done(function (data) {
                 villageArray = villageArray.sort();
-                // //console.log(villageArray, "villageArray")
+                // console.log(villageArray, "villageArray")
                 var select = document.getElementById("search_type");
                 villageArray.forEach(function (village) {
                     var option = document.createElement("option");
@@ -435,11 +570,11 @@ $(document).ready(function () {
 
                 if (village_name && select) {
                     select.value = village_name;
-                    // //console.log(select.value, "pppppp")
+                    // console.log(select.value, "pppppp")
                     var Village_name = 'village_name'
                     // let filters = `${Village_name} = '${village_name}'`;
                     var selectedValue = document.getElementById("search_type").value;
-                    // //console.log("gheheheehehehheeh", selectedValue)
+                    // console.log("gheheheehehehheeh", selectedValue)
 
                     // var selectedValueVillage = village_name
                     var Village_name = 'village_name'
@@ -459,7 +594,7 @@ $(document).ready(function () {
                     function getvalues(callback) {
                         if (!filters.trim()) {
                             // If filters are empty, call the callback with an empty array
-                            // //console.log("No filters provided, skipping data fetch.");
+                            // console.log("No filters provided, skipping data fetch.");
                             if (callback && typeof callback === "function") {
                                 callback([]);
                             }
@@ -490,20 +625,18 @@ $(document).ready(function () {
                                 }
                                 return 0;
                             });
-                            // //console.log(Uniqueguts, "Uniqueguts")
+                            // console.log(Uniqueguts, "Uniqueguts")
                             if (callback && typeof callback === "function") {
                                 callback(Uniqueguts);
                             }
                         });
                     }
 
-
-
                     getvalues(function (Uniqueguts) {
 
                         var stateList = $('#stateList');
                         stateList.empty();
-                        // //console.log(stateList,"stateList")
+
                         _.each(Uniqueguts, function (state) {
                             var listItem = $('<li><input name="' + state + '" type="checkbox"><label for="' + state + '">' + state + '</label></li>');
                             stateList.append(listItem);
@@ -551,14 +684,14 @@ $("#search_type").change(function () {
     const village_name = villageEntry ? villageEntry.name : null;
     const TpsName = villageEntry ? villageEntry.tps_name : null;
     var selectedValueVillage = $(this).val();
-    // //console.log(selectedValueVillage, "selectedValueVillage")
+    console.log(selectedValueVillage, "selectedValueVillage")
     let filters;
 
-    // Check if selectedValueVillage exists in village_name column
+
     if (village_name && village_name.includes(selectedValueVillage)) {
         filters = `village_name ='${selectedValueVillage}'`;
     } else {
-        // Check if selectedValueVillage exists in TPS_Name column
+
         if (TpsName && TpsName.includes(selectedValueVillage)) {
             filters = `TPS_Name ='${selectedValueVillage}'`;
         } else {
@@ -567,7 +700,8 @@ $("#search_type").change(function () {
         }
     }
 
-
+    // Update Revenue_Layer with new CQL_FILTER
+    // console.log(filters, "filters")
     FitbouCustomiseRevenue(filters)
     Revenue_Layer.setParams({
         CQL_FILTER: filters,
@@ -607,7 +741,7 @@ $("#search_type").change(function () {
     function getvalues(callback) {
 
         if (!filters.trim()) {
-            // //console.log("No filters provided, skipping data fetch.");
+            console.log("No filters provided, skipping data fetch.");
             if (callback && typeof callback === "function") {
                 callback([]);
             }
@@ -629,7 +763,7 @@ $("#search_type").change(function () {
             });
             var Uniqueguts = Array.from(gutvalues);
 
-            // //console.log("Unique Gut Numbers:", Uniqueguts);
+            // console.log("Unique Gut Numbers:", Uniqueguts);
 
             if (callback && typeof callback === "function") {
                 callback(Uniqueguts);
@@ -640,11 +774,11 @@ $("#search_type").change(function () {
 
 
     getvalues(function (Uniqueguts) {
-        // //console.log(Uniqueguts, "Uniqueguts");
+        // console.log(Uniqueguts, "Uniqueguts");
 
         var stateList = $('#stateList');
         stateList.empty();
-        // //console.log(stateList,"stateList")
+        // console.log(stateList,"stateList")
         _.each(Uniqueguts, function (state) {
             var listItem = $('<li><input name="' + state + '" type="checkbox"><label for="' + state + '">' + state + '</label></li>');
             stateList.append(listItem);
@@ -684,10 +818,10 @@ $("#search_type").change(function () {
 })
 
 $(document).on('change', '#stateList input[type="checkbox"]', function () {
-    // //console.log("hehehe")
+    // console.log("hehehe")
     getFiltersval()
     var cqlFilter = getSelectedValues();
-    // //console.log(cqlFilter, "Selected filters");
+    console.log(cqlFilter, "Selected filters");
     if (cqlFilter) {
         // Update the map with the new filter
         FitbouCustomiseRevenue(cqlFilter);
@@ -700,7 +834,7 @@ $(document).on('change', '#stateList input[type="checkbox"]', function () {
     }
     else {
         // FitbouCustomiseRevenue(cqlFilter);
-        // //console.log("No filters selected");
+        console.log("No filters selected");
     }
 });
 
@@ -712,7 +846,7 @@ function getFiltersval() {
     const selectedValueVillage = villageEntry ? villageEntry.name : null;
 
 
-    //console.log(filters, "filtersjjjjjjjjjjjjjjj")
+    console.log(filters, "filtersjjjjjjjjjjjjjjj")
 }
 
 
@@ -720,10 +854,10 @@ function getFiltersval() {
 function getSelectedValues() {
     var selectedValues = [];
 
-    // //console.log("pass")
+    // console.log("pass")
     $('input[type="checkbox"]:checked').each(function () {
         var name = $(this).attr('name');
-        // //console.log(name, "selecffffffffffffff")
+        console.log(name, "selecffffffffffffff")
         if (name !== undefined) {
             selectedValues.push("'" + name + "'");
         }
@@ -734,7 +868,7 @@ function getSelectedValues() {
     } else {
         cqlFilterGut = ""
     }
-    // //console.log(cqlFilterGut, "cqlFilterGut")
+    // console.log(cqlFilterGut, "cqlFilterGut")
 
     var cqlFilter = "";
     if (cqlFilterGut && filters) {
@@ -752,8 +886,7 @@ var button = L.control({ position: 'bottomright' });
 
 button.onAdd = function (map) {
     var div = L.DomUtil.create('div', 'custom-button');
-    div.innerHTML = '<button onclick="savevalues()">Next <img src="png/formkit_submit.png" alt="" style="width: 20px; height: 19px; vertical-align: middle;"></button>';
-
+    div.innerHTML = '<button onclick="savevalues()" >Next  <i class="fa-regular fa-circle-right"></i></button>';
     return div;
 };
 
@@ -789,8 +922,8 @@ function FitbouCustomiseRevenue(filter) {
 
             // for degree upadates lattitude
             if (latsouth === latnorth) {
-                // //console.log("heeee");
-                // //console.log(latsouth, latnorth);
+                // console.log("heeee");
+                // console.log(latsouth, latnorth);
                 latitudeDegreesInput.removeAttribute('readonly');
                 latitudeDegreesInput.value = latsouth;
                 latitudeDegreesInput.setAttribute('readonly', 'readonly');
@@ -804,8 +937,8 @@ function FitbouCustomiseRevenue(filter) {
             // for minutes update only latitude
 
             if (latsouthM === latnorthM) {
-                // //console.log("heeee");
-                // //console.log(latsouthM, latnorthM);
+                // console.log("heeee");
+                // console.log(latsouthM, latnorthM);
                 latitudeMinutesInput.removeAttribute('readonly');
                 latitudeMinutesInput.removeAttribute('value');
                 latitudeMinutesInput.value = latsouthM;
@@ -821,19 +954,19 @@ function FitbouCustomiseRevenue(filter) {
             lngnorth = parseInt(Math.floor(geojson.getBounds()._northEast.lng))
             lngsouthM = parseInt(Math.floor((geojson.getBounds()._southWest.lng % 1) * 60))
             lngnorthM = parseInt(Math.floor((geojson.getBounds()._northEast.lng % 1) * 60))
-            //console.log(lngsouth, lngnorth)
+            console.log(lngsouth, lngnorth)
 
             // for longitude degree update
             if (lngsouth === lngnorth) {
-                // //console.log("heeee")
-                // //console.log(lngsouth,lngnorth)
+                // console.log("heeee")
+                // console.log(lngsouth,lngnorth)
                 longitudeDegreesInput.removeAttribute('value');
                 longitudeDegreesInput.value = lngnorth;
                 longitudeDegreesInput.setAttribute('readonly', 'readonly');
             } else {
 
                 // Update longitude input field
-                // //console.log("nooooooooooooooooo")
+                // console.log("nooooooooooooooooo")
                 longitudeDegreesInput.removeAttribute('readonly');
                 longitudeDegreesInput.removeAttribute('value');
                 longitudeDegreesInput.setAttribute('min', lngsouth);
@@ -843,8 +976,8 @@ function FitbouCustomiseRevenue(filter) {
             // for munites onlys longitude
 
             if (lngsouthM === lngnorthM) {
-                // //console.log("heeee")
-                // //console.log(lngsouth,lngnorth)
+                // console.log("heeee")
+                // console.log(lngsouth,lngnorth)
                 longitudeMinutesInput.removeAttribute('readonly')
                 longitudeMinutesInput.removeAttribute('value');
                 longitudeMinutesInput.value = lngnorthM;
@@ -852,7 +985,7 @@ function FitbouCustomiseRevenue(filter) {
             } else {
 
                 // Update longitude input field
-                // //console.log("nooooooooooooooooo")
+                // console.log("nooooooooooooooooo")
                 longitudeMinutesInput.removeAttribute('readonly');
                 longitudeMinutesInput.removeAttribute('value');
                 longitudeMinutesInput.setAttribute('min', lngsouthM);
@@ -913,13 +1046,13 @@ function processKML(kmlString) {
         keysList.forEach(key => {
             var polygonLayer = layer._layers[key];
 
-            // //console.log('polygonLayer', polygonLayer);
+            // console.log('polygonLayer', polygonLayer);
 
             drawnItems.addLayer(polygonLayer);
 
             var polygonId = 'polygon_' + L.stamp(polygonLayer);
             drawnPolygons[polygonId] = polygonLayer.toGeoJSON().geometry.coordinates;
-            // //console.log('hhhhhhhhhokkkk', polygonLayer.toGeoJSON().geometry.coordinates);
+            // console.log('hhhhhhhhhokkkk', polygonLayer.toGeoJSON().geometry.coordinates);
 
             // Attach the polygonId to the layer for future reference
             polygonLayer.polygonId = polygonId;
@@ -945,7 +1078,7 @@ function processCSV(kmlContent) {
     var data = Papa.parse(kmlContent, { header: true, dynamicTyping: true }).data;
     data = data.filter(row => row.latitude !== null && row.longitude !== null);
     var polygon = L.polygon(data.map(coord => [coord.latitude, coord.longitude])).addTo(map);
-    // //console.log("oooooooooooooooooo", polygon)
+    // console.log("oooooooooooooooooo", polygon)
     if (polygon.getBounds().isValid()) {
 
         var polygonLayer = polygon;
@@ -953,7 +1086,7 @@ function processCSV(kmlContent) {
         // // for saving coordinates
         // var polygonId = 'polygon_csv'
         // drawnPolygons[polygonId] = polygon.toGeoJSON().geometry.coordinates;
-        // // //console.log(drawnPolygons, "drawnPolygons", "polygonCounter");
+        // // console.log(drawnPolygons, "drawnPolygons", "polygonCounter");
 
         var polygonId = 'polygon_' + L.stamp(polygon); // Use a unique ID for each polygon
 
@@ -964,7 +1097,7 @@ function processCSV(kmlContent) {
 
         // Save coordinates
         drawnPolygons[polygonId] = polygon.toGeoJSON().geometry.coordinates;
-        // //console.log('hhhhhhhhhokkkk', polygonLayer.toGeoJSON().geometry.coordinates);
+        // console.log('hhhhhhhhhokkkk', polygonLayer.toGeoJSON().geometry.coordinates);
 
         map.fitBounds(polygon.getBounds());
 
@@ -979,7 +1112,7 @@ function processCSV(kmlContent) {
 
 document.getElementById('toggleFormBtn').addEventListener('click', function () {
     var selectedVillage = document.getElementById("search_type").value;
-    //console.log(selectedVillage, "selectedVillage")
+    console.log(selectedVillage, "selectedVillage")
 
 
     var formContainer = document.getElementById('formContainer');
@@ -1041,7 +1174,7 @@ function updateFirstRowValues(table) {
 
 function addCoordinateRow(table) {
     // var selectedVillage = document.getElementById("search_type").value;
-    // //console.log(selectedVillage,"selectedVillage")
+    // console.log(selectedVillage,"selectedVillage")
     var row = table.insertRow();
     var longitudeDegreesCell = row.insertCell();
     var longitudeMinutesCell = row.insertCell();
@@ -1061,7 +1194,7 @@ function addCoordinateRow(table) {
     longitudeDegreesInput.value = '73';
     longitudeDegreesInput.style.width = '40px';
     longitudeDegreesInput.style.position = 'absolute';
-    longitudeDegreesInput.style.left = '6%';
+    longitudeDegreesInput.style.left = '1%';
     // longitudeDegreesInput.style.marginRight = '5px';
     longitudeDegreesInput.style.borderBottomLeftRadius = '5px';
     longitudeDegreesInput.style.borderTopLeftRadius = '5px';
@@ -1079,7 +1212,7 @@ function addCoordinateRow(table) {
     longitudeMinutesInput.setAttribute('name', 'longitudeMinutes[]');
     longitudeMinutesInput.style.width = '40px';
     longitudeMinutesInput.style.position = 'absolute';
-    longitudeMinutesInput.style.left = '14%';
+    longitudeMinutesInput.style.left = '8%';
     // longitudeMinutesInput.style.marginRight = '5px';
     longitudeMinutesInput.style.borderTop = '2px solid  #3c3cb8';
     longitudeMinutesInput.style.borderBottom = '2px solid  #3c3cb8';
@@ -1095,7 +1228,7 @@ function addCoordinateRow(table) {
     longitudeSecondsInput.setAttribute('step', 'any');
     longitudeSecondsInput.style.width = '59px';
     longitudeSecondsInput.style.position = 'absolute';
-    longitudeSecondsInput.style.left = '22%';
+    longitudeSecondsInput.style.left = '16%';
     // longitudeSecondsInput.style.marginRight = '5px'; 
     longitudeSecondsInput.style.borderTop = '2px solid  #3c3cb8';
     longitudeSecondsInput.style.borderBottom = '2px solid #3c3cb8';
@@ -1116,8 +1249,7 @@ function addCoordinateRow(table) {
     latitudeDegreesInput.value = '18';
     latitudeDegreesInput.style.width = '50px';
     latitudeDegreesInput.style.position = 'absolute';
-    latitudeDegreesInput.style.left = '39%';
-
+    latitudeDegreesInput.style.left = '32%';
     // latitudeDegreesInput.style.marginRight = '15px'; 
     latitudeDegreesInput.style.borderBottomLeftRadius = '5px';
     latitudeDegreesInput.style.borderTopLeftRadius = '5px';
@@ -1134,7 +1266,7 @@ function addCoordinateRow(table) {
     latitudeMinutesInput.setAttribute('name', 'latitudeMinutes[]');
     latitudeMinutesInput.style.width = '40px';
     latitudeMinutesInput.style.position = 'absolute';
-    latitudeMinutesInput.style.left = '47%';
+    latitudeMinutesInput.style.left = '40%';
     latitudeMinutesInput.style.borderTop = '2px solid  #3c3cb8';
     latitudeMinutesInput.style.borderBottom = '2px solid  #3c3cb8';
     latitudeMinutesInput.style.borderLeft = '2px solid  #bbb';
@@ -1150,7 +1282,7 @@ function addCoordinateRow(table) {
     latitudeSecondsInput.setAttribute('step', 'any');
     latitudeSecondsInput.style.width = '60px';
     latitudeSecondsInput.style.position = 'absolute';
-    latitudeSecondsInput.style.left = '55%';
+    latitudeSecondsInput.style.left = '48%';
     latitudeSecondsInput.style.borderTop = '2px solid  #3c3cb8';
     latitudeSecondsInput.style.borderBottom = '2px solid #3c3cb8';
     latitudeSecondsInput.style.borderRight = '2px solid #3c3cb8';
@@ -1168,9 +1300,7 @@ function addCoordinateRow(table) {
     // heightfloatCellInput.value = '73';
     heightfloatCellInput.style.width = '70px';
     heightfloatCellInput.style.position = 'absolute';
-    heightfloatCellInput.style.left = '75%';
-    heightfloatCellInput.style.left = '74%';
-
+    heightfloatCellInput.style.left = '65%';
     // longitudeDegreesInput.style.marginRight = '5px';
     heightfloatCellInput.style.borderBottomLeftRadius = '5px';
     heightfloatCellInput.style.borderTopLeftRadius = '5px';
@@ -1196,8 +1326,7 @@ function addCoordinateRow(table) {
 
     updateFirstRowValues(table);
 
-    actionCell.innerHTML = '<button type="button" class="deleteRowBtn"><img src="png/delete.svg" alt="Delete" style=""></button>';
-
+    actionCell.innerHTML = '<button type="button" class="deleteRowBtn"><i class="fa-solid fa-trash-can"></i></button>';
     // Add event istener to delete button
     var deleteBtn = actionCell.querySelector('.deleteRowBtn');
 
@@ -1211,7 +1340,7 @@ document.getElementById('coordinateForm').addEventListener('submit', function (e
     event.preventDefault();
     var formData = new FormData(this);
     var coordinates = [];
-    // //console.log("Form submitted. Form data:", formData);
+    // console.log("Form submitted. Form data:", formData);
     // Process form data here
     formData.getAll('longitudeDegrees[]').forEach(function (longitudeDegrees, index) {
         var longitudeMinutes = formData.getAll('longitudeMinutes[]')[index];
@@ -1234,7 +1363,7 @@ document.getElementById('coordinateForm').addEventListener('submit', function (e
         alert('Please enter at least four coordinates.');
         return;
     } else {
-        // //console.log(coordinates, "coordinates")
+        // console.log(coordinates, "coordinates")
         var polygon = L.polygon(coordinates).addTo(map);// Function to open the legend div when clicked
         function openLegend() {
             var legendDiv = document.querySelector('.info.legend');
@@ -1253,11 +1382,11 @@ document.getElementById('coordinateForm').addEventListener('submit', function (e
         var polygonId = 'polygon_' + L.stamp(polygon); // Use a unique ID for each polygon
         polygon.polygonId = polygonId;
         drawnPolygons[polygonId] = polygon.toGeoJSON().geometry.coordinates;
-        // //console.log('888888888888', polygon.toGeoJSON().geometry.coordinates);
+        // console.log('888888888888', polygon.toGeoJSON().geometry.coordinates);
         var polygonLayer = polygon;
         drawnItems.addLayer(polygonLayer);
 
-        // //console.log(drawnPolygons, "drawnPolygons", "polygonCounter");
+        // console.log(drawnPolygons, "drawnPolygons", "polygonCounter");
     }
 });
 
@@ -1295,15 +1424,15 @@ function getFilters() {
 
 
 async function savevalues() {
-    // //console.log("Drawn polygons:", drawnPolygons);
+    // console.log("Drawn polygons:", drawnPolygons);
 
     if (Object.keys(drawnPolygons).length === 0) {
         alert("Please draw a polygon / upload KML , KMZ , CSV / Add Coordinates before proceeding.");
     } else {
         Object.keys(drawnPolygons).forEach(async function (polygonId) {
-            // //console.log(polygonId, "polygonIdpolygonIdpolygonIdpolygonIdpolygonIdpolygonId")
+            // console.log(polygonId, "polygonIdpolygonIdpolygonIdpolygonIdpolygonIdpolygonId")
             var coordinates = drawnPolygons[polygonId]
-            // //console.log('coordinates111111', coordinates);
+            // console.log('coordinates111111', coordinates);
 
 
             var pp = turf.polygon(coordinates);
@@ -1313,7 +1442,7 @@ async function savevalues() {
                 [bbox[1], bbox[0]], // Southwest coordinate (minY, minX)
                 [bbox[3], bbox[2]]  // Northeast coordinate (maxY, maxX)
             ]);
-            // //console.log('pp',pp);
+            // console.log('pp',pp);
             map.fitBounds(bounds);
             var layers = ["AutoDCR:Revenue_1"];
 
@@ -1333,7 +1462,7 @@ async function savevalues() {
             var layers2 = ["AutoDCR:TOD_Zones", "AutoDCR:TDR_Zones", "AutoDCR:JE_Names", "AutoDCR:DevelopmentRestriction", "AutoDCR:Garden",
                 "AutoDCR:PMC_Reservation", "AutoDCR:Red_Blue", "AutoDCR:Yerwada_Jail", "AutoDCR:Railway_Buffer", "AutoDCR:Lake", "AutoDCR:Monuments", "AutoDCR:Aviation_data"];
             var restriction_details = await Intersection(pp, layers2, url, propertyName, bounds.toBBoxString(), outputFormat)
-            //console.log(restriction_details, "restriction_details")
+            console.log(restriction_details, "restriction_details")
 
 
 
@@ -1367,7 +1496,7 @@ async function savevalues() {
             // Close the table
             htmlTable += "</table>";
 
-            //console.log(htmlTable);
+            console.log(htmlTable);
 
             var restriction_detail = JSON.stringify(restriction_details)
 
@@ -1425,7 +1554,6 @@ async function savevalues() {
                 data.forEach(function (item) {
                     var attribute = item[0];
                     var result = item[1];
-                    //console.log(item, "item")
 
                     if (attribute === 'Coordinates') {
                         // Generate nested table HTML for coordinates
@@ -1438,11 +1566,7 @@ async function savevalues() {
                         <td>${coordinatesTableHtml}</td>
                     </tr>
                 `);
-                
-                        //console.log(coordinatesTableHtml, "coordinatesTableHtml")
-                    }
-                    // else if{}
-                     else {
+                    } else {
                         // For other attributes, just append them normally
                         table.append(`
                     <tr>
@@ -1451,7 +1575,6 @@ async function savevalues() {
                     </tr>
                 `);
                     }
-                 
                 });
 
                 // Show the modal
@@ -1460,96 +1583,22 @@ async function savevalues() {
 
 
             const coordinates1 = coordinates[0].map(coord => [coord[0], coord[1]]);
-            const correctedCoordinates = coordinates1.map(coord => [coord[1], coord[0]]);
-            console.log(correctedCoordinates, "correctedCoordinates");
-            // console.log(coordinates1,"coordinates221")
-            const mapBounds = L.latLngBounds(correctedCoordinates);
-            // //console.log(coordinates1,"edited")
+            // console.log(coordinates1,"edited")
             // This is converting decimal degrees to degree minutes and seconds
             const dmsCoordinates = coordinates1.map(coord => [convertToDMS(coord[0]), convertToDMS(coord[1])]);
-            console.log(dmsCoordinates, "dmsCoordinates")
 
-            // Create a div for the map dynamically
-            var mspd = `<div id="newMap" style="height: 250px; width: 100%; margin-top: 20px; .leaflet-touch .leaflet-bar a {
-                    width: 20px;
-                    height: 21px;
-                    line-height: 30px;
-                    }"></div>`;
+            // console.log("DMS Coordinates:", dmsCoordinates);
 
-            // Example data for the table
             var exampleData = [
-                ['\Preview map', mspd],
                 ['Draw Village Name', villageName],
                 ['Selected Village From Dropdown', selected_village],
                 ['Selected Survey Number From Dropdown', selected_guts],
                 ['Coordinates', dmsCoordinates],
-
+                // ['Restrictions', restriction_detail],
                 ['Restrictions', htmlTable]
             ];
 
             showTableModal(exampleData);
-
-            // Initialize the map only after the modal is shown
-            $('#dataPageModal').on('shown.bs.modal', function () {
-                if (document.getElementById("newMap")) {
-                    // Initialize the new map
-                    newMap = L.map("newMap", {
-                        center: [18.52, 73.89], // Default center
-                        zoom: 11,
-                        minZoom: 12,
-                        maxZoom: 18,
-                        boxZoom: true,
-                        trackResize: true,
-                        wheelPxPerZoomLevel: 40,
-                        zoomAnimation: true,
-                    });
-
-                    var Esri_WorldImagery = L.tileLayer(
-                        "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-                        {
-                            maxZoom: 18,
-                        }
-                    ).addTo(newMap);
-
-                    let polygon;
-
-                        // Function to update the polygon
-                        function updatePolygon(newCoordinates) {
-                           
-                            if (polygon) {
-                                // Remove the old polygon
-                                newMap.removeLayer(polygon);
-                            }
-
-                            // Create a new polygon
-                            polygon = L.polygon(newCoordinates, {
-                                color: 'blue',
-                                weight: 3,
-                                fillOpacity: 0.2
-                            }).addTo(newMap);
-                        }
-
-                        // Example usage with correctedCoordinates
-                        updatePolygon(correctedCoordinates);
-                        console.log(correctedCoordinates,"newCoordinates1")
-                    // Ensure the map has loaded fully before fitting to bounds
-                    setTimeout(function () {
-                        newMap.invalidateSize();
-                        newMap.fitBounds(mapBounds);
-
-                        console.log(correctedCoordinates,"newCoordinates1")
-                        // L.polygon(correctedCoordinates, {
-                        //     color: 'blue',       // Border color
-                        //     weight: 3,          // Border thickness
-                        //     fillOpacity: 0.2    // Transparency for the filled area
-                        // }).addTo(newMap);
-                        
-
-                    }, 500); // Increased timeout for map loading
-                }
-            });
-
-
         }
         )
     }
@@ -1575,25 +1624,25 @@ function convertToDMS(decimal) {
 
 async function submitForm() {
     // alert("Data Saved")
-    // //console.log(drawnPolygons, "drawnPolygonslllllllllll")
+    // console.log(drawnPolygons, "drawnPolygonslllllllllll")
 
     for (const polygonId in drawnPolygons) {
         // var polygonId= "";
         var coordinates = drawnPolygons[polygonId];
-        // //console.log('coordinatessubmit', coordinates);
-        // //console.log(layer,"layerlayer")
+        console.log('coordinatessubmit', coordinates);
+        // console.log(layer,"layerlayer")
         var pp = turf.polygon(coordinates);
 
         localStorage.setItem('coordinates', coordinates);
 
         var bbox = turf.bbox(pp); // bbox is [minX, minY, maxX, maxY]
-        // //console.log(bbox, "bboc")
+        console.log(bbox, "bboc")
         var bounds = L.latLngBounds([
             [bbox[1], bbox[0]], // Southwest coordinate (minY, minX)
             [bbox[3], bbox[2]]  // Northeast coordinate (maxY, maxX)
         ]);
         localStorage.setItem('bounds', bbox);
-        // //console.log(coordinates, "updateed")
+        console.log(coordinates, "updateed")
         var pp = turf.polygon(coordinates);
         // L.geoJSON(pp).addTo(map)
         var bounds = L.geoJSON(pp).getBounds();
@@ -1612,7 +1661,7 @@ async function submitForm() {
         const coordinates1 = coordinates[0].map(coord => [coord[0], coord[1]]);
 
         // const dmsCoordinates = coordinates1.map(coord => [convertToDMS(coord[0]), convertToDMS(coord[1])]);
-        // //console.log(cqlFilterget, "cqlFilterget", selected_dropdown, "selected_dropdown", villageName, "villageName", selected_guts, "selected_guts", selected_village, "selected_village", "coordinate111111", coordinates1)
+        console.log(cqlFilterget, "cqlFilterget", selected_dropdown, "selected_dropdown", villageName, "villageName", selected_guts, "selected_guts", selected_village, "selected_village", "coordinate111111", coordinates1)
         // alert("Data saved")
 
 
@@ -1633,10 +1682,10 @@ async function submitForm() {
             }),
             success: function (response) {
 
-                // //console.log("Coordinates saved successfully", response);
+                // console.log("Coordinates saved successfully", response);
                 localStorage.setItem('lastInsertedPlotBoundaryId', response.data.id);
                 // localStorage.setItem('coordinates',coordinates1);
-                // //console.log("localstorage")
+                // console.log("localstorage")
 
                 window.location.href = 'dashboard.html';
 
@@ -1648,7 +1697,7 @@ async function submitForm() {
 
             },
             error: function (xhr, status, error) {
-                // console.error("Failed to save coordinates:", error);
+                console.error("Failed to save coordinates:", error);
             }
         });
 
@@ -1690,7 +1739,7 @@ async function submitForm() {
                 },
             }),
             success: function (response) {
-                //console.log('API response received:', response);
+                console.log('API response received:', response);
                 if (response.Status) {
                     window.location.href = 'data.html';
                 }
@@ -1718,7 +1767,7 @@ function infovalues() {
 
     Object.keys(drawnPolygons).forEach(async function (polygonId) {
         var coordinates = drawnPolygons[polygonId];
-        // //console.log(coordinates, "drawcoordinates")
+        // console.log(coordinates, "drawcoordinates")
         var pp = turf.polygon(coordinates);
         L.geoJSON(pp).addTo(map)
         var bounds = L.geoJSON(pp).getBounds();
@@ -1730,7 +1779,7 @@ function infovalues() {
         var outputFormat = "application/json";
         IntersectwithASLM(pp, layers1, url, propertyName1, bounds.toBBoxString(), outputFormat)
         var restriction_details = await Intersection(pp, layers2, url, propertyName1, bounds.toBBoxString(), outputFormat)
-        //console.log(restriction_details, "restriction_details")
+        console.log(restriction_details, "restriction_details")
 
     })
 };
@@ -1764,7 +1813,7 @@ async function IntersectAreaWithPolygon(drawnPolygon, layers, url, propertyName,
                     });
                     resolve(summaryByVillage);
                 } else {
-                    //console.log('No valid features found in the response.');
+                    console.log('No valid features found in the response.');
                     resolve([]);
                 }
             }).fail(function () {
@@ -1789,7 +1838,7 @@ function IntersectwithASLM(drawnPolygon, layers, url, propertyName, bounds, outp
             "&propertyName=" + propertyName + "&bbox=" +
             bounds +
             "&outputFormat=" + outputFormat;
-        // //console.log(urlm)
+        // console.log(urlm)
         return new Promise((resolve, reject) => {
             $.getJSON(urlm, function (data) {
                 if (data && data.features && data.features.length > 0) {
@@ -1817,7 +1866,7 @@ function IntersectwithASLM(drawnPolygon, layers, url, propertyName, bounds, outp
                     // intersectedLayer.addTo(map);
                     intersectedLayer.eachLayer(function (layer) {
                         var properties = layer.feature.properties;
-                        // //console.log(properties, "properties")
+                        // console.log(properties, "properties")
                         var area = turf.area(layer.feature);
                         layer.bindPopup(`Area: ${area.toFixed(2)} sq meters<br>Zone: ${JSON.stringify(properties.Aviation_Zone)} <br> Distance: ${JSON.stringify(properties.Aviation_Distance)}  <br> Elevation: ${JSON.stringify(properties.Aviation_Elevation)}<br> Distance fromNDA : ${distancefromNDA.map(d => d.toFixed(3))} Meters. <br> Distance fromPune airport : ${distancefromPuneairport.map(d => d.toFixed(3))} Meters.`);
                         layer.openPopup();
@@ -1831,7 +1880,7 @@ function IntersectwithASLM(drawnPolygon, layers, url, propertyName, bounds, outp
                     });
                     // resolve(summaryByVillage); 
                 } else {
-                    //console.log('No valid features found in the response.');
+                    console.log('No valid features found in the response.');
                     resolve([]);
                 }
             }).fail(function () {
@@ -1879,7 +1928,7 @@ async function Intersection(drawnPolygon, layers, url, propertyName, bounds, out
                         var area = turf.area(geometry); // Calculate area using Turf.js
                         properties['area'] = area; // Add area to the properties
                     }
-                    // //console.log(properties, "HHHHHHHH");
+                    // console.log(properties, "HHHHHHHH");
                     let keay = Object.keys(attributes);
                     for (let ind in keay) {
                         let key = keay[ind];
@@ -1893,11 +1942,11 @@ async function Intersection(drawnPolygon, layers, url, propertyName, bounds, out
 
                             let combinedValue = [value, percent]; // Create an array with the current value and 'area' value
                             intersectvalues[attributes_value].push(combinedValue); // Push the combined array into the array
-                            // //console.log(attributes_value, combinedValue, "workingsss");
+                            // console.log(attributes_value, combinedValue, "workingsss");
                         }
                     }
 
-                    // //console.log(properties, "HHHHHHHH");
+                    // console.log(properties, "HHHHHHHH");
                     // let keay = Object.keys(attributes);
                     // for (let ind in keay) {
                     //     let key = keay[ind];
@@ -1909,7 +1958,7 @@ async function Intersection(drawnPolygon, layers, url, propertyName, bounds, out
                     //             intersectvalues[attributes_value] = []; // Create an array for each key if it doesn't exist
                     //         }
                     //         intersectvalues[attributes_value].push(value); // Push value into the array
-                    //         //console.log(attributes_value, value, "workingsss");
+                    //         console.log(attributes_value, value, "workingsss");
                     //     //     let pp = value+"area"
                     //     // intersectvalues[pp] = properties['area'];
 
@@ -1929,12 +1978,12 @@ async function Intersection(drawnPolygon, layers, url, propertyName, bounds, out
                 //                 intersectvalues[key] = []; // Create an array for each key if it doesn't exist
                 //             }
                 //             intersectvalues[key].push(value); // Push value into the array
-                //             //console.log(value, "workingsss");
+                //             console.log(value, "workingsss");
                 //         }
                 //     }
                 // });
             } else {
-                //console.log('No valid features found in the response.');
+                console.log('No valid features found in the response.');
             }
         }
         return intersectvalues;
@@ -1956,79 +2005,77 @@ $('#saveToAutoDCRButton').click(function () {
 
 
 // Function to show modal with table
-// function showTableModal(data) {
-//     var modal = $('#dataPageModal');
-//     var table = modal.find('#popup-table tbody');
+function showTableModal(data) {
+    var modal = $('#dataPageModal');
+    var table = modal.find('#popup-table tbody');
 
-//     table.empty();
+    table.empty();
 
-//     data.forEach(function (row) {
-//         var tr = $('<tr>');
-//         row.forEach(function (cell) {
-//             tr.append('<td>' + cell + '</td>');
-//         });
-//         table.append(tr);
-//     });
+    data.forEach(function (row) {
+        var tr = $('<tr>');
+        row.forEach(function (cell) {
+            tr.append('<td>' + cell + '</td>');
+        });
+        table.append(tr);
+    });
 
-//     // Show modal
-//     modal.modal('show');
-// }
+    // Show modal
+    modal.modal('show');
+}
 
-// function showTableModal(data) {
-//     // Clear the existing table content
-//     $('#popup-table tbody').empty();
+function showTableModal(data) {
+    // Clear the existing table content
+    $('#popup-table tbody').empty();
 
-//     data.forEach(function (row) {
-//         var rowHtml = '<tr>';
-//         rowHtml += '<td>' + row[0] + '</td>';
-//         rowHtml += '<td>' + row[1] + '</td>';
-//         rowHtml += '</tr>';
-//         $('#popup-table tbody').append(rowHtml);
-//     });
+    data.forEach(function (row) {
+        var rowHtml = '<tr>';
+        rowHtml += '<td>' + row[0] + '</td>';
+        rowHtml += '<td>' + row[1] + '</td>';
+        rowHtml += '</tr>';
+        $('#popup-table tbody').append(rowHtml);
+    });
 
-//     // Show the modal
-//     $('#dataPageModal').modal('show');
-// }
+    // Show the modal
+    $('#dataPageModal').modal('show');
+}
 
 
-// function showTableModal(data) {
-//     var modal = $('#dataPageModal');
-//     var table = modal.find('#popup-table tbody');
+function showTableModal(data) {
+    var modal = $('#dataPageModal');
+    var table = modal.find('#popup-table tbody');
 
-//     // Clear existing rows
-//     table.empty();
+    // Clear existing rows
+    table.empty();
 
-//     data.forEach(function (item) {
-//         var attribute = item[0];
-//         var result = item[1];
-//         //console.log(item,"item")
+    data.forEach(function (item) {
+        var attribute = item[0];
+        var result = item[1];
 
-//         if (attribute === 'Coordinates') {
-//             // Generate nested table HTML for coordinates
-//             var coordinatesTableHtml = generateCoordinatesTable(result);
+        if (attribute === 'Coordinates') {
+            // Generate nested table HTML for coordinates
+            var coordinatesTableHtml = generateCoordinatesTable(result);
 
-//             // Append a row with nested table HTML
-//             table.append(`
-//                 <tr>
-//                     <td>${attribute}</td>
-//                     <td>${coordinatesTableHtml}</td>
-//                 </tr>
-//             `);
-//             //console.log(coordinatesTableHtml,"coordinatesTableHtml")
-//         } else {
-//             // For other attributes, just append them normally
-//             table.append(`
-//                 <tr>
-//                     <td>${attribute}</td>
-//                     <td>${result}</td>
-//                 </tr>
-//             `);
-//         }
-//     });
+            // Append a row with nested table HTML
+            table.append(`
+                <tr>
+                    <td>${attribute}</td>
+                    <td>${coordinatesTableHtml}</td>
+                </tr>
+            `);
+        } else {
+            // For other attributes, just append them normally
+            table.append(`
+                <tr>
+                    <td>${attribute}</td>
+                    <td>${result}</td>
+                </tr>
+            `);
+        }
+    });
 
-//     // Show the modal
-//     modal.modal('show');
-// }
+    // Show the modal
+    modal.modal('show');
+}
 
 
 

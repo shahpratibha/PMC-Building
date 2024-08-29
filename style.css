@@ -6,23 +6,6 @@
   width: 100vw;
   z-index: 0;
 }
-.leaflet-touch .leaflet-control-layers-toggle {
-  width: 35px !important ;
-  height: 35px !important;
-
-}
-
-.leaflet-retina .leaflet-control-layers-toggle {
-  background-image: url("png/Group\ 93.svg") !important;
-  background-size: 17px 24px;
-}
-/* .leaflet-touch .leaflet-control-layers-toggle {
-  width: 30px;
-  height: 30px;
-} */
-/* .leaflet-top .leaflet-right{
-  top: 90px !important;
-} */
 .px-4 {
   padding-right: 2 rem !important;
   padding-left: 2rem !important;
@@ -44,37 +27,31 @@
 
 
 .geopulseaname{
- 
-  position: absolute;
-  z-index: 99999;
- 
-
-  font-weight: bold;
+  font-size: 10px;
   color: darkblue;
-font-family: Roboto;
-font-size: 12px;
-/* font-style: normal; */
-/* font-weight: 500; */
-/* line-height: normal; */
   position: absolute;
   z-index: 99999;
-  bottom: -1%;
-  right: 15px;
-  /* align-self: stretch; */
-
+  bottom: -1.5%;
+  right: 5px;
+  font-weight: bold;
+  /* background-color: rgba(173, 216, 230, 0.5); */
 }
 
 .leaflet-control-zoom{
   position: relative;
-  right: 3px;
-  bottom: 17px;
+  right: 20px;
+  bottom: 25px;
   border: 1px solid;
 }
 
 
-
-
-
+/* .leaflet-draw-toolbar .leaflet-bar .leaflet-draw-toolbar-top.leaflet-draw-draw-circlemarker{
+  display: none;
+} */
+/* .leaflet-draw-toolbar .leaflet-draw-draw-polygon {
+  background: url('png/006-drawing.png') no-repeat;
+  background-color: #FFF;
+} */
 
 .leaflet-draw-draw-polygon:before {
  background: url('png/006-drawing.png');
@@ -127,17 +104,11 @@ font-size: 12px;
 
 .header h5 {
   color: black;
-  color: var(--Grey-800, #262626);
-text-align: center;
-/* font-family: "Plus Jakarta Sans"; */
-font-size: 16px;
-font-style: normal;
-font-weight: 600;
-line-height: normal;
-  position: relative;
+  font-weight: bold;
+  position: absolute;
   z-index: 999;
-  bottom: 10px;
-  /* left: 6%; */
+  top: 20px;
+  left: 6%;
 }
 
 
@@ -175,31 +146,30 @@ line-height: normal;
 /* for button map start */
 .custom-button {
   position: absolute;
-  bottom: 16px;
-  right: 2px;
-  background-color: green;
-  border-radius: 8px;
-/* background: linear-gradient(180deg, #8AC0EE 0%, #0077DA 100%), var(--Blue-500, #0077DA); */
-
-/* M3/Elevation Light/5 */
-  /* box-shadow: 0px 8px 12px 6px rgba(0, 0, 0, 0.15), 0px 4px 4px 0px rgba(0, 0, 0, 0.30); */
+  bottom: -50px;
+  right: 80px;
   z-index: 1000; /* Ensure the button is above other map elements */
-  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
-  padding:8px 10px;
+  background-color: green;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 5px 10px;
   cursor: pointer;
-  
+  border: 2px solid green;
 }
 
 .custom-button button {
-background: none;
- color: var(--Basic-Colors-White, #FFF);
-  /* font-family: "Plus Jakarta Sans"; */
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
+  background-color:green;
+  color: white;
+  font-weight: bold;
+  font-size: 15px;
   border: none;
  
+}
+
+.custom-button:hover, .custom-button button:hover {
+  background-color: green;
+  color: #f2f2f2;
 }
 
 /* for button map start */
@@ -209,8 +179,8 @@ background: none;
 .custom-button1{
 
   position: absolute;
-  top: 20px;
-  left: 43.900%;
+  top: 3.1%;
+  left: 64%;
   z-index: 1000;
   border: 2px solid #3c3cb8;
   border-radius: 10px;
@@ -265,8 +235,8 @@ background: none;
 
 .coordimg1 {
   position: absolute;
-  top: 29vh;
-  left: 10px;
+  top: 140px;
+  left: 97%;
   z-index: 1000;
   width: 34px;
   height: 34px;
@@ -274,8 +244,7 @@ background: none;
   border: 2px solid #3c3cb8;
   border-radius: 5px;
   font-size: 15px;
-  /* color: #3c3cb8; */
-  color: #262626;
+  color: #3c3cb8;
   font-weight: bold;
   /* padding: 5px 10px; */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -427,28 +396,30 @@ background: none;
 .custom-buttoncsv {
   position: absolute;
   top:3%;
-  left: 57%;
+  left: 75%;
   z-index: 1000;
   background-color: white;
   border: 2px solid #3c3cb8;
   /* border: none; */
   border-radius: 10px;
   padding: px 5px;
+  box-shadow: 0px  0px 10px black;
   height: 35px;
   width: 145px;
 }
 
+
 .form-modal {
-  width: 465px;
+  width: 450px;
   position: fixed;
-  top: 40%;
-  left: 33%;
+  top: 10%;
+  left: 63%;
   /* transform: translate(-50%, -50%); */
   transition: 0s;
   background-color: white;
   padding: 18px 5px;
-  /* border: 2px solid #3c3cb8; */
-  border-radius: 12px;
+  border: 2px solid #3c3cb8;
+  border-radius: 5px;
   z-index: 9999;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
@@ -456,8 +427,8 @@ background: none;
 
 .close-btn {
   position: absolute;
-  top: 7.2%;
-  right: 2.95%;
+  top: 0.2%;
+  right: -0.05%;
   cursor: pointer;
   border: none;
   background-color: transparent;
@@ -474,70 +445,26 @@ background: none;
 }
 
 .subbtn{
-  margin-top: 6px;
-  background: var(--Blue-500, #0077DA);
+  margin-top: 7px;
+  background-color: green;
+  border: 2px solid green;
   border-radius: 5px;
   color: white;
-  padding: 6px 8px;
-  border: none;
-  font-size: 13PX;
+  padding: 5px;
+  font-size: 10PX;
 }
-.addbtn {
-
-  align-items: center;
-  cursor: pointer;
-  border-radius: 8px;
-background: var(--Blue-500, #0077DA);
-  padding: 5px 5px;
+.addbtn{
+  background-color:transparent;
+  border: 2px solid#3c3cb8;
+  border-radius: 5px;
   font-weight: bold;
-  font-size: 12px; /* Adjust font size */
-  background-color: transparent; /* Transparent background */
-  color: #171717cf; /* Text color */
-  border: 2px solid #3c3cb8; /* Border color */
-  border-radius: 5px; /* Rounded corners */
-  text-align: center; /* Center text alignment */
-  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth hover effect */
+  color: #171717cf;
+  padding: 5px 15px;
+  font-size: 12PX;
+  top: 600px
+  ;
+  
 }
-.custom-btn {
-  background: var(--Blue-500, #0077DA);
-  color: white; /* Text color */
-  border: none; /* Remove border */
-  padding: 8px 12px; /* Padding for the button */
-  cursor: pointer; /* Pointer cursor on hover */
-  display: inline-flex; /* Aligns the text and image */
-  align-items: center; /* Vertically centers the content */
-}
-
-
-.add-icon {
-  width: 20px; /* Adjust width */
-  height: 20px; /* Adjust height */
-  margin-bottom: 2px;
-
- 
-}
-
-
-/* Red border for invalid input */
-.invalid-input {
-  border: 2px solid red;
-}
-
-/* Popup styling */
-.popup {
-  display: none;
-  position: absolute;
-  background-color: white;
-  border: 1px solid #ccc;
-  padding: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  z-index: 100;
-}
-
-.popup-visible {
-  display: block;
-}
-
 
 
 .coordinate-input {
@@ -554,16 +481,16 @@ background: var(--Blue-500, #0077DA);
  .deleteRowBtn {
   background-color:transparent ;
   position: relative;
-  top:11px;
-  left: 25px;
+  top:15px;
+  right: 17px;
   z-index: 99999;
   font-size: 14px;
   color:#f44336;
-  border-top: none;
-  border-bottom: none;
+  border-top: 2px solid #3c3cb8;
+  border-bottom: 2px solid #3c3cb8;
   border-left: none;
   border-right: none;
-  padding: 5px 10px;
+  padding: 2px 10px;
   margin-top:10%;
   margin-left: -280%;
   text-align: center;
@@ -626,7 +553,7 @@ background: var(--Blue-500, #0077DA);
 .dropdown-container {
  
   position: absolute;
-  top: 21px;
+  top: 3%;
   left: 35%;
   transform: translateX(-50%);
   z-index: 999;
@@ -696,15 +623,10 @@ input[type="checkbox"] {
   left: -5%;
 }
 
-.upload-icon {
-    width: 15px; /* Adjust width as needed */
-    height: 15px; /* Adjust height as needed */
-    margin-bottom: 5px; /* Space between the icon and text */
-}
 .upload-btn{
-  font-size: 12px;
+  font-size: 10px;
   font-weight: bold;
-  color:#171717cf;
+  color: #3d3a3abf;
 }
 /* element.style {
   top: 60px;
@@ -786,22 +708,11 @@ input[type="checkbox"] {
   border-radius: 5px;
   color: #3c3cb8;
   background-color: white;
+  font-size: 17px;
   padding: 3px 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* .custom-buttoncsv {
-  position: absolute;
-  top: 20px;
-  left: 510px;
-  z-index: 1000;
-  background-color: white;
-  border: 2px solid green;
-  border-radius: 10px;
-  padding: px 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  height: 35px;
-} */
 
 .fa-solid fa-angle-down{
   left: 50px;
@@ -851,151 +762,24 @@ input[type="checkbox"] {
 
 /* finish/delete last point/cancel */
 
-.leaflet-retina .leaflet-control-layers-toggle {
-  background-image: url(png/layer.svg);
-  background-size: 26px 26px;
-}
-
-.leaflet-control-layers-toggle {
-  position: relative; /* Ensure the element is positioned relative to its container */
-  
-}
-.leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar {
-  border: 2px solid #3c3cb8 !important;
-  background-clip: padding-box;
-}
-/* For WebKit browsers */
-.leaflet-control-layers-list {
-  padding: 7px; /* Add padding to the div */
-  overflow-x: hidden; /* Enable horizontal scrolling */
-  overflow-y: auto; /* Enable vertical scrolling */
-  max-height: 250px; /* Adjust the height for vertical scroll */
-  white-space: nowrap; /* Prevent the content from wrapping */
-}
-
-/* Custom scrollbar styles for WebKit browsers */
-.leaflet-control-layers-list::-webkit-scrollbar {
-  width: 4px; /* Width of the vertical scrollbar */
-  height: 4px; /* Height of the horizontal scrollbar */
-}
-
-.leaflet-control-layers-list::-webkit-scrollbar-thumb {
-  background: #888; /* Color of the scrollbar thumb */
-  border-radius: 4px; /* Rounded corners of the scrollbar thumb */
-}
-
-.leaflet-control-layers-list::-webkit-scrollbar-thumb:hover {
-  background: #555; /* Color of the scrollbar thumb on hover */
-}
-
-.leaflet-control-measure .leaflet-bar .leaflet-control{
-  
-  display: none;
-}
-
-
-
-/* Modal container */
-.modal-content {
-  position: relative;
-  /* display: flex; */
-  flex-direction: column;
-  width: 100%;
-  color: var(--bs-modal-color);
-  pointer-events: auto;
-  background-color: var(--bs-modal-bg);
-  background-clip: padding-box;
-  border: var(--bs-modal-border-width) solid var(--bs-modal-border-color);
-  border-radius: var(--bs-modal-border-radius);
-  outline: 0;
-}
-
-
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 20%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.5); /* Dark background */
-}
-
-/* Modal content */
-.modal-content {
-  background-color: #fff;
-  margin: 15% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  border-radius: 10px; /* Rounded corners */
-  /* width: 40% !important; */
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25); /* Shadow for depth */
-}
-
-/* Close button */
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-/* Upload box styling */
-.upload-box {
-  border: 2px dashed #ccc; /* Dashed border */
-  border-radius: 10px; /* Rounded corners */
-  padding: 20px;
-  text-align: center;
-}
-
-.upload-box p {
-  font-size: 16px;
-  margin-bottom: 10px;
-}
-
-.upload-box button {
-  background-color: transparent;
-  border: none;
-  color: #007bff;
-  cursor: pointer;
-  font-size: 16px;
-  text-decoration: underline;
-}
-
-.upload-box button:hover {
-  color: #0056b3;
-}
-
-
-/* Styling for the file details */
-#fileDetails {
-  margin-top: 20px;
-  text-align: center;
-}
-
-#fileDetails p {
-  margin-bottom: 10px;
-  font-weight: bold;
-}
-
-#fileDetails button {
-  background-color: #dc3545;
+.leaflet-touch .leaflet-draw-actions a {
+  font-size: 12px;
+  line-height: 30px;
+  height: 30px;
   color: white;
-  padding: 5px 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
 }
 
-#fileDetails button:hover {
-  background-color: #c82333;
+.tablefromautodcr{
+  position: absolute;
+    z-index: 99;
+    width: 50vh;
+    overflow: auto;
+    height: 40vh;
+    top: 61vh;
+    left: 6vw;
+    font-size: 10px;
 }
+
+
+
+

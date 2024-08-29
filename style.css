@@ -999,3 +999,16 @@ input[type="checkbox"] {
 #fileDetails button:hover {
   background-color: #c82333;
 }
+
+
+.tablefromautodcr{
+  position: absolute;
+    z-index: 99;
+    width: 50vh;
+    overflow: auto;
+    height: 40vh;
+    top: 61vh;
+    left: 6vw;
+    font-size: 10px;
+    scrollbar-width: thin;
+}

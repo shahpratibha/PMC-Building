@@ -396,6 +396,130 @@ $(document).ready(function () {
     const village_name = villageEntry ? villageEntry.name : null;
     const TpsName = villageEntry ? villageEntry.tps_name : null;
 
+
+
+    // Fetch data from the API first
+    // Extract the data from the API response
+    $.ajax({
+        type: "GET",
+        url: "https://autodcr.pmc.gov.in/AutoDCR.PMC.Support/GISAPI/GISAPI.asmx/GetPreApprovalData",
+        data: { TokenNo: token }, // Pass the token as a parameter
+        success: function (data) {
+            // let data = JSON.parse(apiResponse);
+            console.log(data,"llllllllllll")
+            // Prepare the payload for saving to the database
+            let payload = {
+                token: data.Token,
+                village_name: data.SiteAddress[0]?.Area || '',
+                gut_num: data.SiteAddress[0]?.SurveyNo || '',
+                // selectedvillage: data.SiteAddress[0]?.Area || '',
+                // selectedguts: data.SiteAddress[0]?.HissaNo || '',
+                applyfor: data.CaseInformation?.ApplyFor || '',
+                projecttype: data.CaseInformation?.ProjectType || '',
+                casetype: data.CaseInformation?.CaseType || '',
+                proposaltype: data.CaseInformation?.ProposalType || '',
+                // locationzone: data.CaseInformation?.LocationZone || '',
+                tdrzone: data.CaseInformation?.TDRZONE || '',
+                // tdrarea: data.CaseInformation?.TDRArea || 0,
+                // case_info_area: data.CaseInformation?.AREA || '',
+                grossplotarea: data.CaseInformation.GrossPlotArea,
+                // existingarea: data.CaseInformation?.ExistingArea || 0,
+                // proportionateinternalroadarea: data.CaseInformation?.ProportionateInternalRoadArea || 0,
+                // premiumfsi: JSON.stringify(data.CaseInformation?.PremiumFSI || {}),
+                // ancillaryareafsi: data.CaseInformation?.AncillaryAreaFSI || 0,
+                // totalpremiumfsi: data.CaseInformation?.TotalPremiumFSI || 0,
+                // accommodationreservation: data.CaseInformation?.AccommodationReservation || '',
+                // typeofaccommodationreservation: data.CaseInformation?.TypeOfAccommodationReservation || '',
+                // specialproject: data.CaseInformation?.SpecialProject || '',
+                // whetherincentive: data.CaseInformation?.WhetherIncentive || '',
+                // surveyno: data.SiteAddress[0]?.SurveyNo || '',
+                // finalplotno: data.SiteAddress[0]?.FinalPlotNo || '',
+                // hissano: data.SiteAddress[0]?.HissaNo || '',
+                // ctsno: data.SiteAddress[0]?.CtsNo || '',
+                // plotno: data.SiteAddress[0]?.PlotNo || '',
+                // societyname: data.SiteAddress[0]?.SocietyName || '',
+                // pincode: data.SiteAddress[0]?.PinCode || '',
+                // plottype: data.PlotAbuttingDetails[0]?.PlotType || '',
+                // readyreckonervaluationofplot: data.PlotAbuttingDetails[0]?.ReadyReckonerValuationOfPlot || 0,
+                plot_det_area: data.PlotDetails[0]?.Area || '',
+                // areazone: data.PlotDetails[0]?.AreaZone || '',
+                // r7for: data.PlotDetails[0]?.R7for || '',
+                // propertytdrzone: data.PlotDetails[0]?.PropertyTDRZone || '',
+                // receivingtdrzone: data.PlotDetails[0]?.ReceivingTDRZone || '',
+                developmentzonedp: data.PlotDetails[0]?.DevelopmentZoneDP || ''
+            };
+            console.log(payload,JSON.stringify(data))
+            console.log("grossplotarea: ",data.CaseInformation.GrossPlotArea)
+
+            displayPayloadInDiv(payload);
+
+            function generateTableFromPayload(payload) {
+                var tableHtml = '<table class="table table-bordered">';
+
+                // Create table header
+                tableHtml += '<thead><tr><th>Attribute</th><th>Value</th></tr></thead>';
+
+                // Create table body
+                tableHtml += '<tbody>';
+
+                // Iterate over the payload object and add rows to the table
+                for (var key in payload) {
+                    if (payload.hasOwnProperty(key)) {
+                        var value = payload[key];
+                        tableHtml += '<tr><td>' + key + '</td><td>' + formatValue(value) + '</td></tr>';
+                    }
+                }
+
+                tableHtml += '</tbody></table>';
+                return tableHtml;
+            }
+
+            function formatValue(value) {
+                // Format the value based on its type
+                if (typeof value === 'object') {
+                    return JSON.stringify(value, null, 2); // Convert object to JSON string
+                }
+                return value || 'N/A'; // Handle undefined or null values
+            }
+
+
+            function displayPayloadInDiv(payload) {
+                var tableHtml = generateTableFromPayload(payload);
+                var container = document.getElementById('tablefromautoDcr');
+                container.innerHTML = tableHtml;
+            }
+
+
+
+
+            // Send the extracted data to savevalues.php
+            // $.ajax({
+            //     type: "POST",
+            //     url: "APIS/savevalues.php",
+            //     contentType: "application/json",
+            //     data: JSON.stringify(payload),
+            //     success: function (response) {
+            //         if (response.status === 'success') {
+            //             alert("Data saved successfully");
+            //         } else if (response.status === 'error' && response.message === 'Token already exists in the database.') {
+            //             alert('Token already exists. Please check the details or use a different token.');
+            //         } else {
+            //             console.error("Failed to save data:", response.message);
+            //         }
+            //     },
+            //     error: function (xhr, status, error) {
+            //         console.error("Failed to save data:", error);
+            //     }
+            // });
+        },
+        error: function (xhr, status, error) {
+            console.error("Failed to fetch data from API:", error);
+        }
+    });
+
+
+
+
     trials()
     function trials() {
 

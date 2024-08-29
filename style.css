@@ -7,15 +7,32 @@
   z-index: 0;
 }
 .leaflet-touch .leaflet-control-layers-toggle {
-  width: 35px !important ;
-  height: 35px !important;
+  width: 32px !important ;
+  height: 32px !important;
 
 }
-
+/* .leaflet-container a {
+  color: white !important;
+} */
 .leaflet-retina .leaflet-control-layers-toggle {
-  background-image: url("png/Group\ 93.svg") !important;
-  background-size: 17px 24px;
+  background-image: url("png/Layers_Icon.png") !important;
+  background-size: 20px 24px;
+  border: none; /* Remove any border around the image */
+  background-repeat: no-repeat; /* Ensure the image does not repeat */
+  background-position: center; /* Center the image */
 }
+.leaflet-draw-actions a {
+  background-color: #919187;
+  border-left: 1px solid #AAA;
+  color: #FFF !important;
+  font: 11px / 19px "Helvetica Neue", Arial, Helvetica, sans-serif;
+  line-height: 28px;
+  text-decoration: none;
+  padding-left: 10px;
+  padding-right: 10px;
+  height: 28px;
+}
+
 /* .leaflet-touch .leaflet-control-layers-toggle {
   width: 30px;
   height: 30px;
@@ -136,7 +153,7 @@ font-weight: 600;
 line-height: normal;
   position: relative;
   z-index: 999;
-  bottom: 10px;
+  bottom: 7px;
   /* left: 6%; */
 }
 
@@ -209,15 +226,16 @@ background: none;
 .custom-button1{
 
   position: absolute;
-  top: 20px;
+  top: 21px;
   left: 43.900%;
+  /* width: 190px; */
   z-index: 1000;
   border: 2px solid #3c3cb8;
   border-radius: 10px;
   color: #3c3cb8;
   background-color: white;
-  font-size:17px;
-  padding: 3px 10px;
+  font-size:14px;
+  padding: 5px 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
 }
@@ -426,8 +444,9 @@ background: none;
 
 .custom-buttoncsv {
   position: absolute;
-  top:3%;
-  left: 57%;
+  top:22px;
+  left: 58%;
+  
   z-index: 1000;
   background-color: white;
   border: 2px solid #3c3cb8;
@@ -435,7 +454,7 @@ background: none;
   border-radius: 10px;
   padding: px 5px;
   height: 35px;
-  width: 145px;
+  width: 155px;
 }
 
 .form-modal {
@@ -452,12 +471,17 @@ background: none;
   z-index: 9999;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
+.table-row-spacing {
+  padding: 5px;
+  font-size: 13px;
+  margin-bottom: 10px; /* Adds space at the bottom */
+}
 
 
 .close-btn {
   position: absolute;
-  top: 7.2%;
-  right: 2.95%;
+  top: 1%;
+  right: -0.05%;
   cursor: pointer;
   border: none;
   background-color: transparent;
@@ -472,7 +496,6 @@ background: none;
 .xicon:hover{
   color: #f44336;
 }
-
 .subbtn{
   margin-top: 6px;
   background: var(--Blue-500, #0077DA);
@@ -489,10 +512,10 @@ background: none;
   border-radius: 8px;
 background: var(--Blue-500, #0077DA);
   padding: 5px 5px;
-  font-weight: bold;
-  font-size: 12px; /* Adjust font size */
+  /* font-weight: bold; */
+  font-size: 14px; /* Adjust font size */
   background-color: transparent; /* Transparent background */
-  color: #171717cf; /* Text color */
+  
   border: 2px solid #3c3cb8; /* Border color */
   border-radius: 5px; /* Rounded corners */
   text-align: center; /* Center text alignment */
@@ -702,9 +725,10 @@ input[type="checkbox"] {
     margin-bottom: 5px; /* Space between the icon and text */
 }
 .upload-btn{
-  font-size: 12px;
-  font-weight: bold;
-  color:#171717cf;
+  font-size: 14px;
+  color: black;
+  /* font-weight: bold;
+  color:#171717cf; */
 }
 /* element.style {
   top: 60px;
@@ -737,7 +761,7 @@ input[type="checkbox"] {
 }
   #search_type {
     position: absolute;
-    top: 20px;
+    top: 21px;
     left: 120px;
     transform: translateX(-50%);
     z-index: 999;
@@ -779,14 +803,15 @@ input[type="checkbox"] {
 }
 .custom-button1 {
   position: absolute;
-  top: 20px;
+  top: 21px;
   left: 355px;
+  /* width: 190px; */
   z-index: 1000;
   border: 2px solid #3c3cb8;
   border-radius: 5px;
   color: #3c3cb8;
   background-color: white;
-  padding: 3px 10px;
+  padding: 5px 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -850,11 +875,11 @@ input[type="checkbox"] {
 }
 
 /* finish/delete last point/cancel */
-
+/* 
 .leaflet-retina .leaflet-control-layers-toggle {
   background-image: url(png/layer.svg);
   background-size: 26px 26px;
-}
+} */
 
 .leaflet-control-layers-toggle {
   position: relative; /* Ensure the element is positioned relative to its container */
@@ -895,10 +920,10 @@ input[type="checkbox"] {
 
 
 
+
 /* Modal container */
-.modal-content {
+.content {
   position: relative;
-  /* display: flex; */
   flex-direction: column;
   width: 100%;
   color: var(--bs-modal-color);
@@ -908,8 +933,15 @@ input[type="checkbox"] {
   border: var(--bs-modal-border-width) solid var(--bs-modal-border-color);
   border-radius: var(--bs-modal-border-radius);
   outline: 0;
+  overflow: hidden; /* Prevent scrolling inside the modal */
 }
 
+.uploadheading {
+  color: black;
+  margin-left: 11px;
+  font-size: 15px;
+  margin-top: -8px;
+}
 
 .modal {
   display: none;
@@ -917,22 +949,30 @@ input[type="checkbox"] {
   z-index: 1;
   left: 0;
   top: 0;
-  width: 20%;
+  width: 100%;
   height: 100%;
-  overflow: auto;
+  overflow: hidden; /* Prevent scrollbar for the entire modal */
   background-color: rgba(0, 0, 0, 0.5); /* Dark background */
 }
 
 /* Modal content */
-.modal-content {
+.content {
   background-color: #fff;
-  margin: 15% auto;
+  position: absolute; /* Change to absolute positioning */
+  bottom: 40%; /* Align at the bottom */
+  left: 50%; /* Center horizontally */
+  transform: translateX(-50%); /* Adjust to center */
   padding: 20px;
   border: 1px solid #888;
+  border-radius: 10px;
+  width: 28%;
   border-radius: 10px; /* Rounded corners */
   /* width: 40% !important; */
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25); /* Shadow for depth */
+  overflow: hidden; /* Prevent scrollbar inside the content */
+  max-height: 90vh; /* Prevent content overflow beyond viewport */
 }
+
 
 /* Close button */
 .close {
@@ -940,6 +980,7 @@ input[type="checkbox"] {
   float: right;
   font-size: 28px;
   font-weight: bold;
+  margin-top: -24px;
 }
 
 .close:hover,
@@ -947,12 +988,13 @@ input[type="checkbox"] {
   color: black;
   text-decoration: none;
   cursor: pointer;
+  margin-top: -24px;
 }
 
 /* Upload box styling */
 .upload-box {
-  border: 2px dashed #ccc; /* Dashed border */
-  border-radius: 10px; /* Rounded corners */
+  border: 2px dashed #ccc;
+  border-radius: 10px;
   padding: 20px;
   text-align: center;
 }
@@ -960,6 +1002,7 @@ input[type="checkbox"] {
 .upload-box p {
   font-size: 16px;
   margin-bottom: 10px;
+  color: black;
 }
 
 .upload-box button {
@@ -975,28 +1018,56 @@ input[type="checkbox"] {
   color: #0056b3;
 }
 
-
 /* Styling for the file details */
-#fileDetails {
+.file-details {
+  display: none;
   margin-top: 20px;
   text-align: center;
 }
 
-#fileDetails p {
-  margin-bottom: 10px;
+.file-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 20px;
+  background-color: #e6f1fb;
+  border: 1px solid #0077da;
+  border-radius: 8px;
+}
+
+.file-info img {
+  width: 30px;
+  height: 30px;
+}
+
+.file-info span {
   font-weight: bold;
 }
 
-#fileDetails button {
-  background-color: #dc3545;
-  color: white;
-  padding: 5px 10px;
+.file-info a {
+  color: #007bff;
+  text-decoration: underline;
+}
+
+.file-info a:hover {
+  color: #0056b3;
+}
+
+.remove-btn, .continue-btn {
+  margin-top: 10px;
+  padding: 8px 16px; /* Equal padding for both buttons */
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  margin-right: 10px; /* Add space between buttons */
 }
 
-#fileDetails button:hover {
+.remove-btn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.remove-btn:hover {
   background-color: #c82333;
 }
 
@@ -1011,4 +1082,18 @@ input[type="checkbox"] {
     left: 6vw;
     font-size: 10px;
     scrollbar-width: thin;
+
+}
+.continue-btn {
+  background-color: #007bff;
+  color: white;
+}
+
+.continue-btn:hover {
+  background-color: #0056b3;
+}
+.remove-icon{
+  width: 20px;
+  height: 20px;
+  margin-top: -4px;
 }

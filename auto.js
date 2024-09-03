@@ -409,10 +409,6 @@ $(document).ready(function () {
 
 
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 914c81455c2ce5c82edeb5fc0609d15e5b4e6afc
     // Fetch data from the API first
     // Extract the data from the API response
     $.ajax({

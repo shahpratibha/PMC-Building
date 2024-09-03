@@ -179,10 +179,47 @@
         </div>
 
         <div class="custom-button1">
-            <input type="file" id="fileInput" accept=".kml" style="display:none;" title="Upload KML/KMZ/CSV File">
-            <label for="fileInput" class="upload-btn"><i class="fa-solid fa-file-arrow-up"></i> Upload
-                KML/KMZ/CSV</label>
-        </div>
+            <input id="fileInput" type="file" accept=".kml" style="display:none;" title="Upload KML/KMZ/CSV File">
+            <label  class="upload-btn">
+              <img src="png/upload.svg" alt="" class="upload-icon"> Upload PDF file here
+            </label>
+            <div id="uploadModal" class="modal">
+              <div class="content">
+                <span class="close">&times;</span>
+                <h4 class="uploadheading">Upload your file KML/KMZ/CSV</h4>
+                <div id="uploadBox" class="upload-box">
+                  <p>Drag and drop a file here or
+                  <button type="button" id="uploadLink">Upload a file</button>
+                  </p>
+                </div>
+                <div id="fileDetails" class="file-details" style="display:none;">
+                  
+                    <div class="file-info">
+                        <!-- <img src="png/pdf.svg" alt="PDF icon" style="width:30px; height:30px;"> -->
+                        <span id="fileName"></span>
+                        <a href="#" id="viewFileLink" target="_blank">View File</a>
+                    </div>
+                    <button id="removeFileBtn" class="remove-btn">
+                        Remove File
+                        <img src="png/remove.svg" alt="Remove Icon" class="remove-icon">
+                    </button>
+                                        
+                    <button id="continueBtn" class="continue-btn" disabled>Submit
+                        <img src="png/formkit_submit.png" alt="Submit Icon" class="continue-icon">
+                    </button>
+                    
+                    
+                </div>
+                
+                <!-- Hidden file input element -->
+                <input type="file" id="fileUpload" style="display:none;">
+                
+              </div>
+            </div>
+          </div>
+          
+
+        <div class="tablefromautodcr" id="tablefromautoDcr"></div>
 
         <div class="tablefromautodcr" id="tablefromautoDcr"></div>
 
@@ -209,17 +246,19 @@
             <button id="toggleFormBtn" class="addbtn"> Add Coordinates
             </button>
             <div id="formContainer" class="form-modal" style="display:none;">
-                <button id="closeFormBtn" class="close-btn"><i class="fa-solid fa-xmark xicon" style="font-size: 15px; color: #141414d3; top: 3%;
-                            position: absolute;
-                            left: -30%"></i></button>
+                <button id="closeFormBtn" class="close-btn">
+                    <i class="fa-solid fa-xmark xicon" style="font-size: 18px; color: #141414d3;"></i>
+                </button>
+                                <h5 style="text-align: center;">Add your co-ordinates here</h5>
+
                 <form id="coordinateForm" style="text-align: center;">
                     <table id="coordinateTable">
-                        <tr style="background-color: #bbb; padding: 5px; font-size: 13px;">
-                            <th class="p-1 px-5">Longitude</th>
-                            <th class="p-1 px-5">Latitude</th>
-                            <!-- <th class="p-1 px-4">Height</th> -->
-                            <th class="p-1 px-5">Action</th>
-                        </tr>
+                        <tr class="table-row-spacing">
+    <th class="p-1 px-5">Longitude</th>
+    <th class="p-1 px-5">Latitude</th>
+    <th class="p-1 px-5">Action</th>
+</tr>
+
                     </table>
                     <button class="addbtn" type="button" id="addRowBtn">Add More Coordinates <i
                             class="fa-solid fa-circle-plus" style="color: #bbb;"></i></button>
@@ -461,13 +500,99 @@
     printWindow.document.close();
     printWindow.focus();
 
-    // Print the content
-    printWindow.print();
-}
+            // Print the content
+            printWindow.print();
+        }
+// uplod 
+document.addEventListener('DOMContentLoaded', function () {
+    const uploadBtn = document.querySelector('.upload-btn');
+    const fileInput = document.getElementById('fileInput');
+    const modal = document.getElementById('uploadModal');
+    const closeBtn = document.querySelector('.close');
+    const uploadLink = document.getElementById('uploadLink');
+    const uploadBox = document.getElementById('uploadBox');
+    const fileDetails = document.getElementById('fileDetails');
+    const fileName = document.getElementById('fileName');
+    const viewFileLink = document.getElementById('viewFileLink');
+    const removeFileBtn = document.getElementById('removeFileBtn');
+    const continueBtn = document.getElementById('continueBtn');
+    
+    // Allowed file types
+    const allowedExtensions = ['kml', 'kmz', 'csv'];
+    let fileErrorAlertShown = false; // Flag to track if the error alert has been shown
+
+    // Show the modal when the upload button is clicked
+    uploadBtn.addEventListener('click', function () {
+        resetUploadForm(); // Reset the form each time the modal is opened
+        modal.style.display = 'block';
+    });
+
+    // Close the modal when the close button is clicked
+    closeBtn.addEventListener('click', function () {
+        modal.style.display = 'none';
+        resetUploadForm(); // Reset the form after closing the modal
+    });
+
+    // Close the modal if the user clicks outside of it
+    window.addEventListener('click', function (event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+            resetUploadForm(); // Reset the form after closing the modal
+        }
+    });
+
+    // Trigger file input click when the uploadLink button is clicked
+    uploadLink.addEventListener('click', function () {
+        fileInput.click();
+    });
+
+    // Handle file selection
+    fileInput.addEventListener('change', function() {
+        const file = fileInput.files[0];
+        if (file) {
+            const fileExtension = file.name.split('.').pop().toLowerCase();
+            if (allowedExtensions.includes(fileExtension)) {
+                fileName.textContent = file.name;
+                viewFileLink.href = URL.createObjectURL(file);
+                fileDetails.style.display = 'block';
+                uploadBox.style.display = 'none';
+                continueBtn.disabled = false;
+                fileErrorAlertShown = false; // Reset the error alert flag
+            } else {
+                if (!fileErrorAlertShown) { // Show alert only if it hasn't been shown already
+                    // alert("Invalid file type! Only KML, KMZ, or CSV files are allowed.");
+                    fileErrorAlertShown = true; // Set the flag to true to prevent duplicate alerts
+                }
+                resetUploadForm(); // Reset form to remove invalid file
+            }
+        }
+    });
+
+    // Handle file removal
+    removeFileBtn.addEventListener('click', function () {
+        resetUploadForm();
+    });
+
+    // Handle form submission
+    continueBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        alert("File uploaded successfully!"); // Display success alert
+        resetUploadForm(); // Clear file details after successful upload
+        modal.style.display = 'none'; // Close the modal after resetting the form
+    });
+
+    // Function to reset the upload form
+    function resetUploadForm() {
+        fileInput.value = ''; // Clear the file input
+        fileDetails.style.display = 'none'; // Hide file details
+        uploadBox.style.display = 'block'; // Show upload box
+        continueBtn.disabled = true; // Disable the continue button
+        fileName.textContent = ''; // Clear the file name
+        viewFileLink.href = '#'; // Reset the file link
+    }
+});
 
 </script>
-
-
 </body>
 
 </html>

@@ -1288,12 +1288,10 @@ function addCoordinateRow(table) {
     heightfloatCellInput.setAttribute('type', 'number');
     heightfloatCellInput.setAttribute('placeholder', '247.66');
     heightfloatCellInput.setAttribute('name', 'heightfloatCell[]');
-    // longitudeDegreesInput.setAttribute('readonly', 'readonly'); 
-    // heightfloatCellInput.value = '73';
+ 
     heightfloatCellInput.style.width = '70px';
     heightfloatCellInput.style.position = 'absolute';
     heightfloatCellInput.style.left = '74%';
-    // longitudeDegreesInput.style.marginRight = '5px';
     heightfloatCellInput.style.borderBottomLeftRadius = '5px';
     heightfloatCellInput.style.borderTopLeftRadius = '5px';
     heightfloatCellInput.style.borderTop = '2px solid #3c3cb8';
@@ -1301,7 +1299,6 @@ function addCoordinateRow(table) {
     heightfloatCellInput.style.borderBottom = '2px solid #3c3cb8';
     heightfloatCellInput.style.borderRight = '2px solid  #3c3cb8';
     heightfloatCellInput.style.borderTopRightRadius = '5px';
-    // heightfloatCellInput.style.top = '76px';
     heightfloatCellInput.style.borderBottomRightRadius = '5px';
 
 
@@ -1761,10 +1758,11 @@ async function submitForm() {
                 // localStorage.setItem('coordinates',coordinates1);
                 // //console.log("localstorage")
 
-                window.location.href = 'dashboard.html';
+                // window.location.href = 'dashboard.html';
 
                 // if(response.data.id != undefined){
 
+                
 
                 // }
 
@@ -1815,14 +1813,20 @@ async function submitForm() {
             success: function (response) {
                 //console.log('API response received:', response);
                 if (response.Status) {
-                    window.location.href = 'data.html';
+                    // window.location.href = 'data.html';
+                     setTimeout(function() {
+                        window.close();
+                    }, 5000); // 5000 milliseconds = 5 seconds
                 }
             },
             error: function (xhr, status, error) {
                 console.error('Error calling API:', xhr.responseText);
             },
         });
-        window.location.href = 'dashboard.html';
+        // window.location.href = 'dashboard.html';
+         setTimeout(function() {
+            window.close();
+        }, 5000); // 5000 milliseconds = 5 seconds
 
     };
 }
@@ -2073,7 +2077,7 @@ async function Intersection(drawnPolygon, layers, url, propertyName, bounds, out
 // Add an event listener to the "Next" button
 $('#saveToAutoDCRButton').click(function () {
     localStorage.setItem('editedCoordinates', JSON.stringify(drawnPolygons));
-    window.location.href = 'dashboard.html';
+    // window.location.href = 'dashboard.html';
 });
 
 

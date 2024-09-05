@@ -504,7 +504,7 @@ background: none;
   background: var(--Blue-500, #0077DA);
   border-radius: 5px;
   color: white;
-  padding: 6px 8px;
+  padding: 8px 12px;
   border: none;
   font-size: 13PX;
 }
@@ -1673,7 +1673,7 @@ input[type="checkbox"] {
 
 
 #formContainer {
-  width: 33%;
+  width: 25%;
   max-height: 300px; /* Adjust the max height as needed */
   overflow-y: auto; /* Allows vertical scrolling */
   overflow-x: hidden; /* Hides horizontal scrolling if not needed */

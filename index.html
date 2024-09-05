@@ -1041,21 +1041,6 @@
             // Print the content
             printWindow.print();
         }
-<<<<<<< HEAD
-        // uplod 
-        document.addEventListener('DOMContentLoaded', function () {
-            const uploadBtn = document.querySelector('.upload-btn');
-            const fileInput = document.getElementById('fileInput');
-            const modal = document.getElementById('uploadModal');
-            const closeBtn = document.querySelector('.close');
-            const uploadLink = document.getElementById('uploadLink');
-            const uploadBox = document.getElementById('uploadBox');
-            const fileDetails = document.getElementById('fileDetails');
-            const fileName = document.getElementById('fileName');
-            const viewFileLink = document.getElementById('viewFileLink');
-            const removeFileBtn = document.getElementById('removeFileBtn');
-            const continueBtn = document.getElementById('continueBtn');
-=======
 // upload
 document.addEventListener('DOMContentLoaded', function () {
     const uploadBtn = document.querySelector('.upload-btn');
@@ -1073,11 +1058,10 @@ document.addEventListener('DOMContentLoaded', function () {
     // Allowed file types
     const allowedExtensions = ['kml', 'kmz', 'csv'];
     let fileErrorAlertShown = false; // Flag to track if the error alert has been shown
->>>>>>> 5ebadbb1e92d80f2b41fd6db3e46edfc815fa6e7
 
             // Allowed file types
-            const allowedExtensions = ['kml', 'kmz', 'csv'];
-            let fileErrorAlertShown = false; // Flag to track if the error alert has been shown
+            // const allowedExtensions = ['kml', 'kmz', 'csv'];
+            // let fileErrorAlertShown = false; // Flag to track if the error alert has been shown
 
             // Show the modal when the upload button is clicked
             uploadBtn.addEventListener('click', function () {
@@ -1150,9 +1134,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-<<<<<<< HEAD
-    </script>
-=======
     // Handle file removal
     removeFileBtn.addEventListener('click', function () {
         resetUploadForm();
@@ -1208,7 +1189,6 @@ document.getElementById('mapButton').addEventListener('click', function() {
 
 
 </script>
->>>>>>> 5ebadbb1e92d80f2b41fd6db3e46edfc815fa6e7
 </body>
 
 </html>

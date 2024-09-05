@@ -9,7 +9,7 @@ var map = L.map("map", {
     center: [18.52, 73.89],
     zoom: 11,
     minZoom: 12,
-    maxZoom: 18,
+    maxZoom: 25,
     boxZoom: true,
     trackResize: true,
     wheelPxPerZoomLevel: 40,
@@ -17,13 +17,16 @@ var map = L.map("map", {
 
 });
 
-
+var stamen = L.tileLayer(
+    'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}'
+);
+//   .addTo(map);
 // var map = L.map("map", {}).setView([18.52, 73.895], 12, L.CRS.EPSG4326);
 
 var googleSat = L.tileLayer(
     "http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}",
     {
-        maxZoom: 20,
+        maxZoom: 25,
         subdomains: ["mt0", "mt1", "mt2", "mt3"],
     }
 );
@@ -43,6 +46,7 @@ var baseLayers = {
     "OSM": osm,
     "Esri": Esri_WorldImagery,
     "Satellite": googleSat,
+    "stamen": stamen,
 };
 
 // .addTo(map);
@@ -56,7 +60,7 @@ var Revenue_Layer1 = L.tileLayer
         transparent: true,
         tiled: true,
         version: "1.1.0",
-        maxZoom: 19.9,
+        maxZoom: 25,
 
         opacity: 1,
     });
@@ -71,7 +75,7 @@ var Revenue_Layer = L.tileLayer
         transparent: true,
         tiled: true,
         version: "1.1.0",
-        maxZoom: 19.9,
+        maxZoom: 25,
 
         opacity: 1,
     });
@@ -286,6 +290,21 @@ var WMSlayers = {
 
 };
 
+map.on("zoomend", function () {
+    if (map.getZoom() > 17.2) {
+        if (!map.hasLayer(googleSat)) {
+            map.removeLayer(osm);
+            map.addLayer(googleSat);
+        }
+    } else {
+        if (!map.hasLayer(osm)) {
+            map.removeLayer(googleSat);
+            map.addLayer(osm);
+        }
+    }
+});
+
+
 
 function getQueryParam(param) {
     const urlParams = new URLSearchParams(window.location.search);
@@ -338,6 +357,16 @@ var drawnPolygons = [];
 
 map.on(L.Draw.Event.CREATED, function (event) {
     var layer = event.layer;
+// ----------------
+ // added for are showing as tooltip while drawing
+ if (layer instanceof L.Polygon) {
+    var area = turf.area(layer.toGeoJSON());
+    var areaText = 'Area: ' + (area).toFixed(2) + ' sq m'; // area in square kilometers
+    layer.bindPopup(areaText).openPopup();
+}
+
+// added for are showing as tooltip while drawing
+    // ------------------
     var polygonId = 'polygon_' + L.stamp(layer); // Use a unique ID for each polygon
 
     drawnItems.addLayer(layer);
@@ -357,6 +386,20 @@ map.on(L.Draw.Event.CREATED, function (event) {
 map.on('draw:edited', function (e) {
     var layers = e.layers;
     layers.eachLayer(function (layer) {
+
+        // added for are showing as tooltip while editing
+        if (layer instanceof L.Polygon) {
+            var area = turf.area(layer.toGeoJSON());
+            var areaText = 'Area: ' + (area).toFixed(2) + ' sq m'; // area in square kilometers
+            layer.setPopupContent(areaText);
+            layer.openPopup();
+        }
+
+        // added for are showing as tooltip while drawing
+
+
+
+
         var polygonId = layer.polygonId; // Retrieve the polygonId from the layer
         if (polygonId) {
             drawnPolygons[polygonId] = layer.toGeoJSON().geometry.coordinates;
@@ -364,6 +407,8 @@ map.on('draw:edited', function (e) {
     });
     updateButtonState();
 });
+
+
 map.on('draw:deleted', function (e) {
     var layer = e.layer;
     var index = drawnPolygons.indexOf(layer);
@@ -407,7 +452,7 @@ $(document).ready(function () {
         data: { TokenNo: token }, // Pass the token as a parameter
         success: function (data) {
             // let data = JSON.parse(apiResponse);
-            console.log(data,"llllllllllll")
+            console.log(data, "llllllllllll")
             // Prepare the payload for saving to the database
             let payload = {
                 token: data.Token,
@@ -417,13 +462,14 @@ $(document).ready(function () {
                 // selectedguts: data.SiteAddress[0]?.HissaNo || '',
                 applyfor: data.CaseInformation?.ApplyFor || '',
                 projecttype: data.CaseInformation?.ProjectType || '',
+                grossplotarea: `<strong>${data.CaseInformation.GrossPlotArea.toFixed(2)}  SQM  </strong>`,
                 casetype: data.CaseInformation?.CaseType || '',
                 proposaltype: data.CaseInformation?.ProposalType || '',
                 // locationzone: data.CaseInformation?.LocationZone || '',
                 tdrzone: data.CaseInformation?.TDRZONE || '',
                 // tdrarea: data.CaseInformation?.TDRArea || 0,
                 // case_info_area: data.CaseInformation?.AREA || '',
-                grossplotarea: data.CaseInformation.GrossPlotArea,
+               
                 // existingarea: data.CaseInformation?.ExistingArea || 0,
                 // proportionateinternalroadarea: data.CaseInformation?.ProportionateInternalRoadArea || 0,
                 // premiumfsi: JSON.stringify(data.CaseInformation?.PremiumFSI || {}),
@@ -449,8 +495,8 @@ $(document).ready(function () {
                 // receivingtdrzone: data.PlotDetails[0]?.ReceivingTDRZone || '',
                 developmentzonedp: data.PlotDetails[0]?.DevelopmentZoneDP || ''
             };
-            console.log(payload,JSON.stringify(data))
-            console.log("grossplotarea: ",data.CaseInformation.GrossPlotArea)
+            console.log(payload, JSON.stringify(data))
+            console.log("grossplotarea: ", data.CaseInformation.GrossPlotArea)
 
             displayPayloadInDiv(payload);
 
@@ -1289,7 +1335,7 @@ function addCoordinateRow(table) {
     heightfloatCellInput.setAttribute('type', 'number');
     heightfloatCellInput.setAttribute('placeholder', '247.66');
     heightfloatCellInput.setAttribute('name', 'heightfloatCell[]');
- 
+
     heightfloatCellInput.style.width = '70px';
     heightfloatCellInput.style.position = 'absolute';
     heightfloatCellInput.style.left = '74%';
@@ -1445,6 +1491,8 @@ async function savevalues() {
             var cqlFilterget = getSelectedValues();
             const selected_dropdown = JSON.stringify(cqlFilterget);
             const villageName = JSON.stringify(values);
+            var DrawnPolygonDetails = `Village Name: ${values[0].village_name}, Gut No: ${values[0].Gut_No}, Polygon Area: ${values[0].area.toFixed(2)} sq m`
+ 
             const selected_guts = JSON.stringify(getSelectedValues1());
             const selected_village = JSON.stringify(getFilters());
 
@@ -1559,11 +1607,11 @@ async function savevalues() {
                         <td>${coordinatesTableHtml}</td>
                     </tr>
                 `);
-                
+
                         //console.log(coordinatesTableHtml, "coordinatesTableHtml")
                     }
                     // else if{}
-                     else {
+                    else {
                         // For other attributes, just append them normally
                         table.append(`
                     <tr>
@@ -1572,7 +1620,7 @@ async function savevalues() {
                     </tr>
                 `);
                     }
-                 
+
                 });
 
                 // Show the modal
@@ -1600,15 +1648,14 @@ async function savevalues() {
             // Example data for the table
             var exampleData = [
                 ['\Preview map', mspd],
-                ['Draw Village Name', villageName],
-                ['Selected Village From Dropdown', selected_village],
-                ['Selected Survey Number From Dropdown', selected_guts],
+                ['Plot Details GIS', DrawnPolygonDetails],
+                // ['Selected Village From Dropdown', selected_village],
+                // ['Selected Survey Number From Dropdown', selected_guts],
                 ['Coordinates', dmsCoordinates],
-
                 ['Restrictions', htmlTable]
             ];
 
-            showTableModal(exampleData);
+            // showTableModal(exampleData);
 
             // Initialize the map only after the modal is shown
             $('#dataPageModal').on('shown.bs.modal', function () {
@@ -1634,47 +1681,67 @@ async function savevalues() {
 
                     let polygon;
 
-                        // Function to update the polygon
-                        function updatePolygon(newCoordinates) {
-                           
-                            if (polygon) {
-                                // Remove the old polygon
-                                newMap.removeLayer(polygon);
-                            }
+                    // Function to update the polygon
+                    function updatePolygon(newCoordinates) {
 
-                            // Create a new polygon
-                            polygon = L.polygon(newCoordinates, {
-                                color: 'blue',
-                                weight: 3,
-                                fillOpacity: 0.2
-                            }).addTo(newMap);
+                        if (polygon) {
+                            // Remove the old polygon
+                            newMap.removeLayer(polygon);
                         }
 
-                        // Example usage with correctedCoordinates
-                        updatePolygon(correctedCoordinates);
-                        console.log(correctedCoordinates,"newCoordinates1")
+                        // Create a new polygon
+                        polygon = L.polygon(newCoordinates, {
+                            color: 'blue',
+                            weight: 3,
+                            fillOpacity: 0.2
+                        }).addTo(newMap);
+                    }
+
+                    // Example usage with correctedCoordinates
+                    updatePolygon(correctedCoordinates);
+                    console.log(correctedCoordinates, "newCoordinates1")
                     // Ensure the map has loaded fully before fitting to bounds
                     setTimeout(function () {
                         newMap.invalidateSize();
                         newMap.fitBounds(mapBounds);
 
-                        console.log(correctedCoordinates,"newCoordinates1")
+                        console.log(correctedCoordinates, "newCoordinates1")
                         // L.polygon(correctedCoordinates, {
                         //     color: 'blue',       // Border color
                         //     weight: 3,          // Border thickness
                         //     fillOpacity: 0.2    // Transparency for the filled area
                         // }).addTo(newMap);
-                        
+
 
                     }, 500); // Increased timeout for map loading
                 }
             });
 
+// this is for area check popup
 
+            const token = getQueryParam('TOKEN');
+            var grossplotarea = await fetchGrossPlotArea(token)
+            var polygonArea = turf.area(pp);
+            var tenPercemax = (grossplotarea * 1.1); // 10% of gross plot area
+            var tenPercemin = (grossplotarea * 0.9);
+ 
+            if (polygonArea > tenPercemax || polygonArea < tenPercemin) {
+                popupMessage = `The polygon area is ${polygonArea.toFixed(2)} and Grossplotarea is ${grossplotarea.toFixed(2)} \n
+                 the polygon area should be  more or less than 10% of the GrossPlotArea`;
+                showPopup(popupMessage);
+ 
+            } else {
+ 
+                showTableModal(exampleData);
+            }
+
+// -------------------------
         }
         )
     }
 }
+
+
 // }
 // for conveting degree decimals to degree minutes and seconds
 
@@ -1763,7 +1830,7 @@ async function submitForm() {
 
                 // if(response.data.id != undefined){
 
-                
+
 
                 // }
 
@@ -1775,9 +1842,9 @@ async function submitForm() {
         });
 
         $.ajax({
-            url: 'https://autodcr.pmc.gov.in/AutoDCR.GISIntegration/GisExim.svc/getPlotGISDetails',
+            // url: 'https://autodcr.pmc.gov.in/AutoDCR.GISIntegration/GisExim.svc/getPlotGISDetails',
 
-            // url: 'http://115.124.100.250/AutoDCR.Integration/GisExim.svc/getPlotGISDetails',
+            url: 'http://115.124.100.250/AutoDCR.Integration/GisExim.svc/getPlotGISDetails',
 
             type: 'POST',
             contentType: 'application/json',
@@ -1815,7 +1882,7 @@ async function submitForm() {
                 //console.log('API response received:', response);
                 if (response.Status) {
                     // window.location.href = 'data.html';
-                     setTimeout(function() {
+                    setTimeout(function () {
                         window.close();
                     }, 5000); // 5000 milliseconds = 5 seconds
                 }
@@ -1825,7 +1892,7 @@ async function submitForm() {
             },
         });
         // window.location.href = 'dashboard.html';
-         setTimeout(function() {
+        setTimeout(function () {
             window.close();
         }, 5000); // 5000 milliseconds = 5 seconds
 
@@ -2160,3 +2227,38 @@ $('#saveToAutoDCRButton').click(function () {
 
 
 
+// for popupedit
+
+function showPopup(message) {
+    document.getElementById('popupMessage').innerText = message;
+    document.getElementById('customPopup').style.display = 'block';
+}
+
+// Function to close the popup
+function closePopup() {
+    document.getElementById('customPopup').style.display = 'none';
+}
+async function fetchGrossPlotArea(TokenNo) {
+    const url = `https://autodcr.pmc.gov.in/AutoDCR.PMC.Support/GISAPI/GISAPI.asmx/GetPreApprovalData?TokenNo=${TokenNo}`;
+ 
+    try {
+        const response = await fetch(url);
+ 
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+ 
+        // Assuming the response is in JSON format
+        const data = await response.json();
+ 
+        // Extract the specific value
+        const grossPlotArea = data.CaseInformation.GrossPlotArea;
+ 
+        // Return the extracted value
+        return grossPlotArea;
+ 
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        return null; // Return null or handle error as needed
+    }
+}

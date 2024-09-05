@@ -387,13 +387,13 @@ map.on('draw:edited', function (e) {
     var layers = e.layers;
     layers.eachLayer(function (layer) {
 
-        // added for are showing as tooltip while editing
-        if (layer instanceof L.Polygon) {
-            var area = turf.area(layer.toGeoJSON());
-            var areaText = 'Area: ' + (area).toFixed(2) + ' sq m'; // area in square kilometers
-            layer.setPopupContent(areaText);
-            layer.openPopup();
-        }
+        // // added for are showing as tooltip while editing
+        // if (layer instanceof L.Polygon) {
+        //     var area = turf.area(layer.toGeoJSON());
+        //     var areaText = 'Area: ' + (area).toFixed(2) + ' sq m'; // area in square kilometers
+        //     layer.setPopupContent(areaText);
+        //     layer.openPopup();
+        // }
 
         // added for are showing as tooltip while drawing
 
@@ -1719,21 +1719,21 @@ async function savevalues() {
 
 // this is for area check popup
 
-            const token = getQueryParam('TOKEN');
-            var grossplotarea = await fetchGrossPlotArea(token)
-            var polygonArea = turf.area(pp);
-            var tenPercemax = (grossplotarea * 1.1); // 10% of gross plot area
-            var tenPercemin = (grossplotarea * 0.9);
+            // const token = getQueryParam('TOKEN');
+            // var grossplotarea = await fetchGrossPlotArea(token)
+            // var polygonArea = turf.area(pp);
+            // var tenPercemax = (grossplotarea * 1.1); // 10% of gross plot area
+            // var tenPercemin = (grossplotarea * 0.9);
  
-            if (polygonArea > tenPercemax || polygonArea < tenPercemin) {
-                popupMessage = `The polygon area is ${polygonArea.toFixed(2)} and Grossplotarea is ${grossplotarea.toFixed(2)} \n
-                 the polygon area should be  more or less than 10% of the GrossPlotArea`;
-                showPopup(popupMessage);
+            // if (polygonArea > tenPercemax || polygonArea < tenPercemin) {
+            //     popupMessage = `The polygon area is ${polygonArea.toFixed(2)} and Grossplotarea is ${grossplotarea.toFixed(2)} \n
+            //      the polygon area should be  more or less than 10% of the GrossPlotArea`;
+            //     showPopup(popupMessage);
  
-            } else {
+            // } else {
  
-                showTableModal(exampleData);
-            }
+            //     showTableModal(exampleData);
+            // }
 
 // -------------------------
         }
@@ -1842,9 +1842,9 @@ async function submitForm() {
         });
 
         $.ajax({
-            url: 'https://autodcr.pmc.gov.in/AutoDCR.GISIntegration/GisExim.svc/getPlotGISDetails',
+            // url: 'https://autodcr.pmc.gov.in/AutoDCR.GISIntegration/GisExim.svc/getPlotGISDetails',
 
-            // url: 'http://115.124.100.250/AutoDCR.Integration/GisExim.svc/getPlotGISDetails',
+            url: 'http://115.124.100.250/AutoDCR.Integration/GisExim.svc/getPlotGISDetails',
 
             type: 'POST',
             contentType: 'application/json',
@@ -2145,7 +2145,7 @@ async function Intersection(drawnPolygon, layers, url, propertyName, bounds, out
 // Add an event listener to the "Next" button
 $('#saveToAutoDCRButton').click(function () {
     localStorage.setItem('editedCoordinates', JSON.stringify(drawnPolygons));
-    // window.location.href = 'dashboard.html';
+    window.location.href = 'dashboard.html';
 });
 
 
@@ -2227,38 +2227,38 @@ $('#saveToAutoDCRButton').click(function () {
 
 
 
-// for popupedit
+// // for popupedit
 
-function showPopup(message) {
-    document.getElementById('popupMessage').innerText = message;
-    document.getElementById('customPopup').style.display = 'block';
-}
+// function showPopup(message) {
+//     document.getElementById('popupMessage').innerText = message;
+//     document.getElementById('customPopup').style.display = 'block';
+// }
 
-// Function to close the popup
-function closePopup() {
-    document.getElementById('customPopup').style.display = 'none';
-}
-async function fetchGrossPlotArea(TokenNo) {
-    const url = `https://autodcr.pmc.gov.in/AutoDCR.PMC.Support/GISAPI/GISAPI.asmx/GetPreApprovalData?TokenNo=${TokenNo}`;
+// // Function to close the popup
+// function closePopup() {
+//     document.getElementById('customPopup').style.display = 'none';
+// }
+// async function fetchGrossPlotArea(TokenNo) {
+//     const url = `https://autodcr.pmc.gov.in/AutoDCR.PMC.Support/GISAPI/GISAPI.asmx/GetPreApprovalData?TokenNo=${TokenNo}`;
  
-    try {
-        const response = await fetch(url);
+//     try {
+//         const response = await fetch(url);
  
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
+//         if (!response.ok) {
+//             throw new Error(`HTTP error! Status: ${response.status}`);
+//         }
  
-        // Assuming the response is in JSON format
-        const data = await response.json();
+//         // Assuming the response is in JSON format
+//         const data = await response.json();
  
-        // Extract the specific value
-        const grossPlotArea = data.CaseInformation.GrossPlotArea;
+//         // Extract the specific value
+//         const grossPlotArea = data.CaseInformation.GrossPlotArea;
  
-        // Return the extracted value
-        return grossPlotArea;
+//         // Return the extracted value
+//         return grossPlotArea;
  
-    } catch (error) {
-        console.error('Error fetching data:', error);
-        return null; // Return null or handle error as needed
-    }
-}
+//     } catch (error) {
+//         console.error('Error fetching data:', error);
+//         return null; // Return null or handle error as needed
+//     }
+// }

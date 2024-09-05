@@ -2150,7 +2150,7 @@ $('#saveToAutoDCRButton').click(function () {
 
 
 
-// Function to show modal with table
+// // Function to show modal with table
 // function showTableModal(data) {
 //     var modal = $('#dataPageModal');
 //     var table = modal.find('#popup-table tbody');
@@ -2186,44 +2186,44 @@ $('#saveToAutoDCRButton').click(function () {
 // }
 
 
-// function showTableModal(data) {
-//     var modal = $('#dataPageModal');
-//     var table = modal.find('#popup-table tbody');
+function showTableModal(data) {
+    var modal = $('#dataPageModal');
+    var table = modal.find('#popup-table tbody');
 
-//     // Clear existing rows
-//     table.empty();
+    // Clear existing rows
+    table.empty();
 
-//     data.forEach(function (item) {
-//         var attribute = item[0];
-//         var result = item[1];
-//         //console.log(item,"item")
+    data.forEach(function (item) {
+        var attribute = item[0];
+        var result = item[1];
+        //console.log(item,"item")
 
-//         if (attribute === 'Coordinates') {
-//             // Generate nested table HTML for coordinates
-//             var coordinatesTableHtml = generateCoordinatesTable(result);
+        if (attribute === 'Coordinates') {
+            // Generate nested table HTML for coordinates
+            var coordinatesTableHtml = generateCoordinatesTable(result);
 
-//             // Append a row with nested table HTML
-//             table.append(`
-//                 <tr>
-//                     <td>${attribute}</td>
-//                     <td>${coordinatesTableHtml}</td>
-//                 </tr>
-//             `);
-//             //console.log(coordinatesTableHtml,"coordinatesTableHtml")
-//         } else {
-//             // For other attributes, just append them normally
-//             table.append(`
-//                 <tr>
-//                     <td>${attribute}</td>
-//                     <td>${result}</td>
-//                 </tr>
-//             `);
-//         }
-//     });
+            // Append a row with nested table HTML
+            table.append(`
+                <tr>
+                    <td>${attribute}</td>
+                    <td>${coordinatesTableHtml}</td>
+                </tr>
+            `);
+            //console.log(coordinatesTableHtml,"coordinatesTableHtml")
+        } else {
+            // For other attributes, just append them normally
+            table.append(`
+                <tr>
+                    <td>${attribute}</td>
+                    <td>${result}</td>
+                </tr>
+            `);
+        }
+    });
 
-//     // Show the modal
-//     modal.modal('show');
-// }
+    // Show the modal
+    modal.modal('show');
+}
 
 
 
